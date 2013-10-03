@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EP: Tutorium #1</title>
+    <meta charset='utf-8'>
+    <script src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+
+  <style>
+    .slides.template-tugraz > article:not(.nobackground):not(.biglogo) {
+      background: #fff url(tugraz.gif) 710px 615px no-repeat;
+    }
+    .slides.template-tugraz > article {
+      color: #222;
+    }
+
+    table.dates td {
+      padding: .1em 0;
+      border: none;
+    }
+    table.dates {
+      margin-top: 20px;
+    }
+    strong {
+      color: #ee1952;
+      font-style: none;
+      font-weight: bold;
+    }
+    span.meta, p.meta {
+      font-size: .8em;
+      color: #555;
+    }
+    p.meta {
+    	text-align: right;
+    	margin: 0 0 .5em;
+    }
+    ul.compact li {
+      margin-bottom: .2em;
+    }
+    pre.compact {
+      margin: .5em 0
+    }
+    a.runbtn {
+    	color: #ee1952;
+    	display: block;
+    	position: relative;
+    	float: right;
+    	text-decoration: none;
+    	text-transform: uppercase;
+    	font-size: .6em;
+    	color: #666;
+    	padding: 0 .5em;
+    	color: #ee1952;
+    	top: 2.5em;
+    	margin-right: .5em;
+    }
+    a.runbtn:visited {
+      color: #ee1952;
+    }
+    #runoutput {
+    	background: #FFFFD8;
+    	position: absolute;
+    	top: 20%;
+    	bottom: 20%;
+    	left: 10%;
+    	right: 10%;
+    	border: 1px solid #666;
+    	-moz-box-shadow: 0 0 15px #888;
+			-webkit-box-shadow: 0 0 15px#888;
+			box-shadow: 0 0 15px #888;
+			font-size: .6em;
+			padding: .5em;
+			font-family: monospace;
+    }
+	.pagenum {
+	  position: absolute;
+	  right: 1.8em;
+	  top: .8em;
+	  color: #888;
+	  font-size: .6em;
+	  z-index: -5;
+	}
+	article pre {
+	  white-space: pre !IMPORTANT;
+	}
+  </style>
+       <style media="print">
+         @page {
+            size: A4 landscape;
+             @top-right {
+                content: "Page " counter(page);
+             }
+         }
+          article {
+            page-break-after: always;
+            margin: auto;
+          }
+          article.next, article.past {
+            display: block;
+          }
+          body {
+              display: block !important;
+              font-family: 'Open Sans', Arial, sans-serif;
+              font-size: 1.5em;
+          }
+      </style>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script type="text/javascript">
+        window.addEventListener('load', function(){
+            var link = document.getElementsByTagName('link');
+            link[link.length-1].setAttribute ("media","screen");
+        });
+
+        $(document).ready(function() {
+		    var total = $('article').length;
+		    $('article').each(function(i, slide) {
+			   $(slide).append('<div class="pagenum">'+ (i+1) + ' / ' + total + '</div>');
+			 });
+        	$('pre.run').each(function(i, source) {
+        		$('<a class="runbtn" href="#run">Run</a>').insertBefore(source)
+        		.click(function() {
+        			$('#runoutput').remove();
+        			var out = $('<div id="runoutput"></div>').insertAfter(source)
+        				.text('Waiting for remote server...');
+
+        			$.ajax("http://cbuild.tux21b.org/run", {
+        				data: {"source": $(source).text()},
+        				type: "POST",
+        				dataType: "json",
+								success: function(data) {
+									out.empty();
+									if (data.error) {
+										$('<div></div>').text(data.error).appendTo(out);
+									}
+									$('<div></div>').text(data.output).appendTo(out);
+								},
+								error: function() {
+									out.empty();
+									$('<div></div>').text("Error communicating with remote server.").appendTo(out);
+								}
+							});
+        			return false;
+        		});
+        	});
+        	$(document).click(function() {
+        		$('#runoutput').remove();
+        	});
+        });
+        </script>
+
+
+    </head>
+
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-tugraz'>
+      <article>
+        <h1>
+          Tutorium #1
+        </h1>
+        <p>
+          Einführung in die (strukturierte) Programmierung<br><br>
+		  Gruppe 5 – Jörg Müller
+          <small><a href="mailto:prog-tutor-joerg@iicm.tugraz.at">prog-tutor-joerg@iicm.tugraz.at</a></small><br />
+		  Gruppe 6 – Christoph Hack
+          <small><a href="mailto:prog-tutor-hack@iicm.tugraz.at">prog-tutor-hack@iicm.tugraz.at</a></small><br />
+		  Gruppe 8 – Anja Karl
+          <small><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></small><br />
+          Gruppe 9 – Manuel Weber
+          <small><a href="mailto:prog-tutor-weber@iicm.tugraz.at">prog-tutor-weber@iicm.tugraz.at</a></small><br/>
+          
+        </p>
+      </article>
+	  
+	  	  <article>
+	    <h3>Tutoriumsinhalt</h3>
+		<ul>
+		<li>Fragen zur Vorlesung</li>
+		<li>Hilfestellungen zu den Beispielen</li>
+		<li>beispielhafte Bewertung der Hausübungen</li>
+		<li>Erarbeiten ähnlicher Beispiele</li>
+		<li>Eure Vorschläge?</li>
+		</ul>
+	  </article>
+
+      <article>
+        <h3>Zeitlicher Ablauf</h3>
+        <table class="dates">
+        	  <tr><td>08.10.</td><td><strong>Tutorium #1</strong></td></tr>
+        	  <tr><td>09.10.</td><td>Abgabe HW1</td></tr>
+        	  <tr><td>15.10.</td><td><strong>Tutorium #2</strong></td></tr>
+        	  <tr><td>16.10.</td><td>Abgabe HW2</td></tr>
+        	  <tr><td>22.10.</td><td><strong>Tutorium #3</strong></td></tr>
+        	  <tr><td>23.10.</td><td>Ausgabe Ass1</td></tr>
+        	  <tr><td>05.11.</td><td>Abgabe Ass1 <span class="meta">(bis 19:00 Uhr)</span></td></tr>
+						<tr><td>05.11.</td><td><strong>Tutorium #4</strong></td></tr>
+						<tr><td>06.11.</td><td>Gruppensuche für Ass2 <span class="meta">(bis 13.11)</span></td></tr>
+						<tr><td>20.11.</td><td>Ausgabe Ass2</td></tr>
+						<tr><td>26.11.</td><td><strong>Tutorium #5</strong></td></tr>
+        	  <tr><td>17.12.</td><td>Abgabe Ass2 <span class="meta">(bis 19:00 Uhr)</span></td></tr>
+        </table>
+      </article>
+
+      <article>
+        <h3>Resourcen</h3>
+        <dl>
+          <dt>Wiki:
+          <dd><small><a href="https://palme.iicm.tugraz.at/wiki/EP">
+            https://palme.iicm.tugraz.at/wiki/EP</a></small>
+			<small><a href="https://palme.iicm.tugraz.at/wiki/ESP">
+            https://palme.iicm.tugraz.at/wiki/ESP</a></small></dd>
+          <dt>Abgabesystem:</dt>
+          <dd><small><a href="https://palme.iicm.tugraz.at/">
+            https://palme.iicm.tugraz.at/</a></small></dd>
+          <dt>Tutorium:</dt>
+          <dd><small><a href="http://www.student.tugraz.at/christoph.hack/ep2012/">
+            http://www.student.tugraz.at/christoph.hack/ep2012/</a></small></dd>
+        </dl>
+        <dl>
+          <dt>Newsgroup (<code>nntp://news.tugraz.at:119/</code>):</dt>
+          <dd>
+            <ul class="compact">
+            <li>tu-graz.lv.e<span style="color: #666">(s)</span>p</li>
+            <li>tu-graz.lv.e<span style="color: #666">(s)</span>p.organisatorisches</li>
+            <li>tu-graz.lv.e<span style="color: #666">(s)</span>p.uebungsgruppen</li>
+          </ul></dd>
+        </dl>
+		<p style="margin-right: 6em;">Alle nicht persönlichen Fragen <strong>ausschließlich</strong> in der Newsgroup stellen!</p>
+      </article>
+
+      <article>
+        <h3>Bewertung</h3>
+        <ul>
+		  <li>6 (ESP) bzw. 8 (EP) verpflichtende und unbewertete Hausübungen</li>
+          <li>Alle Beispiele müssen rechtzeitig abgegeben werden<br>
+            (erkennbarer Versuch, keine Plagiate)</li>
+		  <li>Ein bewertetes Gruppenbeispiel und eine Klausur</li>
+          <li>Bewertet wird Programmierstil, Struktur, Korrektheit und Funktionalität</li>
+          <li>Mitarbeit wird durch ein Abgabegespräche überprüft</li>
+          <li>Ausbesserungsbeispiel ersetzt die Punkte des Gruppenbeispiels</li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>Entwicklungsumgebung</h3>
+        <ul>
+          <li>Editor (oder IDE) nach Wahl</li>
+          <li>Referenzplattform: <code>pluto.tugraz.at</code> (Linux)
+            <ul>
+              <li>Benötigte Tools: <code>g++</code>, <code>make</code>,
+                <code>valgrind</code>, <code>svn</code></li>
+              <li>Datenübertragung mittels SFTP
+                  <pre class="compact">scp ass1.cpp benutzername@pluto.tugraz.at:~/</pre>
+                  <span class="meta">(alternativ: WinSCP oder FileZilla)</span>
+              </li>
+              <li>Zugang über SSH
+                <pre class="compact">ssh benutzername@pluto.tugraz.at</pre>
+                <span class="meta">(alternativ: Putty)</span>
+              </li>
+          </ul></li>
+          <li>Kompilieren mit:
+            <pre class="compact" style="width: 75%;">gcc -Wall -o prog prog.c</pre>
+          </li>
+        </ul>
+      </article>
+
+      <article>
+      	<h3>Schritt 1</h3>
+      	<p>In einem Editor nach Wahl (z.B. UltraEdit,  Notepad++, Kate, Vim,
+      		Emacs, Textmate) eine Datei "hello.c" anlegen:</p>
+      	<pre class="run">/* Hello World Example */
+
+#include &lt;stdio.h&gt;
+
+int main()
+{
+  printf("Hallo EP!\n");
+  return 0;
+}</pre>
+			<br>
+			<p>Tutorial: <a href="http://www.student.tugraz.at/manuel.weber/sep/howto_vb.html">Linux als virtuelle Umgebung unter Linux</a></p>
+			</article>
+
+			<article class="nobackground">
+      	<h3>Schritt 2</h3>
+      	<p style="margin-bottom: 1em;">Die Datei auf <u>pluto.tugraz.at</u> kopieren:</p>
+      	<pre class="compact">scp hello.c user@pluto.tugraz.at:</pre>
+      	<p style="text-align: center;">
+					<img style="width: 90%;" src="filezilla.png" alt="FileZilla" />
+				</p>
+			</article>
+
+      <article class="nobackground">
+        <h3>Schritt 3</h3>
+        <p>Zum Pluto verbinden:</p>
+        <pre class="compact">ssh user@pluto.tugraz.at</pre>
+       	<p style="text-align: center;">
+        	<img style="width: 90%;" src="putty.png" alt="Putty">
+      	</p>
+      </article>
+
+      <article class="nobackground">
+        <h3>Schritt 4</h3>
+        <p>Das Programm kompilieren:</p>
+        <pre class="compact">gcc -Wall -o hello hello.c</pre>
+		<table style="font-size: .9em;">
+		<tr><td>gcc</td><td>GNU C Compiler</td></tr>
+		<tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td><tr>
+		<tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
+		<tr><td>hello.c</td><td>Quellcode</td></tr>
+		</table>
+        <p>Ausführen (und Testen):</p>
+        <pre class="compact">./hello</pre>
+        <blockquote>Hallo EP!</blockquote>
+	</article>
+	
+	<article class="nobackground">
+        <h3>Schritt 5</h3>
+        <p>Bei HW1 den Quellcode und das Binary laut Angabe abgeben.</p>
+        <p><a href="https://palme.iicm.tugraz.at/">
+            https://palme.iicm.tugraz.at/</a></p>
+		<p style="text-align: center;"><img src="palme.png" alt="PALME" width="80%" /></p>
+      </article>
+
+      <article>
+        <h2>Viel Erfolg bei HW1<br>
+          <span style="font-size: .5em; font-weight: normal">
+            Abgabe: 9. Oktober 2012</span></h2>
+      </article>
+	  
+
+    </section>
+
+  </body>
+</html>
