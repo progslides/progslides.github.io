@@ -218,6 +218,331 @@ else
       </pre>
     </article>
     
+    
+       <article>
+    <h3>Variablen</h3>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int apples = 0;
+3  apples = 5;
+4  printf("I have %d apples.\n", apples);
+5  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>0</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>5</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <p class="stdout">I have 5 apples.</p>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>5</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+    </article>
+    <article>
+    <h3>Operatoren</h3>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int apples = 15;
+3  apples = apples + 5;
+4  apples = apples - 5;
+5  int persons = 5;
+6  int apple_per_person = apples/persons;
+7  int more_persons = persons * 2;
+8  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>20</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>3</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>3</td></tr>
+  <tr><th><strong>more_persons</strong> 0x100C</th><td>10</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_8">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>3</td></tr>
+  <tr><th><strong>more_persons</strong> 0x100C</th><td>10</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+</article>
+
+
+
+
+ <article>
+    <h3>Operatoren - Achtung!</h3>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int apples = 2;
+3  int persons = 4;
+4  int apple_per_person = apples/persons;
+5  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+</article>
+
+ <article>
+    <h3>Gleitkommazahlen</h3>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  double apples = 2;
+3  double persons = 4;
+4  double apple_per_person = apples/persons;
+5  return 0;
+ }
+</div>
+
+</td><td>
+
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4.0</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4.0</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0.5</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4.0</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0.5</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+</article>
+
+<article>
+<h3>Übersicht über die Datentypen</h3>
+<table>
+<tr><th>Ganzzahlen</th></tr>
+<tr><td>&nbsp;&nbsp;char</td></tr>
+<tr><td>&nbsp;&nbsp;short</td></tr>
+<tr><td>&nbsp;&nbsp;int</td></tr>
+<tr><td>&nbsp;&nbsp;long</td></tr>
+</table><table>
+<tr><th>Dezimalzahlen</th></tr>
+<tr><td>&nbsp;&nbsp;float</td></tr>
+<tr><td>&nbsp;&nbsp;double</td></tr>
+</table>
+</article>
+    
 
     <article class="nobackground" style="padding: 20px;">
       <iframe style="height: 100%;" src="http://blockly-demo.appspot.com/blockly/demos/maze/index.html"></iframe>
