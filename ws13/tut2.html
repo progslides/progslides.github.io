@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tutorium #1</title>
+    <meta charset='utf-8'>
+    <script src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+
+  <style>
+    .slides.template-tugraz > article:not(.nobackground):not(.biglogo) {
+      background: #fff url(tugraz.gif) 710px 615px no-repeat;
+    }
+    .slides.template-tugraz > article {
+      color: #222;
+    }
+
+    table.dates td {
+      padding: .1em 0;
+      border: none;
+    }
+    table.dates {
+      margin-top: 20px;
+    }
+    strong {
+      color: #ee1952;
+      font-style: none;
+      font-weight: bold;
+    }
+    span.meta, p.meta {
+      font-size: .8em;
+      color: #555;
+    }
+    p.meta {
+      text-align: right;
+      margin: 0 0 .5em;
+    }
+    ul.compact li {
+      margin-bottom: .2em;
+    }
+    pre.compact {
+      margin: .5em 0
+    }
+    a.runbtn {
+      color: #ee1952;
+      display: block;
+      position: relative;
+      float: right;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .6em;
+      color: #666;
+      padding: 0 .5em;
+      color: #ee1952;
+      top: 2.5em;
+      margin-right: .5em;
+    }
+    a.runbtn:visited {
+      color: #ee1952;
+    }
+    #runoutput {
+      background: #FFFFD8;
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 10%;
+      right: 10%;
+      border: 1px solid #666;
+      -moz-box-shadow: 0 0 15px #888;
+      -webkit-box-shadow: 0 0 15px#888;
+      box-shadow: 0 0 15px #888;
+      font-size: .6em;
+      padding: .5em;
+      font-family: monospace;
+    }
+  .pagenum {
+    position: absolute;
+    right: 1.8em;
+    top: .8em;
+    color: #888;
+    font-size: .6em;
+    z-index: -5;
+  }
+  article pre {
+    white-space: pre !IMPORTANT;
+  }
+  </style>
+       <style media="print">
+         @page {
+            size: A4 landscape;
+             @top-right {
+                content: "Page " counter(page);
+             }
+         }
+          article {
+            page-break-after: always;
+            margin: auto;
+          }
+          article.next, article.past {
+            display: block;
+          }
+          body {
+              display: block !important;
+              font-family: 'Open Sans', Arial, sans-serif;
+              font-size: 1.5em;
+          }
+      </style>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script type="text/javascript">
+        window.addEventListener('load', function(){
+            var link = document.getElementsByTagName('link');
+            link[link.length-1].setAttribute ("media","screen");
+        });
+
+        $(document).ready(function() {
+        var total = $('article').length;
+        $('article').each(function(i, slide) {
+         $(slide).append('<div class="pagenum">'+ (i+1) + ' / ' + total + '</div>');
+       });
+          $('pre.run').each(function(i, source) {
+            $('<a class="runbtn" href="#run">Run</a>').insertBefore(source)
+            .click(function() {
+              $('#runoutput').remove();
+              var out = $('<div id="runoutput"></div>').insertAfter(source)
+                .text('Waiting for remote server...');
+
+              $.ajax("http://cbuild.tux21b.org/run", {
+                data: {"source": $(source).text()},
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                  out.empty();
+                  if (data.error) {
+                    $('<div></div>').text(data.error).appendTo(out);
+                  }
+                  $('<div></div>').text(data.output).appendTo(out);
+                },
+                error: function() {
+                  out.empty();
+                  $('<div></div>').text("Error communicating with remote server.").appendTo(out);
+                }
+              });
+              return false;
+            });
+          });
+          $(document).click(function() {
+            $('#runoutput').remove();
+          });
+        });
+        </script>
+
+
+    </head>
+
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-tugraz'>
+      <article>
+        <h1>
+          Tutorium #1
+        </h1>
+        <p>
+          Einführung in die (strukturierte) Programmierung<br><br>
+      Gruppe 3 – Michael Schwarz
+          <small><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></small><br />
+      Gruppe 5 – Jörg Müller
+          <small><a href="mailto:prog-tutor-joerg@iicm.tugraz.at">prog-tutor-joerg@iicm.tugraz.at</a></small><br />
+      Gruppe 6 – Christoph Hack
+          <small><a href="mailto:prog-tutor-hack@iicm.tugraz.at">prog-tutor-hack@iicm.tugraz.at</a></small><br />
+      Gruppe 8 – Anja Karl
+          <small><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></small><br />
+          Gruppe 9 – Manuel Weber
+          <small><a href="mailto:prog-tutor-weber@iicm.tugraz.at">prog-tutor-weber@iicm.tugraz.at</a></small><br/>
+      
+        </p>
+      </article>
+    
+        <article>
+      <h3>Tutoriumsinhalt</h3>
+    <ul>
+    <li>HW1 Besprechung</li>
+    <li>Codingstandard</li>
+    <li>Variablen</li>
+    <li><code>if</code> Abfragen</li>
+    <li>Schleifen</li>
+    <li>HW2</li>
+    </ul>
+    </article>
+
+    <article class="nobackground" style="padding: 20px;">
+      <iframe style="height: 100%;" src="http://blockly-demo.appspot.com/blockly/demos/maze/index.html"></iframe>
+    </article>
+    
+        <article>
+      <h3>Abgabe</h3>
+      <ul>
+        <li>bis Mittwoch, 16.10.</li>
+        <li><strong>Deadline 19:00</strong></li>
+      </ul>
+
+      <h2>Viel Erfolg bei HW2</h2>
+    </article>
+    
+    
+  </section>
+  </body>
+</html>
+
