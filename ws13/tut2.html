@@ -193,20 +193,39 @@
     </article>
     
      <article>
-      <h3>Condingstandard 1</h3>
-      <pre>
+      <h3>Codingstandard 1</h3>
+      <pre style="margin: 4em 2em;">
+[...]
     if(a>=18) { 
-      if(wd != 0){if( 100<=m) {
+      if(wd != 0){if( 100&lt;=m) {
 e = 1;printf("Herzlich willkommen im Casino!\n");
       } else { printf("Zugang verweigert!\n");}
   }else { puts("Zugang verweigert!");}
   } else { printf("Zugang verweigert!\n");}
-      </pre>
+[...]</pre>
     </article>
     
+         <article>
+       <h3>Coding Standard</h3>
+       <p>
+       Einheitliche Formatierung des Programms um die Zusammenarbeit zu vereinfachen.
+       </p>
+
+       <ul>
+        <li>Blockklammern ({ und }) in eigene Zeile</li>
+        <li>Keine Tabulatoren, Einr&uuml;cken mit 2 Leerzeichen</li>
+        <li>Aussagekräftige Namen f&uuml;r Variablen und Funktionen</li>
+        <li>Naming Convention (long_variable_name, functionName(), CONSTANT_VALUE)</li>
+        <li>Kommentare</li>
+       </ul>
+      <br />
+      siehe <a href="https://palme.iicm.tugraz.at/wiki/ESP/CS">https://palme.iicm.tugraz.at/wiki/ESP/CS</a>
+     </article>
+
+    
     <article>
-      <h3>Condingstandard 2 - Besser so!</h3>
-      <pre>
+      <h3>Codingstandard 2 - Besser so!</h3>
+      <pre style="margin: 4em 2em;">
 if (age >= 18 && well_dressed && money >= 100)
 {
   entry = TRUE;
@@ -219,6 +238,44 @@ else
       </pre>
     </article>
     
+    
+    
+        <article>
+     <h2>HW1 Besprechung</h2>
+    </article>
+    
+    <article>
+     <h3>Gut oder schlecht?</h3>
+     <img src="images/good1.png" width="95%" />
+    </article>
+ 
+    <article>
+     <h3>Gut oder schlecht?</h3>
+     <img src="images/bad1.png" width="95%" />
+    </article>
+
+ 
+    <article>
+     <h3>Gut oder schlecht?</h3>
+     <img src="images/ok1.png" width="95%" />
+    </article>
+    
+    <article>
+     <h3>Gut oder schlecht?</h3>
+     <img src="images/archive_bad.png" width="95%" />
+    </article>
+    
+    
+      <article>
+      <h3>Variablen</h3>
+      <p>Eine Variable ist eine Speicherstellen im Arbeitsspeicher, die einen Wert eines bestimmten Typs speichern kann.</p>
+      <ul>
+       <li>Definition einer Variable vom Typ <code>int</code> mit <pre class="compact">int age = 20;</pre></li>
+       <li>Zuweisen eines neuen Wertes <pre class="compact">age = 21;</pre></li>
+       <li>Den Wert um 3 erh&ouml;hen <pre class="compact">age = age + 3;</pre></li>
+       <li>Ausgabe des Wertes <pre class="compact">printf("%d\n", age);</pre>
+      </ul>
+    </article>
     
        <article>
     <h3>Variablen</h3>
@@ -545,82 +602,24 @@ else
 </article>
     
 
-        <article>
-     <h2>HW1 Besprechung</h2>
-    </article>
     
-    <article>
-     <h3>Gut oder schlecht?</h3>
-     <img src="images/good1.png" width="95%" />
-    </article>
- 
-    <article>
-     <h3>Gut oder schlecht?</h3>
-     <img src="images/bad1.png" width="95%" />
-    </article>
-
- 
-    <article>
-     <h3>Gut oder schlecht?</h3>
-     <img src="images/ok1.png" width="95%" />
-    </article>
-    
-    <article>
-     <h3>Gut oder schlecht?</h3>
-     <img src="images/archive_bad.png" width="95%" />
-    </article>
-    
-    
-         <article>
-       <h3>R&auml;tsel</h3>
-       <h4>Was ist die Ausgabe?</h4>
-       <pre>...
-int a = 0;
-int b = 0;
-if(a == 0 || b++) 
+   <article>
+     <h3>Abfragen</h3>
+     <ul>
+      <li>Code wird nur dann ausgef&uuml;hrt wenn eine bestimmte Bedingung erf&uuml;llt ist.</li>
+      <li>Form: <pre class="compact">
+if(bedingung)
 {
-  printf("b ist %d\n", b);
+ // wird ausgef&uuml;hrt wenn die Bedingung er&uuml;llt ist
 }
-...</pre>
-     </article>
-
-     
-     <article>
-      <h4>Wo ist der Fehler?</h4>
-<pre>
-...
-int a = 1;
-int b = 2;
-
-if(a &amp; b) 
+else
 {
-  printf("a and b are not 0\n");
-} 
-else 
-{
-  printf("a or b is 0\n");
-}
-...
-</pre>
-     </article>
-     
-     
-     <article>
-      <h4>Klammern vergessen</h4>
-<pre>...
-int a = 2;
-if(a == 2)
-  printf("a = 2!\n");
-  return 0;
-printf("a ist nicht 2!\n");
-...</pre>
-     </article>
-     
-    
-    <article class="nobackground" style="padding: 20px;">
-      <iframe style="height: 100%;" src="http://blockly-demo.appspot.com/blockly/demos/maze/index.html"></iframe>
-    </article>
-    
+ // wird ausgef&uuml;hrt wenn die Bedingung <strong>nicht</strong> erf&uuml;llt ist
+}</pre>
+     <li>Als Bedingung wird meistens ein Vergleich verwendet (z.B. <code>age > 18</code>)</li>
+   </article>
+
+   
     <article>
     <div class="codeAnimator">
 <table class="ptr_table_format"><tr><td>
@@ -713,10 +712,37 @@ printf("a ist nicht 2!\n");
 </tr></table>
 </div>
     </article>
+
+
+
+   <article>
+    <h3>Schleifen</h3>
+    <ul>
+     <li>Schleifen wiederholen einen Codeteil (Block) solange eine Bedingung erf&uuml;llt ist</li>
+     <li>Arten von Schleifen: <code>for</code>, <code>while</code>, <code>do</code> (<code>if</code> <strong> ist keine Schleife!</strong>)</li>
+     <li><pre class="compact" style="font-size: 50%;">
+#include &lt;stdio.h>
+int main() 
+{
+  int beer = 99;
+  while(beer > 0)
+  {
+    printf("%d bottles of beer on the wall, %d bottles of beer.\n", beer, beer);
+    beer = beer - 1;
+    printf("Take one down and pass it around, %d bottles of beer on the wall.\n", beer);
+  }
+  printf("No more bottles of beer on the wall, no more bottles of beer.\n");
+  return 0;
+}
+</pre>
+   </article>
+
+       
+    <article class="nobackground" style="padding: 20px;">
+      <iframe style="height: 100%;" src="http://blockly-demo.appspot.com/blockly/demos/maze/index.html"></iframe>
+    </article>
     
-    
-    <object name="foo" type="text/html" data="hw1.inc"/>
-    
+       
         <article>
       <h3>Abgabe</h3>
       <ul>
