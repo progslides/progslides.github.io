@@ -736,7 +736,66 @@ int main()
 }
 </pre>
    </article>
+    <article>
+      <h3>For-Schleife</h3>
+    <pre class="run">/* For-Loop example */
+#include &lt;stdio.h&gt;
 
+int main()
+{
+  int number_of_students = 20;
+  int student_id = 0;
+  
+  //Init, Condition
+  for (student_id = 1; student_id < number_of_students; student_id++) 
+  {
+    printf("Student-ID: %d\n", student_id);
+    //Step
+  }
+  return 0;
+}
+</pre>
+    </article>
+    <article>
+      <h3>While-Schleife</h3>
+    <pre class="run">/* While-Loop example */
+#include &lt;stdio.h&gt;
+
+int main()
+{
+  int number_of_students = 20;
+  
+  int student_id = 1; //Init
+  while(student_id < number_of_students) //Condition
+  {
+    printf("Student-ID: %d\n", student_id);
+    student_id++; //Step
+  }
+  return 0;
+}
+</pre>
+    </article>
+	<article>
+      <h3>While-Schleife</h3>
+    <pre class="run">/* While-Loop example 2 */
+#include &lt;stdio.h&gt;
+
+int main()
+{
+  int max_value = 100;
+  int current_value = 1;
+  int add_value = 2;
+  int iterations = 0; //Init
+  while(current_value < max_value) //Condition
+  {
+    current_value += add_value;
+    iterations++; //Step
+  }
+  printf("Iterations: %d\n", iterations);
+  return 0;
+}
+</pre>
+    </article>
        
     <article class="nobackground" style="padding: 20px;">
       <iframe style="height: 100%;" src="http://blockly-demo.appspot.com/blockly/demos/maze/index.html"></iframe>
