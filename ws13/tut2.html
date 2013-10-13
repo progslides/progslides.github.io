@@ -3,7 +3,6 @@
   <head>
     <title>Tutorium #1</title>
     <meta charset='utf-8'>
-    <script src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
     <script src="js/code_animator.js"></script>
     <script src="slides.js"></script>
     <link rel="stylesheet" type="text/css" href="css/code_animator.css">
@@ -73,6 +72,8 @@
       font-size: .6em;
       padding: .5em;
       font-family: monospace;
+      white-space: pre;
+      overflow: auto;
     }
   .pagenum {
     position: absolute;
@@ -85,6 +86,19 @@
   article pre {
     white-space: pre !IMPORTANT;
   }
+  
+  .stdout {
+    background-color: #fefefe;
+    border: 2px inset #ddd;
+    color: #000;
+    font-family: monospace;
+    font-size: 110%;
+    line-height: 1.1em;
+    padding: 18px;
+    margin: 18px;
+    text-align: left;
+  }
+  
   </style>
        <style media="print">
          @page {
@@ -325,7 +339,9 @@ else
  </table>
 </div>
 <div class="code_4">
- <p class="stdout">I have 5 apples.</p>
+ <table class="ptr_table">
+  <tr><th><p class="stdout">I have 5 apples.</p></th></tr>
+ </table>
 </div>
 <div class="code_5">
  <table class="ptr_table">
@@ -688,14 +704,9 @@ else
 </div>
 
 <div class="code_5">
- <table class="ptr_table">
-  <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
-  <tr><th>0x1004</th><td></td></tr>
-  <tr><th>0x1008</th><td></td></tr>
-  <tr><th>0x100C</th><td></td></tr>
-  <tr><th>0x1010</th><td></td></tr>
-  <tr><th>0x1014</th><td></td></tr>
- </table>
+<table class="ptr_table">
+ <tr><th><p class="stdout">Zutritt verweigert!</p></th></tr>
+</table>
 </div>
 
 <div class="code_6">

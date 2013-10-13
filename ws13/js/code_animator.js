@@ -28,9 +28,15 @@ function animateCode() {
                 }
               }
             }
-            code[k] = code[k].substring(1).replace(" ", "&nbsp;");
+            code[k] = code[k].substring(1); //.replace(" ", "&nbsp;");
+            var prae = "";
+            for(var idx = 0; idx < code[k].length; idx++) {
+              if(code[k][idx] != ' ') break;
+              prae += "&nbsp;";
+            }
+            
             var tr_id = " id=\"ca_" + id + "_" + state + "\" ";
-            if(code[k].length > 0) table += "<tr><td" + ((state != ' ') ? tr_id : "") + (state == 1 ? " class=\"code_animator_active\" " : "") + ">" + prettyPrintOne(code[k], "c", 0) + "</td></tr>";
+            if(code[k].length > 0) table += "<tr><td" + ((state != ' ') ? tr_id : "") + (state == 1 ? " class=\"code_animator_active\" " : "") + ">" + prae + prettyPrintOne(code[k], "c", 0) + "</td></tr>";
           }
           table += "</table>";
           table += "<input type=\"button\" value=\"&laquo; back\" onclick=\"animateCodeStep(" + id + ", -1);\" class=\"code_animator_button\">";
