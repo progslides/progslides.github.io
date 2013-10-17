@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tutorium #3</title>
+    <meta charset='utf-8'>
+    <script src="js/code_animator.js"></script>
+    <script src="slides.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/code_animator.css">
+
+  <style>
+    .slides.template-tugraz > article:not(.nobackground):not(.biglogo) {
+      background: #fff url(tugraz.gif) 710px 615px no-repeat;
+    }
+    .slides.template-tugraz > article {
+      color: #222;
+    }
+
+    table.dates td {
+      padding: .1em 0;
+      border: none;
+    }
+    table.dates {
+      margin-top: 20px;
+    }
+    strong {
+      color: #ee1952;
+      font-style: none;
+      font-weight: bold;
+    }
+    span.meta, p.meta {
+      font-size: .8em;
+      color: #555;
+    }
+    p.meta {
+      text-align: right;
+      margin: 0 0 .5em;
+    }
+    ul.compact li {
+      margin-bottom: .2em;
+    }
+    pre.compact {
+      margin: .5em 0
+    }
+    a.runbtn {
+      color: #ee1952;
+      display: block;
+      position: relative;
+      float: right;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .6em;
+      color: #666;
+      padding: 0 .5em;
+      color: #ee1952;
+      top: 2.5em;
+      margin-right: .5em;
+    }
+    a.runbtn:visited {
+      color: #ee1952;
+    }
+    #runoutput {
+      background: #FFFFD8;
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 10%;
+      right: 10%;
+      border: 1px solid #666;
+      -moz-box-shadow: 0 0 15px #888;
+      -webkit-box-shadow: 0 0 15px#888;
+      box-shadow: 0 0 15px #888;
+      font-size: .6em;
+      padding: .5em;
+      font-family: monospace;
+      white-space: pre;
+      overflow: auto;
+    }
+  .pagenum {
+    position: absolute;
+    right: 1.8em;
+    top: .8em;
+    color: #888;
+    font-size: .6em;
+    z-index: -5;
+  }
+  article pre {
+    white-space: pre !IMPORTANT;
+  }
+  
+  .stdout {
+    background-color: #fefefe;
+    border: 2px inset #ddd;
+    color: #000;
+    font-family: monospace;
+    font-size: 110%;
+    line-height: 1.1em;
+    padding: 18px;
+    margin: 18px;
+    text-align: left;
+  }
+  
+  .pre-small {
+    white-space: pre;
+    font-family: Monospace, 'Times New Roman';
+    font-size: 0.6em;
+    line-height: 1em;
+  }
+  
+  .mark {
+    background: #ff8;
+border: 1px solid #cc0;
+padding: 1px 2px;
+color: black;
+  }
+  
+  </style>
+       <style media="print">
+         @page {
+            size: A4 landscape;
+             @top-right {
+                content: "Page " counter(page);
+             }
+         }
+          article {
+            page-break-after: always;
+            margin: auto;
+          }
+          article.next, article.past {
+            display: block;
+          }
+          body {
+              display: block !important;
+              font-family: 'Open Sans', Arial, sans-serif;
+              font-size: 1.5em;
+          }
+      </style>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script type="text/javascript">
+        window.addEventListener('load', function(){
+            var link = document.getElementsByTagName('link');
+            link[link.length-1].setAttribute ("media","screen");
+        });
+
+        $(document).ready(function() {
+        var total = $('article').length;
+        $('article').each(function(i, slide) {
+         $(slide).append('<div class="pagenum">'+ (i+1) + ' / ' + total + '</div>');
+       });
+          $('pre.run').each(function(i, source) {
+            $('<a class="runbtn" href="#run">Run</a>').insertBefore(source)
+            .click(function() {
+              $('#runoutput').remove();
+              var out = $('<div id="runoutput"></div>').insertAfter(source)
+                .text('Waiting for remote server...');
+
+              $.ajax("http://cbuild.tux21b.org/run", {
+                data: {"source": $(source).text()},
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                  out.empty();
+                  if (data.error) {
+                    $('<div></div>').text(data.error).appendTo(out);
+                  }
+                  $('<div></div>').text(data.output).appendTo(out);
+                },
+                error: function() {
+                  out.empty();
+                  $('<div></div>').text("Error communicating with remote server.").appendTo(out);
+                }
+              });
+              return false;
+            });
+          });
+          $(document).click(function() {
+            $('#runoutput').remove();
+          });
+        });
+        
+        window.addEventListener("load", function() {
+          animateCode();
+        });
+        </script>
+
+
+    </head>
+
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-tugraz'>
+     <article>
+        <h1>
+          Tutorium #2
+        </h1>
+        <p>
+          Einführung in die (strukturierte) Programmierung<br><br>
+      Gruppe 3 – Michael Schwarz
+          <small><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></small><br />
+      Gruppe 5 – Jörg Müller
+          <small><a href="mailto:prog-tutor-joerg@iicm.tugraz.at">prog-tutor-joerg@iicm.tugraz.at</a></small><br />
+      Gruppe 6 – Christoph Hack
+          <small><a href="mailto:prog-tutor-hack@iicm.tugraz.at">prog-tutor-hack@iicm.tugraz.at</a></small><br />
+      Gruppe 8 – Anja Karl
+          <small><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></small><br />
+          Gruppe 9 – Manuel Weber
+          <small><a href="mailto:prog-tutor-weber@iicm.tugraz.at">prog-tutor-weber@iicm.tugraz.at</a></small><br/>
+      
+        </p>
+      </article>
+     
+     
+        <article>
+      <h3>Tutoriumsinhalt</h3>
+    <ul>
+    <li>HW2 Besprechung</li>
+    <li>Testreports</li>
+    <li>Funktionen</li>
+    <li>Bitoperationen</li>
+    <li>Bithacking</li>
+    <li>HW3</li>
+    </ul>
+    </article>
+    
+     <article>
+      <h3>HW2 Besprechung</h3>
+     </article>
+
+      <article>
+      <h3>Funktionen</h3>
+      <pre>
+&lt;Rueckgabewert-Typ> Funktion-Name (&lt;Parameter1>, &lt;Parameter2>...)
+{
+  // Code 
+  return &lt;Rueckgabewert> 
+}
+
+int main()
+{
+  // Aufruf:
+  &lt;Rueckgabewert-Typ> Ergebnis;
+  Ergebnis = Funktion-Name(&lt;Parameter1>, &lt;Parameter2>...);
+} </pre>
+
+      <h4>R&uuml;ckgabewert der <code>main</code>-Funktion anzeigen</h4>
+<p class="stdout">
+> echo $?<br />
+0
+</p>
+      </article>
+      
+     <article>
+      <h4>What does the Palme say?</h4>
+     
+<p class="pre-small">
+=====================================================================================
+TESTCASES
+
+testcase #1 [FAILED]
+  there were 1 chance(s) to pass testcase
+
+CHANCE #1
+  description:
+    check whether output is correct
+  summary:
+    [FAILED] return check - ref: 0 user: 255
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+
+-------------------------------------------------------------------------------------
+===================================================================================== 
+</p>
+      <img src="images/fu.png" style="position: absolute; right: 40px; bottom: 20px;"/>
+
+     </article>
+     
+     <article>
+     <h3>Und hier?</h3>
+<p class="pre-small">
+=====================================================================================
+TESTCASES
+
+testcase #1 [FAILED]
+  there were 1 chance(s) to pass testcase
+
+CHANCE #1
+  description:
+    check whether output is correct
+  summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+    #0: 6a7
+    #0: > 1915657434 * 8
+
+-------------------------------------------------------------------------------------
+===================================================================================== 
+</p>
+     </article>
+     
+     <article>
+     <h3>Die magischen Codes</h3>
+     <ul>
+      <li>Was bedeuten die Codes wie <code class="mark">6a7</code>, <code class="mark">1,6c1,6</code>, <code class="mark">6d5</code>?</li>
+      <li>Am Testsystem werden die Ausgabe eures Programms mit der korrekten Ausgabe verglichen (mit <code>diff</code>).</li>
+      <li>Die Codes geben an, was an der Musterausgabe ge&auml;ndert werden m&uuml;sste, um eure Ausgabe zu erhalten</li>
+      <li>Es gibt dabei die Codes <code class="mark">a</code> (append), <code class="mark">d</code> (delete) und <code class="mark">c</code> (change)</li>
+     </ul> 
+     </article>
+     
+     <article>
+      <h3>Beispiel</h3>
+        <ul>
+           <li><code class="mark">6a7</code>: Nach der 6. Zeile der Musterausgabe, m&uuml;sste die folgende 7. Zeile angeh&auml;ngt werden (Zeile folgt). Das heißt, ihr gebt dieses Zeile zuviel aus</li>
+           <li><code class="mark">6d5</code>: Die 6. Zeile der Musterausgabe (Zeile folgt) m&uuml;sste gel&ouml;scht werden. Das heißt, ihr gebt eine Zeile nicht aus, obwohl ihr solltet</li>
+           <li><code class="mark">2c2</code>: Die 2. Zeile der Musterausgabe stimmt nicht mit eurer 2. Zeile &uuml;berein, daraufhin folgt die Zeile der Musterausgabe und eure Zeile</li>
+        </ul>
+     </article>
+     
+      <article>
+       <h3>HW2 mit Funktionen</h3>
+      </article>
+     
+        <article>
+      <h3>Bitoperationen</h3>
+      <ul>
+       <li>Verkn&uuml;pfen Daten bitweise</li>
+       <li>Erfordern zwei Operanden (Ausnahme: NOT)</li>
+       <li>AND (<code>&amp;</code>), OR (<code>|</code>), XOR (<code>^</code>)</li>
+       <li>Left Shift (<code>&lt;&lt;</code>), Right Shift (<code>&gt;&gt;</code>)</li>
+       <li>NOT (<code>~</code>)</li>
+      </ul>
+    </article>
+    
+    <article>
+     <h3>Bitoperationen</h3>
+     <h4>AND ... &amp;</h4>
+     <table class="middle">
+      <tr><td>&amp;</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>1</td><td>0</td></tr>
+      <tr><th>0</th><td>0</td><td>0</td></tr>
+     </table>
+
+     <h4>OR ... |</h4>
+     <table class="middle">
+      <tr><td>|</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>1</td><td>1</td></tr>
+      <tr><th>0</th><td>1</td><td>0</td></tr>
+     </table>
+    </article>
+    
+    <article>
+     <h3>Bitoperationen</h3>
+     <h4>XOR ... ^</h4>
+     <table class="middle">
+      <tr><td>^</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>0</td><td>1</td></tr>
+      <tr><th>0</th><td>1</td><td>0</td></tr>
+     </table>
+
+     <h4>NOT ... ~</h4>
+     <table class="middle">
+      <tr><td> </td><th>1</th><th>0</th></tr>
+      <tr><th>~</th><td>0</td><td>1</td></tr>
+     </table>
+    </article>
+    
+    
+    <article>
+     <h3>Bitoperationen</h3>
+     <h4>Shift Left ... &lt;&lt;</h4>
+     Verschiebt die Bits um <i>n</i> Stellen nach links<br/>
+     Beispiel: 9 ( = 0000 1001<sub>b</sub>) &lt;&lt; 1 = 18 ( = 0001 0010<sub>b</sub>)
+
+     <h4>Shift Right ... &gt;&gt;</h4>
+     Verschiebt die Bits <i>n</i> Stellen nach rechts<br/>
+     Beispiel: 27 ( = 0001 1011<sub>b</sub>) >> 2 = 6 ( = 0000 0110<sub>b</sub>)
+    </article>
+    
+    
+    <article>
+      <h3>Bitoperation - Wozu?</h3>
+      <ul>
+        <li>Setzen von einzelnen Bits</li>
+        <li>L&ouml;schen von einzelnen Bits</li>
+        <li>Extrahieren von Bits</li>
+        <li>Potenzen von 2 schnell berechnen</li>
+        <li>Extrahieren von Teilen eines Bytes</li>
+        <li>Tauschen von Bytes</li>
+        <li>Bitfelder</li>
+      </ul>
+    
+    </article>
+     
+     
+    <article>
+      <h3>Bitmasken Beispiel</h3>
+      <h4>Bitfeld</h4>
+<pre class="compact run">
+#include &lt;stdio.h>
+int main()
+{
+  unsigned char lampen_zustand = 0; // 8 Zust&auml;nde (Lampen)
+  // Lampe 1 einschalten
+  lampen_zustand |= 1;
+  // Lampen 5-8 ausschalten
+  lampen_zustand &amp;= 15;
+  // Lampe 5 umschalten
+  lampen_zustand ^= 16;
+  // Zustand ausgeben
+  int lampe;
+  for(lampe = 0; lampe &lt; 8; lampe++) 
+  {
+    printf("Lampe %d: %s\n", lampe + 1, 
+      lampen_zustand &amp; (1 &lt;&lt; lampe) ? "ein" : "aus");
+  }
+}
+</pre>
+    </article>
+    
+    
+    <article>
+      <h3>Bitmasken Beispiel</h3>
+    
+      <h4>Farbe in RGBA, einzelne Farbe extrahieren</h4>
+      
+      <h4>Byte-Reihenfolge</h4>
+      
+      <h4>Hexadezimal Ausgabe</h4>
+    </article>
+
+    
+    
+     <article class="nobackground" style="padding: 20px;">
+      <h3>Bitmasken</h3>
+      <iframe src="bitmask/bitmask.html" height="100%" style="border: 0px;"></iframe> 
+     </article>
+
+    <article>
+     <h2>Bithacking</h2>
+    </article>
+    
+    <article>
+      <pre>
+if((value &amp; (value - 1) == 0)
+{
+  printf("Wann werde ich ausgef&uuml;hrt?");
+}
+      </pre>
+    </article>
+    
+    
+    <article>
+<pre>
+a = a^b;
+b = b^a;
+a = a^b;</pre>
+    </article>
+    
+    <article>
+<pre>
+int log = 0;
+while(value > 0)
+{
+  value = value >> 1;
+  log++;
+}</pre>
+
+
+<a href="http://graphics.stanford.edu/~seander/bithacks.html">http://graphics.stanford.edu/~seander/bithacks.html</a>
+    </article>
+    
+    <article>
+     <h3>HW3</h3>
+    </article>
+    
+        <article>
+      <h3>Abgabe</h3>
+      <ul>
+        <li>bis Mittwoch, 23.10.</li>
+        <li><strong>Deadline 19:00</strong></li>
+      </ul>
+
+      <h2>Viel Erfolg bei HW3</h2>
+    </article>
+    
+    
+  </section>
+  </body>
+</html>
+

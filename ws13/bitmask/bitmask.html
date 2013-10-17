@@ -1,0 +1,77 @@
+<html>
+<head>
+ <title>Interactive Bitmask</title>
+ <script src="bitmask.js"></script>
+ <style type="text/css">
+ 
+  .bit_off, .bit_on, .button_active, .button_inactive {
+   display: inline;
+   background-color: #500000;
+   color: white;
+   font-weight: bold;
+   padding: 8px;
+   margin: 8px;
+   font-family: Verdana;
+   cursor: hand;
+   border-radius: 10px;
+   font-size: 200%;
+  }
+  
+  .bit_on {
+    background-color: #e00000 !important;
+  }
+  
+  .button_active {
+    background-color: #000080 !important;
+    border: 1px solid #0000f0;
+    color: yellow;
+    background:linear-gradient(top,#000060 0%,#000080 100%);
+    background:-webkit-linear-gradient(top,#000060 0%,#0000a0 100%);
+  }
+  
+  .button_inactive {
+    background-color: #0000e0 !important;
+    border: 1px solid #0000d0;
+    background:linear-gradient(top,#000080 0%,#000060 100%);
+    background:-webkit-linear-gradient(top,#0000a0 0%,#000060 100%);
+  }
+  
+  table tr td {
+    padding-bottom: 16px;  
+    padding-top: 16px;
+  }
+  
+  input[type="text"] {
+    border: 1px solid #c0c0c0;
+    font-size: 200%;
+    width: 4em;
+    border-radius: 10px;
+    text-align: center;
+    margin-right: 16px;
+  }
+  
+ </style>
+</head>
+<body onload="init(8);">
+<center>
+ <table>
+  <tr><td colspan="3" align="right">
+    <div class="button_active" id="op_and" onclick="changeOperation('and');">AND (&amp;)</div>
+    <div class="button_inactive" id="op_or" onclick="changeOperation('or');">OR (|)</div>
+    <div class="button_inactive" id="op_xor" onclick="changeOperation('xor');">XOR (^)</div>
+  </td></tr>
+  <tr><td colspan="3">&nbsp;</td></tr>
+
+  <tr><td><input type="text" onkeyup="setValueAndUpdate('first_binary_', this.value);" id="first_binary_nr" value="0"></td><td id="first_binary"></td><td><div class="button_inactive" onmousedown="this.className='button_active';" onmouseup="this.className='button_inactive';" onclick="invert('first_binary_');">~</div></td></tr>
+  <tr><td><input type="text" onkeyup="setValueAndUpdate('second_binary_', this.value);" id="second_binary_nr" value="0"></td><td id="second_binary"></td><td><div class="button_inactive" onmousedown="this.className='button_active';" onmouseup="this.className='button_inactive';" onclick="invert('second_binary_');">~</div>
+  </td></tr>
+  <tr><td>
+   <input type="text" id="result_binary_nr" value="0" readonly="readonly" style="background-color: #efefef;">
+  </td><td style="border-top: 1px solid black;" id="result_binary"></td><td>
+   
+  </td></tr>
+ </table>
+</body>
+</center>
+</html>
+ 
