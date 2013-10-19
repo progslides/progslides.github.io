@@ -248,8 +248,39 @@ int main()
 </p>
       </article>
       
+           <article>
+     <h3>What does the Palme say? - Die magischen Codes</h3>
+     <ul>
+      <li>Was bedeuten die Codes wie <code class="mark">6a7</code>, <code class="mark">1,6c1,6</code>, <code class="mark">6d5</code>?</li>
+      <li>Am Testsystem werden die Ausgabe eures Programms mit der korrekten Ausgabe verglichen (mit <code>diff</code>).</li>
+      <li>Die Codes geben an, was an der Musterausgabe ge&auml;ndert werden m&uuml;sste, um eure Ausgabe zu erhalten</li>
+      <li>Es gibt dabei die Codes <code class="mark">a</code> (append), <code class="mark">d</code> (delete) und <code class="mark">c</code> (change)</li>
+     </ul> 
+     <p class="pre-small">
+CHANCE #1
+  description:
+    check whether output is correct
+  summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        < REFERENCE
+        > USER CREATED
+
+    #0: 6d5 </p>
+     </article>
+     
      <article>
-      <h4>What does the Palme say?</h4>
+      <h3>Beispiel</h3>
+        <ul>
+           <li><code class="mark">6a7</code>: Nach der 6. Zeile der Musterausgabe, m&uuml;sste die folgende 7. Zeile angeh&auml;ngt werden (Zeile folgt). Das heißt, ihr gebt dieses Zeile zuviel aus</li>
+           <li><code class="mark">6d5</code>: Die 6. Zeile der Musterausgabe (Zeile folgt) m&uuml;sste gel&ouml;scht werden. Das heißt, ihr gebt eine Zeile nicht aus, obwohl ihr solltet</li>
+           <li><code class="mark">2c2</code>: Die 2. Zeile der Musterausgabe stimmt nicht mit eurer 2. Zeile &uuml;berein, daraufhin folgt die Zeile der Musterausgabe und eure Zeile</li>
+        </ul>
+     </article>
+     
+     <article>
+      <h4>Was stimmt hier nicht?</h4>
      
 <p class="pre-small">
 =====================================================================================
@@ -304,23 +335,90 @@ CHANCE #1
      </article>
      
      <article>
-     <h3>Die magischen Codes</h3>
-     <ul>
-      <li>Was bedeuten die Codes wie <code class="mark">6a7</code>, <code class="mark">1,6c1,6</code>, <code class="mark">6d5</code>?</li>
-      <li>Am Testsystem werden die Ausgabe eures Programms mit der korrekten Ausgabe verglichen (mit <code>diff</code>).</li>
-      <li>Die Codes geben an, was an der Musterausgabe ge&auml;ndert werden m&uuml;sste, um eure Ausgabe zu erhalten</li>
-      <li>Es gibt dabei die Codes <code class="mark">a</code> (append), <code class="mark">d</code> (delete) und <code class="mark">c</code> (change)</li>
-     </ul> 
+     <h3>Findet den Fehler...</h3>
+     <p class="pre-small">
+OUTPUT
+    Archive:  Term_6/Course_11/Assignment_58/Group_7642/Submission_1_hw1a.zip
+      inflating: Course_11/Assignment_58/Group_7642/14960/1381852533/hw1a/hw1a.c
+    Returnvalue was: 0 - should be 0
+=====================================================================================
+CHECK
+
+check #1
+  Result:
+    [FAILED] File hw1a.c not found
+=====================================================================================
+COMPILE
+
+executable #1
+  using file_set #1
+  return was: 1 - should be 0
+
+OUTPUT
+  gcc44: hw1a.c: No such file or directory
+  gcc44: no input files
+</p>
      </article>
      
-     <article>
-      <h3>Beispiel</h3>
-        <ul>
-           <li><code class="mark">6a7</code>: Nach der 6. Zeile der Musterausgabe, m&uuml;sste die folgende 7. Zeile angeh&auml;ngt werden (Zeile folgt). Das heißt, ihr gebt dieses Zeile zuviel aus</li>
-           <li><code class="mark">6d5</code>: Die 6. Zeile der Musterausgabe (Zeile folgt) m&uuml;sste gel&ouml;scht werden. Das heißt, ihr gebt eine Zeile nicht aus, obwohl ihr solltet</li>
-           <li><code class="mark">2c2</code>: Die 2. Zeile der Musterausgabe stimmt nicht mit eurer 2. Zeile &uuml;berein, daraufhin folgt die Zeile der Musterausgabe und eure Zeile</li>
-        </ul>
+          <article>
+          <h3>... noch mehr Fehler ...</h3>
+     <p class="pre-small">
+summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        < REFERENCE
+        > USER CREATED
+
+    #0: 1,7c1,7
+    #0: <    xxxxxxx * 2
+    #0: <    xxxxxxx * 3
+    #0: <    xxxxxxx * 4
+    #0: <   xxxxxxxx * 5
+    #0: <  xxxxxxxxx * 6
+    #0: <  xxxxxxxxx * 7
+    #0: < An overflow has occurred!
+    #0: ---
+    #0: > xxxxxxx * 2
+    #0: > xxxxxxx * 3
+    #0: > xxxxxxx * 4
+    #0: > xxxxxxxx * 5
+    #0: > xxxxxxxxx * 6
+    #0: > xxxxxxxxx * 7
+    #0: > An overflow has occured! 
+</p>
      </article>
+     
+               <article>
+               <h3>Auch hier gibt es einen Fehler!</h3>
+     <p class="pre-small">
+summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        < REFERENCE
+        > USER CREATED
+
+    #0: 1,6c1,6
+    #0: <    xxxxxxx * 2
+    #0: <    xxxxxxx * 3
+    #0: <    xxxxxxx * 4
+    #0: <   xxxxxxxx * 5
+    #0: <  xxxxxxxxx * 6
+    #0: <  xxxxxxxxx * 7
+
+    #0: ---
+    #0: >    xxxxxxx * 2 
+    #0: >    xxxxxxx * 3 
+    #0: >    xxxxxxx * 4 
+    #0: >   xxxxxxxx * 5 
+    #0: >  xxxxxxxxx * 6 
+    #0: >  xxxxxxxxx * 7 
+
+</p>
+     </article>
+     
+
      
       <article>
        <h3>HW2 mit Funktionen</h3>
