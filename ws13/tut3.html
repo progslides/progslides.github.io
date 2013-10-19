@@ -212,41 +212,15 @@ color: black;
         <article>
       <h3>Tutoriumsinhalt</h3>
     <ul>
-    <li>HW2 Besprechung</li>
     <li>Testreports</li>
+    <li>HW2 Besprechung</li>
     <li>Funktionen</li>
     <li>Bitoperationen</li>
     <li>Bithacking</li>
     <li>HW3</li>
     </ul>
     </article>
-    
-     <article>
-      <h3>HW2 Besprechung</h3>
-     </article>
 
-      <article>
-      <h3>Funktionen</h3>
-      <pre>
-&lt;Rueckgabewert-Typ> Funktion-Name (&lt;Parameter1>, &lt;Parameter2>...)
-{
-  // Code 
-  return &lt;Rueckgabewert> 
-}
-
-int main()
-{
-  // Aufruf:
-  &lt;Rueckgabewert-Typ> Ergebnis;
-  Ergebnis = Funktion-Name(&lt;Parameter1>, &lt;Parameter2>...);
-} </pre>
-
-      <h4>R&uuml;ckgabewert der <code>main</code>-Funktion anzeigen</h4>
-<p class="stdout">
-> echo $?<br />
-0
-</p>
-      </article>
       
            <article>
      <h3>What does the Palme say? - Die magischen Codes</h3>
@@ -264,7 +238,7 @@ CHANCE #1
     [FAILED] comparing "$STDOUT"
 
   compares:
-        < REFERENCE
+        &lt; REFERENCE
         > USER CREATED
 
     #0: 6d5 </p>
@@ -367,17 +341,17 @@ summary:
     [FAILED] comparing "$STDOUT"
 
   compares:
-        < REFERENCE
+        &lt; REFERENCE
         > USER CREATED
 
     #0: 1,7c1,7
-    #0: <    xxxxxxx * 2
-    #0: <    xxxxxxx * 3
-    #0: <    xxxxxxx * 4
-    #0: <   xxxxxxxx * 5
-    #0: <  xxxxxxxxx * 6
-    #0: <  xxxxxxxxx * 7
-    #0: < An overflow has occurred!
+    #0: &lt;    xxxxxxx * 2
+    #0: &lt;    xxxxxxx * 3
+    #0: &lt;    xxxxxxx * 4
+    #0: &lt;   xxxxxxxx * 5
+    #0: &lt;  xxxxxxxxx * 6
+    #0: &lt;  xxxxxxxxx * 7
+    #0: &lt; An overflow has occurred!
     #0: ---
     #0: > xxxxxxx * 2
     #0: > xxxxxxx * 3
@@ -396,16 +370,16 @@ summary:
     [FAILED] comparing "$STDOUT"
 
   compares:
-        < REFERENCE
+        &lt; REFERENCE
         > USER CREATED
 
     #0: 1,6c1,6
-    #0: <    xxxxxxx * 2
-    #0: <    xxxxxxx * 3
-    #0: <    xxxxxxx * 4
-    #0: <   xxxxxxxx * 5
-    #0: <  xxxxxxxxx * 6
-    #0: <  xxxxxxxxx * 7
+    #0: &lt;    xxxxxxx * 2
+    #0: &lt;    xxxxxxx * 3
+    #0: &lt;    xxxxxxx * 4
+    #0: &lt;   xxxxxxxx * 5
+    #0: &lt;  xxxxxxxxx * 6
+    #0: &lt;  xxxxxxxxx * 7
 
     #0: ---
     #0: >    xxxxxxx * 2 
@@ -417,11 +391,90 @@ summary:
 
 </p>
      </article>
+         
+    
+     <article>
+      <h3>HW2 Besprechung - H&auml;ufige Fehler</h3>
+      <ul>
+       <li>Nur eine Schleife verwendet (Spezifikation: <strong>zwei</strong> Schleifen)</li>
+       <li>Codingstandard (Tabulatoren, Zeile zu lang, Einr&uuml;ckungen, ...)</li>
+       <li>Deutsche Variablennamen und deutsche Kommentare</li>
+       <li>Schlechte Variablennamen (<code>i</code>, <code>tmp</code>, ...)</li>
+       <li>Falsche Overflow Behandlung</li>
+      </ul>
+     </article>
+
+      <article>
+      <h3>HW2 Besprechung - H&auml;ufige Fehler</h3>
+      <ul>
+        <li>Falsche Overflow Behandlung:
+         <ul>
+           <li><pre class="compact">if(number &lt; 0) ...</pre></li>
+           <li><pre class="compact">if((number * counter) &lt; number) ...</pre></li>
+           <li><pre class="compact">if(number > INT_MAX - number) ...</pre></li>
+           <li><pre class="compact">if(number > INT_MAX) ...</pre></li>
+           <li><pre class="compact">if(nubmer * counter >= INT_MAX) ...</pre></li>
+         </ul>        
+        </li>
+        <li>Richtige Overflow Behandlung:
+        <ul>
+          <li><pre class="compact">if(number > INT_MAX / counter) ...</pre></li>
+          <li><pre class="compact">if(((double)number * (double)counter) > INT_MAX) ...</pre></li>
+        </ul>
+        </li>
+    
+      </ul>
+      
+     </article>
      
+     <article>
+      <h3>HW2 Beispiele - Gut oder schlecht?</h3><br />
+      <img src="images/hw2_bad1.png" height="90%" />
+     </article>
+     
+     <article>
+      <h3>HW2 Beispiele - Gut oder schlecht?</h3><br />
+      <img src="images/hw2_bad2.png" height="90%" />
+     </article>
+
+    <article>
+      <h3>HW2 Beispiele - Gut oder schlecht?</h3><br />
+      <img src="images/hw2_good1.png" height="90%" />
+     </article>
+
+    <article>
+      <h3>HW2 Beispiele - Gut oder schlecht?</h3>
+      <img src="images/hw2_bad3.png" height="99%" />
+     </article>
+     
+      <article>
+      <h3>Funktionen</h3>
+      <pre>
+&lt;Rueckgabewert-Typ> Funktion-Name (&lt;Parameter1>, &lt;Parameter2>...)
+{
+  // Code 
+  return &lt;Rueckgabewert> 
+}
+
+int main()
+{
+  // Aufruf:
+  &lt;Rueckgabewert-Typ> Ergebnis;
+  Ergebnis = Funktion-Name(&lt;Parameter1>, &lt;Parameter2>...);
+} </pre>
+
+      <h4>R&uuml;ckgabewert der <code>main</code>-Funktion anzeigen</h4>
+<p class="stdout">
+> echo $?<br />
+0
+</p>
+      </article>
+
 
      
       <article>
        <h3>HW2 mit Funktionen</h3>
+       <h2>Live Demo</h2>
       </article>
      
         <article>
