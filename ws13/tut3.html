@@ -576,13 +576,37 @@ int main()
     
     
     <article>
-      <h3>Bitmasken Beispiel</h3>
+     <h3>Bitmasken Beispiel: RGB</h3><br />
+     <img src="images/rgb_bsp.png" height="90%" />
+    </article>
     
-      <h4>Farbe in RGBA, einzelne Farbe extrahieren</h4>
-      
-      <h4>Byte-Reihenfolge</h4>
-      
-      <h4>Hexadezimal Ausgabe</h4>
+    <article>
+     <h3>Bitmasken Beispiel: Byte-Reihenfolge</h3><br />
+<pre class="compact run">
+#include &lt;stdio.h>
+
+unsigned int swapByteOrder(unsigned int value)
+{
+  value = ((value &lt;&lt; 8) &amp; 0xFF00FF00) |
+          ((value >> 8) &amp; 0xFF00FF); 
+  return (value &lt;&lt; 16) | (value >> 16);
+}
+
+int main()
+{
+  unsigned int value = 0x12345678;
+  
+  printf("value = %x\n", value);
+  printf("swapped value = %x\n", swapByteOrder(value));
+  
+  return 0;
+}
+</pre>
+    
+    </article>
+    <article>
+      <h4>Bitmasken Beispiel: Hexadezimal Ausgabe</h4>
+
     </article>
 
     
