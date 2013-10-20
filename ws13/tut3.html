@@ -607,6 +607,38 @@ int main()
     <article>
       <h4>Bitmasken Beispiel: Hexadezimal Ausgabe</h4>
 
+<pre class="compact run" style="font-size: .5em; line-height: 1.2em">
+#include &lt;stdio.h>
+
+#define BITS_PER_NIBBLE 4
+#define NIBBLE_MASK 0xF
+
+int main()
+{
+  int a_number = 17036401;
+  int index;
+  
+  printf("bin = ");
+  for( index = 32; index > 0; index-- )
+  {
+    printf( "%d", (a_number &amp; (1 &lt;&lt; (index - 1))) ? 1 : 0 );
+    if( (index - 1) % BITS_PER_NIBBLE == 0 )
+      printf(" ");
+  }
+  
+  // This should only demonstrate how to use bit operations.
+  // In practice use %x for hexadecimal output
+  printf("\nhex = ");
+  for( index = 32 / BITS_PER_NIBBLE; index > 0; index-- )
+  {
+    int nibble = (a_number >> ((index - 1) * BITS_PER_NIBBLE)) &amp; NIBBLE_MASK;
+    printf( "%4c ", nibble &lt; 10 ? nibble + '0' : nibble + 'A' - 10 );
+  }
+  
+  return 0;
+}
+</pre>
+      
     </article>
 
     
