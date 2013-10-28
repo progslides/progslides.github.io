@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tutorium #4</title>
+    <meta charset='utf-8'>
+    <script src="js/code_animator.js"></script>
+    <script src="slides.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/code_animator.css">
+
+  <style>
+    .slides.template-tugraz > article:not(.nobackground):not(.biglogo) {
+      background: #fff url(tugraz.gif) 710px 615px no-repeat;
+    }
+    .slides.template-tugraz > article {
+      color: #222;
+    }
+
+    table.dates td {
+      padding: .1em 0;
+      border: none;
+    }
+    table.dates {
+      margin-top: 20px;
+    }
+    strong {
+      color: #ee1952;
+      font-style: none;
+      font-weight: bold;
+    }
+    span.meta, p.meta {
+      font-size: .8em;
+      color: #555;
+    }
+    p.meta {
+      text-align: right;
+      margin: 0 0 .5em;
+    }
+    ul.compact li {
+      margin-bottom: .2em;
+    }
+    pre.compact {
+      margin: .5em 0
+    }
+    a.runbtn {
+      color: #ee1952;
+      display: block;
+      position: relative;
+      float: right;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .6em;
+      color: #666;
+      padding: 0 .5em;
+      color: #ee1952;
+      top: 2.5em;
+      margin-right: .5em;
+    }
+    a.runbtn:visited {
+      color: #ee1952;
+    }
+    #runoutput {
+      background: #FFFFD8;
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 10%;
+      right: 10%;
+      border: 1px solid #666;
+      -moz-box-shadow: 0 0 15px #888;
+      -webkit-box-shadow: 0 0 15px#888;
+      box-shadow: 0 0 15px #888;
+      font-size: .6em;
+      padding: .5em;
+      font-family: monospace;
+      white-space: pre;
+      overflow: auto;
+    }
+  .pagenum {
+    position: absolute;
+    right: 1.8em;
+    top: .8em;
+    color: #888;
+    font-size: .6em;
+    z-index: -5;
+  }
+  article pre {
+    white-space: pre !IMPORTANT;
+  }
+  
+  .stdout {
+    background-color: #fefefe;
+    border: 2px inset #ddd;
+    color: #000;
+    font-family: monospace;
+    font-size: 110%;
+    line-height: 1.1em;
+    padding: 18px;
+    margin: 18px;
+    text-align: left;
+  }
+  
+  .pre-small {
+    white-space: pre;
+    font-family: Monospace, 'Times New Roman';
+    font-size: 0.6em;
+    line-height: 1em;
+  }
+  
+  .mark {
+    background: #ff8;
+border: 1px solid #cc0;
+padding: 1px 2px;
+color: black;
+  }
+  
+  </style>
+       <style media="print">
+         @page {
+            size: A4 landscape;
+             @top-right {
+                content: "Page " counter(page);
+             }
+         }
+          article {
+            page-break-after: always;
+            margin: auto;
+          }
+          article.next, article.past {
+            display: block;
+          }
+          body {
+              display: block !important;
+              font-family: 'Open Sans', Arial, sans-serif;
+              font-size: 1.5em;
+          }
+      </style>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script type="text/javascript">
+        window.addEventListener('load', function(){
+            var link = document.getElementsByTagName('link');
+            link[link.length-1].setAttribute ("media","screen");
+        });
+
+        $(document).ready(function() {
+        var total = $('article').length;
+        $('article').each(function(i, slide) {
+         $(slide).append('<div class="pagenum">'+ (i+1) + ' / ' + total + '</div>');
+       });
+          $('pre.run').each(function(i, source) {
+            $('<a class="runbtn" href="#run">Run</a>').insertBefore(source)
+            .click(function() {
+              $('#runoutput').remove();
+              var out = $('<div id="runoutput"></div>').insertAfter(source)
+                .text('Waiting for remote server...');
+
+              $.ajax("http://cbuild.tux21b.org/run", {
+                data: {"source": $(source).text()},
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                  out.empty();
+                  if (data.error) {
+                    $('<div></div>').text(data.error).appendTo(out);
+                  }
+                  $('<div></div>').text(data.output).appendTo(out);
+                },
+                error: function() {
+                  out.empty();
+                  $('<div></div>').text("Error communicating with remote server.").appendTo(out);
+                }
+              });
+              return false;
+            });
+          });
+          $(document).click(function() {
+            $('#runoutput').remove();
+          });
+        });
+        
+        window.addEventListener("load", function() {
+          animateCode();
+        });
+        
+        function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = 1;
+          container.src = container.src.replace(img_id + ".", new_id + "."); 
+        }
+        </script>
+
+
+    </head>
+
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-tugraz'>
+     <article>
+        <h1>
+          Tutorium #2
+        </h1>
+        <p>
+          Einführung in die (strukturierte) Programmierung<br><br>
+      Gruppe 3 – Michael Schwarz
+          <small><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></small><br />
+      Gruppe 5 – Jörg Müller
+          <small><a href="mailto:prog-tutor-joerg@iicm.tugraz.at">prog-tutor-joerg@iicm.tugraz.at</a></small><br />
+      Gruppe 6 – Christoph Hack
+          <small><a href="mailto:prog-tutor-hack@iicm.tugraz.at">prog-tutor-hack@iicm.tugraz.at</a></small><br />
+      Gruppe 8 – Anja Karl
+          <small><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></small><br />
+          Gruppe 9 – Manuel Weber
+          <small><a href="mailto:prog-tutor-weber@iicm.tugraz.at">prog-tutor-weber@iicm.tugraz.at</a></small><br/>
+      
+        </p>
+      </article>
+     
+     
+        <article>
+      <h3>Tutoriumsinhalt</h3>
+    <ul>
+    <li>HW3 Besprechung</li>
+    <li>Arrays</li>
+    <li>Pointer</li>
+    <li>HW4</li>
+    </ul>
+    </article>
+
+              
+    
+     <article>
+      <h3>HW3 Besprechung - H&auml;ufige Fehler</h3>
+      <ul>
+       <li>Variablennamen <span class="src">A</span>, <span class="src">B</span>, <span class="src">C</span>, <span class="src">D</span></li>
+       <li>Deutsche Variablennamen (<span class="src">netzmaske</span>)</li>
+       <li>Deutsche Kommentare</li>
+       <li>Einr&uuml;ckungen (Codingstandard)</li>
+       <li>Nur die Suffixe 8, 16, 24, 32 beachtet</li>
+       <li>Shift um 32 Bit - undefiniertes Verhalten</li>
+      </ul>
+     </article>
+     
+     <article>
+       <h3>HW3 Falle</h3>
+       <ul>
+        <li>Shiften von <span class="src">signed</span> Variablen</li>
+        <li>Im C Standard nicht definiert was passiert!</li>
+        <li>GCC Verhalten: wenn die Zahl negativ ist, wird mit 1-Bit aufgef&uuml;llt, sonst mit 0-Bit</li>
+        <li>Beispiel:
+        <pre class="compact">
+unsigned char x = 0xf0;
+signed char y = 0xf0;
+x = x >> 4; // x = 0x0f
+y = y >> 4; // y = 0xff
+</pre></li>
+       </ul>
+     </article>
+
+     <!--
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+<div style="overflow: auto; height: 600px;">
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+[...]
+  if (suffix < 8)
+  //a is from network ip2 and host_ip1, b, c and d are from host_ip!
+  {
+    temp_store1 = (host_ip1 >> 24);
+    temp_store2 = (host_ip1 >> 8);
+    a = (network_ip2 + temp_store1);
+    b = ((host_ip1 ^ (temp_store1 << 24)) >> 16);
+    d = ((temp_store2 << 8) ^ host_ip1);
+    c = (((b << 16) | (temp_store1 << 24) | d) ^ host_ip1)%255;
+  }
+  if (8 <= suffix && suffix < 16)
+  /*a is form network_ip2, b is from network ip2 and host_ip1,
+  c and d are from host_ip1*/
+  {
+    temp_store1 = host_ip1 >> 16;
+    a = network_ip2 >> 24;
+    b = ((a << 24)^(network_ip2)) + temp_store1;
+    c = ((host_ip1 ^ (temp_store1 << 16)) >> 8);
+    d = (((temp_store1 << 16) | c) ^ host_ip1)%255;
+  }
+
+  if (16 <= suffix && suffix < 24)
+  /*a and b are from network_ip2, c is from network ip2 and host_ip2,
+  d is from host_ip1*/
+  {
+    temp_store1 = host_ip1 >> 8;
+    a = network_ip2 >> 24;
+    b = (a << 24)^(network_ip2);
+    b = b >> 16;
+    c = ((a << 24) | (b << 16))^(network_ip2);
+    c = c + temp_store1;
+    d = (temp_store1 << 8)^host_ip1;
+  }
+  if (suffix >= 24)
+  /*a, b and c are from network_ip2,
+  d is from network ip2 and host_ip1*/
+  {
+    a = network_ip2 >> 24;
+    b = (a << 24)^(network_ip2);
+    b = b >> 16;
+    c = ((a << 24) | (b << 16))^(network_ip2);
+    c = c >> 8;
+    d = ((a << 24) | (b << 16) | (c << 8))^(network_ip2);
+    d = d + host_ip1;
+  }
+  printf("New IP address: %d.%d.%d.%d/%d\n", a, b, c, d, suffix);
+  return 0;
+[...]
+</pre></div>
+     </article>
+     
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+      <div style="overflow: auto; height: 600px;">
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+#include &lt;stdio.h>
+
+int main()
+{ 
+  #include "input.c"
+  //integer "network_bitmask" is created with a leading 1 bit, so that
+  //shifting it right will always set a 1 at first bit (signed int)
+  int network_bitmask = 0x80000000;
+  int host_bitmask = 0x0;
+  int new_ip = 0x0;
+  
+  //4 variables to isolate the parts of the new ip address,
+  //only needed to print it in the correct form.
+  int a = 0xff000000; 
+  int b = 0x00ff0000;
+  int c = 0x0000ff00;
+  int d = 0x000000ff;
+  
+  //create bitmasks for network and host part
+  network_bitmask = network_bitmask >> ( suffix - 1 );
+  host_bitmask = ~ network_bitmask;
+ 
+  //isolate network and host parts of old ip, and create new one
+  new_ip = (ip_address_2 & network_bitmask ) 
+    | ( ip_address_1 & host_bitmask );
+
+  //isolate first, second, and third octal of ip address.
+  a = ( a & new_ip ) >> 24;
+  b = ( b & new_ip ) >> 16;
+  c = ( c & new_ip ) >> 8;
+  d = d & new_ip;  
+
+  printf("New IP address: %i.%i.%i.%i/%i\n", a, b, c, d, suffix);
+
+  return 0;
+}
+</pre></div>
+     </article>
+
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+<div style="overflow: auto; height: 600px; width: 800px;">
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+#include &lt;stdio.h>
+#include "input.c"
+
+//------------- Function to get a sufix 8,16,24 or 32
+int calcsuffix(int x)
+{
+  while(x % 8 != 0)
+  {
+    x--;
+  }
+  return(x);
+  }
+
+//------------- Main funtcion of the program
+int main()
+{
+  // unsigned int ip11; don't need this because of suffix >= 8
+  unsigned int ip12, ip13, ip14, ip21, ip22, ip23, ip24;
+  int mysuffix;
+
+//---------------------- Filter the ip_adress -------------
+  ip12 = (unsigned int)ip_address_1 << 8;
+  ip12 = ip12 >> (8+16);
+  ip13 = (unsigned int)ip_address_1 << 16;
+  ip13 = ip13 >> (16+8);
+  ip14 = (unsigned int)ip_address_1 << 24;
+  ip14 = ip14 >> (24);
+  ip21 = (unsigned int)ip_address_2 >> 24;
+  ip22 = (unsigned int)ip_address_2 << 8;
+  ip22 = ip22 >> (8+16);
+  ip23 = (unsigned int)ip_address_2 << 16;
+  ip23 = ip23 >> (16+8);
+  ip24 = (unsigned int)ip_address_2 << 24;
+  ip24 = ip24 >> (24);
+
+  mysuffix = calcsuffix(suffix);
+  if(mysuffix == 8)
+  {
+    printf("New IP address: %d.%d.%d.%d/%d\n",ip21,ip12,ip13,ip14,suffix);
+  }
+  if(mysuffix == 16)
+  {
+    printf("New IP address: %d.%d.%d.%d/%d\n",ip21,ip22,ip13,ip14,suffix);
+  }
+  if(mysuffix == 24)
+  {
+    printf("New IP address: %d.%d.%d.%d/%d\n",ip21,ip22,ip23,ip14,suffix);
+  }
+  if(mysuffix == 32)
+  {
+    printf("New IP address: %d.%d.%d.%d/%d\n",ip21,ip22,ip23,ip24,suffix);
+  }
+  return (0);
+}
+</pre></div>
+      </article>
+
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+            <div style="overflow: auto; height: 600px;">
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+#include &lt;stdio.h>
+
+int main()
+{
+  #include "input.c"
+  unsigned int ip1 = ip_address_1;
+  unsigned int ip2 = ip_address_2;
+  unsigned int s = suffix;
+  unsigned int ip3 = 0;
+  unsigned int x = 0;
+  unsigned y = 0;
+  unsigned int A = 0;
+  unsigned int B = 0;
+  unsigned int C = 0;
+  unsigned int D = 0;
+
+  int potenz(int basis, int potenz)
+  {
+    int t, x;
+    x = 1;
+    for (t = 0; t < potenz; t++)
+    {
+      x *= basis;
+    }
+    return x;
+  }
+
+  x = (potenz(2, 32 - s)) - 1;
+  y = (potenz(2, 32) - 1) << (32 - s);
+
+  ip1 = x & ip1;
+  ip2 = y & ip2;
+  ip3 = ip1 + ip2;
+
+  A = ip3 >> 24;
+  B = (ip3 >> 16) & 255;
+  C = (ip3 >>  & 255;
+  D = ip3 & 255;
+
+  printf("New IP address: %d.%d.%d.%d/%d\n", A, B, C, D, s);
+  return 0;
+}</pre></div>
+  </article>
+!-->
+
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+      <img src="images/hw3_bad1.png" height="99%" />
+     </article>
+
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+      <img src="images/hw3_good1.png" height="99%" />
+     </article>
+
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+      <img src="images/hw3_bad2.png" height="99%" />
+     </article>
+
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+      <img src="images/hw3_good2.png" height="99%" />
+     </article>
+
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+      <img src="images/hw3_bad4.png" height="99%" />
+     </article>
+
+     <article>
+      <h3>HW3 Beispiele - Gut oder schlecht?</h3>
+      <img src="images/hw3_bad3.png" height="99%" />
+     </article>
+
+    <article> 
+      <h3>Array</h3>
+      <ul>
+        <li>Hintereinander liegende Daten vom gleichen Typ</li>
+        <li>Gr&ouml;&szlig;e kann nicht mehr verändert werden, muss bei Deklaration bekannt sein</li>
+        <li>Zugriff &uuml;ber [ ]</li>
+        <li>Deklaration: <pre class="compact">&lt;typ&gt; name[&lt;size&gt;];</pre></li>
+        <li>Initialisiertes Array: <pre class="compact">&lt;typ&gt; name[] = {&lt;value1&gt;, &lt;value2&gt;, ...};</pre></li>
+        <li>Zugriff: <pre class="compact">name[&lt;index&gt;] = &lt;value&gt;;</pre></li>
+      </ul>
+    </article>
+
+   <article>
+      <h3>Beispiel</h3>
+
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int fibo[5];
+3  fibo[0] = 1;
+4  fibo[1] = 1;
+5  fibo[2] = fibo[1] + fibo[0];
+6  fibo[3] = fibo[2] + fibo[1];
+7  fibo[4] = fibo[3] + fibo[2];
+   return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv"><em>1</em></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"><em>1</em></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"><em>2</em></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv">2</td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"><em>3</em></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv">2</td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv">3</td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"><em>5</em></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+</tr></table>
+</div>
+   </article>
+
+
+   <article>
+    <h3>Variable-length-Arrays</h3>
+    <ul>
+     <li>GCC akzeptiert Arrays mit variabler L&auml;nge (C99 Standard)</li>
+     <li>Beispiel
+<pre class="compact">
+int size = numberOfHornsOnAUnicorn();
+int array[size];
+</pre></li>
+     <li><strong>Gefährlich</strong> zu verwenden, da diese Arrays am Stack liegen &#8594; normal 8MB maximale Gr&ouml;&szlig;e, kann jedoch auch nur 64kB sein!</li>
+     <li>Ist das Array zu groß, st&uuml;rzt das Programm ohne erkennbare Ursache ab</li>
+     <li>Have fun debugging!</li>
+    </ul>
+    <img src="images/debug.png" width="25%" style="position: absolute; right: 220px; bottom: 10px;">
+   </article>
+   
+      
+   <article>
+    <h3>Array als Funktionsparameter</h3>
+    <ul>
+     <li>Soll ein Array an eine Funktion als Parameter &uuml;bergeben werden gibt es 3 Wege</li>
+    </ul>
+    <ol>
+     <li>Array variabler Gr&ouml;&szlig;e
+<pre class="compact">
+void foo(int bar[]) {
+ [..]
+}</pre>
+     </li>
+     <li>Array fixer Gr&ouml;&szlig;e
+<pre class="compact">
+void foo(int bar[8]) {
+ [..]
+}</pre></li>
+     <li>Als Pointer
+<pre class="compact">
+void foo(int* bar) {
+ [..]
+}</pre></li>
+    </ol>
+   </article>
+
+   
+   
+   <article>
+    <h3>Spezielle Arrays: Mehrdimensionale Arrays</h3>
+    <ul>
+      <li>Arrays k&ouml;nnen mehrere Dimensionen haben</li>
+      <li>2-dimensionale Arrays: <pre class="compact">&lt;typ&gt; name[&lt;rows&gt;][&lt;columns&gt;];</pre>
+      <li>Zugriff &uuml;ber Zeilen- und Spaltenindex: <pre class="compact">name[&lt;row&gt;][&lt;column&gt;] = &lt;value&gt;;</pre>
+      <li>Beispiel Initialisierung: <pre class="compact">char matrix[3][3] = { {'A', 'B', 'C'}, {'D', 'E', 'F'}, 
+      {'G', 'H', 'I'} };</pre>
+    </ul>
+   </article>
+   
+
+   <article>
+     <h3>Mehr als 2 Dimensionen?</h3>
+     <ul>
+      <li>Ja, in C beliebig viele (so lange wir Speicher haben)</li>
+      <li>Schwer vorstellbar ab 4 Dimensionen, deshalb als <i>Array von Arrays</i> denken</li> 
+     </ul>
+     <img src="images/multi_dim_array.jpg" width="80%">
+     
+<pre class="compact">
+int cube[3][3][3];
+int hypercube[3][3][3][3];
+</pre>
+   </article>
+   
+   
+   <article>
+    <h3>Beispiel: 4 Dimensionen</h3>
+<pre class="compact">
+ int hypercube[3][3][3][3];
+</pre>
+<div style="float: left;">
+<h4>M&ouml;glichkeit 1: 4D-W&uuml;rfel</h4>
+<img src="images/hypercube.gif" width="125%"/>
+</div>
+<div style="float: right;">
+<h4>M&ouml;glichkeit 2: Array von 3D W&uuml;rfeln</h4>
+<table border="1" style="width: 200px;">
+<tr><td><img src="images/cube3.png" width="50%"></td></tr>
+<tr><td><img src="images/cube3.png" width="50%"></td></tr>
+<tr><td><img src="images/cube3.png" width="50%"></td></tr>
+</table>
+</div>
+   </article>
+   
+   <article>
+    <h3>Mehrdimensionale Arrays als Parameter</h3>
+<pre class="compact">
+#include &lt;stdio.h>
+
+void printMatrix3(char matrix[][3])
+{
+  int y;
+  for(y = 0; y &lt; 3; y++)
+  {
+    printf("%c %c %c\n", matrix[y][0], matrix[y][1], matrix[y][2]);
+  }
+}
+
+int main()
+{
+  char matrix[3][3] = { {'A', 'B', 'C'}, {'D', 'E', 'F'}, 
+      {'G', 'H', 'I'} };
+  printMatrix3(matrix);
+}
+</pre>
+<strong>Achtung: Nicht mehr m&ouml;glich als Pointer zu &uuml;bergeben!</strong>
+   </article>
+
+   
+   
+    <article>
+      <h3>Pointer</h3>
+       <ul>
+        <li>Pointer &raquo;zeigen&laquo; auf Variablen</li>
+        <li>Pointer enth&auml;lt die Adresse einer Variable</li>
+        <li>Deklaration mit "*"
+<pre class="compact">&lt;datentyp&gt;* name;</pre>
+        <li>Zugriff auf die Variable durch Dereferenzieren ebenfalls mit "*"
+<pre class="compact">*name = &lt;value&gt;;</pre>
+        </li>
+        <li>Zuweisen einer Adresse durch den Adressoperator "&amp;"
+<pre class="compact">name = &amp;&lt;variable&gt;;</pre>
+        </li>
+       </ul>
+    </article>
+
+    
+    <article>
+     <h3>Pointer und Pointee</h3>
+    <img src="pointer/step1.png" id='pointer' height="100%">
+
+    <input type="button" onclick="nextImage(document.getElementById('pointer'), 9);" class="code_animator_button" style="position: absolute; right: 320px; bottom: 20px;" value="Weiter"></input>
+    </article>
+    
+    
+    <article>
+      <h3>Pointer - Praxisbeispiel</h3>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int main()
+ {
+2  int a = 3;
+3  int x = 2;
+4  int* ptr = &amp;a;
+5  *ptr = 4;
+6  ptr = &amp;x;
+7  *ptr = 8;
+   return 0;
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1000</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td><em>4</em></td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1000</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>4</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td><em>0x1004</em></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>4</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td><em>8</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1004</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+
+</td></tr></table>
+</div>
+
+    </article>
+
+     
+    <article>
+     <h3>HW4</h3>
+     <h2>Fragen?</h2>
+    </article>
+    
+        <article>
+      <h3>Abgabe</h3>
+      <ul>
+        <li>bis Mittwoch, 30.10.</li>
+        <li><strong>Deadline 19:00</strong></li>
+      </ul>
+
+      <h2>Viel Erfolg bei HW4</h2>
+    </article>
+    
+    
+  </section>
+  </body>
+</html>
+
