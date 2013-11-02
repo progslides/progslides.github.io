@@ -664,8 +664,8 @@ valgrind --leak-check=full ./valgrind_test
      <ul>
       <li>Pointer auf <code>NULL</code> initialisieren</li> 
       <li>Pointer nach <code>free</code> auf <code>NULL</code> setzen</li>
-      <li><code>malloc</code>/<code>realloc</code> auf <code>NULL</code> &uuml;berpr&uuml;fen</li>
-      <li>Bei <code>realloc</code> Hilfspointer verwenden:
+      <li><strong><code><strong>malloc</strong></code>/<code><strong>realloc</strong></code> auf <code><strong>NULL</strong></code> &uuml;berpr&uuml;fen</strong></li>
+      <li><strong>Bei <code><strong>realloc</strong></code> Hilfspointer verwenden:</strong>
 <pre class="compact">
 char* text = (char*)malloc(8 * sizeof(char));
 char* new_text = (char*)realloc(text, 16 * sizeof(char));
