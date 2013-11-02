@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tutorium #5</title>
+    <meta charset='utf-8'>
+    <script src="js/code_animator.js"></script>
+    <script src="slides.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/code_animator.css">
+
+  <style>
+    .slides.template-tugraz > article:not(.nobackground):not(.biglogo) {
+      background: #fff url(tugraz.gif) 710px 615px no-repeat;
+    }
+    .slides.template-tugraz > article {
+      color: #222;
+    }
+
+    table.dates td {
+      padding: .1em 0;
+      border: none;
+    }
+    table.dates {
+      margin-top: 20px;
+    }
+    strong {
+      color: #ee1952;
+      font-style: none;
+      font-weight: bold;
+    }
+    span.meta, p.meta {
+      font-size: .8em;
+      color: #555;
+    }
+    p.meta {
+      text-align: right;
+      margin: 0 0 .5em;
+    }
+    ul.compact li {
+      margin-bottom: .2em;
+    }
+    pre.compact {
+      margin: .5em 0
+    }
+    a.runbtn {
+      color: #ee1952;
+      display: block;
+      position: relative;
+      float: right;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .6em;
+      color: #666;
+      padding: 0 .5em;
+      color: #ee1952;
+      top: 2.5em;
+      margin-right: .5em;
+    }
+    a.runbtn:visited {
+      color: #ee1952;
+    }
+    #runoutput {
+      background: #FFFFD8;
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 10%;
+      right: 10%;
+      border: 1px solid #666;
+      -moz-box-shadow: 0 0 15px #888;
+      -webkit-box-shadow: 0 0 15px#888;
+      box-shadow: 0 0 15px #888;
+      font-size: .6em;
+      padding: .5em;
+      font-family: monospace;
+      white-space: pre;
+      overflow: auto;
+    }
+  .pagenum {
+    position: absolute;
+    right: 1.8em;
+    top: .8em;
+    color: #888;
+    font-size: .6em;
+    z-index: -5;
+  }
+  article pre {
+    white-space: pre !IMPORTANT;
+  }
+  
+  .stdout {
+    background-color: #fefefe;
+    border: 2px inset #ddd;
+    color: #000;
+    font-family: monospace;
+    font-size: 110%;
+    line-height: 1.1em;
+    padding: 18px;
+    margin: 18px;
+    text-align: left;
+  }
+  
+  .pre-small {
+    white-space: pre;
+    font-family: Monospace, 'Times New Roman';
+    font-size: 0.6em;
+    line-height: 1em;
+  }
+  
+  .mark {
+    background: #ff8;
+border: 1px solid #cc0;
+padding: 1px 2px;
+color: black;
+  }
+  
+  </style>
+       <style media="print">
+         @page {
+            size: A4 landscape;
+             @top-right {
+                content: "Page " counter(page);
+             }
+         }
+          article {
+            page-break-after: always;
+            margin: auto;
+          }
+          article.next, article.past {
+            display: block;
+          }
+          body {
+              display: block !important;
+              font-family: 'Open Sans', Arial, sans-serif;
+              font-size: 1.5em;
+          }
+      </style>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script type="text/javascript">
+        window.addEventListener('load', function(){
+            var link = document.getElementsByTagName('link');
+            link[link.length-1].setAttribute ("media","screen");
+        });
+
+        $(document).ready(function() {
+        var total = $('article').length;
+        $('article').each(function(i, slide) {
+         $(slide).append('<div class="pagenum">'+ (i+1) + ' / ' + total + '</div>');
+       });
+          $('pre.run').each(function(i, source) {
+            $('<a class="runbtn" href="#run">Run</a>').insertBefore(source)
+            .click(function() {
+              $('#runoutput').remove();
+              var out = $('<div id="runoutput"></div>').insertAfter(source)
+                .text('Waiting for remote server...');
+
+              $.ajax("http://cbuild.tux21b.org/run", {
+                data: {"source": $(source).text()},
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                  out.empty();
+                  if (data.error) {
+                    $('<div></div>').text(data.error).appendTo(out);
+                  }
+                  $('<div></div>').text(data.output).appendTo(out);
+                },
+                error: function() {
+                  out.empty();
+                  $('<div></div>').text("Error communicating with remote server.").appendTo(out);
+                }
+              });
+              return false;
+            });
+          });
+          $(document).click(function() {
+            $('#runoutput').remove();
+          });
+        });
+        
+        window.addEventListener("load", function() {
+          animateCode();
+        });
+        
+        function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = max_img;
+          container.src = container.src.replace(img_id + ".", new_id + "."); 
+        }
+        </script>
+
+
+    </head>
+
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-tugraz'>
+    <article>
+        <h1>
+          Tutorium #5
+        </h1>
+        <p>
+          Einführung in die (strukturierte) Programmierung<br><br>
+      Gruppe 3 – Michael Schwarz
+          <small><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></small><br />
+      Gruppe 5 – Jörg Müller
+          <small><a href="mailto:prog-tutor-joerg@iicm.tugraz.at">prog-tutor-joerg@iicm.tugraz.at</a></small><br />
+      Gruppe 6 – Christoph Hack
+          <small><a href="mailto:prog-tutor-hack@iicm.tugraz.at">prog-tutor-hack@iicm.tugraz.at</a></small><br />
+      Gruppe 8 – Anja Karl
+          <small><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></small><br />
+          Gruppe 9 – Manuel Weber
+          <small><a href="mailto:prog-tutor-weber@iicm.tugraz.at">prog-tutor-weber@iicm.tugraz.at</a></small><br/>
+      
+        </p>
+      </article>
+     
+    
+        <article>
+      <h3>Tutoriumsinhalt</h3>
+    <ul>
+    <li>HW4 Besprechung</li>
+    <li>Strings</li>
+    <li>Pointer (Wiederholung)</li>
+    <li>Dynamischer Speicher</li>
+    <li>Valgrind</li>
+    </ul>
+    </article>
+
+              
+    
+     <article>
+      <h3>HW4 Besprechung - H&auml;ufige Fehler</h3>
+      <ul>
+      </ul>
+     </article>
+     
+
+     <article>
+      <h3>HW4 Beispiele - Gut oder schlecht?</h3>
+      <img src="images/hw4_cheat.png" height="99%" />
+     </article>
+
+
+   <article>
+    <h3>Strings - auch nur Arrays</h3>
+    <ul>
+     <li>String = Zeichenkette, &raquo;Text&laquo;</li>
+     <li>String ist nur ein Array von <code>char</code> (Zeichen)</li>
+     <li>Strings enden mit einem 0-Byte ('\0', nicht dem Zeichen 0!)</li>
+     <li>Deklaration (am h&auml;ufigsten):
+<pre class="compact">char* text = "Hallo!";</pre>
+     </li>Andere Varianten:
+<pre class="compact">char text[] = "Hallo!";</pre>
+<pre class="compact">char text[] = {'H', 'a', 'l', 'l', 'o', '!', '\0'};</pre>
+    </ul>
+   </article>
+
+
+   <article>
+    <h3>Strings</h3>
+    <h4>Vergleichen</h4>
+     <ul>
+      <li>Funktion <code>strcmp</code> aus <code>string.h</code> verwenden</li>
+      <li><code>==</code> funktioniert nicht, vergleicht nur die Speicheradressen</li>
+      <li>
+<pre class="compact">
+ char* str1 = "Hello";
+ char* str2 = "World";
+ if(strcmp(str1, str2) == 0) 
+ {
+   // strings sind gleich
+ } 
+ else 
+ {
+   // strings sind ungleich
+ }
+</pre>
+     </ul>
+   </article>
+
+   <article>
+     <h3>Strings</h3>
+     <h4>Zugriff auf einzelne Buchstaben</h4>
+     <ul>
+      <li>Zugriff durch Array-Schreibweise (<code>[]</code>)</li>
+      <li>Erstes Zeichen hat Index 0!</li>
+      <li>Letztes Zeichen ist 0-Byte (<code>'\0'</code>)</li>
+      <li>
+<pre class="compact">
+ char* str1 = "Hello";
+ char c1 = str[0]; // c1 = 'H'
+ char c2 = str[4]; // c2 = 'o'
+ char c3 = str[5]; // c3 = '\0'
+</pre>
+      </li>
+     </ul>
+
+   </article>
+   
+   <article>
+     <h3>Strings</h3>
+     <ul>
+      <li>Weiter Funktionen die mit Strings arbeiten in <span class="src">string.h</span></li>
+      <li>Einbinden mit <pre class="compact">#include &lt;string.h></pre></li>
+      <li>N&uuml;tzliche Funktionen:
+       <dl>
+        <dt><span class="src">strlen</span></dt><dd>L&auml;nge des Strings (ohne 0-Byte!)</dd>
+        <dt><span class="src">strcpy</span></dt><dd>String in einen anderen kopieren</dd>
+        <dt><span class="src">strcat</span></dt><dd>Strings aneinanderh&auml;ngen</dd>
+        <dt><span class="src">sprintf</span></dt><dd>Wie printf, aber Ausgabe wird in String gespeichert</dd>
+       </dl>
+      </li>
+     </ul>
+   </article>
+
+      
+    <article>
+      <h3>Pointer (Wiederholung)</h3>
+       <ul>
+        <li>Pointer &raquo;zeigen&laquo; auf Variablen</li>
+        <li>Pointer enth&auml;lt die Adresse einer Variable</li>
+        <li>Deklaration mit "*"
+<pre class="compact">&lt;datentyp&gt;* name;</pre>
+        <li>Zugriff auf die Variable durch Dereferenzieren ebenfalls mit "*"
+<pre class="compact">*name = &lt;value&gt;;</pre>
+        </li>
+        <li>Zuweisen einer Adresse durch den Adressoperator "&amp;"
+<pre class="compact">name = &amp;&lt;variable&gt;;</pre>
+        </li>
+       </ul>
+    </article>
+
+    
+    <article>
+     <h3>Pointer und Pointee (Wiederholung)</h3>
+    <img src="pointer/step1.png" id='pointer' height="100%">
+
+    <input type="button" onclick="nextImage(document.getElementById('pointer'), 9);" class="code_animator_button" style="position: absolute; right: 320px; bottom: 20px;" value="Weiter"></input>
+    </article>
+    
+      
+
+    
+    <article>
+      <h3>Verwendung von Pointern: Dynamischer Speicher</h3>
+      <ul>
+        <li>Wird zur Laufzeit angefordert</li>
+        <li>Hat keinen &raquo;Namen&laquo;, nur eine Adresse &#8594; Zugriff &uuml;ber Pointer</li>
+        <li>Angeforderter Speicher muss auch wieder freigegeben werden</li>
+        <li><span class="src">void* malloc(size_t size)</span> fordert Speicher der Gr&ouml;&szlig;e <code>size</code> an (in Bytes angegeben)</li>
+        <li><span class="src">void free(void* ptr)</span> gibt angeforderten Speicher wieder frei</li>
+        <li><span class="src">void* realloc(void* ptr, size_t new_size)</span> vergr&ouml;&szlig;ert einen angeforderten Speicherbereich</li>
+      </ul>
+    </article>
+
+
+    <article>
+      <h3>Beispiel</h3>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int main()
+ {
+2  int* mem = (int*)malloc(sizeof(int) * 2);
+3  if(mem == NULL) return 0; 
+4  *mem = 1;
+5  *(mem + 1) = 2;
+6  mem[0] = 3;
+7  mem[1] = 4;
+8  free(mem);
+   return 0;
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td><em>0x1000</em></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"><em>1</em></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"><em>2</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"><em>3</em></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv">3</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"><em>4</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_8">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+
+
+    <article>
+     <h3>Call-by-Reference</h3>
+     <ul>
+       <li>Bei Funktionsaufruf nicht Variable, sondern Adresse &uuml;bergeben</li>
+       <li>mehrere R&uuml;ckgabewerte m&ouml;glich</li>
+       <li>z.B. n&uuml;tzlich damit eine Funktion einen Wert sowie einen Fehlercode liefern kann</li>
+     </ul>
+    </article>
+
+   
+    <article>
+     <h3>Beispiel</h3>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+4void getHM(int min, int* h, int* m)
+ {
+5  *h = minutes / 60;
+6  *m = minutes % 60;
+ }
+  
+1int main()
+ {
+2  int hour = 0, minutes = 0;
+3  getHourMinutes(320, &amp;hour, &amp;minutes);
+7  printf("%d:%d\n", hour, minutes);
+   return 0;
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th>0x2000</th><td></td></tr>
+  <tr><th>0x2004</th><td></td></tr>
+  <tr><th>0x2008</th><td></td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td><em>0</em></td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td><em>0</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th>0x2000</th><td></td></tr>
+  <tr><th>0x2004</th><td></td></tr>
+  <tr><th>0x2008</th><td></td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td>0</td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td>0</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th><strong>min</strong> &nbsp; 0x2000</th><td><em>320</em></td></tr>
+  <tr><th><strong>h</strong> &nbsp; 0x2004</th><td><em>0x1000</em></td></tr>
+  <tr><th><strong>m</strong> &nbsp; 0x2008</th><td><em>0x1004</em></td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td>0</td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td>0</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th><strong>min</strong> &nbsp; 0x2000</th><td>320</td></tr>
+  <tr><th><strong>h</strong> &nbsp; 0x2004</th><td>0x1000</td></tr>
+  <tr><th><strong>m</strong> &nbsp; 0x2008</th><td>0x1004</td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td><em>5</em></td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td>0</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th><strong>min</strong> &nbsp; 0x2000</th><td>320</td></tr>
+  <tr><th><strong>h</strong> &nbsp; 0x2004</th><td>0x1000</td></tr>
+  <tr><th><strong>m</strong> &nbsp; 0x2008</th><td>0x1004</td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td>5</td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td><em>20</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th><strong>min</strong> &nbsp; 0x2000</th><td>320</td></tr>
+  <tr><th><strong>h</strong> &nbsp; 0x2004</th><td>0x1000</td></tr>
+  <tr><th><strong>m</strong> &nbsp; 0x2008</th><td>0x1004</td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td>5</td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td>20</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th>0x2000</th><td></td></tr>
+  <tr><th>0x2004</th><td></td></tr>
+  <tr><th>0x2008</th><td></td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+  <tr><th><strong>stdout</strong></th><th style="border: 1px solid black;"><em>5:20</em></th></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+
+
+    <article>
+     <h3>Valgrind</h3>
+     <ul>
+      <li>Tool zum Finden von
+       <ul>
+        <li>Memory Leaks</li>
+        <li>unitialiserten Variablen</li>
+        <li>Off-by-one Fehlern</li>
+       </ul>
+      </li>
+      <li>Testsystem verwendet Valgrind &#8594; Valgrind Fehler geben Punkteabzug!</li>
+      <li>Nur f&uuml;r Linux, aber auf Pluto schon installiert</li>
+     </ul>
+    </article>
+
+
+    <article>
+     <h3>Beispiel</h3>
+<pre class="compact">
+#include &lt;stdio.h>
+#include &lt;stdlib.h>
+#include &lt;string.h>
+
+int main()
+{
+  char* text = (char*)malloc(6 * sizeof(char));
+  strcpy(text, "Hallo!");
+  printf("%s\n", text);
+  return 0;
+}
+</pre>
+
+Kompilieren:
+<pre class="compact">
+gcc -Wall -g -o valgrind_test valgrind_test.c
+</pre>
+
+Valgrind:
+<pre class="compact">
+valgrind --leak-check=full ./valgrind_test
+</pre>
+    </article>
+
+
+    <article>
+     <h3>Best Practice</h3>
+     <ul>
+      <li>Pointer auf <code>NULL</code> initialisieren</li> 
+      <li>Pointer nach <code>free</code> auf <code>NULL</code> setzen</li>
+      <li><code>malloc</code>/<code>realloc</code> auf <code>NULL</code> &uuml;berpr&uuml;fen</li>
+      <li>Bei <code>realloc</code> Hilfspointer verwenden:
+<pre class="compact">
+char* text = (char*)malloc(8 * sizeof(char));
+char* new_text = (char*)realloc(text, 16 * sizeof(char));
+if(new_text != NULL)
+{
+  text = new_text;
+}
+else
+{
+  free(text);
+  printf("Out of memory!\n");
+}
+</pre>
+</li>
+     </ul>
+    </article>
+
+
+    <article>
+     <h3>Warum nicht einfach?</h3>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int* x = (int*)malloc(3);
+2x = (int*)realloc(x, 16);
+3if(x == NULL)
+ {
+4  free(x);
+5  printf("Out of memory!");
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td><em>0x1008</em></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td><em>NULL</em></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>NULL</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>NULL</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>NULL</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th><strong>stdout</strong><th style="border: 1px solid black;">Out of memory!</th></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+
+
+    <article>
+     <h3>Deshalb mit Hilfspointer</h3>
+
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int* x = (int*)malloc(3);
+2int* new_x = (int*)realloc(x, 16);
+3if(new_x != NULL)
+ {
+   x = new_x;
+ }
+4else
+ {
+5  free(x);
+6  printf("Out of memory!\n");
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td><em>0x1008</em></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td><em>NULL</em></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th><strong>stdout</strong></th><th style="border: 1px solid black;">Out of memory!</th></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+
+      
+      
+        <article>
+      <h3>Abgabe</h3>
+      <br />
+      <center><img src="images/no-hw.png" /></center>
+
+      <h2>Bis zum n&auml;chsten Mal!</h2>
+    </article>
+    
+    
+  </section>
+  </body>
+</html>
+
