@@ -1,0 +1,1 @@
+ - 5: bei 5/10 wird integer division ausgeführt

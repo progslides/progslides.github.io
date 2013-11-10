@@ -1,0 +1,1 @@
+- 14: Funktion wird wie call by reference verwendet, der Wert in result bleibt aber 0!

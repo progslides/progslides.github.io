@@ -1,0 +1,1 @@
+#include <stdio>;#define SIZE 5;#define LIMIT 2;int main(){  int x = SIZE;  while( x > LIMIT );  {    x--;    printf("%d\n", x);  }    return 0;}

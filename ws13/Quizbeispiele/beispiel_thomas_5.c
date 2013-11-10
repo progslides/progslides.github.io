@@ -1,0 +1,1 @@
+#include <stdio.h>int main(){  char string[] = "HALLO";  char string2[] = {'H', 'A', 'L', 'L', 'O', '\0'};   //Check if strings are the same  if(string == string2)  {    printf("%s is equal to %s\n", string, string2);  }}
