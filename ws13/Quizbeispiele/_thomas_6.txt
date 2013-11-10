@@ -1,5 +1,0 @@
- - 1: strichpunkt nach #include
- - 1: .h nach stdio vergessen
- - 2: strichpunkt nach #define
- - 3: strichpunkt nach #define
- - 7: strichpunkt nach while

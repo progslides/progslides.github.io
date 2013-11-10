@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tutorium #6</title>
+    <meta charset='utf-8'>
+    <script src="js/code_animator.js"></script>
+    <script src="slides.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/code_animator.css">
+
+  <style>
+    .slides.template-tugraz > article:not(.nobackground):not(.biglogo) {
+      background: #fff url(tugraz.gif) 710px 615px no-repeat;
+    }
+    .slides.template-tugraz > article {
+      color: #222;
+    }
+
+    table.dates td {
+      padding: .1em 0;
+      border: none;
+    }
+    table.dates {
+      margin-top: 20px;
+    }
+    strong {
+      color: #ee1952;
+      font-style: none;
+      font-weight: bold;
+    }
+    span.meta, p.meta {
+      font-size: .8em;
+      color: #555;
+    }
+    p.meta {
+      text-align: right;
+      margin: 0 0 .5em;
+    }
+    ul.compact li {
+      margin-bottom: .2em;
+    }
+    pre.compact {
+      margin: .5em 0
+    }
+    a.runbtn {
+      color: #ee1952;
+      display: block;
+      position: relative;
+      float: right;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .6em;
+      color: #666;
+      padding: 0 .5em;
+      color: #ee1952;
+      top: 2.5em;
+      margin-right: .5em;
+    }
+    a.runbtn:visited {
+      color: #ee1952;
+    }
+    #runoutput {
+      background: #FFFFD8;
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 10%;
+      right: 10%;
+      border: 1px solid #666;
+      -moz-box-shadow: 0 0 15px #888;
+      -webkit-box-shadow: 0 0 15px#888;
+      box-shadow: 0 0 15px #888;
+      font-size: .6em;
+      padding: .5em;
+      font-family: monospace;
+      white-space: pre;
+      overflow: auto;
+    }
+  .pagenum {
+    position: absolute;
+    right: 1.8em;
+    top: .8em;
+    color: #888;
+    font-size: .6em;
+    z-index: -5;
+  }
+  article pre {
+    white-space: pre !IMPORTANT;
+  }
+  
+  .stdout {
+    background-color: #fefefe;
+    border: 2px inset #ddd;
+    color: #000;
+    font-family: monospace;
+    font-size: 110%;
+    line-height: 1.1em;
+    padding: 18px;
+    margin: 18px;
+    text-align: left;
+  }
+  
+  .pre-small {
+    white-space: pre;
+    font-family: Monospace, 'Times New Roman';
+    font-size: 0.6em;
+    line-height: 1em;
+  }
+  
+  .mark {
+    background: #ff8;
+border: 1px solid #cc0;
+padding: 1px 2px;
+color: black;
+  }
+  
+      blockquote {
+      border-bottom-color: #444;
+      border-bottom-style: none;
+      border-bottom-width: 0px;
+      border-left-color: #DDD;
+      border-left-style: solid;
+      border-left-width: 8px;
+      border-right-color: #444;
+      border-right-style: none;
+      border-right-width: 0px;
+      border-top-color: #444;
+      border-top-style: none;
+      border-top-width: 0px;
+      box-shadow: rgba(0, 0, 0, 0.496094) 0px 0px 6px 0px;
+      color: #444;
+      display: block;
+      margin-bottom: 24px;
+      margin-left: 24px;
+      margin-right: 0px;
+      margin-top: 24px;
+      outline-color: #444;
+      outline-style: none;
+      outline-width: 0px;
+      padding-bottom: 12px;
+      padding-left: 16px;
+      padding-right: 8px;
+      padding-top: 12px;
+      vertical-align: baseline;
+    }
+  
+  </style>
+       <style media="print">
+         @page {
+            size: A4 landscape;
+             @top-right {
+                content: "Page " counter(page);
+             }
+         }
+          article {
+            page-break-after: always;
+            margin: auto;
+          }
+          article.next, article.past {
+            display: block;
+          }
+          body {
+              display: block !important;
+              font-family: 'Open Sans', Arial, sans-serif;
+              font-size: 1.5em;
+          }
+      </style>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script type="text/javascript">
+        window.addEventListener('load', function(){
+            var link = document.getElementsByTagName('link');
+            link[link.length-1].setAttribute ("media","screen");
+        });
+
+        $(document).ready(function() {
+        var total = $('article').length;
+        $('article').each(function(i, slide) {
+         $(slide).append('<div class="pagenum">'+ (i+1) + ' / ' + total + '</div>');
+       });
+          $('pre.run').each(function(i, source) {
+            $('<a class="runbtn" href="#run">Run</a>').insertBefore(source)
+            .click(function() {
+              $('#runoutput').remove();
+              var out = $('<div id="runoutput"></div>').insertAfter(source)
+                .text('Waiting for remote server...');
+
+              $.ajax("http://cbuild.tux21b.org/run", {
+                data: {"source": $(source).text()},
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                  out.empty();
+                  if (data.error) {
+                    $('<div></div>').text(data.error).appendTo(out);
+                  }
+                  $('<div></div>').text(data.output).appendTo(out);
+                },
+                error: function() {
+                  out.empty();
+                  $('<div></div>').text("Error communicating with remote server.").appendTo(out);
+                }
+              });
+              return false;
+            });
+          });
+          $(document).click(function() {
+            $('#runoutput').remove();
+          });
+        });
+        
+        window.addEventListener("load", function() {
+          animateCode();
+        });
+        
+        function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = max_img;
+          container.src = container.src.replace(img_id + ".", new_id + "."); 
+        }
+        </script>
+
+
+    </head>
+
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-tugraz'>
+    <article>
+        <h1>
+          Tutorium #6
+        </h1>
+        <p>
+          Einführung in die (strukturierte) Programmierung<br><br>
+      Gruppe 2 – Thomas Neff
+          <small><a href="mailto:prog-tutor-thomas@iicm.tugraz.at">prog-tutor-thomas@iicm.tugraz.at</a></small><br />
+      Gruppe 3 – Michael Schwarz
+          <small><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></small><br />
+      Gruppe 5 – Jörg Müller
+          <small><a href="mailto:prog-tutor-joerg@iicm.tugraz.at">prog-tutor-joerg@iicm.tugraz.at</a></small><br />
+      Gruppe 6 – Christoph Hack
+          <small><a href="mailto:prog-tutor-hack@iicm.tugraz.at">prog-tutor-hack@iicm.tugraz.at</a></small><br />
+      Gruppe 8 – Anja Karl
+          <small><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></small><br />
+          Gruppe 9 – Manuel Weber
+          <small><a href="mailto:prog-tutor-weber@iicm.tugraz.at">prog-tutor-weber@iicm.tugraz.at</a></small><br/>
+      
+        </p>
+      </article>
+     
+    
+        <article>
+      <h3>Tutoriumsinhalt</h3>
+    <ul>
+    <li>Shell/Pipes</li>
+    <li><span class="src">realloc</span></li>
+    <li><span class="src">sizeof</span></li>
+    <li>Quiz</li>
+    </ul>
+    </article>
+
+              
+    <article>
+      <h3>Shell</h3>
+      <table class="little_bit_bigger">
+        <tr><td><code>cd [Ordner]</code></td><td>In Ordner wechseln</td></tr>
+        <tr><td><code>cd ~</code></td><td>In home Verzeichnis wechseln</td></tr>
+        <tr><td><code>ls -l</code></td><td>Datein und Ordner mit Details auflisten</td></tr>
+        <tr><td><code>rm [Dateiname]</code></td><td>Datei l&ouml;schen</td></tr>
+        <tr><td><code>rmdir [Ordner]</code></td><td>Leeren Ordner l&ouml;schen</td></tr>
+        <tr><td><code>mkdir [Ordner]</code></td><td>Ordner erstellen</td></tr>
+        <tr><td><code>mv [alter Name] [neuer Name]</code></td><td>Datei verschieben</td></tr>
+        <tr><td><code>nano [Dateiname]</code></td><td>Einfacher Editor zum Bearbeiten</td></tr>
+        <tr><td><code>man [Befehl]</code></td><td>Hilfe zu einem Befehl (z.B. <code>man ls</code>)</td></tr>
+      </table>
+    </article>
+
+     
+     <article>
+       <h3>Pipes</h3>
+       <blockquote>Möglichkeit, die Ausgabe der einzelnen Befehle umzuleiten bzw. an andere Befehle weiterzuleiten.
+       <footer>— <cite><a href="http://wiki.ubuntuusers.de/Shell/Umleitungen">Ubuntuusers Wiki</a></cite></footer></blockquote>
+     
+        <ul>
+          <li>Umleiten der Ausgabe in Datei</li>
+          <li>Standardeingabe von Datei lesen</li>
+          <li>Ausgabe als Eingabe f&uuml;r anderes Programm</li>
+        </ul>
+     </article>
+     
+     
+     
+     <article>
+       <h3>Pipes</h3>
+       
+       <h4>Ausgabe umleiten</h4>
+       <pre>./programm > ausgabe.txt</pre>
+       
+       <h4>Eingabe umleiten</h4>
+       <pre>./programm &lt; eingabe.txt</pre>
+       
+       <h4>stderr umleiten</h4>
+       <pre>./programm 2> error.txt</pre>
+     </article>
+     
+     
+     <article>
+       <h3>Pipes</h3>
+       
+       <h4>Beliebig kombinierbar</h4>
+       <pre>./programm &lt; input.txt 1> output.txt 2> error.txt</pre>
+       
+       <h4>Stdout als stdin eines anderen programms</h4>
+       <pre>./programm | tail</pre>
+       
+       <h4>Returncode des letzten Programms</h4>
+       <pre>echo $?</pre>
+     </article>
+     
+     
+     <article>
+      <h3><span class="src">realloc</span> - blockweises allokieren</h3>
+      <ul>
+       <li>Wenn Speicher vergr&ouml;&szlig;ert wird, sollte das nie byteweise erfolgen!</li>
+       <li>Entweder linear mit sinnvoller Blockgr&ouml;&szlig;e, oder verdoppeln</li>
+       <li>Vergleich</li>
+       <table>
+        <tr><th>&nbsp;</th><th>+1 Byte</th><th>+16 Byte</th><th>Verdoppeln</th></tr>
+        <tr><th>100MB</th><td>1,82s</td><td>0,97s</td><td>0,78s</td></tr>
+        <tr><th>500MB</th><td>8,94s</td><td>4,81s</td><td>3,92s</td></tr>
+        <tr><th>1,5GB</th><td>44,89s</td><td>17,23s</td><td>9,38s</td></tr>
+       </table>
+      </ul>
+
+     </article>     
+     
+     <article>
+       <h3>Der <span class="src">sizeof</span> Operator</span></h3>
+       <ul>
+         <li>Operator (keine Funktion), nur f&uuml;r Gr&ouml;&szlig;en, die zur Kompilierzeit bekannt sind</li>
+       </ul>
+       <div style="float: left; width: 45%">
+       <h4>Funktioniert</h4>
+       <ul>
+        <li><pre class="compact">int charsize = sizeof(char);</pre></li>
+        <li><pre class="compact">int ptrsize = sizeof(int*);</pre></li>
+        <li><pre class="compact">int size = sizeof("Hallo");</pre></li>
+        <li>
+<pre class="compact">
+int x[20];
+int len = 
+  sizeof(x) / sizeof(x[0]);
+</pre>
+       </ul>
+       </div>
+       
+       <div style="float: left; width: 45%; padding-left: 7%;">
+       <h4>Funktioniert nicht</h4>
+       <ul>
+        <li><pre class="compact">
+int* x = (int*)malloc(100);
+int len = sizeof(x);</pre></li>
+        <li>
+<pre class="compact">
+int x[20];
+int* y = x;
+int len = 
+  sizeof(y) / sizeof(y[0]);
+</pre></li>
+        <li>
+<pre class="compact">
+char* hallo = "Hallo";
+int size = sizeof(hallo);
+</pre>
+        </li>
+        </ul>
+       </div>
+     </article>
+     
+     <article>
+      <h3>Verwendung von <span class="src">sizeof</span></h3>
+      <ul>
+       <li>Soll bei <span class="src">malloc</span>/<span class="src">realloc</span> verwendet werden, da diese die Gr&ouml;&szlig;e in Byte verlangen</li>
+       <li><em>Beispiel</em>: Integer Array mit 10 Elementen</li>
+       <li><strong>Falsch</strong>
+<pre class="compact">
+int* x = (int*)malloc(10);
+</pre></li>
+       <li><strong>Richtig</strong>
+<pre class="compact">
+int* x = (int*)malloc(10 * sizeof(int));
+</pre>
+      </ul>
+     </article>
+     
+     </article>
+     
+     <article>
+      <img src="images/quiz.png" width="99%" />
+     </article>
+           
+        <article>
+      <h3>Abgabe</h3>
+       <ul>
+        <li>bis Mittwoch, 13.11.</li>
+        <li><strong>Deadline 19:00</strong></li>
+      </ul>
+
+      <h2>Bis zum n&auml;chsten Mal!</h2>
+    </article>
+    
+    
+  </section>
+  </body>
+</html>
+
