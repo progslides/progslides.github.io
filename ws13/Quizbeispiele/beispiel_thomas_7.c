@@ -1,0 +1,1 @@
+#include <stdio.h>int main(){  int a, b, c = 0; /* initialize variables  a = 3;  b = 7;  c = a + b;  /* add variables together */    return 0;}

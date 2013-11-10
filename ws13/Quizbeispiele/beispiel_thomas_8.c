@@ -1,0 +1,1 @@
+#include <stdio.h>int main(){  int a = 020;  int b = 170;  int c = 010;  int d = 0;    d = a + b + c;    //020 + 170 + 010 = 200!  printf("%d + %d + %d = %d\n");    return 0;  }
