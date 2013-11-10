@@ -1,0 +1,1 @@
+ #include <stdio.h> int main() {  char text[] = {'H', 'a', 'l', 'l', 'o', '\0'};    text[0] = "a";    printf("%s\n", text);    return 0;   } 
