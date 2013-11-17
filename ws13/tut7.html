@@ -260,12 +260,166 @@ color: black;
     <li>HW 6</li>
     </ul>
     </article>
-           
+          
      <article>
       <h3>Gruppensuche</h3>
       <br /><br /><br />
       <center><img src="images/gruppe.jpg"></center>
      </article>
+
+
+<article>
+<h3> HW5 - Gut oder Schlecht?
+</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+int errorMemory()
+{
+  printf("Error: Out of memory!\n");
+  return ERROR_MEM;
+}
+
+[...]
+
+int main()
+{
+  char *input = (char*)malloc(STRING_LENGTH * sizeof(char));
+  if(input == NULL)
+  {
+    errorMemory();
+  }
+  
+  while((character_from_stdin = getchar()) != EOF)
+  {
+    input[input_counter] = character_from_stdin;
+  
+  [...]
+  }
+  
+  [...]
+  
+}
+</pre>
+</article>
+         
+         <article>
+<h3>HW5 - Gut oder Schlecht?</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+  [...]
+int max_char = 32;
+int pos = 0;
+
+char *ptr = (char*) malloc(max_char * (sizeof(char)));
+  
+if (ptr == NULL)
+{
+  printf ("Error: Out of memory!\n");
+  return 1; 
+}
+
+char input;
+do
+{
+  input = getchar();
+  if (pos == max_char)
+  {
+    max_char += 16;
+    char* tmp = (char*) realloc (ptr, max_char * (sizeof(char)));
+    if (tmp == NULL)
+    {
+      printf ("Error: Out of memory!\n");
+      free(ptr);
+      return 1; 
+    }
+    ptr = tmp;
+  }
+  [...]
+}
+[...]
+  </pre>
+         </article>  
+
+<article>
+<h3>HW5 - Gut oder Schlecht?</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.3em;">
+[...]
+
+char* text = malloc(10000 * sizeof(char));
+
+gets(text);
+
+int length = strlen(text);
+int i = 0;
+for(i = length - 1; i >= 0; i--)
+  printf("%c", text[i]);
+
+[...]
+</pre>
+</article>
+
+<article>
+<h3>HW5 - Gut oder Schlecht?</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+[...]
+#define BLOCKSIZE 50
+
+char* text = malloc(BLOCKSIZE * sizeof(char));
+
+[...] // NULL-Pointercheck
+
+char letter = getchar();
+
+int index = 0;
+int size = BLOCKSIZE;
+
+while(letter != EOF)
+{
+  if(index == size)
+  {
+    size += BLOCKSIZE;
+    char* tmp = realloc(text, size * sizeof(char));
+    [...] //NULL-Pointer check
+  }
+  text[index] = letter;
+  letter = getchar();
+}
+
+while(index >= 0)
+{
+  printf("%c", text[index]);
+  index--;
+}
+printf("\n");
+[...]
+
+</pre>
+</article>
+
+
+<article>
+<h3>HW5 - Häuftigste Fehler</h3>
+<ul>
+<li>
+  Keine Überprüfung von NULL-Pointern nach malloc/realloc
+</li>
+<li>
+  Keine Verwendung von Temp-Pointern für realloc
+  </li>
+<li>
+  Zeichenweises vergrößern des Speichers
+</li>
+<li>
+  NULL-Byte vergessen
+  </li>
+<li>
+Memcopy nach realloc
+</li>
+<li>
+Falsche verwendung von realloc
+</li>
+</ul>
+</article>
+
+           
       
        <article>
       <h3>Strukturen</h3>
