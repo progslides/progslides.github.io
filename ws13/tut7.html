@@ -431,6 +431,49 @@ fclose(file);
      </ul>
     </article>
     
+    
+    <article>
+     <h3>Wie schaut ein <code>int</code> in einer Datei aus?</h3>
+     <ul>
+      <li>Integer hat 4 Byte</li>
+      <li>Jedes der Bytes kann wie eine &raquo;Ziffer&laquo; gesehen werden</li>
+      <li>Die Umrechung zur&uuml;ck in einen Integer erfolgt dann wie in jedem anderen Zahlensystem<li>
+      <li>Achtung Endianness: Intel ist Little-Endian, d.h. die Byte-Reihenfolge ist &raquo;verkehrt&laquo;</li>
+      <li>Beispiel: Integer 0x12345678 (= 305.419.896) in einer Datei:
+      <code>78 56 34 12</code></li>
+     </ul>
+    </article>
+    
+    <article>
+     <h3>Beispiel zur Umrechnung</h3>
+     <ul>
+      <li>Inhalt der Datei als <code>char</code> Array eingelesen: <code>02 01 00 00</code></li>
+      <li>Umrechnung ins Dezimalsystem:
+      <table>
+       <tr><th><sub>256</sub><sup>0</sup></th><th><sub>256</sub><sup>1</sup></th><th><sub>256</sub><sup>2</sup></th><th><sub>256</sub><sup>3</sup></th></tr>
+       <tr><td>02</td><td>01</td><td>00</td><td>00</td></tr>
+      </table></li>
+      <li>= <u>0x02</u> * 256<sup>0</sup> + <u>0x01</u> * 256<sup>1</sup> + <u>0x00</u> * 256<sup>2</sup> + <u>0x00</u> * 256<sup>3</sup></li>
+      <li>= 258</li>
+     </ul>
+    </article>
+    
+    <article>
+     <h3>Geht das auch einfacher?</h3>
+     <ul>
+      <li>Nat&uuml;rlich, wir lassen den Compiler f&uuml;r uns arbeiten</li>
+      <li>Direktes Einlesen in einen Integer mit <code>fread</code>:
+      <pre class="compact">int length;
+fread(&amp;length, sizeof(int), 1, file);</pre></li>
+      <li>&Uuml;ber Pointer, indem wir den Speicherinhalt neu &raquo;interpretieren&laquo; lassen:
+      <pre class="compact">// buffer is the char array containing the file
+int length = *((int*)buffer);</pre></li>
+      <li>Mit <code>memcpy</code> in einen Integer kopieren:
+      <pre class="compact">// buffer is the char array containing the file
+int length;
+memcpy(&amp;length, buffer, sizeof(int));</pre>
+     </ul>
+    </article>
            
            
         <article>
