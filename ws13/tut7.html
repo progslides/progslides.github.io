@@ -260,7 +260,33 @@ color: black;
     </ul>
     </article>
            
-           
+
+      
+       <article>
+      <h3>Strukturen</h3>
+      <ul>
+        <li>Zusammenfassung mehrer Variablen zu neuem Datentyp</li>
+        <li>Zugriff mit &raquo;.&laquo; bzw. &raquo;->&laquo; bei Pointern</li>
+        <li>
+<pre class="compact">
+#include &lt;stdio.h>
+struct _Person_ {
+  char* name;
+  int age;
+};
+
+int main()
+{
+  struct _Person_ petra;
+  petra.name = "Petra";
+  petra.age = 17;
+  return 0;
+}
+</pre></li>
+      </ul>
+</article>
+
+
 <article>
   <h3>Strukturen</h3>
    <ul>
