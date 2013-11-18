@@ -669,6 +669,17 @@ memcpy(&amp;length, buffer, sizeof(int));</pre>
            
            
         <article>
+        <article>
+<h3> HW6 - Dateigr&ouml;&szlig;e ermitteln
+</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+int size;
+fseek(file, 0, SEEK_END);
+size = ftell(file);
+fseek(file, 0, SEEK_SET);
+}
+</pre>
+</article>
       <h3>Abgabe</h3>
        <ul>
         <li>bis Mittwoch, 20.11.</li>
