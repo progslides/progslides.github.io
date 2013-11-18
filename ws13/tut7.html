@@ -670,15 +670,24 @@ memcpy(&amp;length, buffer, sizeof(int));</pre>
            
         <article>
 
-<h3> HW6 - Dateigr&ouml;&szlig;e ermitteln
-</h3>
-<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
-int size;
+<h3> HW6 - Dateigr&ouml;&szlig;e ermitteln</h3>
+
+<ul>
+ <li>Keine C Funktion um die Dateigr&ouml;&szlig;e zu ermitteln</li>
+ <li>Folgende Vorgehensweise:
+  <ol>
+   <li>Dateizeiger an das Ende der Datei setzen</li>
+   <li>Abfragen, wo der Dateizeiger steht</li>
+   <li>Dateizeiger wieder auf den Anfang der Datei setzen</li>
+  </ol></li> 
+ <li>Der Code dazu:
+ <pre class="compact">
+long size;
 fseek(file, 0, SEEK_END);
 size = ftell(file);
 fseek(file, 0, SEEK_SET);
-}
-</pre>
+</pre></li>
+</ul>
 </article>
         <article>
       <h3>Abgabe</h3>
