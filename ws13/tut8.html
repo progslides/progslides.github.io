@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tutorium #8</title>
+    <meta charset='utf-8'>
+    <script src="js/code_animator.js"></script>
+    <script src="slides.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/code_animator.css">
+
+  <style>
+    .slides.template-tugraz > article:not(.nobackground):not(.biglogo) {
+      background: #fff url(tugraz.gif) 710px 615px no-repeat;
+    }
+    .slides.template-tugraz > article {
+      color: #222;
+    }
+
+    table.dates td {
+      padding: .1em 0;
+      border: none;
+    }
+    table.dates {
+      margin-top: 20px;
+    }
+    strong {
+      color: #ee1952;
+      font-style: none;
+      font-weight: bold;
+    }
+    span.meta, p.meta {
+      font-size: .8em;
+      color: #555;
+    }
+    p.meta {
+      text-align: right;
+      margin: 0 0 .5em;
+    }
+    ul.compact li {
+      margin-bottom: .2em;
+    }
+    pre.compact {
+      margin: .5em 0
+    }
+    a.runbtn {
+      color: #ee1952;
+      display: block;
+      position: relative;
+      float: right;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .6em;
+      color: #666;
+      padding: 0 .5em;
+      color: #ee1952;
+      top: 2.5em;
+      margin-right: .5em;
+    }
+    a.runbtn:visited {
+      color: #ee1952;
+    }
+    #runoutput {
+      background: #FFFFD8;
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 10%;
+      right: 10%;
+      border: 1px solid #666;
+      -moz-box-shadow: 0 0 15px #888;
+      -webkit-box-shadow: 0 0 15px#888;
+      box-shadow: 0 0 15px #888;
+      font-size: .6em;
+      padding: .5em;
+      font-family: monospace;
+      white-space: pre;
+      overflow: auto;
+    }
+  .pagenum {
+    position: absolute;
+    right: 1.8em;
+    top: .8em;
+    color: #888;
+    font-size: .6em;
+    z-index: -5;
+  }
+  article pre {
+    white-space: pre !IMPORTANT;
+  }
+  
+  .stdout {
+    background-color: #fefefe;
+    border: 2px inset #ddd;
+    color: #000;
+    font-family: monospace;
+    font-size: 110%;
+    line-height: 1.1em;
+    padding: 18px;
+    margin: 18px;
+    text-align: left;
+  }
+  
+  .pre-small {
+    white-space: pre;
+    font-family: Monospace, 'Times New Roman';
+    font-size: 0.6em;
+    line-height: 1em;
+  }
+  
+  .mark {
+    background: #ff8;
+border: 1px solid #cc0;
+padding: 1px 2px;
+color: black;
+  }
+  
+      blockquote {
+      border-bottom-color: #444;
+      border-bottom-style: none;
+      border-bottom-width: 0px;
+      border-left-color: #DDD;
+      border-left-style: solid;
+      border-left-width: 8px;
+      border-right-color: #444;
+      border-right-style: none;
+      border-right-width: 0px;
+      border-top-color: #444;
+      border-top-style: none;
+      border-top-width: 0px;
+      box-shadow: rgba(0, 0, 0, 0.496094) 0px 0px 6px 0px;
+      color: #444;
+      display: block;
+      margin-bottom: 24px;
+      margin-left: 24px;
+      margin-right: 0px;
+      margin-top: 24px;
+      outline-color: #444;
+      outline-style: none;
+      outline-width: 0px;
+      padding-bottom: 12px;
+      padding-left: 16px;
+      padding-right: 8px;
+      padding-top: 12px;
+      vertical-align: baseline;
+    }
+  
+  </style>
+       <style media="print">
+         @page {
+            size: A4 landscape;
+             @top-right {
+                content: "Page " counter(page);
+             }
+         }
+          article {
+            page-break-after: always;
+            margin: auto;
+          }
+          article.next, article.past {
+            display: block;
+          }
+          body {
+              display: block !important;
+              font-family: 'Open Sans', Arial, sans-serif;
+              font-size: 1.5em;
+          }
+      </style>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script type="text/javascript">
+        window.addEventListener('load', function(){
+            var link = document.getElementsByTagName('link');
+            link[link.length-1].setAttribute ("media","screen");
+        });
+
+        $(document).ready(function() {
+        var total = $('article').length;
+        $('article').each(function(i, slide) {
+         $(slide).append('<div class="pagenum">'+ (i+1) + ' / ' + total + '</div>');
+       });
+          $('pre.run').each(function(i, source) {
+            $('<a class="runbtn" href="#run">Run</a>').insertBefore(source)
+            .click(function() {
+              $('#runoutput').remove();
+              var out = $('<div id="runoutput"></div>').insertAfter(source)
+                .text('Waiting for remote server...');
+
+              $.ajax("http://cbuild.tux21b.org/run", {
+                data: {"source": $(source).text()},
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                  out.empty();
+                  if (data.error) {
+                    $('<div></div>').text(data.error).appendTo(out);
+                  }
+                  $('<div></div>').text(data.output).appendTo(out);
+                },
+                error: function() {
+                  out.empty();
+                  $('<div></div>').text("Error communicating with remote server.").appendTo(out);
+                }
+              });
+              return false;
+            });
+          });
+          $(document).click(function() {
+            $('#runoutput').remove();
+          });
+        });
+        
+        window.addEventListener("load", function() {
+          animateCode();
+        });
+        
+        function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = max_img;
+          container.src = container.src.replace(img_id + ".", new_id + "."); 
+        }
+        </script>
+
+
+    </head>
+
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-tugraz'>
+    <article>
+        <h1>
+          Tutorium #8
+        </h1>
+        <p>
+          Einführung in die (strukturierte) Programmierung<br><br>
+      Gruppe 2 – Thomas Neff
+          <small><a href="mailto:prog-tutor-thomas@iicm.tugraz.at">prog-tutor-thomas@iicm.tugraz.at</a></small><br />
+      Gruppe 3 – Michael Schwarz
+          <small><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></small><br />
+      Gruppe 5 – Jörg Müller
+          <small><a href="mailto:prog-tutor-joerg@iicm.tugraz.at">prog-tutor-joerg@iicm.tugraz.at</a></small><br />
+      Gruppe 6 – Christoph Hack
+          <small><a href="mailto:prog-tutor-hack@iicm.tugraz.at">prog-tutor-hack@iicm.tugraz.at</a></small><br />
+      Gruppe 8 – Anja Karl
+          <small><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></small><br />
+          Gruppe 9 – Manuel Weber
+          <small><a href="mailto:prog-tutor-weber@iicm.tugraz.at">prog-tutor-weber@iicm.tugraz.at</a></small><br/>
+      
+        </p>
+      </article>
+     
+    
+        <article>
+      <h3>Tutoriumsinhalt</h3>
+    <ul>
+    <li>HW 6 Besprechung</li>
+    <li>Listen</li>
+    <li>SVN</li>
+    <li>Gruppenbeispiel</li>
+    <li>Abgabegespr&auml;ch</li>
+    <li>Beliebte Fehler / Best Practice</li>
+    </ul>
+    </article>
+
+<article>
+<h3> HW6 - Gut oder Schlecht?
+</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+</pre>
+</article>
+         
+<article>
+<h3>HW6 - H&auml;uftigste Fehler</h3>
+<ul>
+<li>
+  Keine &Uuml;berpr&uuml;fung von NULL-Pointern nach malloc/realloc
+</li>
+<li>
+  Keine &Uuml;berpr&uuml;fung der R&uuml;ckgabewerte der File I/O Funktionen
+  </li>
+</ul>
+</article>
+           
+        <article>
+      <h3>Abgabe</h3>
+       <ul>
+        <li>bis Mittwoch, 18.12.</li>
+        <li><strong>Deadline 19:00</strong></li>
+      </ul>
+    </article>
+    
+    
+  </section>
+  </body>
+</html>
+
