@@ -265,10 +265,120 @@ color: black;
 <article>
 <h3> HW6 - Gut oder Schlecht?
 </h3>
-<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+<pre class="compact" style="font-size: 0.55em; line-height: 0.95em;">
+int main(int argc, char *argv[]) {
+  if(argc == 3){
+    if(input) {
+      if(lSize > 0){
+        if(PascalsInFile[0] > 0){
+          if(PascalStructArray){
+            for(iC = 0;iC < PascalsInFile[0];iC++){
+              if(!ReadInPascal(&PascalStructArray[iC],input)){
+                if(!&PascalStructArray[iC]){
+                  return 5;
+                }
+                else{
+                  return 4;
+                }
+              }
+            }
+            return 0;
+          }
+          else{
+            return 5;
+          }
+        }
+        else{
+          return 3;
+        }
+      }
+      return 3;
+    }
+    else{
+      return 2;
+    }
+  }
+  else{
+    return 1;
+  }
+}
 </pre>
+
+
 </article>
-         
+<article>
+<h3> HW6 - Gut oder Schlecht?
+</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.22em;">
+int main(int argc, char* argv[])
+{
+  if(argc != 3)
+  {
+    print(USAGE_ERROR);
+    return USAGE_ERROR;
+  }
+  char* input = NULL;
+  enum ErrorCodes enum_temp = readFileToStr(&input, argv[1]);
+  if(enum_temp != NO_ERROR)
+  {
+    print(enum_temp);
+    free(input);
+    return enum_temp;
+  }
+
+  enum_temp = writeStrToFile(input, argv[2]);
+  if(enum_temp != NO_ERROR)
+  {
+    print(enum_temp);
+    free(input);
+    return enum_temp;
+  }
+
+  free(input);
+  return NO_ERROR;
+}
+ </pre>
+
+
+</article> 
+<article>
+<h3> HW6 - Gut oder Schlecht?
+</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.1em;">
+int readBinaryFile(char * filename)
+{
+ [...]
+      
+      length_of_strings = (int *)malloc(sizeof(int)*count_pascal_str);
+      if(length_of_strings==NULL)
+      {
+        printf("Error: out of memory.\n");
+        return 5;
+      }
+      
+      for(str_counter = 0; str_counter < count_pascal_str; str_counter++)
+      {
+        // read length of the string
+        str = NULL;
+        fread(&str_length,sizeof(int),1,input);
+        length_of_strings[str_counter] = str_length;
+        str = (char *) realloc(str,(str_length+1));
+
+        if(str==NULL)
+        {
+          printf("Error: out of memory.\n");
+          return 5;
+        }
+        [...]
+      }
+  [...]
+    
+  return 0;
+}
+   </pre>
+
+
+</article>      
 <article>
 <h3>HW6 - H&auml;uftigste Fehler</h3>
 <ul>
