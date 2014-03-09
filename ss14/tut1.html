@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SEP: Tutorium #1</title>
+    <meta charset='utf-8'>
+    <script src='slides.js'></script>
+    <script src="balls.js"></script>
+    <link rel="stylesheet" media="print" href="print.css">
+    </head>
+
+
+  <body style='display: none' onload="Example.init();">
+    <section class='slides layout-regular template-tugraz'>
+
+      <article>
+        <h1>
+          Tutorium #1
+        </h1>
+        <p>
+          Softwareentwicklung Praktikum<br>
+          Gruppe 9 – Michael Schwarz</p>
+          <p><small><a href="mailto:prog-tutor-michael@iicm.edu">prog-tutor-michael@iicm.edu</a></small></p>
+          <p><small><a href="http://www.student.tugraz.at/michael.schwarz/sep">http://www.student.tugraz.at/michael.schwarz/sep</a></small></p>
+      </article>
+
+     <article>
+        <h3>Ablauf des Tutoriums</h3>
+        <ul class="compact">
+          <li>Ablauf</li>
+          <li>Kommunikation</li>
+          <li>Beurteilung</li>
+          <li>Arbeitsumgebung</li>
+		  <li>Makefiles</li>
+		  <li>SVN</li>
+          <li>Beispiel</li>
+        </ul>
+     </article>
+     
+     <article>
+	<h3>Allgemeines zu den Tutorien</h3>
+	<ul>
+	  <li>4 Tutorien</li>
+	  <li>keine Anwesenheitspflicht</li>
+	  <li>Erklärung der Übungsaufgaben</li>
+	  <li>Beantwortung von Fragen</li>
+	  <li>Hilfestellungen</li>
+	</ul>
+	
+	<br />
+	<small><strong>Mitschreiben ist nicht notwendig, die Folien sind online verf&uuml;gbar</strong></small>
+     </article>
+     
+     
+     <article>
+	<h3>Kontakt</h3>
+	<h4>Newsgroups (nntp://news.tugraz.at)</h4>
+	    <ul>
+	      <li>tu-graz.lv.sep</li>
+	      <li>tu-graz.lv.sep.organisatorisches</li>
+	      <li>tu-graz.lv.sep.uebungsgruppen</li>
+	    </ul>
+	  <small><strong>Das Lesen der Newsgroups ist verpflichtend!<br /></strong></small>
+	  
+	<h4>E-Mail</h4>
+	<a href="mailto:prog-tutor-michael@iicm.edu">prog-tutor-michael@iicm.edu</a>
+
+     </article>
+     
+
+    <article>
+      <h3>Wichtige Internetadressen</h3>
+	    <h4>Palme (Abgabesystem)</h4>
+	    <a href="http://palme.iicm.tugraz.at">http://palme.iicm.tugraz.at</a>
+	    
+	    <h4>Wiki</h4> 
+	    <a href="http://palme.iicm.tugraz.at/wiki/SEP">http://palme.iicm.tugraz.at/wiki/SEP</a>
+	    
+	    <h4>Teach Center </h4>
+	    <a href="http://tugtc.tugraz.at/wbtmaster/courseMain.htm?706007">http://tugtc.tugraz.at/wbtmaster/courseMain.htm?706007</a>
+	    	    
+	    <h4>Tutoriumshomepage</h4>
+	      <a href="http://www.student.tugraz.at/michael.schwarz/sep">http://www.student.tugraz.at/michael.schwarz/sep</a>
+    
+    </article>
+    
+    <article>
+      <h3>Leistung</h3>
+      <ul>
+        <li>1 Einzelbeispiel</li>
+        <li>2 Gruppenbeispiele (<strong>3er Gruppen</strong>)</li>
+        <hr>
+        <li>&Uuml;bungsteil (30 Punkte)
+        <li>Klausur (10 Punkte)</li>
+      </ul>
+      <hr>
+      <br /><br />
+    <img src="images/challenge-accepted.png" alt="" style="float: left;"/>
+
+      <ul class="marks">
+        <li>Nicht Gen&uuml;gend: &lt; 20 Punkte</li>
+        <li>Gen&uuml;gend: ab 20 Punkten</li>
+        <li>Befriedigend: ab 27 Punkten</li>
+        <li>Gut: ab 32 Punkten</li>
+        <li>Sehr Gut: ab 36 Punkten</li>
+      </ul>
+    
+    </article>
+    
+    
+    <article>
+        <h3>Benotung</h3>
+        
+        <ul>
+          <li>Formale Fehlerquellen <sup>1</sup></li>
+          <li>Codingstandard <sup>2</sup></li>
+          <li>Testcases</li>
+          <li>Abgabegespräche nach Assignments</li>
+        </ul>
+        
+        <br />
+        <ul>
+          <li>Alle Assignments m&uuml;ssen abgegeben werden!</li>
+          <li>Keine Plagiate!</li>
+        </ul>
+        
+        <div class="source little_bit_right">
+        <sup>1</sup> <a href="https://palme.iicm.tugraz.at/wiki/SEP/Fehlerquellen">https://palme.iicm.tugraz.at/wiki/SEP/Fehlerquellen</a><br />
+        <sup>2</sup> <a href="https://palme.iicm.tugraz.at/wiki/SEP/CS">https://palme.iicm.tugraz.at/wiki/SEP/CS</a>
+        </div>
+     </article>
+	 
+	      
+     <article class="smaller">
+	 <h3>Benotungsschema</h3>
+	 <img src="images/fehlerquellen.png" style="float: left; display: inline;" />
+	 <img src="images/serious.jpg" style="margin-top: 350px; right: 8px;" width="35%" />
+	 </article>
+     
+     
+
+      <article class='smaller'>
+          <h3>Arbeitsumgebung</h3>
+          <h4>Editor mit Syntaxhighlighting / IDE</h4>
+          <p>
+            <img src="images/linux.png"> kate, gedit, ...<br />
+            <img src="images/windows.png"> <a href="http://notepad-plus-plus.org/">Notepad++</a><br />
+            <img src="images/mac.png"> <a href="http://www.peterborgapps.com/smultron/">Smultron</a><br />
+            <img src="images/linux.png"><img src="images/windows.png"><img src="images/mac.png"> <a href="http://www.eclipse.org/cdt/">Eclipse CDT</a>
+          </p>
+
+          <h4>Upload (SFTP) auf Pluto</h4>
+          <p>
+            <img src="images/linux.png"><img src="images/windows.png"><img src="images/mac.png"> <a href="http://filezilla-project.org/download.php?type=client">FileZilla</a>
+          </p>
+
+          <h4>SSH</h4>
+          <p><img src="images/linux.png"><img src="images/mac.png"> Terminal</p>
+          <pre>ssh tugraz_username@pluto.tugraz.at</pre>
+          <p>
+           <img src="images/windows.png"> <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTY</a>
+          </p>
+      </article>
+
+
+      <article>
+        <h3>Compilieren: <code>g++</code></h3>
+        <pre>g++ -Wall -o ass1 ass1.cpp</pre>
+        
+        <table class="little_bit_bigger">
+          <tr><td><b>g++</b></td><td>Name des Compilers</td></tr>
+          <tr><td><b>-Wall</b></td><td>Alle Warnungen anzeigen</td></tr>
+          <tr><td><b>-o ass1</b></td><td>Executable als &raquo;ass1&laquo; speichern</td></tr>
+          <tr><td><b>ass1.cpp</b></td><td>Datei, in welcher der C++ Quelltext steht</td></tr>
+        </table>
+ 
+
+        <h4>Starten:</h4>
+        <pre>./ass1</pre>
+      </article>
+      
+      
+      <article>
+        <h3>Alternativ: <code>make</code></h3>
+        <pre>make</pre>
+        
+        <ul>
+          <li>Bei allen Assignments liegt ein <code>Makefile</code> bei</li>
+          <li><code>make</code> erstellt das Programm nach den Regeln im <code>Makefile</code></li>
+          <li>Kann verwendet werden ohne es zu verstehen</li>
+          <li>Standard in gr&ouml;&szlig;eren Softwareprojekten</li>
+        </ul>
+ 
+
+        <h4>Starten:</h4>
+        <pre>./ass1</pre>
+      </article>
+      
+      
+       
+      <article>
+        <h3>Exkurs <code>Makefile</code></h3>
+        
+        Aufbau:
+<p class="pre">
+<span class="red">Ziel:</span> <span class="yellow">Abhängigkeit1 (Abhängigkeit2 ...)</span>
+&lt;tab>  <span class="blue">(Befehl 1)</span>
+&lt;tab>  <span class="blue">(Befehl 2)</span>
+	...
+</p>
+
+        Beispiel:
+<p class="code">
+<span class="red">all:</span> <span class="yellow">ass1</span>
+
+<span class="red">ass1:</span> <span class="yellow">ass1.cpp</span>
+	<span class="blue">g++ ass1.cpp -Wall -o ass1</span>
+</p>
+      </article>     
+      
+      
+      <article>
+       <h3>Exkurs <code>Makefile</code> - Ass1</h3>
+<p style="font-size: .55em; line-height: 1.2em; width: 60%; float: left; margin: 0px;" class="code compact">EXECUTABLE = ass1
+OBJECT_DIR = objects
+SOURCES    = $(wildcard *.cpp)
+OBJECTS    = $(patsubst %,
+                  $(OBJECT_DIR)/%,${SOURCES:.cpp=.o})
+
+all: $(EXECUTABLE) 
+
+$(OBJECT_DIR)/%.o: %.cpp
+	$(CC) $(CCFLAGS) $@ $&lt; -MMD -MF ./$@.d
+
+$(EXECUTABLE) : $(OBJECTS)
+	$(CC) -o $@ $^ $(LDFLAGS)
+	
+clean:
+        rm -f $(OBJECT_DIR)/*.o $(OBJECT_DIR)/*.o.d
+        rm -f $(EXECUTABLE)</p>
+        
+<div style="float: right; width: 30%; line-height: 0.95em;">
+  <dl class="expl">
+    <dt>$(CC)</dt>
+    <dd>Compiler: g++</dd>
+    <dt>$(CCFLAGS)</dt>
+    <dd>Compilerflags: -Wall -g -c -o</dd>
+    <dt>$@</dt>
+    <dd>Zielname</dd>
+    <dt>$&lt;</dt>
+    <dd>Namen der Abhängigkeiten</dd>
+    <dt>$^</dt>
+    <dd>Alle Quellen</dd>
+    <dt>%.o: %.cpp</dt>
+    <dd>generische Regel um .o Dateien aus .cpp Dateien zu erzeugen</dd>
+    <dt>-MMD -MF ./$@.d</dt>
+    <dd>Automatische Erkennung von Abhängigkeiten</dt>
+  </dl>
+</div>
+
+<div style="float: left; padding-top: 8px;">
+<img src="images/fu.jpg" width="85%" alt="" />
+</div>
+      </article>
+
+      
+      <article>
+       <h3>Exkurs <code>Makefile</code></h3>
+       Ass1 Makefile aufgel&ouml;st:
+<p class="code compact" style="font-size: .55em; line-height: 1.2em;">all: ass1
+
+objects/Game.o: Game.cpp
+	g++ -Wall -g -c -o Game.o Game.cpp -MMD -MF ./Game.o.d
+
+[...]
+
+objects/main.o: main.cpp
+	g++ -Wall -g -c -o main.o main.cpp -MMD -MF ./main.o.d
+
+ass1 : objects/Game.o objects/main.o [...]
+	g++ -o ass1 objects/Game.o objects/main.o [...]
+	
+clean:
+        rm -f objects/Game.o objects/main.o [...] objects/Game.o.d [...]
+        rm -f ass1</p>
+</p>
+
+<pre class="compact"># ass1 erstellen
+make
+# ass1 und alle *.o l&ouml;schen
+make clean
+</pre>
+      </article>
+
+<article>
+    <h3>Was ist SVN?</h3>
+    <ul>
+    <li>Versionskontrolle</li>
+    <li>Man kann jederzeit auf eine alte Version vom Code zugreifen</li>
+    <li>Mehrere Leute können an einem Projekt arbeiten - Man sieht wer was eingecheckt hat</li>
+    <li>Vergleichs-Funktion für verschiedene Versionen</li>
+    <li>Kostenlose Repositories für TU Graz Studenten</li>
+    </ul>
+    </article>
+    
+        <article>
+    <h3>SVN einrichten (1/6) : TUGraz online</h3>
+    <img style="margin-top: 70px;" src="images/TUG_svn.png" width="97%">
+    </article>
+    
+            <article>
+    <h3>SVN einrichten (2/6) : Checkout - Windows</h3>
+    <p>
+    <a href="http://tortoisesvn.net/downloads.html">TortoiseSVN</a>
+    </p>
+    <img style="margin-top: 120px; float:left; margin-left: 32px;" src="images/TortoiseSVN_checkout.png" width="36%">
+    <img style="margin-top: 120px; float:left; margin-left: 32px;" src="images/TortoiseSVN_checkout2.png" width="46%">
+    </article>
+    
+                <article>
+    <h3>SVN verwenden (3/6) : Update/Commit - Windows</h3>
+    <img style="margin-top: 10%; margin-left:27%;" src="images/TortoiseSVN_Update_Commit.png" width="40%">
+    </article>
+    
+                    <article>
+    <h3>SVN verwenden (4/6) : History - Windows</h3>
+    <p style="font-size: 70%;">Rechtsklick > TortoiseSVN  > Show Log
+    <img style="margin-top: 1%; margin-left:19%;" src="images/TortoiseSVN_History.png" width="55%" >
+    </article>
+                    <article>
+    <h3>SVN verwenden (5/6) : Vergleichen - Windows</h3>
+    <p style="font-size: 70%;">Log > Show changes</p>
+    <img style="margin-top: 30px; " src="images/TortoiseSVN_Vergleich.png" width="97%">
+    </article>
+    
+                        <article>
+    <h3>SVN verwenden (6/6) : Linux</h3>
+    <p style="font-size: 70%;">KDE-SVN (zu finden im Packet-Manager)</p>
+    <img style="margin-top: 10px; ; margin-left:4%;" src="images/kdesvn.png" width="90%" >
+    </article>
+      
+     <article>
+       <h3>Einfache Klasse (ball.h)</h3>
+<pre style="font-size: .65em; line-height: 1.2em; width: 75%; margin: 2em auto;">
+#ifndef BALL_H_INCLUDED
+#define BALL_H_INCLUDED
+
+class Ball
+{
+private:
+  float x_, y_, speed_;
+  int direction_;
+
+public:
+  Ball(float x, float y, float speed, int direction);
+  
+  void move();
+  
+  float getSpeed();
+  void setSpeed(float speed);  
+};
+
+#endif
+</pre>
+     
+     </article>
+     
+
+     <article>
+       <h3>Konstruktor und <code>move</code> (ball.cpp)</h3>
+<pre style="font-size: .6em; line-height: 1.2em; width: 75%; margin: 4em auto;">
+#include &lt;math.h>
+#include "ball.h"
+
+Ball::Ball(float x, float y, float speed, int direction) 
+       : x_(x), y_(y), speed_(speed)
+{
+ direction_ = direction * M_PI / 180.0;
+}
+
+void Ball::move()
+{
+  x_ = x_ + cos(direction_) * speed_;
+  y_ = y_ + sin(direction_) * speed_;  
+  if(x_ &lt; 0 || x_ > 800) 
+    direction_ = atan2(sin(direction_), -cos(direction_));
+  if(y_ &lt; 0 || y_ > 600)
+    direction_ = atan2(-sin(direction_), cos(direction_));
+}
+
+</pre>
+     
+     </article>
+     
+
+      
+     <article>
+       <h3>Getter und Setter (ball.cpp)</h3>
+<pre style="font-size: .6em; line-height: 1.2em; width: 75%; margin: 4em auto;">
+// getter Methode f&uuml;r Variable speed_
+float Ball::getSpeed()
+{
+  return speed_;
+}
+
+// setter Methode f&uuml;r Variable speed_
+void Ball::setSpeed(float speed)
+{
+  speed_ = speed;
+}
+</pre>
+<ul>
+ <li>Schutz der Variablen vor direktem Zugriff</li>
+ <li>&Uuml;berpr&uuml;fung/Ver&auml;nderung/etc. des Wertes vor der Zuweisung</li>
+</ul>
+     </article>
+      
+
+     
+     <article>
+       <h3>Das <code>main</code>-Programm</h3>
+<table><tr><td style="border: 0px;">
+<pre class="compact" style="font-size: .55em; line-height: 1.2em; width: 95%;">
+#include "ball.h"
+
+int main()
+{
+  Ball b1(200, 225, 5, 10);<div id="balls"></div>
+  while(1)
+  {
+    b1.move();
+    if(b1.getSpeed() &lt; 20) b1.setSpeed(b1.getSpeed() + 0.01);<div id="ball_move"></div>
+    drawWindow(); // some magic...
+  }
+}
+
+</pre>
+</td><td style="border: 0px;">
+  <button onclick="Example.addRandomBall();" class="big_button"><img src="images/add.png" alt="" /> Ball</button>
+  <button onclick="Example.compile();" class="big_button"><img src="images/run.png" alt="" /> Starten</button>
+</td></tr></table>
+
+<div id="popup" style="display: none;">
+
+  <div style="position: absolute; left: 80px; top: 80px;">
+    <img src="images/window.png" onclick="Example.kill();"/>
+  </div>
+  <div style="position: absolute; left: 85px; top: 110px;">
+   <canvas id="game" style="width: 700px; height: 430px;"></canvas>
+  </div>
+
+</div>
+
+
+     </article>
+                 
+     <article>
+        <h3>H&auml;ufige Fehler</h3>
+        <ul>
+          <li>Versteckte Dateien/Ordner (Mac OS X)</li>
+          <li>Falscher Dateiname</li>
+          <li>Warnings beim Kompilieren</li>
+          <li>Codingstandard Verst&ouml;&szlig;e</li>
+          <li>Spezifikations-Verst&ouml;&szlig;e</li>
+          <li>Nicht geforderte Dateien</li>
+        </ul>
+     </article>
+
+	 <article>
+	   <center><h1>Live Demo</h1></center>
+	 </article>
+    
+    </section>
+
+  </body>
+</html>

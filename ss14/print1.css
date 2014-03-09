@@ -1,0 +1,85 @@
+
+@page {
+  size: A4 landscape;
+    @top-right {
+      content: "Page " counter(page);
+    }
+}
+article {
+  page-break-after: always;
+  margin: auto;
+}
+article.next, article.past {
+  display: block;
+}
+body {
+    display: block !important;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 1.5em;
+}
+
+.no_print {
+  display: none;
+}
+
+p.pre {
+  white-space: pre;
+  font-family: monospace;
+  font-size: .9em;
+}
+
+p.code {
+  font-family: 'Droid Sans Mono', 'Courier New', monospace;
+  white-space: pre;
+  font-size: 20px;
+  line-height: 28px;
+  padding: 5px 10px;
+  letter-spacing: -1px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  color: black;
+  overflow: hidden;
+  border: 1px solid black;
+}
+
+span.src {
+  font-family: monospace;
+}
+
+.uml_class {
+ border: 1px solid black; 
+ border-collapse: collapse;
+}
+
+.uml_class tr th {
+  text-align: center; 
+  border-bottom: 1px solid black;
+}
+
+.uml_class tr td.private ul {
+  list-style: none !important;
+  border-bottom: 1px solid gray;
+}
+
+.uml_class tr td.private ul li:before {
+ content: "- ";
+}
+
+.uml_class tr td.public ul {
+  list-style: none !important;
+}
+
+.uml_class tr td.public ul li:before {
+ content: "+ ";
+}
+
+.console {
+  border: 1px solid gray; 
+  color: #000; 
+  font-family: monospace; 
+  font-size: 60%; 
+  line-height: 1.1em; 
+  padding: 8px; 
+  margin-top: 8px;  
+}
+
