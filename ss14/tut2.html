@@ -368,7 +368,99 @@ int main()
        <img src="images/gruppe.jpg" />
       </center>
      </article>
+   
+      <article>
+        <h3>Exkurs <code>Makefile</code></h3>
+        
+        Aufbau:
+<p class="pre">
+<span class="red">Ziel:</span> <span class="yellow">Abhängigkeit1 (Abhängigkeit2 ...)</span>
+&lt;tab&gt;  <span class="blue">(Befehl 1)</span>
+&lt;tab&gt;  <span class="blue">(Befehl 2)</span>
+	...
+</p>
 
+        Beispiel:
+<p class="code">
+<span class="red">all:</span> <span class="yellow">ass1</span>
+
+<span class="red">ass1:</span> <span class="yellow">ass1.cpp</span>
+	<span class="blue">g++ ass1.cpp -Wall -o ass1</span>
+</p>
+      <div class="source little_bit_bigger no_print" id="page11div"> 12 / 27</div></article>     
+      
+      
+      <article>
+       <h3>Exkurs <code>Makefile</code> - Ass1</h3>
+<p style="font-size: .55em; line-height: 1.2em; width: 60%; float: left; margin: 0px;" class="code compact">EXECUTABLE = ass1
+OBJECT_DIR = objects
+SOURCES    = $(wildcard *.cpp)
+OBJECTS    = $(patsubst %,
+                  $(OBJECT_DIR)/%,${SOURCES:.cpp=.o})
+
+all: $(EXECUTABLE) 
+
+$(OBJECT_DIR)/%.o: %.cpp
+	$(CC) $(CCFLAGS) $@ $&lt; -MMD -MF ./$@.d
+
+$(EXECUTABLE) : $(OBJECTS)
+	$(CC) -o $@ $^ $(LDFLAGS)
+	
+clean:
+        rm -f $(OBJECT_DIR)/*.o $(OBJECT_DIR)/*.o.d
+        rm -f $(EXECUTABLE)</p>
+        
+<div style="float: right; width: 30%; line-height: 0.95em;">
+  <dl class="expl">
+    <dt>$(CC)</dt>
+    <dd>Compiler: g++</dd>
+    <dt>$(CCFLAGS)</dt>
+    <dd>Compilerflags: -Wall -g -c -o</dd>
+    <dt>$@</dt>
+    <dd>Zielname</dd>
+    <dt>$&lt;</dt>
+    <dd>Namen der Abhängigkeiten</dd>
+    <dt>$^</dt>
+    <dd>Alle Quellen</dd>
+    <dt>%.o: %.cpp</dt>
+    <dd>generische Regel um .o Dateien aus .cpp Dateien zu erzeugen</dd>
+    <dt>-MMD -MF ./$@.d</dt>
+    <dd>Automatische Erkennung von Abhängigkeiten
+  </dd></dl>
+</div>
+
+<div style="float: left; padding-top: 8px;">
+<img src="SEP%20%20Tutorium%20%231-Dateien/fu.jpg" alt="" width="85%">
+</div>
+      <div class="source little_bit_bigger no_print" id="page12div"> 13 / 27</div></article>
+
+      
+      <article>
+       <h3>Exkurs <code>Makefile</code></h3>
+       Ass1 Makefile aufgelöst:
+<p class="code compact" style="font-size: .55em; line-height: 1.2em;">all: ass1
+
+objects/Game.o: Game.cpp
+	g++ -Wall -g -c -o Game.o Game.cpp -MMD -MF ./Game.o.d
+
+[...]
+
+objects/main.o: main.cpp
+	g++ -Wall -g -c -o main.o main.cpp -MMD -MF ./main.o.d
+
+ass1 : objects/Game.o objects/main.o [...]
+	g++ -o ass1 objects/Game.o objects/main.o [...]
+	
+clean:
+        rm -f objects/Game.o objects/main.o [...] objects/Game.o.d [...]
+        rm -f ass1</p>
+<p></p>
+
+<pre class="compact prettyprint"><span class="com"># ass1 erstellen</span><span class="pln">
+make
+</span><span class="com"># ass1 und alle *.o löschen</span><span class="pln">
+make clean</span></pre>
+      <div class="source little_bit_bigger no_print" id="page13div"> 14 / 27</div></article>
      
 	 <article>
        <h3>Ass1</h3>
