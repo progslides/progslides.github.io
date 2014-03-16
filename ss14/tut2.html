@@ -84,38 +84,42 @@ vector&lt;int> int_vector;</pre>
 		 oder
 		 <pre class="compact">std::vector&lt;int> int_vector;</pre><br/></li>
 		 
-         <li>Wichtigste Methoden:
-		 <ul class="prelist">
-		 <li><pre>int groesse = int_vector.size();</pre></li>
-		 <li><pre>int_vector.insert(0,3);</pre> <p>0 ... index, 3 ... Wert zum Einf&uuml;gen</p></li>
-		 <li><pre>int_vector.push_back(3);</pre> <p>3 ... Wert zum Einf&uuml;gen an letzter Stelle</p></li>
-		 <li><pre>int element = int_vector[0];</pre><p> 0 ... Index vom Wert, den man haben will</p></li>
-		 </ul></li>
+         <li>Wichtigste Methoden:</li>
+          <div class="left" style="padding-right: 20px;">
+		 <dl class="expl">
+		   <dt>Anzahl der Element im Vektor</dt><dd><pre class="compact">int groesse = int_vector.size();</dd>
+		   <dt>Wert <em>3</em> an Position <em>0</em> einf&uuml;gen</dt><dd><pre class="compact">int_vector.insert(0, 3);</pre></dd>
+		 </dl>
+	 </div>
+	 <div class="left">
+                 <dl class="expl">
+                   <dt>Wert <em>3</em> an letzter Stelle einf&uuml;gen</dt><dd><pre class="compact">int_vector.push_back(3);</pre></dd>
+                   <dt>0 ... Index vom Wert, den man haben will</dt><dd><pre class="compact">int element = int_vector[0];</pre></dd>
+                 </dl>
+	 </div>	 
         </ul>
      </article>
      
      <article>
       <h3>Vector</h3>
-<pre>
-std::vector&lt;int> int_vector;
+<pre class="compact">std::vector&lt;int> int_vector;
 int_vector.push_back(42);
 int_vector.push_back(13);
-int_vector.push_back(37);
-</pre>
+int_vector.push_back(37);</pre>
       
-      Zugriff auf alle Elemente durch Index...
+      <small>Zugriff auf alle Elemente durch Index...</small>
 <pre class="compact" style="font-size: 0.60em;">
 int i;
 for(i = 0; i &lt; int_vector.size(); i++)
   std::cout &lt;&lt; int_vector[i] &lt;&lt; std::endl;
 </pre>
       
-      ...oder durch Iterator
-<pre class="compact" style="font-size: 0.60em;">
+      <small>...oder durch Iterator</small>
+<pre class="compact" style="font-size: 0.55em;">
 for(vector&lt;int>::iterator it = int_vector.begin(); it != int_vector.end(); it++)
   std::cout &lt;&lt; *it &lt;&lt; std::endl;
 </pre>
-     ...oder mit C++2011
+     <small>...oder mit C++2011</small>
 <pre class="compact" style="font-size: 0.60em;">
 for(auto it = int_vector.begin(); it != int_vector.end(); it++)
   std::cout &lt;&lt; *it &lt;&lt; std::endl;
@@ -317,10 +321,17 @@ int main()
   </div>
 
 </div>
-
-
      </article>
-	 
+
+          <article>
+      <h3>Gruppenfindung</h3>
+      <center>
+       <br /><br /><br />
+       <img src="images/gruppe.jpg" />
+      </center>
+     </article>
+
+     
 	 <article>
        <h3>Ass1</h3>
 	   <ul>
