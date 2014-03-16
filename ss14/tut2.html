@@ -324,108 +324,84 @@ int main()
 	 <article>
        <h3>Ass1</h3>
 	   <ul>
-	   <li>Grundlage f&uuml;r ein Brettspiel</li>
+	   <li>Grundlage f&uuml;r "Tower Defense"</li>
 	   <li><span class="src">main.cpp</span> wird vorgegeben</li>
-	   <li>4 Klassen zu schreiben: <span class="src">Game</span>, <span class="src">Player</span>, <span class="src">Continent</span> &amp; <span class="src">Territory</span></li>
+	   <li>3 Klassen zu schreiben: <span class="src">Game</span>, <span class="src">Player</span>, <span class="src">Continent</span> &amp; <span class="src">Territory</span></li>
 	   </ul>
      </article>
+
 	 <article>
-       <h3>Ass1 - Game</h3>
+       <h3>Ass1 - SpeedRatio</h3>
        <table class="uml_class">
-       <tr>
-        <th>
-         Game
-        </th>
-       </tr>
-       <tr>
-        <td class="private">
-	   <ul>
-	   <li>players_: vector&lt;Player*></li>
-	   <li>continents_: vector&lt;Contintent*></li>
-	   <li>current_player_: Player*</li>
-	   </ul>
-	 </td>
-	</tr>
-        </table>
-     </article>
-	 <article>
-       <h3>Ass1 - Player</h3>
-       <table class="uml_class">
-       <tr><th>Player</th></tr>
+       <tr><th>SpeedRatio</th></tr>
        <tr><td class="private">
 	   <ul>
-	   <li>color_ : Color</li>
-	   <li>name_ : String</li>
+	   <li>events_ : unsigned int</li>
+	   <li>ticks_ : unsigned int</li>
 	   </ul>
        </td></tr>
        <tr><td class="public">
            <ul>
-           <li>Konstruktor</li>
-	   <li>Getter &amp; Setter</li>
-	   <li>getFullName()</li>
+           <li>currentEvents(unsigned int)</li>
 	   </ul>
 	</td></tr>
         </table>
      </article>
  <article>
-       <h3>Ass1 - Continent</h3>
+       <h3>Ass1 - Tower</h3>
        <table class="uml_class">
-       <tr><th>Continent</th></tr>
+       <tr><th>Tower</th></tr>
        <tr><td class="private">
 	   <ul>
 	   <li>name_: string</li>
-	   <li>territories: vector&lt;Territory*></li>
-	   </ul>
+	   <li>damage_: unsigned int</li>
+	   <li>range_: unsigned int</li>
+     <li>shoot_ratio_: SpeedRatio</li>
+     <li>game_: Game*</li>
+     </ul>
         </td></tr><tr><td class="public">
 	   <ul>
 	   <li>Konstruktor</li>
-	   <li>getOwner</li>
+	   <li>fire()</li>
 	   </ul>
 	</td></tr>
       </table>
      </article>
 	 <article>
-       <h3>Ass1 - Territory</h3>
+       <h3>Ass1 - Monster</h3>
        <table class="uml_class">
-       <tr><th>Territory</th></tr>
+       <tr><th>Monster</th></tr>
        <tr><td class="private">
 	   <ul>
 	   <li>name_: string</li>
-	   <li>short_name_: char[2]</li>
-	   <li>owner_: Player*</li>
-	   <li>units_: char</li>
-	   <li>neighbours_: vector&lt;Territory*></li>
+     <li>speed_ratio_: SpeedRatio</li>
+	   <li>damage_: unsigned int</li>
+	   <li>life_: unsigned int</li>
+     <li>attribute_: unsigned int</li>
+     <li>game_: Game*</li>
 	   </ul>
         </td></tr><tr><td class="public">
             <ul>
 	   <li>Konstruktor</li>
-	   <li>Getter &amp; Setter</li>
-	   <li>isNeighbour</li>
-	   <li>addNeighbour</li>
+	   <li>move()</li>
 	   </ul>
 	</td></tr></table>
      </article>
 	 <article class="smaller">
 	 <h3>Ass1 - Abgabe</h3>
-	 <h4><strong>Deadline: 10.04.2013 - 19:00</strong></h4>
+	 <h4><strong>Deadline: 19.03.2014 - 19:00</strong></h4>
 	 <ul>
 	 <li>main.cpp</li>
-<li>Game.h</li>
-<li>Game.cpp</li>
-<li>Player.h</li>
-<li>Player.cpp</li>
-<li>Territory.h</li>
-<li>Territory.cpp</li>
-<li>Continent.h</li>
-<li>Continent.cpp</li>
-<li>Color.h</li></ul>
+<li>.cpp files</li>
+<li>.h files</li>
+</ul>
 
 <span style="font-size: 0.75em; font-weight: bold;">Abgabe Archiv erstellen:</span>
 <pre class="compact">make submission</pre>
 	 </article>
 	 <article>
 	 <h1>Viel Glück für HW1 &amp; Ass1</h1>
-	 <h3 style="margin-top: 30px;">Nächstes Tutorium: 24. April</h3></article>
+	 <h3 style="margin-top: 30px;">Nächstes Tutorium: XX. April</h3></article>
     </section>
 
   </body>
