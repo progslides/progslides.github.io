@@ -84,19 +84,23 @@ vector&lt;int> int_vector;</pre>
 		 oder
 		 <pre class="compact">std::vector&lt;int> int_vector;</pre><br/></li>
 		 
-         <li>Wichtigste Methoden:</li>
+		 
+<img src="images/homer2.gif" width="100px" style="float: left; margin-top: 100px;">
+        <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 610px; background-color: #fcfcfc;">
+        <h3 style="border-bottom: 1px solid gray;">Wichtigste Methoden</h3>
           <div class="left" style="padding-right: 20px;">
 		 <dl class="expl">
-		   <dt>Anzahl der Element im Vektor</dt><dd><pre class="compact">int groesse = int_vector.size();</dd>
+		   <dt>Anzahl der Element im Vektor</dt><dd><pre class="compact">int len = int_vector.size();</dd>
 		   <dt>Wert <em>3</em> an Position <em>0</em> einf&uuml;gen</dt><dd><pre class="compact">int_vector.insert(0, 3);</pre></dd>
 		 </dl>
 	 </div>
 	 <div class="left">
                  <dl class="expl">
                    <dt>Wert <em>3</em> an letzter Stelle einf&uuml;gen</dt><dd><pre class="compact">int_vector.push_back(3);</pre></dd>
-                   <dt>0 ... Index vom Wert, den man haben will</dt><dd><pre class="compact">int element = int_vector[0];</pre></dd>
+                   <dt>Wert an Position <em>0</em></dt><dd><pre class="compact">int element = int_vector[0];</pre></dd>
                  </dl>
 	 </div>	 
+	 </div>
         </ul>
      </article>
      
@@ -140,15 +144,26 @@ string hallo_str = "Hallo Welt!";
 char* char_array = "Hallo Welt!";
 string char_str (char_array);</pre> <br />
 		 </li>
-		 
-         <li>Wichtigste Methoden:
-		 <ul class="prelist">
-		 <li><pre>int groesse = hallo_str.length();</pre></li>
-		 <li><pre>hallo_str += char_str; </pre> <p>Zwei Strings aneinander h&auml;ngen</p></li>
-		 <li><pre>hallo_str.compare(char_str);</pre> <p>returned 0 wenn gleich</p></li>
-		 <li><pre>char letter = hallo_str[0];</pre><p> 0 ... Index vom Buchstabe, den man haben will</p></li>
-		 </ul></li>
-        </ul>
+
+        <img src="images/homer2.gif" width="100px" style="float: left; margin-top: 110px;">
+        <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 610px; background-color: #fcfcfc;">
+        <h3 style="border-bottom: 1px solid gray;">Wichtigste Methoden</h3>
+
+        <div class="left" style="padding-right: 20px;">
+		 <dl class="expl">
+		 <dt>L&auml;nge des Strings</dt><dd><pre class="compact">int groesse = hallo_str.length();</pre></dd>
+		 <dt>Zwei Strings aneinander h&auml;ngen</dt><dd><pre class="compact">hallo_str += char_str; </pre></dd>
+		 </dl>
+        </div>
+        <div class="left">
+                <dl class="expl">
+                  <dt>liefert 0 wenn gleich</dt><dd><pre class="compact">hallo_str.compare(char_str);</pre></dd>
+                  <dt>Buchstabe an Position <em>0</em></dt><dd><pre class="compact">char letter = hallo_str[0];</pre></dd>
+                </dl>
+        </div>
+     </div>
+     
+     </ul>
 	   
      </article>
 	 
