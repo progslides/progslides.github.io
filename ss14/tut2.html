@@ -35,21 +35,6 @@
         </ul>
      </article>
 	 
-	<article>
-       <h3>HW</h3>
-	   <ul class="compact">
-         <li>Erstelle einen Vector von Strings, der alle dem Programm übergebene Parameter enthält</li>
-         <li>Gib erst die Anzahl der Elemente im Vector, dann für jeden String die Anzahl der Buchstaben aus.</li>
-        </ul>
-		<pre>
-tutor@tutor~$ ./hw a ab abc abcd
-4
-1
-2
-3
-4		</pre>
-     </article>
-     
      <article>
        <h3>STL - Standard Template Library</h3>
         <div class="left">
@@ -122,13 +107,18 @@ int_vector.push_back(37);
 <pre class="compact" style="font-size: 0.60em;">
 int i;
 for(i = 0; i &lt; int_vector.size(); i++)
-  cout &lt;&lt; int_vector[i] &lt;&lt; std::endl;
+  std::cout &lt;&lt; int_vector[i] &lt;&lt; std::endl;
 </pre>
       
       ...oder durch Iterator
 <pre class="compact" style="font-size: 0.60em;">
-for(vector<int>::iterator it = int_vector.begin(); it != int_vector.end(); it++)
-  cout &lt;&lt; *it &lt;&lt; std::endl;
+for(vector&lt;int>::iterator it = int_vector.begin(); it != int_vector.end(); it++)
+  std::cout &lt;&lt; *it &lt;&lt; std::endl;
+</pre>
+     ...oder mit C++2011
+<pre class="compact" style="font-size: 0.60em;">
+for(auto it = int_vector.begin(); it != int_vector.end(); it++)
+  std::cout &lt;&lt; *it &lt;&lt; std::endl;
 </pre>
      </article>
      
