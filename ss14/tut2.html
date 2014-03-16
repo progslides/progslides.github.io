@@ -13,15 +13,20 @@
   <body style='display: none' onload="Example2.init();">
     <section class='slides layout-regular template-tugraz'>
 
-      <article>
-        <h1>
-          Tutorium #2
-        </h1>
+     <article>
+      <h1>
+        Tutorium #2
+      </h1>
+      <p>
+        Softwareentwicklung Praktikum</p>
         <p>
-          Softwareentwicklung Praktikum<br>
-          Gruppe 9 – Michael Schwarz</p>
-          <p><small><a href="mailto:prog-tutor-michael@iicm.edu">prog-tutor-michael@iicm.edu</a></small></p>
-          <p><small><a href="http://www.student.tugraz.at/michael.schwarz/sep">http://www.student.tugraz.at/michael.schwarz/sep</a></small></p>
+          Gruppe 4 – Michael Schwarz
+          <small><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></small><br />
+          Gruppe 5 – Anja Karl
+          <small><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></small><br />
+          Gruppe 8 – Thomas Neff
+          <small><a href="mailto:prog-tutor-thomas@iicm.tugraz.at">prog-tutor-thomas@iicm.tugraz.at</a></small><br />
+        </p>
       </article>
 
      <article>
@@ -187,7 +192,26 @@ int main()
   std::cout &lt;&lt; "string1 is " &lt;&lt; string1 &lt;&lt; ", it's length is " &lt;&lt; string1.length() &lt;&lt; std::endl;
 </pre>
 
-     </article>     
+     </article>  
+
+      <article class="smaller">
+        <h3>Für Fortgeschrittene: Map</h3>
+        <ul>
+          <li>inkludieren mit</li>
+          <pre class="compact">#include &lt;map></pre><br/>
+          <li>Eine Liste von Key-Value Paaren von einem beliebigen Datentyp. Erst Key-, dann Value-Datentyp.</li>
+          <pre class="compact">std::map&lt;std::string, int> grades_;</pre><br/>
+          <li>Direkter Zugriff auf Value über Key. Fügt ein Element ein, falls noch nicht vorhanden.</li>
+          <pre class="compact">grades_["SEP"] = 1;</pre></br>
+          <li>Wichtigste Methoden:
+           <ul class="compact">
+            <li><pre class="compact">int groesse = grades_.size();</pre></li>
+             <li><pre class="compact">std::map&lt;std::string,int>::iterator it = grades_.find("SEP");</pre> </li>
+             <li><pre class="compact">for(it = grades_.begin(); it != grades_.end(); it++)</pre> </li>
+             <li><pre class="compact">std::cout &lt;&lt; "Key: " &lt;&lt; it->first &lt;&lt; "Value: " &lt;&lt; it->second &lt;&lt; std::endl;</pre></li>
+           </ul></li>
+         </ul>
+       </article>       
      
      <article>
        <h3>Einfache Klasse II (ball.h)</h3>
