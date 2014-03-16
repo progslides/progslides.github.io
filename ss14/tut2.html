@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SEP: Tutorium #2</title>
+    <meta charset='utf-8'>
+    <script src='slides.js'></script>
+    <script src="balls2.js"></script>
+    <link rel="stylesheet" media="print" href="print.css">
+    <!--<link rel="stylesheet" href="styles.css">-->
+    </head>
+
+
+  <body style='display: none' onload="Example2.init();">
+    <section class='slides layout-regular template-tugraz'>
+
+      <article>
+        <h1>
+          Tutorium #2
+        </h1>
+        <p>
+          Softwareentwicklung Praktikum<br>
+          Gruppe 9 – Michael Schwarz</p>
+          <p><small><a href="mailto:prog-tutor-michael@iicm.edu">prog-tutor-michael@iicm.edu</a></small></p>
+          <p><small><a href="http://www.student.tugraz.at/michael.schwarz/sep">http://www.student.tugraz.at/michael.schwarz/sep</a></small></p>
+      </article>
+
+     <article>
+        <h3>Ablauf des Tutoriums</h3>
+        <ul class="compact">
+		<li>HW1</li>
+         <li>STL - Standard Template Library</li>
+         <li>Strings</li>
+         <li>Vektoren</li>
+         <li>Ass1</li>
+        </ul>
+     </article>
+	 
+	<article>
+       <h3>HW</h3>
+	   <ul class="compact">
+         <li>Erstelle einen Vector von Strings, der alle dem Programm übergebene Parameter enthält</li>
+         <li>Gib erst die Anzahl der Elemente im Vector, dann für jeden String die Anzahl der Buchstaben aus.</li>
+        </ul>
+		<pre>
+tutor@tutor~$ ./hw a ab abc abcd
+4
+1
+2
+3
+4		</pre>
+     </article>
+     
+     <article>
+       <h3>STL - Standard Template Library</h3>
+        <div class="left">
+        <dl class="expl">
+          <dt>std::string</dt>
+          <dd>Zeichenketten</dd>
+          <dt>std::vector</dt>
+          <dd>Arrays</dd>
+          <dt>std::list</dt>
+          <dd>Doppelt-verkettete Liste</dd>
+        </dl>
+      </div>
+        <div class="right">
+        <dl class="expl">
+          <dt>std::set</dt>
+          <dd>Menge von eindeutigen Objekten</dd>
+          <dt>std::map</dt>
+          <dd>Assoziatives Array (Key-Value)</dd>
+        </dl>
+        <p>...</p>
+      </div>
+
+      <ul>
+        <li>Generische Datentypen für unterschiedliche
+          Einsatzzwecke (z.B. <span class="src" style="font-size: .8em;">std::vector&lt;int&gt;</span> oder <span class="src" style="font-size: .8em;">std::vector&lt;std::string&gt;</span>)
+        <li>Automatisches Speichermanagement</li>
+        <li>Iteratoren zum Durchlaufen der
+        Container, unabhängig von der Datenstruktur</li>
+        <li>Vorgefertigte Algorithmen (copy, sort, transform, etc.)</li>
+      </ul>     
+     </article>
+     
+     <article>
+      <img src="images/container.png" height="105%" />
+      <div style="position: absolute; right: 24px; top: 24px; font-size: 0.5em;">http://www.liamdevine.co.uk/code/images/container.png</div>
+     </article>
+
+     <article class="smaller">
+       <h3>Vector</h3>
+	   <ul>
+         <li>inkludieren mit</li>
+		 <pre class="compact">#include &lt;vector></pre>
+         <li>Erstellen eines Vektors
+		 <pre class="compact">using std::vector;
+...
+vector&lt;int> int_vector;</pre> 
+		 oder
+		 <pre class="compact">std::vector&lt;int> int_vector;</pre><br/></li>
+		 
+         <li>Wichtigste Methoden:
+		 <ul class="prelist">
+		 <li><pre>int groesse = int_vector.size();</pre></li>
+		 <li><pre>int_vector.insert(0,3);</pre> <p>0 ... index, 3 ... Wert zum Einf&uuml;gen</p></li>
+		 <li><pre>int_vector.push_back(3);</pre> <p>3 ... Wert zum Einf&uuml;gen an letzter Stelle</p></li>
+		 <li><pre>int element = int_vector[0];</pre><p> 0 ... Index vom Wert, den man haben will</p></li>
+		 </ul></li>
+        </ul>
+     </article>
+     
+     <article>
+      <h3>Vector</h3>
+<pre>
+std::vector&lt;int> int_vector;
+int_vector.push_back(42);
+int_vector.push_back(13);
+int_vector.push_back(37);
+</pre>
+      
+      Zugriff auf alle Elemente durch Index...
+<pre class="compact" style="font-size: 0.60em;">
+int i;
+for(i = 0; i &lt; int_vector.size(); i++)
+  cout &lt;&lt; int_vector[i] &lt;&lt; std::endl;
+</pre>
+      
+      ...oder durch Iterator
+<pre class="compact" style="font-size: 0.60em;">
+for(vector<int>::iterator it = int_vector.begin(); it != int_vector.end(); it++)
+  cout &lt;&lt; *it &lt;&lt; std::endl;
+</pre>
+     </article>
+     
+     
+     <article class="smaller">
+       <h3>String: Text</h3>
+	   <ul>
+	   <li>inkludieren mit</li>
+		 <pre class="compact">#include &lt;string></pre>
+         <li>Erstellen eines Strings
+		 <pre class="compact">using std::string;
+...
+string hallo_str = "Hallo Welt!";
+...
+char* char_array = "Hallo Welt!";
+string char_str (char_array);</pre> <br />
+		 </li>
+		 
+         <li>Wichtigste Methoden:
+		 <ul class="prelist">
+		 <li><pre>int groesse = hallo_str.length();</pre></li>
+		 <li><pre>hallo_str += char_str; </pre> <p>Zwei Strings aneinander h&auml;ngen</p></li>
+		 <li><pre>hallo_str.compare(char_str);</pre> <p>returned 0 wenn gleich</p></li>
+		 <li><pre>char letter = hallo_str[0];</pre><p> 0 ... Index vom Buchstabe, den man haben will</p></li>
+		 </ul></li>
+        </ul>
+	   
+     </article>
+	 
+	 <article>
+       <h3>Schreiben auf STDOUT</h3>
+	   
+<pre>#include &lt;iostream>
+	   
+int main()
+{
+  std::cout &lt;&lt; "Hallo Welt!\n";
+  return 0;
+}
+</pre>
+	   
+     Verketten von Strings und anderen Datentypen m&ouml;glich
+<pre style="font-size: 0.50em;">
+  std::cout &lt;&lt; "The answer to life, the universe and everything is " &lt;&lt; 42 &lt;&lt; std::endl;
+</pre>
+<pre style="font-size: 0.50em;">
+  std::cout &lt;&lt; "string1 is " &lt;&lt; string1 &lt;&lt; ", it's length is " &lt;&lt; string1.length() &lt;&lt; std::endl;
+</pre>
+
+     </article>     
+     
+     <article>
+       <h3>Einfache Klasse II (ball.h)</h3>
+<pre style="font-size: .55em; line-height: 1.2em; width: 75%; margin: 1em auto;">
+#ifndef BALL_H_INCLUDED
+#define BALL_H_INCLUDED
+
+#include &lt;string>
+
+class Ball
+{
+private:
+  float x_, y_, speed_;
+  int direction_;
+  std::string name_;
+
+public:
+  Ball(float x, float y, float speed, int direction,
+       std::string name);
+  
+  void move();
+  
+  float getSpeed();
+  void setSpeed(float speed);
+  std::string getName();
+  void setDirection(float direction);
+  float getDirection();
+};
+
+#endif
+</pre>
+     
+     </article>
+     
+     
+     <article>
+       <h3>Konstruktor und <code>move</code> (ball.cpp)</h3>
+<pre style="font-size: .6em; line-height: 1.2em; width: 75%; margin: 4em auto;">
+#include &lt;math.h>
+#include "ball.h"
+
+Ball::Ball(float x, float y, float speed, int dir, 
+      std::string name) : x_(x), y_(y), speed_(speed)
+{
+  direction_ = dir * M_PI / 180.0;
+  name_ = "Ball '" + name + "'";
+}
+
+void Ball::move()
+{
+  x_ = x_ + cos(direction_) * speed_;
+  y_ = y_ + sin(direction_) * speed_;  
+  if(x_ &lt; 0 || x_ > 800) 
+    direction_ = atan2(sin(direction_), -cos(direction_));
+  if(y_ &lt; 0 || y_ > 600)
+    direction_ = atan2(-sin(direction_), cos(direction_));
+}
+
+</pre>
+     
+     </article>
+     
+
+      
+     <article>
+       <h3>Getter und Setter</h3>
+       <br />
+<pre style="font-size: .6em; line-height: 1.2em; width: 40%; float: left; margin-right: 16px;" class="compact">
+float Ball::getSpeed()
+{
+  return speed_;
+}
+
+void Ball::setSpeed(float speed)
+{
+  speed_ = speed;
+}
+
+std::string Ball::getName()
+{
+  return name_;
+}
+</pre>
+
+<pre style="font-size: .6em; line-height: 1.2em; width: 52%; margin: float: right;" class="compact">
+float Ball::getDirection()
+{
+  return direction_;
+}
+
+void Ball::setDirection(float direction)
+{
+  direction_ = direction;
+}
+</pre>
+
+<ul style="clear: both; padding-top: 32px;">
+ <li>Neuer Getter <span class="src">getName()</span> liefert Namen des Balls zur&uuml;ck</li>
+ <li>Neuer Getter <span class="src">getDirection()</span> und Setter <span class="src">setDirection()</span> f&uuml;r die Richtung des Balls</li>
+</ul>
+     
+     </article>
+      
+
+     
+     <article>
+       <h3>Das <code>main</code>-Programm</h3>
+<table style="border: 0px; margin: 4px; padding:0px;"><tr style="border: 0px; margin: 0px; padding:0px;"><td style="border: 0px; margin: 0px; padding:0px;">
+<pre class="compact" style="font-size: .55em; line-height: 1.2em; width: 95%;">
+#include &lt;vector>
+#include "ball.h"
+
+int main()
+{
+  std::vector&lt;Ball> balls;
+
+  Ball b1(200, 225, 5, 10, "#1");
+  balls.push_back(b1);<div id="balls"></div>
+  while(1)
+  {
+    int i;
+    for(i = 0; i &lt; balls.size(); i++)
+    {
+      if(balls[i].getName().compare("Ball #2") == 0) 
+        balls[i].setDirection(balls[i].getDirection() + 1);
+      balls[i].move();
+    }
+
+    drawWindow(); // some magic...
+  }
+}
+
+</pre>
+</td><td style="border: 0px;">
+  <button onclick="Example2.addRandomBall();" class="big_button"><img src="images/add.png" alt="" /> Ball</button>
+  <button onclick="Example2.compile();" class="big_button"><img src="images/run.png" alt="" /> Starten</button>
+</td></tr></table>
+
+<div id="popup" style="display: none;">
+
+  <div style="position: absolute; left: 80px; top: 80px;">
+    <img src="images/window.png" onclick="Example2.kill();"/>
+  </div>
+  <div style="position: absolute; left: 85px; top: 110px;">
+   <canvas id="game" style="width: 700px; height: 430px;"></canvas>
+  </div>
+
+</div>
+
+
+     </article>
+	 
+	 <article>
+       <h3>Ass1</h3>
+	   <ul>
+	   <li>Grundlage f&uuml;r ein Brettspiel</li>
+	   <li><span class="src">main.cpp</span> wird vorgegeben</li>
+	   <li>4 Klassen zu schreiben: <span class="src">Game</span>, <span class="src">Player</span>, <span class="src">Continent</span> &amp; <span class="src">Territory</span></li>
+	   </ul>
+     </article>
+	 <article>
+       <h3>Ass1 - Game</h3>
+       <table class="uml_class">
+       <tr>
+        <th>
+         Game
+        </th>
+       </tr>
+       <tr>
+        <td class="private">
+	   <ul>
+	   <li>players_: vector&lt;Player*></li>
+	   <li>continents_: vector&lt;Contintent*></li>
+	   <li>current_player_: Player*</li>
+	   </ul>
+	 </td>
+	</tr>
+        </table>
+     </article>
+	 <article>
+       <h3>Ass1 - Player</h3>
+       <table class="uml_class">
+       <tr><th>Player</th></tr>
+       <tr><td class="private">
+	   <ul>
+	   <li>color_ : Color</li>
+	   <li>name_ : String</li>
+	   </ul>
+       </td></tr>
+       <tr><td class="public">
+           <ul>
+           <li>Konstruktor</li>
+	   <li>Getter &amp; Setter</li>
+	   <li>getFullName()</li>
+	   </ul>
+	</td></tr>
+        </table>
+     </article>
+ <article>
+       <h3>Ass1 - Continent</h3>
+       <table class="uml_class">
+       <tr><th>Continent</th></tr>
+       <tr><td class="private">
+	   <ul>
+	   <li>name_: string</li>
+	   <li>territories: vector&lt;Territory*></li>
+	   </ul>
+        </td></tr><tr><td class="public">
+	   <ul>
+	   <li>Konstruktor</li>
+	   <li>getOwner</li>
+	   </ul>
+	</td></tr>
+      </table>
+     </article>
+	 <article>
+       <h3>Ass1 - Territory</h3>
+       <table class="uml_class">
+       <tr><th>Territory</th></tr>
+       <tr><td class="private">
+	   <ul>
+	   <li>name_: string</li>
+	   <li>short_name_: char[2]</li>
+	   <li>owner_: Player*</li>
+	   <li>units_: char</li>
+	   <li>neighbours_: vector&lt;Territory*></li>
+	   </ul>
+        </td></tr><tr><td class="public">
+            <ul>
+	   <li>Konstruktor</li>
+	   <li>Getter &amp; Setter</li>
+	   <li>isNeighbour</li>
+	   <li>addNeighbour</li>
+	   </ul>
+	</td></tr></table>
+     </article>
+	 <article class="smaller">
+	 <h3>Ass1 - Abgabe</h3>
+	 <h4><strong>Deadline: 10.04.2013 - 19:00</strong></h4>
+	 <ul>
+	 <li>main.cpp</li>
+<li>Game.h</li>
+<li>Game.cpp</li>
+<li>Player.h</li>
+<li>Player.cpp</li>
+<li>Territory.h</li>
+<li>Territory.cpp</li>
+<li>Continent.h</li>
+<li>Continent.cpp</li>
+<li>Color.h</li></ul>
+
+<span style="font-size: 0.75em; font-weight: bold;">Abgabe Archiv erstellen:</span>
+<pre class="compact">make submission</pre>
+	 </article>
+	 <article>
+	 <h1>Viel Glück für HW1 &amp; Ass1</h1>
+	 <h3 style="margin-top: 30px;">Nächstes Tutorium: 24. April</h3></article>
+    </section>
+
+  </body>
+</html>
