@@ -203,13 +203,11 @@ int main()
           <pre class="compact">std::map&lt;std::string, int> grades_;</pre><br/>
           <li>Direkter Zugriff auf Value über Key. Fügt ein Element ein, falls noch nicht vorhanden.</li>
           <pre class="compact">grades_["SEP"] = 1;</pre></br>
-          <li>Wichtigste Methoden:
-           <ul class="compact">
-            <li><pre class="compact">int groesse = grades_.size();</pre></li>
-             <li><pre class="compact">std::map&lt;std::string,int>::iterator it = grades_.find("SEP");</pre> </li>
-             <li><pre class="compact">for(it = grades_.begin(); it != grades_.end(); it++)</pre> </li>
-             <li><pre class="compact">std::cout &lt;&lt; "Key: " &lt;&lt; it->first &lt;&lt; "Value: " &lt;&lt; it->second &lt;&lt; std::endl;</pre></li>
-           </ul></li>
+          <li>Beispiel:
+          <pre class="compact" style="line-height: 2em;">int groesse = grades_.size();
+std::map&lt;std::string,int>::iterator it = grades_.find("SEP");
+for(it = grades_.begin(); it != grades_.end(); it++)
+std::cout &lt;&lt; "Key: " &lt;&lt; it->first &lt;&lt; "Value: " &lt;&lt; it->second &lt;&lt; std::endl;</pre>
          </ul>
        </article>       
      
