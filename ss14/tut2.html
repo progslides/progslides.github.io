@@ -54,16 +54,18 @@
         </dl>
       </div>
         <div class="right">
-        <dl class="expl">
+        <dl class="expl" style="margin-bottom: 0px;">
           <dt>std::set</dt>
           <dd>Menge von eindeutigen Objekten</dd>
           <dt>std::map</dt>
           <dd>Assoziatives Array (Key-Value)</dd>
+          <dt>std::array <img src="images/newflag.jpg" style="height: 24px; vertical-align: middle;"/></dt>
+          <dd>Array mit zus&auml;tzlichen Funktionen</dd>
         </dl>
-        <p>...</p>
+        <span>...</span>
       </div>
 
-      <ul>
+      <ul style="margin-top: 16px;">
         <li>Generische Datentypen für unterschiedliche
           Einsatzzwecke (z.B. <span class="src" style="font-size: .8em;">std::vector&lt;int&gt;</span> oder <span class="src" style="font-size: .8em;">std::vector&lt;std::string&gt;</span>)
         <li>Automatisches Speichermanagement</li>
@@ -368,8 +370,79 @@ int main()
        <img src="images/gruppe.jpg" />
       </center>
      </article>
+   
+      <article>
+       <h3>Exkurs <code>Makefile</code> - Ass1</h3>
+<p style="font-size: .55em; line-height: 1.2em; width: 60%; float: left; margin: 0px;" class="code compact">EXECUTABLE = ass1
+OBJECT_DIR = objects
+SOURCES    = $(wildcard *.cpp)
+OBJECTS    = $(patsubst %,
+                  $(OBJECT_DIR)/%,${SOURCES:.cpp=.o})
 
-     
+all: $(EXECUTABLE) 
+
+$(OBJECT_DIR)/%.o: %.cpp
+	$(CC) $(CCFLAGS) $@ $&lt; -MMD -MF ./$@.d
+
+$(EXECUTABLE) : $(OBJECTS)
+	$(CC) -o $@ $^ $(LDFLAGS)
+	
+clean:
+        rm -f $(OBJECT_DIR)/*.o $(OBJECT_DIR)/*.o.d
+        rm -f $(EXECUTABLE)</p>
+        
+<div style="float: right; width: 30%; line-height: 0.95em;">
+  <dl class="expl">
+    <dt>$(CC)</dt>
+    <dd>Compiler: g++</dd>
+    <dt>$(CCFLAGS)</dt>
+    <dd>Compilerflags: -Wall -g -c -o</dd>
+    <dt>$@</dt>
+    <dd>Zielname</dd>
+    <dt>$&lt;</dt>
+    <dd>Namen der Abhängigkeiten</dd>
+    <dt>$^</dt>
+    <dd>Alle Quellen</dd>
+    <dt>%.o: %.cpp</dt>
+    <dd>generische Regel um .o Dateien aus .cpp Dateien zu erzeugen</dd>
+    <dt>-MMD -MF ./$@.d</dt>
+    <dd>Automatische Erkennung von Abhängigkeiten</dt>
+  </dl>
+</div>
+
+<div style="float: left; padding-top: 8px;">
+<img src="images/fu.jpg" width="85%" alt="" />
+</div>
+      </article>
+
+      
+      <article>
+       <h3>Exkurs <code>Makefile</code></h3>
+       Ass1 Makefile aufgel&ouml;st:
+<p class="code compact" style="font-size: .55em; line-height: 1.2em;">all: ass1
+
+objects/Game.o: Game.cpp
+	g++ -Wall -g -c -o Game.o Game.cpp -MMD -MF ./Game.o.d
+
+[...]
+
+objects/main.o: main.cpp
+	g++ -Wall -g -c -o main.o main.cpp -MMD -MF ./main.o.d
+
+ass1 : objects/Game.o objects/main.o [...]
+	g++ -o ass1 objects/Game.o objects/main.o [...]
+	
+clean:
+        rm -f objects/Game.o objects/main.o [...] objects/Game.o.d [...]
+        rm -f ass1</p>
+</p>
+
+<pre class="compact"># ass1 erstellen
+make
+# ass1 und alle *.o l&ouml;schen
+make clean
+</pre>
+      </article>
 	 <article>
        <h3>Ass1</h3>
 	   <ul>
