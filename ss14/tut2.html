@@ -176,9 +176,9 @@ string char_str (char_array);</pre> <br />
      </article>
 	 
 	 <article>
-       <h3>Schreiben auf STDOUT</h3>
+       <h3>Schreiben auf <span class="src">stdout</span></h3>
 	   
-<pre>#include &lt;iostream>
+<pre class="compact">#include &lt;iostream>
 	   
 int main()
 {
@@ -186,14 +186,23 @@ int main()
   return 0;
 }
 </pre>
-	   
      Verketten von Strings und anderen Datentypen m&ouml;glich
-<pre style="font-size: 0.50em;">
-  std::cout &lt;&lt; "The answer to life, the universe and everything is " &lt;&lt; 42 &lt;&lt; std::endl;
+<pre style="font-size: 0.50em;" class="compact">
+std::cout &lt;&lt; "The answer to life, the universe and everything is " &lt;&lt; 42 &lt;&lt; std::endl;
 </pre>
-<pre style="font-size: 0.50em;">
-  std::cout &lt;&lt; "string1 is " &lt;&lt; string1 &lt;&lt; ", it's length is " &lt;&lt; string1.length() &lt;&lt; std::endl;
+<pre style="font-size: 0.50em;" class="compact">
+std::cout &lt;&lt; "string1 is " &lt;&lt; string1 &lt;&lt; ", it's length is " &lt;&lt; string1.length() &lt;&lt; std::endl;
 </pre>
+<br />
+ <img src="images/homer2.gif" width="100px" style="float: left; margin-top: 24px;">
+        <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 610px; background-color: #fcfcfc;">
+     <h3 style="border-bottom: 1px solid gray;">Ausgabe von Hexadezimalen Werten</h3>
+<pre class="compact">
+int value = 32;
+std::cout &lt;&lt; value &lt;&lt; " = 0x" &lt;&lt; std::hex 
+          &lt;&lt; value &lt;&lt; std::endl; 
+</pre>
+</div>
 
      </article>  
 
@@ -210,7 +219,7 @@ int main()
           <pre class="compact" style="line-height: 2em;">int groesse = grades_.size();
 std::map&lt;std::string,int>::iterator it = grades_.find("SEP");
 for(it = grades_.begin(); it != grades_.end(); it++)
-std::cout &lt;&lt; "Key: " &lt;&lt; it->first &lt;&lt; "Value: " &lt;&lt; it->second &lt;&lt; std::endl;</pre>
+  std::cout &lt;&lt; "Key: " &lt;&lt; it->first &lt;&lt; "Value: " &lt;&lt; it->second &lt;&lt; std::endl;</pre>
          </ul>
        </article>       
      
@@ -370,7 +379,28 @@ int main()
        <img src="images/gruppe.jpg" />
       </center>
      </article>
-   
+
+      <article>
+        <h3>Exkurs <code>Makefile</code></h3>
+        
+        Aufbau:
+<p class="pre">
+<span class="red">Ziel:</span> <span class="yellow">Abhängigkeit1 (Abhängigkeit2 ...)</span>
+&lt;tab>  <span class="blue">(Befehl 1)</span>
+&lt;tab>  <span class="blue">(Befehl 2)</span>
+        ...
+</p>
+
+        Beispiel:
+<p class="code">
+<span class="red">all:</span> <span class="yellow">ass1</span>
+
+<span class="red">ass1:</span> <span class="yellow">ass1.cpp</span>
+        <span class="blue">g++ ass1.cpp -Wall -o ass1</span>
+</p>
+      </article>     
+           
+     
       <article>
        <h3>Exkurs <code>Makefile</code> - Ass1</h3>
 <p style="font-size: .55em; line-height: 1.2em; width: 60%; float: left; margin: 0px;" class="code compact">EXECUTABLE = ass1
@@ -421,19 +451,19 @@ clean:
        Ass1 Makefile aufgel&ouml;st:
 <p class="code compact" style="font-size: .55em; line-height: 1.2em;">all: ass1
 
-objects/Game.o: Game.cpp
-	g++ -Wall -g -c -o Game.o Game.cpp -MMD -MF ./Game.o.d
+objects/Tower.o: Tower.cpp
+	g++ -Wall -g -c -o Tower.o Tower.cpp -MMD -MF ./Tower.o.d
 
 [...]
 
 objects/main.o: main.cpp
 	g++ -Wall -g -c -o main.o main.cpp -MMD -MF ./main.o.d
 
-ass1 : objects/Game.o objects/main.o [...]
-	g++ -o ass1 objects/Game.o objects/main.o [...]
+ass1 : objects/Tower.o objects/main.o [...]
+	g++ -o ass1 objects/Tower.o objects/main.o [...]
 	
 clean:
-        rm -f objects/Game.o objects/main.o [...] objects/Game.o.d [...]
+        rm -f objects/Tower.o objects/main.o [...] objects/Tower.o.d [...]
         rm -f ass1</p>
 </p>
 
