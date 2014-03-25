@@ -1,0 +1,17 @@
+Sources used for presentation:
+
+GCC:
+http://blog.fefe.de/?ts=adf5a1ff
+http://gcc.gnu.org/ml/gcc-help/2011-05/msg00360.html
+http://gcc.gnu.org/onlinedocs/gcc/Function-Attributes.html#Function-Attributes
+http://software.intel.com/sites/products/documentation/studio/composer/en-us/2011Update/compiler_c/copts/ccpp_options/option_wmissing_declarations.htm
+
+man gcc 4.2.1
+
+Clang:
+https://www.mikeash.com/pyblog/friday-qa-2011-04-15-compile-time-tips-and-tricks.html
+http://nshipster.com/__attribute__/
+http://nshipster.com/pragma/
+
+---
+Special thanks to Thomas Krug.
