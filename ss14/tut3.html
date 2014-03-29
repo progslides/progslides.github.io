@@ -702,86 +702,11 @@ int main()
    <article>
      <h3>Assignment 2</h3>
          <ul>
-         <li>Missionen</li>
          <li>Befehle mit Command Pattern</li>
-         <li>Weitere kleine &Auml;nderungen an den bestehenden Klassen</li>
          </ul>
          <p><strong>Angeforderter Speicher ist in jedem Fall wieder freizugeben</strong></p>
     </article>
 
-         
-          <article>
-     <h3>Missionen</h3>
-     <table style="margin: 0px; padding: 0px;">
-      <tr>
-       <td colspan="2" style="padding-left: 220px; border: 0px;">
-       Destruction<br />
-            <div style="clear: both;">
-            <div class="riskcard">
-             <div class="title">Mission</div>
-             <div class="text">
-              Befreien Sie alle L&auml;nder von den <b>roten</b> Armeen
-             </div>
-            </div>
-            
-            <div class="riskcard">
-             <div class="title">Mission</div>
-             <div class="text">
-              Befreien Sie alle L&auml;nder von den <b>gr&uuml;nen</b> Armeen
-             </div>
-            </div>
-            </div>
-       </td>
-      </tr><tr>
-      <td style="border: 0px;">
-       ContinentConquest<br />
-       <div style="clear: both;">
-            
-            <div class="riskcard">
-             <div class="title">Mission</div>
-             <div class="text">
-              Befreien Sie Nordamerika und Asien
-             </div>
-            </div>
-
-            <div class="riskcard">
-             <div class="title">Mission</div>
-             <div class="text">
-              Befreien Sie Europa, Australien und einen dritten Kontinent Ihrer Wahl
-             </div>
-            </div>
-            
-            </div>
-      
-      </td>
-      <td style="border: 0px;">
-      
-      TerritoryConquest<br />
-      <div style="clear: both;">
-            
-            <div class="riskcard">
-             <div class="title">Mission</div>
-             <div class="text">
-              Befreien Sie 18 L&auml;nder und und setzen Sie in jedes Land mindestens 2 Armeen
-             </div>
-            </div>
-            
-                    <div class="riskcard">
-             <div class="title">Mission</div>
-             <div class="text">
-              Befreien Sie 24 L&auml;nder Ihrer Wahl
-             </div>
-            </div>
-            
-            </div>
-      
-      </td>
-      </tr>
-     
-     </table>
-     
-  </article>
-        
     
     <article class="no_print">
      <h3>Command Pattern</h3>
@@ -873,28 +798,23 @@ int PrintHello::execute(Game&amp; board, std::vector&lt;std::string>&amp; params
      <br />
      
          <div class="command">
-          <div class="title">status</div>
-          <div class="text">Gibt den aktuellen Spieler aus</div>
-         </div>
-         
-         <div class="command">
-          <div class="title">rename</div>
-          <div class="text">Benennt den aktuellen Spieler um</div>
-         </div>
-         
-         <div class="command">
-          <div class="title">view</div>
-          <div class="text">Gibt das Spielfeld des aktuellen Spiels aus</div>
-         </div>
-         
-         <div class="command">
           <div class="title">echo</div>
           <div class="text">Gibt beliebig viele übergebene Parameter aus</div>
+         </div>
+
+         <div class="command">
+          <div class="title">show</div>
+          <div class="text">Ausgabe von Spielfeld, Kapital und HP</div>
+         </div>
+         
+         <div class="command">
+          <div class="title">list</div>
+          <div class="text">Informationen &uuml;ber alle T&uuml;rme und Monster ausgeben</div>
          </div>
          
          <div class="command">
           <div class="title">next</div>
-          <div class="text">Wechselt zum nächsten Spieler</div>
+          <div class="text">Runde beenden bzw. <em>n</em> Runden vorspulen</div>
          </div>
 
          <div class="command">
@@ -907,7 +827,7 @@ int PrintHello::execute(Game&amp; board, std::vector&lt;std::string>&amp; params
 
     <article>
          <h1>Viel Glück</h1>
-         <h3 style="margin-top: 30px;">Nächstes Tutorium: 29. Mai 2013</h3></article>
+         <h3 style="margin-top: 30px;">Nächstes Tutorium: 19. Mai 2014</h3></article>
     </section>
 
   </body>
