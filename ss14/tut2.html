@@ -13,22 +13,16 @@
   <body style='display: none' onload="Example2.init();">
     <section class='slides layout-regular template-tugraz'>
 
-     <article>
-      <h1>
-        Tutorium #2
-      </h1>
-      <p>
-        Softwareentwicklung Praktikum</p>
+<article>
+        <h1>
+          Tutorium #2
+        </h1>
         <p>
-          Gruppe 4 – Michael Schwarz
-          <small><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></small><br />
-          Gruppe 5 – Anja Karl
-          <small><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></small><br />
-          Gruppe 8 – Thomas Neff
-          <small><a href="mailto:prog-tutor-thomas@iicm.tugraz.at">prog-tutor-thomas@iicm.tugraz.at</a></small><br />
-        </p>
+          Softwareentwicklung Praktikum<br>
+          Gruppe 4 – Michael Schwarz</p>
+          <p><small><a href="mailto:prog-tutor-michael@iicm.edu">prog-tutor-michael@iicm.edu</a></small></p>
+          <p><small><a href="http://www.student.tugraz.at/michael.schwarz/sep">http://www.student.tugraz.at/michael.schwarz/sep</a></small></p>
       </article>
-
      <article>
         <h3>Ablauf des Tutoriums</h3>
         <ul class="compact">
@@ -222,6 +216,27 @@ for(it = grades_.begin(); it != grades_.end(); it++)
   std::cout &lt;&lt; "Key: " &lt;&lt; it->first &lt;&lt; "Value: " &lt;&lt; it->second &lt;&lt; std::endl;</pre>
          </ul>
        </article>       
+     
+     <article >
+       <h3>Pr&auml;dikate testen <img src="images/newflag.jpg" style="vertical-align: middle;" /></h3>
+     
+     <ul><li>Testet, ob eine Eigenschaft auf ein (<small><span class="src">std::any_of</span></small>), alle (<small><span class="src">std::all_of</span></small>) oder kein (<small><span class="src">std::none_of</span></small>) Element eines Containers zutrifft.</li></ul>
+     <ul><li><small>Beispiel: Test, ob eine durch 5 teilbare Zahl in einem Vector vorkommt</small></li></ul>
+     <pre class="compact" style="font-size: 0.6em; line-height: 1.25em;">#include &lt;iostream>
+#include &lt;vector>
+#include &lt;algorithm>
+
+bool is_div5(int x) { return (x % 5 == 0); }
+
+int main() {
+  std::vector&lt;int> numbers {1, 3, 5, 7, 9, 11, 13};
+  
+  if(std::any_of(numbers.begin(), numbers.end(), is_div5)) {
+    std::cout &lt;&lt; "Durch 5 teilbare Zahl gefunden" &lt;&lt; std::endl;
+  }
+}</pre>
+     
+     </article>
      
      <article>
        <h3>Einfache Klasse II (ball.h)</h3>
@@ -552,10 +567,18 @@ make clean
 <pre class="compact">make submission</pre>
 	 </article>
 
+	 
+	 <article>
+	   <h3>Freiwillige &Uuml;bung</h3>
+	   
+	   <center><img src="images/seplab.png" style="padding: 12px;" /></center>
+	   
+	   <a href="http://misc0110.net/lab">http://misc0110.net/lab</a>
+	 </article>
    
 	 <article>
 	 <h1>Viel Glück für Ass1</h1>
-	 <h3 style="margin-top: 30px;">Nächstes Tutorium: 1./2. April</h3></article>
+	 <h3 style="margin-top: 30px;">Nächstes Tutorium: 1. April</h3></article>
     </section>
 
   </body>

@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SEP: Tutorium #3</title>
+    <meta charset='utf-8'>
+    <script src='slides.js'></script>
+    <script src="balls3.js"></script>
+    <script src="cmdpattern.js"></script>
+    
+    <script type="text/javascript">
+    window.addEventListener("load", function() {
+          var inputs = document.getElementsByTagName("input");
+          for(i = 0; i < inputs.length; i++) {
+            if(inputs[i].type == "text") {
+              inputs[i].onfocus = function() {noNavigationWithBackspaceAndSpace(true);};
+              inputs[i].onblur = function() {noNavigationWithBackspaceAndSpace(false);};
+            }
+          }
+        });
+    </script>
+    <link rel="stylesheet" media="print" href="print.css">
+        <!--<link rel="stylesheet" href="styles.css">-->
+        <link rel="stylesheet" href="cmdpattern.css">
+        
+    <style type="text/css">
+      .riskcard {
+        width: 150px; 
+        height: 200px;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #222;
+        border-radius: 16px;
+        box-shadow: 1px 1px;
+        padding: 0px;
+        font-size: 0.7em;
+        line-height: 1.2em;
+        float: left;
+        margin: 6px;
+        background-color: #fdfdfd;
+       }
+      
+      .riskcard div.title {
+        background-color: #c00000;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 16px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        padding: 3px;
+        margin-bottom: 8px;
+      }
+      
+      .riskcard div.text {
+        margin: 12px;
+      }
+      
+      .riskcard div.text b {
+       font-weight: bold;
+      }
+      
+      .command {
+        width: 250px;
+        height: 100px;
+        border: 1px solid #444;
+        padding: 0px;
+        font-size: 0.68em;
+        line-height: 1.1em;
+        margin: 24px;
+        margin-left: 80px;
+        background-color: #fcfcfc;
+        border-radius: 8px;
+        float: left;
+      }
+      
+      .command div.title {
+        background-color: #4444f0;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 8px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        padding: 3px;
+        margin-bottom: 8px;      
+      }
+      
+      .command div.text {
+       margin: 6px;
+      }
+    </style>
+        
+    </head>
+
+
+  <body style='display: none' onload="Example2.init();">
+    <section class='slides layout-regular template-tugraz'>
+
+      <article>
+        <h1>
+          Tutorium #3
+        </h1>
+        <p>
+          Softwareentwicklung Praktikum<br>
+          Gruppe 9 – Michael Schwarz</p>
+          <p><small><a href="mailto:prog-tutor-michael@iicm.edu">prog-tutor-michael@iicm.edu</a></small></p>
+          <p><small><a href="http://www.student.tugraz.at/michael.schwarz/sep">http://www.student.tugraz.at/michael.schwarz/sep</a></small></p>
+      </article>
+
+     <article>
+        <h3>Ablauf des Tutoriums</h3>
+        <ul class="compact">
+         <li>Codingstandard</li>
+         <li>Pointer &amp; Referenzen</li>
+         <li>const, static und virtual</li>
+         <li>Vererbung</li>
+         <li>Abstrakte Klassen</li>
+         <li>Command Pattern</li>
+         <li>Ass2</li>
+        </ul>
+     </article>
+     
+     <article>
+      <h3>Gruppenfindung</h3>
+      <center>
+       <br /><br /><br />
+       <img src="images/gruppe.jpg" />
+      </center>
+     </article>
+         
+     </article>
+         
+         <article>
+      <h3>Codingstandard Tools</h3>
+      <ul class="compact">
+                 <li>Zeilen mit mehr als 80 Zeichen finden<pre>grep -n '.\{81,\}' *.cpp *.h</pre></li>
+         <li>Tabulatoren ersetzten <pre>sed 's/\t/  /g' input > output</pre></li>
+         <li><a href="http://uncrustify.sourceforge.net/">Uncrustify</a>: Config auf Website von <a href='http://www.student.tugraz.at/manuel.weber/sep/'>Manuel Weber</a><br />
+                 <pre>uncrustify -c config-file -f input -o output </pre></li>
+        </ul>
+     </article>  
+         
+         
+    <article>
+     <h3><span class="src">const</span> Schl&uuml;sselwort</h3>
+     <ul>
+      <li>F&uuml;r Konstanten
+<pre class="compact">
+ const int ANSWER_TO_EVERYTHING = 42;
+</pre>
+      <li>F&uuml;r Pointer
+      <ul style="padding-top: 12px;">
+       <li>Pointer auf Konstante: <pre style="display: inline;">const int * some_pointer;</pre></li>
+       <li>Alternativ auch: <pre style="display: inline;">int const * some_pointer;</pre></li>
+       <li>Konstanter Pointer auf Variable: <pre style="display: inline;">int * const SOME_POINTER;</pre></li>
+       <li>Konstanter Pointer auf Konstante: <pre style="display: inline;">int const * const SOME_POINTER;</pre></li>
+      </ul>
+     </ul>
+     <br />
+     <img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     <span class="src">const</span> bezieht sich immer auf den linken Nachbarn. Gibt es keinen, dann auf den rechten Nachbarn.
+     </div>
+    </article>
+    
+    <article>
+     <h3><span class="src">const</span> Schl&uuml;sselwort</h3>
+     <ul>
+      <li>F&uuml;r Funktionsparamter
+<pre class="compact">
+void doSomething(const char * str)
+{
+[...]
+}
+</pre>
+Funktion garantiert dem Aufrufer, dass sie den Wert, auf den der Pointer zeigt, nicht &auml;ndern wird (kann).</li>
+      <li style="margin-top: 28px;">F&uuml;r Methoden
+<pre class="compact">
+class SomeClass {
+  void doSomething() const;
+};
+</pre>
+Die Methode kann keine Membervariablen ver&auml;ndern. 
+
+     </ul>
+    </article>
+    
+    <article>
+     <h3><span class="src">const</span> Schl&uuml;sselwort</h3>
+     <br /><br />
+     <h3 style="font-size: 120%;">...und was macht das?</h3>
+     <br />
+<pre>
+int const * const doSomething(const int * const &amp; parameter) const;
+</pre>
+    <img src="images/cereal_guy.png" width="450px" style="float: right;" />
+    </article>
+    
+    <article>
+     <h3>Pointer &amp; Referenzen</h3>
+     <table>
+      <tr><td style="border: 0px;">
+<pre class="compact" style="font-size: .55em; line-height: 1.2em;">
+#include &lt;iostream>
+
+void funcValue(int x, int val) {
+  x = val;
+}
+
+int main() {
+  int v = 3;
+  funcValue(v, 4);
+  std::cout &lt;&lt; v &lt;&lt; std::endl;
+}
+</pre>
+      </td><td style="border: 0px;">
+<pre class="compact"  style="font-size: .55em; line-height: 1.2em;">
+#include &lt;iostream>
+
+void funcReference(int&amp; x, int val) {
+  x = val;
+}
+
+int main() {
+  int v = 3;
+  funcReference(v, 4);
+  std::cout &lt;&lt; v &lt;&lt; std::endl;
+}
+</pre>
+      </td></tr><tr>
+      <td style="border: 0px;">
+<pre class="compact" style="font-size: .55em; line-height: 1.2em;">
+#include &lt;iostream>
+
+void funcPointer(int* x, int val) {
+  *x = val;
+}
+
+int main() {
+  int v = 3;
+  funcPointer(&amp;v, 4);
+  std::cout &lt;&lt; v &lt;&lt; std::endl;
+}
+</pre>
+      </td><td style="border: 0px;">
+      <ul style="font-size: 80%;">
+       <li>Referenzen k&ouml;nnen <em>nicht</em> <span class="src">NULL</span> sein, Pointer schon</li>
+       <li>Referenzen k&ouml;nnen wie normale Variablen verwendet werden</li>
+       <li>Bei Referenzen und Pointern wird nur die Adresse &uuml;bergeben, sonst wird kopiert</li>
+      </ul>
+      </td></tr>
+     </table>
+    </article>
+    
+    <article>
+     <h3><span class="src">static</span> Schl&uuml;sselwort</h3>
+     <br />
+     <span style="font-size: 90%;">
+     Statische Attribute und Methoden werden <strong>pro Klasse nur einmal</strong> angelegt, 
+     statt wie sonst f&uuml;r jede Instanz.
+     </span><br />
+     <span style="font-size: 80%; display: block; margin-top: 16px; margin-bottom: 16px;">
+     Zugriff &uuml;ber <span class="src">Klassenname::funktion()</span> bzw. <span class="src">Klassenname::variable</span>
+     </span>
+<pre class="compact"  style="font-size: .55em; line-height: 1.25em; width: 75%; margin: 1em auto;">
+class Product 
+{
+  private:
+    static int count_;
+  public:
+    Product() { count_++; }
+    ~Product() { count_--; }
+    static int getProductsCount() { return count_; }
+};
+
+int Product::count_ = 0;
+
+int main() 
+{
+  std::cout &lt;&lt; Product::getProductsCount() &lt;&lt; std::endl;
+  Product p1;
+  std::cout &lt;&lt; Product::getProductsCount() &lt;&lt; std::endl;
+} 
+</pre>
+</article>
+    
+    <article>
+     <h3>Vererbung</h3>
+     <table style="margin:0px;padding:0px;"><tr><td style="border: 0px;">
+<pre class="compact" style="font-size: .55em; line-height: 1.25em; ">
+class CD 
+{
+private:
+  int capacity_;
+  string title_;
+  
+public:
+  CD(string title, int size) 
+   : capacity_(size), title_(title) {}
+  
+  int getCapacity() { 
+    return capacity_; 
+  }
+  
+  void printTitle() { 
+    cout &lt;&lt; title_ &lt;&lt; endl; 
+  }
+};
+</pre>
+</td><td style="border: 0px;">
+<pre class="compact" style="font-size: .55em; line-height: 1.25em;">
+class MusicCD : public CD 
+{
+private:
+  int tracks_;
+
+public:
+  MusicCD(string name, int tracks) 
+   : CD(name, 700), tracks_(tracks)
+  {}
+  
+  int getCapacity() { 
+    return tracks_; 
+  }
+  
+  void play() {
+    cout &lt;&lt; "lalalala" &lt;&lt; endl;
+  }
+};
+</pre>
+</td></tr>
+<tr>
+<td style="border: 0px; ">
+<pre class="compact" style="font-size: .55em; line-height: 1.25em;">
+int main() {
+  CD cd1("Backup", 700);
+  MusicCD cd2("Charts", 21);
+  cd1.printTitle();
+  cout &lt;&lt; cd1.getCapacity() &lt;&lt; endl;
+  cd2.printTitle();
+  cout &lt;&lt; cd2.getCapacity() &lt;&lt; endl;
+  cd2.play();
+}
+</pre>
+</td><td style="border: 0px;">
+<div class="console">
+> ./cd_class<br />
+Backup<br />
+700<br />
+Charts<br />
+21<br />
+lalalala
+</div>
+</td>
+</tr></table>
+</article>
+
+    <article>
+     <h3>Virtuelle Methoden - Problem</h3>
+         <pre class="compact">
+int main() 
+{
+  CD cd1("Backup", 700);
+  MusicCD cd2("Charts", 21);
+  
+  vector&lt;CD*> vec;
+  vec.push_back(&amp;cd1);
+  vec.push_back(&amp;cd2);
+  
+  for(vector&lt;CD*>::iterator it = vec.begin(); it != vec.end(); it++)
+  {
+    (*it)->printTitle();
+    cout &lt;&lt; (*it)->getCapacity() &lt;&lt; endl;
+  }
+}
+</pre>
+<table width="100%"><tr><td style="border: 0px;" width="10%"><em>Soll</em></td><td style="border: 0px;">
+<div class="console" >
+Backup<br />
+700<br />
+Charts<br />
+21
+</div>
+</td>
+<td style="border: 0px;">
+&nbsp; &nbsp;
+</td>
+<td style="border: 0px;" width="10%"><em>Ist</em></td>
+<td style="border: 0px;">
+<div class="console">
+Backup<br />
+700<br />
+Charts<br />
+700
+</div>
+</td>
+</tr></table>
+
+
+         </article>
+         <article>
+         <h3>Virtuelle Methode - Theorie</h3>
+         <ul>
+         <li style="padding-top: 12px;">Schl&uuml;sselwort <span class="src">virtual</span>
+         <pre class="compact">virtual int getCapacity() {...}</pre>
+         </li>
+         <li style="padding-top: 12px;">Es wird zur Laufzeit entschieden, welche Methode aufgerufen wird</li>
+         </ul>
+
+         <br /><br />
+         <img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     Destruktoren sollten immer als <span class="src">virtual</span> deklariert sein, damit beim Zerst&ouml;ren des Objekts immer auf den richtigen Destruktor 
+     zugegriffen wird.
+     </div>
+         
+    </article>
+        <article>
+     <h3>Virtual - L&ouml;sung</h3>
+     <br /><br />
+     <table style="margin:0px;padding:0px;"><tr><td style="border: 0px;">
+<pre class="compact" style="font-size: .55em; line-height: 1.25em; ">
+class CD 
+{
+private:
+  int capacity_;
+  string title_;
+  
+public:
+  CD(string title, int size) 
+   : capacity_(size), title_(title) {}
+  
+  virtual int getCapacity() { 
+    return capacity_; 
+  }
+  
+  void printTitle() { 
+    cout &lt;&lt; title_ &lt;&lt; endl; 
+  }
+};
+</pre>
+</td><td style="border: 0px;">
+<pre class="compact" style="font-size: .55em; line-height: 1.25em;">
+class MusicCD : public CD 
+{
+private:
+  int tracks_;
+
+public:
+  MusicCD(string name, int tracks) 
+   : CD(name, 700), tracks_(tracks)
+  {}
+  
+  int getCapacity() { 
+    return tracks_; 
+  }
+  
+  void play() {
+    cout &lt;&lt; "lalalala" &lt;&lt; endl;
+  }
+};
+</pre>
+</td></tr>
+</table>
+</article>
+
+<article>
+     <h3>Abstrakte Klassen &amp; Rein Virtuelle Methoden</h3>
+         <ul>
+          <li>Rein virtuelle Methoden haben keine Funktion:
+           <pre>virtual int getCapacity() = 0;</li>
+          <li>Enth&auml;lt eine Klasse mindestens eine rein virtuelle Methode, ist sie <em>abstrakt</em></li>
+          <li>Die Funktion muss von der abgeleiteten Klasse implementiert werden</li>
+          <li>Es k&ouml;nnen keinen Instanzen der Basisklasse (= abstrakten Klasse) erstellt werden</li>
+         </ul>
+    </article>
+    
+    <article>
+     <h3>Speichermanagement: <span class="src">new</span> und <span class="src">delete</span></h3>
+     
+     <table>
+      <tr>
+       <td style="border: 0px;" ><h4 style="margin-top: 4px;">Speicheranforderung</h4></td><td style="border: 0px;"><h4 style="margin-top: 4px;">Speicherfreigabe</h4></td></tr>
+       <tr><td style="border: 0px;">
+        <ul>
+         <li>Einfache Typen
+          <pre class="compact">
+int* i = new int;
+string* str = new string;
+</pre>
+         </li>
+         <li>Klassen (def. Konstruktor)
+          <pre class="compact">
+Person* p = new Person;
+</pre>
+         </li>
+         <li>Klassen (mit Konstruktor)
+          <pre class="compact">
+Person* p = new Person("Max");
+</pre>   </li>
+         <li>Arrays
+          <pre class="compact">
+int* a = new int[10];    
+</pre>
+         </li>
+        </ul>
+       </td><td style="border: 0px;">
+        <ul>
+         <li>Einfache Typen
+          <pre class="compact">
+delete i;
+delete str;
+</pre>
+         </li>
+         <li>Klassen (def. Konstruktor)
+          <pre class="compact">
+delete p;          
+</pre>
+         </li>
+         <li>Klassen (mit Konstruktor)
+          <pre class="compact">
+delete p;    
+</pre>
+          </li>
+          <li>Arrays
+          <pre class="compact">
+delete[] a;
+</pre>
+         </li>
+         </ul>
+       </td>
+      </tr>     
+     </table>
+    </article>
+    
+
+     <article>
+       <h3>Einfache Klasse III (ball.h)</h3>
+<pre style="font-size: .55em; line-height: 1.2em; width: 75%; margin: 1em auto;">
+#ifndef BALL_H_INCLUDED
+#define BALL_H_INCLUDED
+
+#include &lt;string>
+
+class Ball
+{
+private:
+  float x_, y_, speed_;
+  int direction_;
+  std::string color_;
+  std::string name_;
+
+public:
+  Ball(float x, float y, float speed, int direction,
+       std::string name);
+  
+  virtual void move() = 0;
+  
+};
+
+#endif
+</pre>
+     
+     </article>
+     
+     
+     <article>
+      <h3><span class="src">NormalBall</span> und <span class="src">CrazyBall</span></h3>
+<pre style="font-size: .6em; line-height: 1.2em; width: 75%; margin: 3em auto;">
+#ifndef NORMALBALL_H_INCLUDED
+#define NORMALBALL_H_INCLUDED
+#include "ball.h"
+
+class NormalBall : public Ball {
+  public:
+    NormalBall(float x, float y, float speed, int dir,
+               std::string name);
+    void move();
+};
+#endif
+</pre>
+<pre style="font-size: .6em; line-height: 1.2em; width: 75%; margin: 3em auto;">
+#ifndef CRAZYBALL_H_INCLUDED
+#define CRAZYBALL_H_INCLUDED
+#include "ball.h"
+
+class CrazyBall : public Ball {
+  public:
+    CrazyBall(float x, float y, float speed, int dir, 
+              std::string name);
+    void move();
+};
+#endif
+</pre>
+
+     </article>
+     
+     <article>
+       <h3>Konstruktor (ball.cpp)</h3>
+<pre style="font-size: .6em; line-height: 1.2em; width: 75%; margin: 4em auto;">
+#include &lt;math.h>
+#include "ball.h"
+
+Ball::Ball(float x, float y, float speed, int dir, 
+      std::string name) : x_(x), y_(y), speed_(speed)
+{
+  direction_ = dir * M_PI / 180.0;
+  name_ = "Ball '" + name + "'";
+  color_ = "red";
+}
+
+</pre>
+     
+     </article>
+     
+     
+    <article>
+       <h3>Konstruktor (crazyball.cpp / normalball.cpp)</h3>
+<pre style="font-size: .6em; line-height: 1.2em; width: 85%; margin: 4em auto;">
+#include &lt;math.h>
+#include "ball.h"
+
+Crazyball::Crazyball(float x, float y, float speed, int dir, 
+      std::string name) : Ball(x, y, speed, dir, name)
+{
+  name_ = "CrazyBall '" + name + "'";
+  color_ = "blue";
+}
+</pre>
+<pre style="font-size: .6em; line-height: 1.2em; width: 85%; margin: 4em auto;">
+#include &lt;math.h>
+#include "ball.h"
+
+Normalball::Normalball(float x, float y, float speed, int dir, 
+      std::string name) : Ball(x, y, speed, dir, name)
+{
+}
+</pre>
+     
+     </article>
+     
+     
+     <article>
+      <h3><span class="src">move</span> (crazyball.cpp and normalball.cpp)</h3>
+<pre>
+void NormalBall::move()
+{
+  x_ = x_ + cos(direction_) * speed_;
+  y_ = y_ + sin(direction_) * speed_;  
+  if(x_ &lt; 0 || x_ > 800) 
+    direction_ = atan2(sin(direction_), -cos(direction_));
+  if(y_ &lt; 0 || y_ > 600)
+    direction_ = atan2(-sin(direction_), cos(direction_));
+}
+
+void CrazyBall::move()
+{
+  x_ = x_ + cos(direction_) * speed_ + sin(direction_ / 2) * speed_;
+  y_ = y_ + (tan((x_ % 180) * M_PI / 180.0) % 4) * speed_;  
+  if(x_ &lt; 0 || x_ > 800) 
+    direction_ = atan2(sin(direction_), -cos(direction_));
+  if(y_ &lt; 0 || y_ > 600)
+    direction_ = atan2(-sin(direction_), cos(direction_));
+}
+
+</pre>
+     </article>
+     
+
+     
+     
+     <article>
+       <h3>Das <code>main</code>-Programm</h3>
+<table style="border: 0px; margin: 4px; padding:0px;"><tr style="border: 0px; margin: 0px; padding:0px;"><td style="border: 0px; margin: 0px; padding:0px;">
+<pre class="compact" style="font-size: .55em; line-height: 1.2em; width: 95%;">
+#include &lt;vector>
+#include "ball.h"
+
+int main()
+{
+  std::vector&lt;Ball*> balls;
+
+  NormalBall b1(200, 225, 5, 10, "#1");
+  balls.push_back(&amp;b1);<div id="balls"></div>
+  while(1)
+  {
+    int i;
+    for(i = 0; i &lt; balls.size(); i++)
+    {
+      balls[i]->move();
+    }
+
+    drawWindow(); // some magic...
+  }
+}
+
+</pre>
+</td><td style="border: 0px;">
+  <button onclick="Example2.addRandomBall();" class="big_button"><img src="images/add.png" alt="" /> Normalball</button>
+  <button onclick="Example2.addRandomCrazyball();" class="big_button"><img src="images/add.png" alt="" /> Crazyball</button>
+  <button onclick="Example2.compile();" class="big_button"><img src="images/run.png" alt="" /> Starten</button>
+</td></tr></table>
+
+<div id="popup" style="display: none;">
+
+  <div style="position: absolute; left: 80px; top: 80px;">
+    <img src="images/window.png" onclick="Example2.kill();"/>
+  </div>
+  <div style="position: absolute; left: 85px; top: 110px;">
+   <canvas id="game" style="width: 700px; height: 430px;"></canvas>
+  </div>
+
+</div>
+</article>
+
+   <article>
+     <h3>Assignment 2</h3>
+         <ul>
+         <li>Missionen</li>
+         <li>Befehle mit Command Pattern</li>
+         <li>Weitere kleine &Auml;nderungen an den bestehenden Klassen</li>
+         </ul>
+         <p><strong>Angeforderter Speicher ist in jedem Fall wieder freizugeben</strong></p>
+    </article>
+
+         
+          <article>
+     <h3>Missionen</h3>
+     <table style="margin: 0px; padding: 0px;">
+      <tr>
+       <td colspan="2" style="padding-left: 220px; border: 0px;">
+       Destruction<br />
+            <div style="clear: both;">
+            <div class="riskcard">
+             <div class="title">Mission</div>
+             <div class="text">
+              Befreien Sie alle L&auml;nder von den <b>roten</b> Armeen
+             </div>
+            </div>
+            
+            <div class="riskcard">
+             <div class="title">Mission</div>
+             <div class="text">
+              Befreien Sie alle L&auml;nder von den <b>gr&uuml;nen</b> Armeen
+             </div>
+            </div>
+            </div>
+       </td>
+      </tr><tr>
+      <td style="border: 0px;">
+       ContinentConquest<br />
+       <div style="clear: both;">
+            
+            <div class="riskcard">
+             <div class="title">Mission</div>
+             <div class="text">
+              Befreien Sie Nordamerika und Asien
+             </div>
+            </div>
+
+            <div class="riskcard">
+             <div class="title">Mission</div>
+             <div class="text">
+              Befreien Sie Europa, Australien und einen dritten Kontinent Ihrer Wahl
+             </div>
+            </div>
+            
+            </div>
+      
+      </td>
+      <td style="border: 0px;">
+      
+      TerritoryConquest<br />
+      <div style="clear: both;">
+            
+            <div class="riskcard">
+             <div class="title">Mission</div>
+             <div class="text">
+              Befreien Sie 18 L&auml;nder und und setzen Sie in jedes Land mindestens 2 Armeen
+             </div>
+            </div>
+            
+                    <div class="riskcard">
+             <div class="title">Mission</div>
+             <div class="text">
+              Befreien Sie 24 L&auml;nder Ihrer Wahl
+             </div>
+            </div>
+            
+            </div>
+      
+      </td>
+      </tr>
+     
+     </table>
+     
+  </article>
+        
+    
+    <article class="no_print">
+     <h3>Command Pattern</h3>
+     
+     <img src="images/bulb_off.png" style="position: absolute; top: 70px; left: 8px;" id="cmdBulb" />
+     
+     <table class="classtable">
+      <tr><th>Light</th></tr>
+      <tr><td><pre class="syntax" id="cmdOn">void turnOn();</pre>
+              <pre class="syntax" id="cmdOff">void turnOff();</pre>
+</pre></td></tr>
+     </table>
+     
+          <table class="classtable" style="position: absolute; left: 32px; top: 256px; visibility: hidden;" id="cmdCmd">
+      <tr><th>Light<span id="cmdTitle">On</span>Command : Command</th></tr>
+      <tr><td><pre class="syntax">int execute(Light&amp; light) {</pre>
+<pre class="syntax" id="cmdExCmd">  light.turnOn();</pre><br />
+<pre class="syntax">}</pre></td></tr>
+     </table>
+
+     <table class="classtable" style="position: absolute; top: 128px; right: 128px;">
+      <tr><th>Invoker</th></tr>
+      <tr><td><pre id="cmdInv" class="syntax">int invoke(Command&amp; cmd) {
+  return cmd.execute(light);<br /> }</pre>
+      </td></tr>
+     </table>
+     
+     <div id="cmdCall" style="position: absolute; left: 520px; top: 128px; visibility: hidden;">
+      &lt;-
+     </div>
+     
+     <table class="classtable" style="position: absolute; left: 32px; top: 256px;">
+      <tr><th>Command</th></tr>
+      <tr><td><pre class="syntax">int execute(Light&amp; light) = 0;</pre></td></tr>
+     </table>
+     
+     <img src="images/run.png" style="position: absolute; left: 380px; top: 480px; visibility: hidden;" width="40px" id="cmdRun" onclick="cmdSend();" />
+
+     <br /><br /> <br /><br /><br /><br /><br /> <br /><br /><br />
+     <div class="cmdprompt">
+      #> <input type="text" id="cmdPrompt" style="border: 0px; background-color: inherit;" onkeypress="return cmdParse(event);" placeholder='(try "light on" or "light off")' />
+     </div>
+
+    </article>
+    <article>
+         <h3>Command Pattern</h3>
+         <pre style="font-size: 0.6em;">
+class Command
+{
+  private:
+    Command(const Command&amp; original);
+    Command&amp; operator=(const Command&amp; original);
+    
+    std::string command_name_;
+
+  public:
+    Command(std::string name);
+    virtual ~Command();
+        
+    virtual int execute(Game&amp; board, std::vector&lt;std::string>&amp; params) = 0;
+
+    const std::string&amp; getName();
+};
+         </pre>
+    </article>
+    
+        <article>
+        <h3>Command Pattern - Beispiel</h3>
+        <pre style="font-size: 0.6em;">
+class PrintHello : public Command
+{
+  public:
+    PrintHello() : Command("PrintHello!"){}
+    virtual ~PrintHello();
+        
+    int execute(Game&amp; board, std::vector&lt;std::string>&amp; params);
+};
+
+int PrintHello::execute(Game&amp; board, std::vector&lt;std::string>&amp; params)
+{
+  std::cout &lt;&lt; "Hello" &lt;&lt; std::endl;
+}
+        </pre>
+        </article>
+
+
+         <article>
+     <h3>Befehle</h3>
+     <br />
+     
+         <div class="command">
+          <div class="title">status</div>
+          <div class="text">Gibt den aktuellen Spieler aus</div>
+         </div>
+         
+         <div class="command">
+          <div class="title">rename</div>
+          <div class="text">Benennt den aktuellen Spieler um</div>
+         </div>
+         
+         <div class="command">
+          <div class="title">view</div>
+          <div class="text">Gibt das Spielfeld des aktuellen Spiels aus</div>
+         </div>
+         
+         <div class="command">
+          <div class="title">echo</div>
+          <div class="text">Gibt beliebig viele übergebene Parameter aus</div>
+         </div>
+         
+         <div class="command">
+          <div class="title">next</div>
+          <div class="text">Wechselt zum nächsten Spieler</div>
+         </div>
+
+         <div class="command">
+          <div class="title">quit</div>
+          <div class="text">Beendet das Programm</div>
+         </div>
+         
+    </article>
+     
+
+    <article>
+         <h1>Viel Glück</h1>
+         <h3 style="margin-top: 30px;">Nächstes Tutorium: 29. Mai 2013</h3></article>
+    </section>
+
+  </body>
+</html>
