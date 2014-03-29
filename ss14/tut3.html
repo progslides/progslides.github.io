@@ -124,7 +124,7 @@
         </ul>
      </article>
 
-        
+
     <article>
      <h3>Pointer &amp; Referenzen</h3>
      <table>
@@ -353,10 +353,10 @@ int main()
   vec.push_back(&amp;cd1);
   vec.push_back(&amp;cd2);
   
-  for(vector&lt;CD*>::iterator it = vec.begin(); it != vec.end(); it++)
+  for(auto&amp; cd : vec)
   {
-    (*it)->printTitle();
-    cout &lt;&lt; (*it)->getCapacity() &lt;&lt; endl;
+    cd.printTitle();
+    cout &lt;&lt; cd.getCapacity() &lt;&lt; endl;
   }
 }
 </pre>
