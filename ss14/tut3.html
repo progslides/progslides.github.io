@@ -102,6 +102,8 @@
       <p>
         Softwareentwicklung Praktikum</p>
         <p>
+          Gruppe 3 – Jörg Müller
+          <small><a href="mailto:prog-tutor-joerg@iicm.tugraz.at">prog-tutor-joerg@iicm.tugraz.at</a></small><br />
           Gruppe 4 – Michael Schwarz
           <small><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></small><br />
           Gruppe 5 – Anja Karl
@@ -698,6 +700,69 @@ int main()
 
 </div>
 </article>
+
+    <article>
+         <h3>C++ 11 Gimmicks</h3>
+         <ul>
+           <li>auto</li>
+           <li>for each</li>
+           <li>initializer lists</li>
+         </ul>
+         <pre style="font-size: 0.6em">
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main()
+{
+  std::vector&lt;int&gt; numbers = {1, 2, 3, 4};
+  for(const auto&amp; number : numbers)
+
+    std::cout &lt;&lt; number &lt;&lt; std::endl;
+}</pre>
+    </article>
+
+    <article>
+         <h3>C++ 11 nullptr</h3>
+         <pre style="font-size: 0.6em">
+#include &lt;iostream&gt;
+
+void foo(int number)
+{
+  std::cout &lt;&lt; "Number: " &lt;&lt; number &lt;&lt; std::endl;
+}
+
+void foo(void* pointer)
+{
+  std::cout &lt;&lt; "Pointer: " &lt;&lt; pointer &lt;&lt; std::endl;
+}
+
+int main()
+{
+  foo(nullptr); // NULL doesn't work!
+}</pre>
+    </article>
+
+    <article>
+         <h3>C++ 11 delete und default</h3>
+         <pre style="font-size: 0.6em">
+class Foo
+{
+public:
+  Foo(Foo&amp; foo) = delete;
+  Foo&amp; operator=(Foo&amp; foo) = delete;
+  Foo() = default; // keep default constructor
+  Foo(double number) {}
+  Foo(int number) = delete;
+};
+
+int main()
+{
+  Foo f1; // works, default constructor
+  Foo f2 = f1; // doesn't work
+  Foo f3(0); // doesn't work either
+  Foo f4(3.1415); // works again
+}</pre>
+    </article>
 
    <article>
      <h3>Assignment 2</h3>
