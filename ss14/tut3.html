@@ -355,10 +355,10 @@ int main()
   vec.push_back(&amp;cd1);
   vec.push_back(&amp;cd2);
   
-  for(auto&amp; cd : vec)
+  for(auto cd : vec)
   {
-    cd.printTitle();
-    cout &lt;&lt; cd.getCapacity() &lt;&lt; endl;
+    cd->printTitle();
+    cout &lt;&lt; cd->getCapacity() &lt;&lt; endl;
   }
 }
 </pre>
@@ -702,9 +702,9 @@ int main()
 </article>
 
     <article>
-         <h3>C++ 11 Gimmicks</h3>
+         <h3>C++ 11 Gimmicks &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h3>
          <ul>
-           <li>auto</li>
+           <li><span class="src">auto</span></li>
            <li>for each</li>
            <li>initializer lists</li>
          </ul>
@@ -716,13 +716,14 @@ int main()
 {
   std::vector&lt;int&gt; numbers = {1, 2, 3, 4};
   for(const auto&amp; number : numbers)
-
+  {
     std::cout &lt;&lt; number &lt;&lt; std::endl;
+  }
 }</pre>
     </article>
 
     <article>
-         <h3>C++ 11 nullptr</h3>
+         <h3>C++ 11 <span class="src">nullptr</span> &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h3>
          <pre style="font-size: 0.6em">
 #include &lt;iostream&gt;
 
@@ -743,7 +744,7 @@ int main()
     </article>
 
     <article>
-         <h3>C++ 11 delete und default</h3>
+         <h3>C++ 11 <span class="src">delete</span> und <span class="src">default</span> &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h3>
          <pre style="font-size: 0.6em">
 class Foo
 {
