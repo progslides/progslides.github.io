@@ -491,13 +491,12 @@ public:
      </article>
 
      <article>
-      <h3>Auto Pointer</h3>
+      <h3>Smart Pointer <img src="images/newflag.jpg" style="vertical-align: middle;" /></h3>
       <ul>
        <li>Helfen beim Verwalten von <u>dynamischem</u> Speicher</li>
        <li>Zugriff wie &uuml;ber einen normalen Pointer</li>
-       <li>Nicht f&uuml;r Arrays</li>
-       <li>Im Header <span class="src">&lt;memory></span> zu finden</li>
-       <li>Syntax: <pre class="compact">std::auto_ptr&lt;typ> pointer(speicher);</pre></li>
+       <li>Im Header <span class="src">&lt;memory></span> zu finden (<a href="http://en.cppreference.com/w/cpp/memory">C++ Referenz</a>)</li>
+       <li>Syntax: <pre class="compact">std::unique_ptr&lt;typ> pointer(speicher);</pre></li>
       </ul>
       <br /><br />
       <img src="images/homer2.gif" width="100px" style="float: left;"/>
@@ -507,29 +506,34 @@ public:
      </article>
 
      <article>
-      <h3>Auto Pointer - Beispiel</h3>
-      <pre class="compact" style="font-size: 0.65em; line-height: 1.3em; width: 80%; margin: 1em auto;">
+      <h3>Smart Pointer - Beispiel <img src="images/newflag.jpg" style="vertical-align: middle;" /></h3>
+      <pre class="compact" style="font-size: 0.6em; line-height: 1.15em; width: 80%; margin: 1em auto;">
 #include &lt;iostream>
 #include &lt;memory>
 
-void foo(int x) 
-{
-  int* i = new int;
-  std::auto_ptr&lt;int> ptr(i);
-  if(x == 0) 
-    return;
-  
-  *ptr = x;
-  std::cout &lt;&lt; (*ptr) &lt;&lt; std::endl;
-  return;
+class Foo {
+public:
+  void bar() {
+    std::cout  &lt;&lt; "foobar" &lt;&lt; std::endl;
+  }
+};
+
+std::unique_ptr&lt;Foo> createFoo() {
+  Foo* bar = new Foo();
+  return std::unique_ptr&lt;Foo>(bar);
 }
 
-int main() 
-{
-  foo(0);
-  foo(1);
-}
-</pre>
+int main() {
+    std::unique_ptr&lt;Foo> ptr = createFoo();
+    
+    std::vector&lt;std::unique_ptr&lt;Foo>> foos;
+    
+    foos.push_back(std::unique_ptr&lt;Foo>(new Foo()));
+    foos.push_back(std::unique_ptr&lt;Foo>(new Foo()));
+    foos.push_back(std::unique_ptr&lt;Foo>(new Foo()));
+    
+    ptr->bar();
+}</pre>
      </article>
      
      <article>
