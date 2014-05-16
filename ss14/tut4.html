@@ -729,7 +729,48 @@ int main() {
      </div>
 
     </article>
-    
+        <article>
+     <h3>Ratio</h3>
+         <br />
+          Rationale Zahl, bestehend aus  <strong>zwei teilerfremden Ganzzahlen.</strong>
+    <pre class="compact" style="font-size: .62em; line-height: 1.1em;">
+int main() {
+  Ratio ratio_1(7,3);
+  Ratio ratio_2(3,2);
+  std::cout << "Ratios: " << std::endl;
+  std::cout << ratio_1 << std::endl;
+  std::cout << ratio_2 << std::endl;
+
+  Ratio sum = ratio_1 + ratio_2;
+
+  std::cout << "Sum:" << std::endl;
+  std::cout << sum << std::endl;
+
+  sum = sum - 2;
+  std::cout << "Sum - 2:" << std::endl;
+  std::cout << sum << std::endl;
+  if(sum > 1)
+    std::cout << "Ratio: " << sum << " is > 1" << std::endl;
+  else
+    std::cout << "Ratio: " << sum << " is < 1" << std::endl;
+}
+</pre>
+    </article>
+     <article>
+     <h3>Ratio</h3>
+         <br />
+          Ausgabe
+    <div class="console">
+Ratios: <br />
+7 / 3<br />
+3 / 2<br />
+Sum:<br />
+23 / 6<br />
+Sum - 2:<br />
+11 / 6<br />
+Ratio: 11 / 6 is > 1<br />
+</div>
+    </article>
     <article>
      <h3>SVG</h3>
       <ul>
