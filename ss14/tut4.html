@@ -430,6 +430,39 @@ catch (std::bad_alloc& ba)
      <p><strong>Außer: Exceptions im Konstruktor!</strong></p>
      </article>
 
+     <article>
+     <h3><strong>Achtung</strong>: Exception im Konstruktor</h3>
+     <ul>
+     <li>Wird im Konstruktor eine Exception geworfen, ist das Objekt nicht erstellt, und auch der Destruktor wird nicht aufgerufen.</li>
+     </ul>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.22em; width: 75%; margin: 1em auto;">
+#include &lt;memory>
+#include &lt;iostream>
+#include &lt;vector>
+class Foo {
+private:
+    std::vector&lt;int*> list;
+public:
+    Foo() {
+        list.push_back(new int);
+        list.push_back(new int);
+        throw 1;
+    }
+    
+    ~Foo() {
+      for(auto it : list) {
+          delete it;
+      }
+    }
+};
+int main() {
+    Foo f;
+    return 0;
+}</pre>
+     </article>
+
+     
+     
      
      <article>
       <h3>Resource Acquisition Is Initialization (RAII)</h3>
@@ -534,7 +567,7 @@ public:
       <br /><br />
       <img src="images/homer2.gif" width="100px" style="float: left;"/>
      <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
-     "Stirbt" der Auto-Pointer, wird der reservierte Speicher (durch <span class="src">delete</span>) freigegeben.
+     "Stirbt" der Smart-Pointer, wird der reservierte Speicher (durch <span class="src">delete</span>) freigegeben.
      </div>
      </article>
 
