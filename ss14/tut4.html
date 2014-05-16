@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SEP: Tutorium #4</title>
+    <meta charset='utf-8'>
+    <script src='slides.js'></script>
+    <script src="svg.js"></script>
+    
+    <script type="text/javascript">
+    window.addEventListener("load", function() {
+          var inputs = document.getElementsByTagName("input");
+          for(i = 0; i < inputs.length; i++) {
+            if(inputs[i].type == "text") {
+              inputs[i].onfocus = function() {noNavigationWithBackspaceAndSpace(true);};
+              inputs[i].onblur = function() {noNavigationWithBackspaceAndSpace(false);};
+            }
+          }
+        });
+    </script>
+    <link rel="stylesheet" media="print" href="print.css">
+    <!--<link rel="stylesheet" href="styles.css">-->
+    
+    <style type="text/css">
+      .riskcard {
+        width: 150px; 
+        height: 200px;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #222;
+        border-radius: 16px;
+        box-shadow: 1px 1px;
+        padding: 0px;
+        font-size: 0.7em;
+        line-height: 1.2em;
+        float: left;
+        margin: 6px;
+        background-color: #fdfdfd;
+       }
+      
+      .riskcard div.title {
+        background-color: #c00000;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 16px;
+        border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding: 3px;
+    margin-bottom: 8px;
+      }
+      
+      .riskcard div.text {
+        margin: 12px;
+      }
+      
+      .riskcard div.text b {
+       font-weight: bold;
+      }
+      
+      .command {
+        width: 250px;
+        height: 120px;
+        border: 1px solid #444;
+        padding: 0px;
+        font-size: 0.68em;
+        line-height: 1.1em;
+        margin: 24px;
+        margin-left: 80px;
+        background-color: #fcfcfc;
+        border-radius: 8px;
+        float: left;
+      }
+      
+      .command div.title {
+        background-color: #4444f0;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 8px;
+        border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding: 3px;
+    margin-bottom: 8px;      
+      }
+      
+      .command div.text {
+       margin: 6px;
+      }
+      
+      .svg_code {
+       background: #fff; 
+       overflow: auto; 
+       height: 140px; 
+       width: 100%; 
+       border: 1px inset gray; 
+       font-size: 0.55em; 
+       font-family: monospace, 'Courier New'; 
+       line-height: 1.05em; 
+       white-space: pre;
+      }
+      
+      span.meta {
+       font-size: .9em;
+       color: #555;
+      }
+    </style>
+    
+    </head>
+
+
+  <body style='display: none' onload="SVG.init('svg', 'svg_src'); SVG.init('svg1', 'svg_src1'); SVG.init('svg2', 'svg_src2');">
+    <section class='slides layout-regular template-tugraz'>
+
+      <article>
+        <h1>
+          Tutorium #4
+        </h1>
+        <p>
+          Softwareentwicklung Praktikum<br>
+          Gruppe 9 – Michael Schwarz</p>
+          <p><small><a href="mailto:prog-tutor-michael@iicm.edu">prog-tutor-michael@iicm.edu</a></small></p>
+          <p><small><a href="http://www.student.tugraz.at/michael.schwarz/sep">http://www.student.tugraz.at/michael.schwarz/sep</a></small></p>
+      </article>
+
+     <article>
+        <h3>Ablauf des Tutoriums</h3>
+        <ul class="compact">
+         <li>File IO</li>
+         <li>Operator Overloading</li>
+         <li>Casting</li>
+         <li>Exceptions</li>
+         <li>Ressourcenverwaltung</li>
+         <li>Auto-Pointer</li>
+         <li>Templates</li>
+         <li>Ass3</li>
+        </ul>
+     </article>
+	 <article>
+	 <h1>Wer will alles eine neue Gruppe?</h1>
+	 </article>
+     
+     <article>
+       <h3>H&auml;ufige Fehler, die viele Punkte kosten</h3>
+       <center><br /><img src="images/segfaults.jpg" width="350"/></center>
+       <ul>
+         <li>Valgrind Warnings</li>
+         <li>unn&ouml;tiges <span class="src">this</span></li>
+         <li>Doppelter Code</li>
+         <li>C statt C++ Casts</li>
+         <li>Codingstandard</li>
+       </ul>
+     </article>
+     
+     <article>
+      <h3>File-IO - File öffnen</h3>
+	  <p>Bin&auml;rdatei zum Schreiben &ouml;ffnen</p>
+	  <pre class="compact">
+  #include &lt;fstream>
+  std::ofstream file("tut4.bin",
+    std::ios::out | std::ios::trunc | std::ios::binary);
+  if (!file.is_open()) 
+  {
+    std::cerr &lt;&lt; "cannot open file" &lt;&lt; std::endl;
+  } else file.close(); </pre>
+	<p>Bin&auml;rdatei zum Lesen &ouml;ffnen</p>
+	  <pre class="compact">
+  std::ifstream input("tut4.bin", std::ios::in | std::ios::binary);
+  if (!input.is_open()) 
+  {
+    std::cerr &lt;&lt; "cannot open file" &lt;&lt; std::endl;
+  } else input.close();</pre>
+     </article>
+	 <article>
+	 <h3>File-IO - Schreiben</h3>
+<pre class="compact">
+// schreibe "SEPRISK\0" in Datei
+file &lt;&lt; "SEPRISK";
+file &lt;&lt; '\0';
+// schreibe Zahl 7 als Bin&auml;rwert -> in char speichern 
+// und dann in Datei schreiben
+char num = 7;
+file &lt;&lt; num;
+// schreibe Zahl 7 als Ziffer ('7') -> wenn Zahl 
+// in int gespeichert ist
+int num2 = 7;
+file &lt;&lt; num2;
+// schreibe C-String mit Nullbyte
+char* str = "Hallo Welt";
+file &lt;&lt; str &lt;&lt; '\0';
+</pre>
+<br />
+<img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     Dateien können behandelt werden wie <span class="src">std::cout</span> und <span class="src">std::cin</span>
+     </div>
+	 </article>
+	 
+	 <article>
+	 <h3> File-IO - Lesen
+	 </h3>
+	 <pre>
+  // lese C-String Zeichenweise bis Nullbyte zur&uuml;ck
+  char c;
+  while((input >> c) &amp;&amp; c != 0) {
+   std::cout &lt;&lt; c; 
+  }
+  std::cout &lt;&lt; std::endl;
+  // lese Bin&auml;rwert 7 zur&uuml;ck (und zeige als char und integer an)
+  char y;
+  input >> y;
+  std::cout &lt;&lt; y &lt;&lt; " = " &lt;&lt; static_cast&lt;int>(y) &lt;&lt; std::endl;
+  // lese Zahl 7 als Ziffer ('7') zur&uuml;ck
+  int x;
+  input >> x;
+  std::cout &lt;&lt; x &lt;&lt; std::endl;
+  </pre>
+ </article>
+
+     <article>
+      <h3>Operator Overloading</h3>
+      <ul>
+       <li>&Uuml;berschreibt die Operatoren (<span class="src">==</span>, <span class="src">+</span>, <span class="src">-</span>, <span class="src">*</span>, <span class="src">/</span>, ...) f&uuml;r die eigene Klasse</li>
+       <li>Syntax: (<span class="src">@</span> steht f&uuml;r den Operator)
+<pre class="compact">
+return_type operator@(argumente)
+{
+    [...]
+}
+</pre></li>
+      <li>Kann als Member-Funktion oder als <span class="src">friend</span> deklariert werden</li>
+      <li>Sollte sparsam verwendet werden und nur wenn es eindeutig ist</li>
+      </ul>
+     </article>
+     
+     <article>
+      <h3>Operator Overloading - Beispiel (als Member)</h3>
+<pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
+class Complex
+{
+private:
+  float real_part_;
+  float imaginary_part_;
+  
+public:
+    bool operator==(const Complex &amp;c) const
+    {
+        return ( c.real_part_ == real_part_ &amp;&amp;
+                (c.imaginary_part_ == imaginary_part_) );
+    }
+    
+    Complex operator+(const Complex&amp; right)
+    {
+      Complex result;
+      result.setImaginary(imaginary_part_ + right.getImaginary());
+      result.setReal(real_part_ + right.getReal());
+      return result;
+    }
+    
+    [...]
+};
+</pre>
+     </article>
+     
+     <article>
+        <h3>Casts in C++</h3>
+
+        <dl class="expl">
+          <dt><span class="src">static_cast</span></dt>
+          <dd>Funktioniert wie das von C bekannte Casting <span class="src">(typ)variable</span>. Funktioniert nur, wenn der Compiler eine Regel zum Casten kennt.
+            <pre class="compact">int a = 16, b = 9;
+float ratio = static_cast&lt;float&gt;(a) / b;</pre></dd>
+          <dt><span class="src">const_cast</span></dt>
+          <dd>Nur zum Hinzuf&uuml;gen oder Entfernen <span class="meta">(gefährlich)</span>
+            des <span class="src">const</span>
+            Keywords.</dd>
+          <dt><span class="src">dynamic_cast</span></dt>
+          <dd>Casts innerhalb einer Klassenhierarchie von polymorphen Klassen. Aufw&auml;ndige Type-Checks zur Laufzeit.
+                  <pre class="compact">// Cast von *CD in *MusicCD
+MusicCD *charts = dynamic_cast&lt;*MusicCD&gt;(cd1);</pre></dd>
+          <dt><span class="src">reinterpret_cast</span></dt>
+          <dd style="width: 75%;">Keine Konvertierung, Daten werden ohne &Auml;nderung als neuer Datentyp interpretiert,
+            plattformabh&auml;ngig, sollte nur bei hardwarenaher Programmierung verwendet werden.</dd>
+        </dl>
+     </article>
+     
+     <article>
+      <h3><span class="src">static_cast</span> verlustfreie Regeln</h3>
+      <center><img src="images/casts.png" width="700px" style="padding-top: 8px;" /></center>
+      <br />
+      <img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     Castings sind nur dann ohne Datenverlust, wenn auf einen gr&ouml;&szlig;eren Datentyp gecastet wird.
+     </div>
+     </article>
+
+     <article>
+      <h3>Exceptions</h3>
+      <br />Grundlegendes Konstrukt f&uuml;r Exceptions
+<pre>
+try
+{
+  someFunction() // k&ouml;nnte eine Exception werfen...
+  [...]
+  throw(e); // ...oder manuelles Werfen einer Exception
+}
+catch(MyException&amp; e1)
+{
+  // fange Exception vom Typ MyException
+}
+catch(std::exception&amp; e)
+{
+  // fange alles, was vom Typ std::exception abgeleitet ist, 
+  // und noch nicht gefangen wurde
+}
+</pre>
+     </article>
+     
+     <article>
+      <h3>Exceptions</h3>
+      <br />
+      N&uuml;tzlich, aber nicht &uuml;bertreiben &rarr; <strong>Formale Fehlerquellen</strong>
+      <ul>
+      <li>Kontrollfluss durch Exceptions</li>
+      <li>Silent Catch von Exceptions</li>
+      <li>Wurf einer Nicht-std::exception-Unterklasse</li>
+      <li>Im Destruktor dürfen keine Exceptions geworfen werden</li>
+      </ul>
+      <br />
+      Also immer
+<pre class="compact">
+ class MyException : public std::exception {
+   [...]
+ };
+</pre>
+     </article>
+     
+     <article>
+      <h3>Exceptions - Beispiel</h3>
+      <ul>
+      <li><pre class="compact" style="display: inline;">virtual const char* what() const</pre> sollte eine Fehlerbeschreibung liefern (als <span class="src">const char*</span>)</li>
+      </ul>
+      <pre class="compact" style="font-size:0.60em; line-height:1.2em; margin: 0.5em auto; width: 75%;">
+#include &lt;exception>
+class brick : public std::exception {
+  virtual const char* what() const throw()
+  {
+    return "Achtung Ziegel!\n";
+  }
+};
+
+int main ()
+{
+  try
+  {
+    throw brick();
+  } catch (std::exception&amp; ex)
+  {
+    std::cout &lt;&lt; ex.what();
+  }
+  return 0;
+} </pre>
+     </article>
+	 
+    <article>
+      <h3>Exceptions - Speicher anfordern</h3>
+<pre class="compact" style="margin: 1em auto; width:90%;">
+int* allocateBigArray()
+{
+  int* big_array;
+  try 
+  {
+    big_array = new int[65536];
+  } 
+  catch(std::bad_alloc&amp; ex)
+  {
+    // bad_alloc wird von new geworfen, wenn der Speicher nicht
+    // angefordert werden konnte
+    std::cout &lt;&lt; "Out of memory" &lt;&lt; std::endl;
+    return NULL;
+  }
+  // alles hat funktioniert, 
+  // wir k&ouml;nnen mit dem Speicher arbeiten
+  return big_array;
+}</pre>
+    </article>
+	 
+     
+     <article>
+      <h3>Resource Acquisition Is Initialization (RAII)</h3>
+      <ul>
+        <li>Konzept zur Verwaltung von Ressourcen</li>
+        <li>Automatische Freigabe beim Verlassen des Scopes</li>
+        <li>Kann f&uuml;r Handles (z.B. Dateien), Locks und Speichern verwendet werden</li>
+        <li>Erleichtert das Schreiben von Exception-sicheren Programmen</li>
+      </ul>
+      <img src="images/raii.png" />
+     </article>
+     
+     <article>
+      <h3>Kein RAII - Beispiel</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.22em; width: 65%; margin: 1em auto;">
+int median(int* numbers, int count) {
+  int* data = new int[count];
+  std::memcpy(data, numbers, count * sizeof(int));
+  // error handling
+  if(numbers == NULL) {
+    delete[] data; // &lt;---
+    return 0;
+  }
+  if(count == 0) {
+    delete[] data; // &lt;---
+    return 0;
+  }
+  if(count == 1) {
+    delete[] data; // &lt;---
+    return *numbers;
+  }
+  // sort
+  if(mySortFunction(data, count) == false) {
+    delete[] data; // &lt;---
+    return 0;
+  }
+  // return median
+  int result = data[count / 2];
+  delete[] data; // &lt;---
+  return result;  
+}
+</pre>
+
+     </article>
+     
+     <article>
+       <h3>RAII - Beispiel</h3>
+<pre class="compact" style="float: left; width: 47%; font-size: 0.6em; line-height: 1.3em; margin-right: 16px; margin: 1em;">
+int median(int* numbers, int count)
+{
+  Data data(count);
+  data.setData(numbers, count);
+  // error handling
+  if(numbers == NULL)
+    return 0;
+  if(count == 0) 
+    return 0;
+  if(count == 1)
+    return *numbers;
+    
+  // sort
+  if(mySortFunction(data.getData(),
+       count) == false) 
+    return 0;
+  
+  return data.getData()[count / 2];  
+}
+</pre>
+<pre class="compact" style="float: left; width: 37%; margin: 1em; font-size: 0.6em; line-height: 1.3em;">
+class Data 
+{
+private:
+  int* data_;
+public:
+  Data(int count) { 
+    data_ = new int[count]; 
+  }
+  int* getData() const {
+    return data_; 
+  }
+  void setData(int* data, 
+               int count) 
+  {
+    std::memcpy(data_, data, 
+      count * sizeof(int));             
+  }
+  ~Data() { 
+    delete[] data_; 
+  }
+};
+</pre>
+     </article>
+
+     <article>
+      <h3>Auto Pointer</h3>
+      <ul>
+       <li>Helfen beim Verwalten von <u>dynamischem</u> Speicher</li>
+       <li>Zugriff wie &uuml;ber einen normalen Pointer</li>
+       <li>Nicht f&uuml;r Arrays</li>
+       <li>Im Header <span class="src">&lt;memory></span> zu finden</li>
+       <li>Syntax: <pre class="compact">std::auto_ptr&lt;typ> pointer(speicher);</pre></li>
+      </ul>
+      <br /><br />
+      <img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     "Stirbt" der Auto-Pointer, wird der reservierte Speicher (durch <span class="src">delete</span>) freigegeben.
+     </div>
+     </article>
+
+     <article>
+      <h3>Auto Pointer - Beispiel</h3>
+      <pre class="compact" style="font-size: 0.65em; line-height: 1.3em; width: 80%; margin: 1em auto;">
+#include &lt;iostream>
+#include &lt;memory>
+
+void foo(int x) 
+{
+  int* i = new int;
+  std::auto_ptr&lt;int> ptr(i);
+  if(x == 0) 
+    return;
+  
+  *ptr = x;
+  std::cout &lt;&lt; (*ptr) &lt;&lt; std::endl;
+  return;
+}
+
+int main() 
+{
+  foo(0);
+  foo(1);
+}
+</pre>
+     </article>
+     
+     <article>
+      <h3>Templates</h3>
+      <ul>
+       <li>Erlauben es, generische Funktionen zu schreiben</li>
+       <li>Werden in der STL ausgiebig verwendet</li>
+       <li>Es gibt Funktions- und Klassentemplates</li>
+       <li>Deklarations-Syntax: <pre class="compact">template &lt;typename identifier> function_declaration;</pre></li>
+       <li>Aufrufs-Syntax: <pre class="compact">function&lt;argument_type>(arguments);</pre> bzw. <pre class="compact">classname&lt;class_type>(constructor_values);</pre></li>
+      </ul>
+     </article>
+     
+     <article>
+      <h3>Templates - Beispiel (Funktionstemplate)</h3>
+      <br />
+<pre class="compact">
+template &lt;typename Type>
+Type max(Type a, Type b) 
+{
+    if(a > b) return a;
+    else return b;
+}
+</pre>
+<pre class="compact">
+int main()
+{
+  // ruft max&lt;int> auf (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3, 7) &lt;&lt; std::endl;
+  // ruft max&lt;double> (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3.0, 7.0) &lt;&lt; std::endl;
+  // Argumente nicht eindeutig, Typ muss angegeben werden (&lt;double>)
+  std::cout &lt;&lt; max&lt;double>(3, 7.0) &lt;&lt; std::endl;
+  return 0;
+}
+</pre>
+     </article>
+     
+     <article>
+      <h3>Templates - Beispiel (Klassentemplate)</h3>
+<pre class="compact">
+template &lt;typename T>
+class Math {
+public:
+  T getMin(T x1, T x2) {
+    if(x1 &lt; x2) return x1;
+    else return x2;
+  }
+  
+  T getMax(T x1, T x2) {
+    if(x1 > x2) return x1;
+    else return x2;
+  }
+};
+</pre>
+<pre class="compact" style="font-size: .62em; line-height: 1.3em;">
+int main() {
+  Math&lt;int> int_math;
+  Math&lt;std::string> str_math;
+  
+  std::cout &lt;&lt; "max(2, 4): " &lt;&lt; int_math.getMax(2, 4) &lt;&lt; std::endl;
+  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): " 
+    &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
+}
+</pre>
+     </article>
+
+     
+   <article>
+     <h3>Assignment 3</h3>
+         <br />
+     <img src="images/risk.png" width="729" />
+    </article>
+
+         
+      <article>
+     <h3>Missionen</h3>
+     <table style="margin: 0px; padding: 0px;">
+      <tr>
+       <td colspan="2" style="padding-left: 220px; border: 0px;">
+       Destruction<br />
+            <div style="clear: both;">
+        <div class="riskcard">
+         <div class="title">Mission</div>
+         <div class="text">
+          Befreien Sie alle L&auml;nder von den <b>roten</b> Armeen
+         </div>
+        </div>
+        
+        <div class="riskcard">
+         <div class="title">Mission</div>
+         <div class="text">
+          Befreien Sie alle L&auml;nder von den <b>gr&uuml;nen</b> Armeen
+         </div>
+        </div>
+        </div>
+       </td>
+      </tr><tr>
+      <td style="border: 0px;">
+       ContinentConquest<br />
+       <div style="clear: both;">
+        
+        <div class="riskcard">
+         <div class="title">Mission</div>
+         <div class="text">
+          Befreien Sie Nordamerika und Asien
+         </div>
+        </div>
+
+        <div class="riskcard">
+         <div class="title">Mission</div>
+         <div class="text">
+          Befreien Sie Europa, Australien und einen dritten Kontinent Ihrer Wahl
+         </div>
+        </div>
+        
+        </div>
+      
+      </td>
+      <td style="border: 0px;">
+      
+      TerritoryConquest<br />
+      <div style="clear: both;">
+        
+        <div class="riskcard">
+         <div class="title">Mission</div>
+         <div class="text">
+          Befreien Sie 18 L&auml;nder und und setzen Sie in jedes Land mindestens 2 Armeen
+         </div>
+        </div>
+        
+                <div class="riskcard">
+         <div class="title">Mission</div>
+         <div class="text">
+          Befreien Sie 24 L&auml;nder Ihrer Wahl
+         </div>
+        </div>
+        
+        </div>
+      
+      </td>
+      </tr>
+     
+     </table>
+     
+  </article>
+    
+    
+     <article>
+     <h3>Befehle</h3>
+     <br />
+     
+     <div class="command">
+      <div class="title">status</div>
+      <div class="text">Gibt den aktuellen Spieler aus</div>
+     </div>
+     
+     <div class="command">
+      <div class="title">rename</div>
+      <div class="text">Benennt den aktuellen Spieler um</div>
+     </div>
+     
+     <div class="command">
+      <div class="title">view</div>
+      <div class="text">Gibt das Spielfeld des aktuellen Spiels aus</div>
+     </div>
+     
+     <div class="command">
+      <div class="title">echo</div>
+      <div class="text">Gibt beliebig viele übergebene Parameter aus</div>
+     </div>
+     
+     <div class="command">
+      <div class="title">next</div>
+      <div class="text">Wechselt zum nächsten Spieler</div>
+     </div>
+
+     <div class="command">
+      <div class="title">quit</div>
+      <div class="text">Beendet das Programm</div>
+     </div>
+     
+    </article>
+     
+     <article>
+     <h3>Neue Befehle</h3>
+     <br />
+     <br /><br /><br /><br />
+     <div class="command">
+      <div class="title">attack</div>
+      <div class="text">Wird verwendet, um neue Territorien zu erobern.</div>
+     </div>
+     
+     <div class="command">
+      <div class="title">move</div>
+      <div class="text">Wird verwendet, um Einheiten zwischen eigenen Territorien zu bewegen.</div>
+     </div>
+     
+    </article>
+    
+    <article>
+     <h3>SVG</h3>
+      <ul>
+       <li>Scalable Vector Graphics</li>
+       <li>Bild wird durch Vektoren beschrieben</li>
+       <li>Beschreibung als XML</li>
+       <li>Beliebig skalierbar</li>
+      </ul>
+      <center>
+      <img src="images/vector_raster.png" height="320" />
+      </center>
+    </article>
+    
+    
+    <article>
+     <h3>SVG - Aufbau</h3>
+<br />
+Header
+<pre>
+&lt;svg xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink">  
+</pre>
+
+Objekte
+<pre>
+&lt;image x="0" y="0" width="1016px" height="638px" 
+  xlink:href="risk.svg"> &lt;/image>
+[...]
+</pre>
+
+Footer
+<pre>
+&lt;/svg>
+</pre>
+     
+    </article>
+    
+    
+    <article>
+     <h3>SVG - Einfache Objekte</h3>
+     <ul>
+      <li>Text: <pre class="compact" >&lt;text x="10" y="490">Player1&lt;/text></pre></li>
+      <li>Kreis: <pre class="compact" >&lt;circle cx="64" cy="90" r="14" stroke="black" 
+   stroke-width="2" fill="red"/></li>
+      <li>Rechteck: <pre class="compact">&lt;rect x="0" y="448" width="152" height="52" fill="green" /></li>
+      <li>Eingebettete Bilder: <pre class="compact">&lt;image x="0" y="0" width="1016px" height="638px"
+  xlink:href="risk.png">&lt;/image></pre></li>
+     </ul>
+    </article>
+    
+    </article>
+    
+    <article class="nobackground">
+    <h3>Hintergrundbild</h3>
+    <div style="border: 1px solid black; width: 729; height: 444;" id="svg">
+<svg id="risk" xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" height="444" width="729">
+ <image x="0" y="0" width="729" height="444" xlink:href="images/risk1.png" />
+</svg>
+    </div>
+    <div class="svg_code" id="svg_src"> 
+    </div>
+    </article>
+    
+    
+    <article class="nobackground">
+    <h3>Einfaches Beispiel f&uuml;r Einheiten</h3>
+    <div id="svg1" style="border: 1px solid black; width: 729; height: 444;">
+<svg id="risk" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" height="444" width="729">
+ <image x="0" y="0" width="729" height="444" xlink:href="images/risk1.png" />
+ <circle cx="440" cy="80" r="10" stroke="black" stroke-width="2" fill="red" />
+ <text x="436" y="84" font-family="Verdana" font-size="12" fill="black">3</text>
+ <circle cx="400" cy="300" r="10" stroke="black" stroke-width="2" fill="green" />
+ <text x="396" y="304" font-family="Verdana" font-size="12" fill="yellow">1</text>
+</svg>
+    </div>
+    <div class="svg_code" id="svg_src1">
+    <div>
+    </article>
+
+    <article class="nobackground">
+    <h3>Animationen</h3>
+    <div id="svg2" style="border: 1px solid black; width: 729; height: 444;">
+<svg id="risk" xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" height="444" width="729">
+ <image x="0" y="0" width="729" height="444" id="img" xlink:href="images/risk1.png" />
+ <circle cx="400" cy="300" r="10" stroke="black" stroke-width="2" fill="green" />
+ <text x="396" y="304" font-family="Verdana" font-size="12" fill="yellow">1</text>
+ <circle r="10" stroke="black" stroke-width="2" fill="green">
+  <animateMotion begin="img.click" dur="6s" values="400,300;320,220" />
+  <animate begin="img.click" attributeName="r" attributeType="XML"
+         dur="6s" values="10;18;10" />
+ </circle>
+ <text font-family="Verdana" font-size="12" fill="yellow">1
+  <animateMotion begin="img.click" dur="6s" values="396,304;316,224" /> 
+ </text>
+</svg>
+    </div>
+    <div class="svg_code" id="svg_src2">
+    <div>
+    </article>
+
+    
+    <article>
+     <h3>Weitere Anregungen</h3>
+     <ul>
+      <li>Angriff anzeigen</li>
+      <li>W&uuml;rfel anzeigen</li>
+      <li>Angriff animieren</li>
+      <li>Sieg-Grafik</li>
+      <li>Missionskarten darstellen</li>
+      <li>Grafiken f&uuml;r Armeen</li>
+      <li>Verschiedene Grafiken f&uuml;r unterschiedliche Armeegr&ouml;&szlig;en</li>
+      <li>...</li>
+     </ul>
+    </article>
+     
+    <article>
+     <h1>Viel Glück</h1>
+    </article>
+    </section>
+
+  </body>
+</html>
