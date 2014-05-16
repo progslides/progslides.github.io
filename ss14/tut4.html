@@ -430,6 +430,39 @@ catch (std::bad_alloc& ba)
      <p><strong>Außer: Exceptions im Konstruktor!</strong></p>
      </article>
 
+     <article>
+     <h3><strong>Achtung</strong>: Exception im Konstruktor</h3>
+     <ul>
+     <li>Wird im Konstruktor eine Exception geworfen, ist das Objekt nicht erstellt, und auch der Destruktor wird nicht aufgerufen.</li>
+     </ul>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.22em; width: 75%; margin: 1em auto;">
+#include &lt;memory>
+#include &lt;iostream>
+#include &lt;vector>
+class Foo {
+private:
+    std::vector&lt;int*> list;
+public:
+    Foo() {
+        list.push_back(new int);
+        list.push_back(new int);
+        throw 1;
+    }
+    
+    ~Foo() {
+      for(auto it : list) {
+          delete it;
+      }
+    }
+};
+int main() {
+    Foo f;
+    return 0;
+}</pre>
+     </article>
+
+     
+     
      
      <article>
       <h3>Resource Acquisition Is Initialization (RAII)</h3>
@@ -646,7 +679,7 @@ int main() {
     
     
      <article>
-     <h3>Befehle</h3>
+     <h3>&Uuml;bernommene Befehle</h3>
      <br />
      
          <div class="command">
@@ -696,7 +729,48 @@ int main() {
      </div>
 
     </article>
-    
+        <article>
+     <h3>Ratio</h3>
+         <br />
+          Rationale Zahl, bestehend aus  <strong>zwei teilerfremden Ganzzahlen.</strong>
+    <pre class="compact" style="font-size: .62em; line-height: 1.1em;">
+int main() {
+  Ratio ratio_1(7,3);
+  Ratio ratio_2(3,2);
+  std::cout << "Ratios: " << std::endl;
+  std::cout << ratio_1 << std::endl;
+  std::cout << ratio_2 << std::endl;
+
+  Ratio sum = ratio_1 + ratio_2;
+
+  std::cout << "Sum:" << std::endl;
+  std::cout << sum << std::endl;
+
+  sum = sum - 2;
+  std::cout << "Sum - 2:" << std::endl;
+  std::cout << sum << std::endl;
+  if(sum > 1)
+    std::cout << "Ratio: " << sum << " is > 1" << std::endl;
+  else
+    std::cout << "Ratio: " << sum << " is < 1" << std::endl;
+}
+</pre>
+    </article>
+     <article>
+     <h3>Ratio</h3>
+         <br />
+          Ausgabe
+    <div class="console">
+Ratios: <br />
+7 / 3<br />
+3 / 2<br />
+Sum:<br />
+23 / 6<br />
+Sum - 2:<br />
+11 / 6<br />
+Ratio: 11 / 6 is > 1<br />
+</div>
+    </article>
     <article>
      <h3>SVG</h3>
       <ul>
