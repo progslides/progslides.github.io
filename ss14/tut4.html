@@ -605,133 +605,63 @@ int main() {
    <article>
      <h3>Assignment 3</h3>
          <br />
-     <img src="images/risk.png" width="729" />
+     <img src="images/towerdefense.png" width="729" />
+     <br /><br /><a href="http://towersep.appspot.com/">http://towersep.appspot.com/</a>
     </article>
 
          
-      <article>
-     <h3>Missionen</h3>
-     <table style="margin: 0px; padding: 0px;">
-      <tr>
-       <td colspan="2" style="padding-left: 220px; border: 0px;">
-       Destruction<br />
-            <div style="clear: both;">
-        <div class="riskcard">
-         <div class="title">Mission</div>
-         <div class="text">
-          Befreien Sie alle L&auml;nder von den <b>roten</b> Armeen
-         </div>
-        </div>
-        
-        <div class="riskcard">
-         <div class="title">Mission</div>
-         <div class="text">
-          Befreien Sie alle L&auml;nder von den <b>gr&uuml;nen</b> Armeen
-         </div>
-        </div>
-        </div>
-       </td>
-      </tr><tr>
-      <td style="border: 0px;">
-       ContinentConquest<br />
-       <div style="clear: both;">
-        
-        <div class="riskcard">
-         <div class="title">Mission</div>
-         <div class="text">
-          Befreien Sie Nordamerika und Asien
-         </div>
-        </div>
-
-        <div class="riskcard">
-         <div class="title">Mission</div>
-         <div class="text">
-          Befreien Sie Europa, Australien und einen dritten Kontinent Ihrer Wahl
-         </div>
-        </div>
-        
-        </div>
-      
-      </td>
-      <td style="border: 0px;">
-      
-      TerritoryConquest<br />
-      <div style="clear: both;">
-        
-        <div class="riskcard">
-         <div class="title">Mission</div>
-         <div class="text">
-          Befreien Sie 18 L&auml;nder und und setzen Sie in jedes Land mindestens 2 Armeen
-         </div>
-        </div>
-        
-                <div class="riskcard">
-         <div class="title">Mission</div>
-         <div class="text">
-          Befreien Sie 24 L&auml;nder Ihrer Wahl
-         </div>
-        </div>
-        
-        </div>
-      
-      </td>
-      </tr>
-     
-     </table>
-     
-  </article>
     
     
      <article>
      <h3>Befehle</h3>
      <br />
      
-     <div class="command">
-      <div class="title">status</div>
-      <div class="text">Gibt den aktuellen Spieler aus</div>
-     </div>
-     
-     <div class="command">
-      <div class="title">rename</div>
-      <div class="text">Benennt den aktuellen Spieler um</div>
-     </div>
-     
-     <div class="command">
-      <div class="title">view</div>
-      <div class="text">Gibt das Spielfeld des aktuellen Spiels aus</div>
-     </div>
-     
-     <div class="command">
-      <div class="title">echo</div>
-      <div class="text">Gibt beliebig viele übergebene Parameter aus</div>
-     </div>
-     
-     <div class="command">
-      <div class="title">next</div>
-      <div class="text">Wechselt zum nächsten Spieler</div>
-     </div>
+         <div class="command">
+          <div class="title">show</div>
+          <div class="text">Ausgabe von Spielfeld, Kapital und HP</div>
+         </div>
 
-     <div class="command">
-      <div class="title">quit</div>
-      <div class="text">Beendet das Programm</div>
-     </div>
+         <div class="command">
+          <div class="title">next</div>
+          <div class="text">Runde beenden bzw. <em>n</em> Runden vorspulen</div>
+         </div>
+
+         <div class="command">
+          <div class="title">quit</div>
+          <div class="text">Beendet das Programm</div>
+         </div>
+
      
     </article>
      
      <article>
      <h3>Neue Befehle</h3>
      <br />
-     <br /><br /><br /><br />
      <div class="command">
-      <div class="title">attack</div>
-      <div class="text">Wird verwendet, um neue Territorien zu erobern.</div>
+      <div class="title">stats</div>
+      <div class="text">Zeigt Spielstatistiken an</div>
      </div>
      
      <div class="command">
-      <div class="title">move</div>
-      <div class="text">Wird verwendet, um Einheiten zwischen eigenen Territorien zu bewegen.</div>
+      <div class="title">shop</div>
+      <div class="text">Turm-Shop aufrufen</div>
      </div>
-     
+
+     <div class="command">
+      <div class="title">buy</div>
+      <div class="text">Turm kaufen und errichten</div>
+     </div>
+
+     <div class="command">
+      <div class="title">show target</div>
+      <div class="text">Zeigt an, was sich auf einem Feld befindet</div>
+     </div>
+
+     <div class="command">
+      <div class="title">upgrade (Bonus)</div>
+      <div class="text"><strong>Bonus</strong>: Turm upgraden auf besseren Turm</div>
+     </div>
+
     </article>
     
     <article>
@@ -760,7 +690,7 @@ Header
 Objekte
 <pre>
 &lt;image x="0" y="0" width="1016px" height="638px" 
-  xlink:href="risk.svg"> &lt;/image>
+  xlink:href="base.svg"> &lt;/image>
 [...]
 </pre>
 
@@ -780,78 +710,12 @@ Footer
    stroke-width="2" fill="red"/></li>
       <li>Rechteck: <pre class="compact">&lt;rect x="0" y="448" width="152" height="52" fill="green" /></li>
       <li>Eingebettete Bilder: <pre class="compact">&lt;image x="0" y="0" width="1016px" height="638px"
-  xlink:href="risk.png">&lt;/image></pre></li>
+  xlink:href="base.png">&lt;/image></pre></li>
      </ul>
     </article>
     
     </article>
     
-    <article class="nobackground">
-    <h3>Hintergrundbild</h3>
-    <div style="border: 1px solid black; width: 729; height: 444;" id="svg">
-<svg id="risk" xmlns="http://www.w3.org/2000/svg" 
-  xmlns:xlink="http://www.w3.org/1999/xlink" height="444" width="729">
- <image x="0" y="0" width="729" height="444" xlink:href="images/risk1.png" />
-</svg>
-    </div>
-    <div class="svg_code" id="svg_src"> 
-    </div>
-    </article>
-    
-    
-    <article class="nobackground">
-    <h3>Einfaches Beispiel f&uuml;r Einheiten</h3>
-    <div id="svg1" style="border: 1px solid black; width: 729; height: 444;">
-<svg id="risk" xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink" height="444" width="729">
- <image x="0" y="0" width="729" height="444" xlink:href="images/risk1.png" />
- <circle cx="440" cy="80" r="10" stroke="black" stroke-width="2" fill="red" />
- <text x="436" y="84" font-family="Verdana" font-size="12" fill="black">3</text>
- <circle cx="400" cy="300" r="10" stroke="black" stroke-width="2" fill="green" />
- <text x="396" y="304" font-family="Verdana" font-size="12" fill="yellow">1</text>
-</svg>
-    </div>
-    <div class="svg_code" id="svg_src1">
-    <div>
-    </article>
-
-    <article class="nobackground">
-    <h3>Animationen</h3>
-    <div id="svg2" style="border: 1px solid black; width: 729; height: 444;">
-<svg id="risk" xmlns="http://www.w3.org/2000/svg" 
-  xmlns:xlink="http://www.w3.org/1999/xlink" height="444" width="729">
- <image x="0" y="0" width="729" height="444" id="img" xlink:href="images/risk1.png" />
- <circle cx="400" cy="300" r="10" stroke="black" stroke-width="2" fill="green" />
- <text x="396" y="304" font-family="Verdana" font-size="12" fill="yellow">1</text>
- <circle r="10" stroke="black" stroke-width="2" fill="green">
-  <animateMotion begin="img.click" dur="6s" values="400,300;320,220" />
-  <animate begin="img.click" attributeName="r" attributeType="XML"
-         dur="6s" values="10;18;10" />
- </circle>
- <text font-family="Verdana" font-size="12" fill="yellow">1
-  <animateMotion begin="img.click" dur="6s" values="396,304;316,224" /> 
- </text>
-</svg>
-    </div>
-    <div class="svg_code" id="svg_src2">
-    <div>
-    </article>
-
-    
-    <article>
-     <h3>Weitere Anregungen</h3>
-     <ul>
-      <li>Angriff anzeigen</li>
-      <li>W&uuml;rfel anzeigen</li>
-      <li>Angriff animieren</li>
-      <li>Sieg-Grafik</li>
-      <li>Missionskarten darstellen</li>
-      <li>Grafiken f&uuml;r Armeen</li>
-      <li>Verschiedene Grafiken f&uuml;r unterschiedliche Armeegr&ouml;&szlig;en</li>
-      <li>...</li>
-     </ul>
-    </article>
-     
     <article>
      <h1>Viel Glück</h1>
     </article>
