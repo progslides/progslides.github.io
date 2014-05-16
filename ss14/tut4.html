@@ -160,10 +160,7 @@
        </ul>
      </article>
 
-     <article>
-     <h3>Neu zu beachten: Out of Memory!</h3>
-     </article>
-     
+
      <article>
       <h3>File-IO - File öffnen</h3>
 	  <p>Bin&auml;rdatei zum Schreiben &ouml;ffnen</p>
@@ -375,28 +372,64 @@ int main ()
      </article>
 	 
     <article>
-      <h3>Exceptions - Speicher anfordern</h3>
-<pre class="compact" style="margin: 1em auto; width:90%;">
-int* allocateBigArray()
+     <h3>Neu zu beachten: Out of Memory!</h3>
+<pre>
+int main () 
 {
-  int* big_array;
-  try 
+  try
   {
-    big_array = new int[65536];
-  } 
-  catch(std::bad_alloc&amp; ex)
-  {
-    // bad_alloc wird von new geworfen, wenn der Speicher nicht
-    // angefordert werden konnte
-    std::cout &lt;&lt; "Out of memory" &lt;&lt; std::endl;
-    return NULL;
+    int* myarray = new int[10000];
   }
-  // alles hat funktioniert, 
-  // wir k&ouml;nnen mit dem Speicher arbeiten
-  return big_array;
-}</pre>
-    </article>
-	 
+  catch (std::bad_alloc& ba)
+  {
+    std::cout << "Out of Mana!" << std::endl;
+  }
+  return 0;
+}
+</pre>
+     </article>
+
+          <article>
+     <h3>Neu zu beachten: Out of Memory!</h3>
+<p style="font-size:20px;"><strong>In jedem Fall muss aller Speicher wieder freigegeben werden!</strong></p>
+
+<pre class="compact" style="font-size: 17px; line-height: 1.2em;">
+...
+try
+{
+  NextCommand* next = new NextCommand("next");  
+}
+catch (std::bad_alloc& ba)
+{
+  std::cout << "Out of Mana!" << std::endl;
+  return 0;
+}
+try
+{
+  ShowCommand* show = new ŚhowCommand("show");  
+}
+catch (std::bad_alloc& ba)
+{
+  delete next;
+  std::cout << "Out of Mana!" << std::endl;
+  return 0;
+}
+...
+</pre>
+<p style="font-size:22px;" align="center"><strong>Aber geht das nicht besser???</strong></p>
+     </article>
+
+     <article>
+     <h3>Besser:</h3>
+     <ul>
+     <li>Smart Pointer verwenden!</li>
+     <li>Variablen sofort nach dem "new" Aufruf in eine Klassen-Member-Variable Speichern, die vom Destruktor wieder freigegeben wird.</li>
+     <li>RAII</li>
+     </ul>
+     <p>-> Es reicht bad alloc in der Main zu fangen.</p>
+     <p><strong>Außer: Exceptions im Konstruktor!</strong></p>
+     </article>
+
      
      <article>
       <h3>Resource Acquisition Is Initialization (RAII)</h3>
