@@ -19,4 +19,5 @@ else
   open=xdg-open
 fi
 
-$open http://localhost:$port/index.html && python -m SimpleHTTPServer $port;
+cd ..
+$open http://localhost:$port/ws14/ && python3 -m http.server $port;
