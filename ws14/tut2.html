@@ -8,8 +8,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
   <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
   <base target="_blank">
   <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
   <script type="text/javascript">
     var SLIDE_CONFIG = {
       settings: {
@@ -59,7 +63,7 @@
     }
   </style>
 </head>
-<body id="tugraz" style="opacity: 0">
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
 
 <slides class="layout-widescreen">
 
@@ -210,81 +214,331 @@ else
      </article>
   </slide>
   
-       <slide>
-    <hgroup>
-      <h2>Variablen</h2>
-    </hgroup>
-     <article>
-      <div class="codeAnimator">
-
-
-<pre class="prettyprint" data-lang="c">
-int main()
-{
-  int apples = 0;
-  apples = 5;
-  printf("I have %d apples.\n", apples);
-  return 0;
-}
-</pre>
-
-     </article>
-  </slide>
-  
-  
   <slide>
-    <hgroup>
-      <h2>Operatoren</h2>
+  <article>
+  <hgroup>
+    <h3>Variablen</h3>
     </hgroup>
-    <article>
-<pre class="prettyprint" data-lang="c">
-int main()
-{
-  int apples = 15;
-  apples = apples + 5;
-  apples = apples - 5;
-  int persons = 5;
-  int apple_per_person = apples/persons;
-  int more_persons = persons * 2;
-  return 0;
-}
-</pre>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int apples = 0;
+3  apples = 5;
+4  printf("I have %d apples.\n", apples);
+5  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>0</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>5</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><p class="stdout">I have 5 apples.</p></th></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>5</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Operatoren - Achtung!</h2>
-    </hgroup>
-    <article>
-<pre class="prettyprint" data-lang="c">
-int main()
-{
-  int apples = 2;
-  int persons = 4;
-  int apple_per_person = apples/persons;
-  return 0;
-}
-</pre>
-    </article>
-  </slide>
-  
+    </slide>
+    
     <slide>
-    <hgroup>
-      <h2>Gleitkommazahlen</h2>
-    </hgroup>
     <article>
-<pre class="prettyprint" data-lang="c">
-int main()
-{
-  double apples = 2;
-  double persons = 4;
-  double apple_per_person = apples/persons;
-  return 0;
-}
-</pre>
-    </article>
-  </slide>
+    <hgroup>
+    <h3>Operatoren</h3>
+    </hgroup>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int apples = 15;
+3  apples = apples + 5;
+4  apples = apples - 5;
+5  int persons = 5;
+6  int apple_per_person = apples/persons;
+7  int more_persons = persons * 2;
+8  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>20</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>3</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>3</td></tr>
+  <tr><th><strong>more_persons</strong> 0x100C</th><td>10</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_8">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>3</td></tr>
+  <tr><th><strong>more_persons</strong> 0x100C</th><td>10</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+</article>
+</slide>
+
+
+<slide>
+ <article>
+ <hgroup>
+    <h3>Operatoren - Achtung!</h3>
+  </hgroup>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int apples = 2;
+3  int persons = 4;
+4  int apple_per_person = apples/persons;
+5  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+</article>
+</slide>
+
+<slide>
+ <article>
+ <hgroup>
+    <h3>Gleitkommazahlen</h3>
+ </hgroup>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  double apples = 2;
+3  double persons = 4;
+4  double apple_per_person = apples/persons;
+5  return 0;
+ }
+</div>
+
+</td><td>
+
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4.0</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4.0</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0.5</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4.0</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0.5</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+</article>  
+</slide>
   
       <slide>
     <hgroup>
@@ -360,28 +614,102 @@ else
 </article>
   </slide>
   
-    <slide>
+<slide>
+    <article>
     <hgroup>
-      <h2>Abfragen</h2>
+     <h2>Abfragen</h2>
     </hgroup>
-      <article>
-    <pre class="prettyprint" data-lang="c">
-int main()
-{
-  int age = 17;
-  if(age >= 18)
-  {
-    printf("Willkommen im Casino!");
-  }
-  else
-  {
-    printf("Zutritt verweigert!");
-  }
-  return 0;
-}
-</pre>
-</article>
-  </slide>
+    <br />
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int age = 17;
+3  if(age >= 18)
+   {
+     printf("Willkommen im Casino!");
+   }
+4  else
+   {
+5    printf("Zutritt verweigert!");
+   }
+6  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+<table class="ptr_table">
+ <tr><th><p class="stdout">Zutritt verweigert!</p></th></tr>
+</table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+</tr></table>
+</div>
+    </article>
+
+</slide>  
+  
+  
   
     <slide>
     <hgroup>
