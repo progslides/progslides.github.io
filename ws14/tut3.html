@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #3",
+        subtitle: "Einführung in die (strukturierte) Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+   <ul>
+    <li>Testreports</li>
+    <li>HW2 Besprechung</li>
+    <li>Funktionen</li>
+    <li>Bitoperationen</li>
+    <li>Bithacking</li>
+    </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>What does the Palme say? - Die magischen Codes</h2>
+    </hgroup>
+    <article>
+      <ul>
+      <li>Was bedeuten die Codes wie <code class="mark">6a7</code>, <code class="mark">1,6c1,6</code>, <code class="mark">6d5</code>?</li>
+      <li>Am Testsystem werden die Ausgabe eures Programms mit der korrekten Ausgabe verglichen (mit <code>diff</code>).</li>
+      <li>Die Codes geben an, was an der Musterausgabe ge&auml;ndert werden m&uuml;sste, um eure Ausgabe zu erhalten</li>
+      <li>Es gibt dabei die Codes <code class="mark">a</code> (append), <code class="mark">d</code> (delete) und <code class="mark">c</code> (change)</li>
+     </ul> 
+    <pre class="prettyprint" data-lang="Palme" style="font-size: 65%;">
+CHANCE #1
+  description:
+    check whether output is correct
+  summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+    #0: 6d5 
+</pre>
+    
+    </article>
+    
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Beispiel</h2>
+    </hgroup>
+     <article>
+      <ul>
+           <li><code class="mark">6a7</code>: Nach der 6. Zeile der Musterausgabe, m&uuml;sste die folgende 7. Zeile angeh&auml;ngt werden (Zeile folgt). Das heißt, ihr gebt dieses Zeile zuviel aus</li>
+           <li><code class="mark">6d5</code>: Die 6. Zeile der Musterausgabe (Zeile folgt) m&uuml;sste gel&ouml;scht werden. Das heißt, ihr gebt eine Zeile nicht aus, obwohl ihr solltet</li>
+           <li><code class="mark">2c2</code>: Die 2. Zeile der Musterausgabe stimmt nicht mit eurer 2. Zeile &uuml;berein, daraufhin folgt die Zeile der Musterausgabe und eure Zeile</li>
+        </ul>
+     </article>
+  </slide>
+    
+  <slide>
+    <hgroup>
+      <h2>Was stimmt hier nicht?</h2>
+    </hgroup>
+     <article>
+    <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+=====================================================================================
+TESTCASES
+
+testcase #1 [FAILED]
+  there were 1 chance(s) to pass testcase
+
+CHANCE #1
+  description:
+    check whether output is correct
+  summary:
+    [FAILED] return check - ref: 0 user: 255
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+
+-------------------------------------------------------------------------------------
+===================================================================================== 
+   </pre>
+    <img src="images/fu.png" style="position: absolute; right: 40px; bottom: 20px;"/>
+     </article>
+  </slide>
+  
+    
+  <slide>
+    <hgroup>
+      <h2>Und hier?</h2>
+    </hgroup>
+     <article>
+   <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+=====================================================================================
+TESTCASES
+
+testcase #1 [FAILED]
+  there were 1 chance(s) to pass testcase
+
+CHANCE #1
+  description:
+    check whether output is correct
+  summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+    #0: 6a7
+    #0: > 1915657434 * 8
+
+-------------------------------------------------------------------------------------
+===================================================================================== 
+   </pre>
+     </article>
+  </slide>
+  
+    
+  <slide>
+    <hgroup>
+      <h2>Findet den Fehler...</h2>
+    </hgroup>
+     <article>
+   <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+OUTPUT
+    Archive:  Term_6/Course_11/Assignment_58/Group_7642/Submission_1_hw1a.zip
+      inflating: Course_11/Assignment_58/Group_7642/14960/1381852533/hw1a/hw1a.c
+    Returnvalue was: 0 - should be 0
+=====================================================================================
+CHECK
+
+check #1
+  Result:
+    [FAILED] File hw1a.c not found
+=====================================================================================
+COMPILE
+
+executable #1
+  using file_set #1
+  return was: 1 - should be 0
+
+OUTPUT
+  gcc44: hw1a.c: No such file or directory
+  gcc44: no input files  
+   </pre>
+     </article>
+  </slide>
+  
+    
+  <slide>
+    <hgroup>
+      <h2>... noch mehr Fehler ...</h2>
+    </hgroup>
+     <article>
+   <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+    #0: 1,7c1,7
+    #0: &lt;    xxxxxxx * 2
+    #0: &lt;    xxxxxxx * 3
+    #0: &lt;    xxxxxxx * 4
+    #0: &lt;   xxxxxxxx * 5
+    #0: &lt;  xxxxxxxxx * 6
+    #0: &lt;  xxxxxxxxx * 7
+    #0: &lt; An overflow has occurred!
+    #0: ---
+    #0: > xxxxxxx * 2
+    #0: > xxxxxxx * 3
+    #0: > xxxxxxx * 4
+    #0: > xxxxxxxx * 5
+    #0: > xxxxxxxxx * 6
+    #0: > xxxxxxxxx * 7
+    #0: > An overflow has occured!    
+   </pre>
+     </article>
+  </slide>
+  
+    
+  <slide>
+    <hgroup>
+      <h2>Auch hier gibt es einen Fehler!</h2>
+    </hgroup>
+     <article>
+   <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+    #0: 1,6c1,6
+    #0: &lt;    xxxxxxx * 2
+    #0: &lt;    xxxxxxx * 3
+    #0: &lt;    xxxxxxx * 4
+    #0: &lt;   xxxxxxxx * 5
+    #0: &lt;  xxxxxxxxx * 6
+    #0: &lt;  xxxxxxxxx * 7
+
+    #0: ---
+    #0: >    xxxxxxx * 2 
+    #0: >    xxxxxxx * 3 
+    #0: >    xxxxxxx * 4 
+    #0: >   xxxxxxxx * 5 
+    #0: >  xxxxxxxxx * 6 
+    #0: >  xxxxxxxxx * 7 
+
+   </pre>
+     </article>
+  </slide>
+  
+  
+  <slide>
+    <hgroup>
+      <h2>HW2 Besprechung - H&auml;ufige Fehler</h2>
+    </hgroup>
+     <article>
+      <ul>
+       <li>Nur eine Schleife verwendet (Spezifikation: <strong>zwei</strong> Schleifen)</li>
+       <li>Codingstandard (Tabulatoren, Zeile zu lang, Einr&uuml;ckungen, ...)</li>
+       <li>Deutsche Variablennamen und deutsche Kommentare</li>
+       <li>Schlechte Variablennamen (<code>i</code>, <code>tmp</code>, ...)</li>
+       <li>Falsche Overflow Behandlung</li>
+      </ul>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW2 Besprechung - H&auml;ufige Fehler</h2>
+    </hgroup>
+     <article>
+      <ul>
+        <li>Falsche Overflow Behandlung:
+         <ul>
+           <li><pre class="prettyprint" data-lang="c">if(number &lt; 0) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if((number * counter) &lt; number) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX - number) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if(nubmer * counter >= INT_MAX) ...</pre></li>
+         </ul>        
+        </li>
+        <li>Richtige Overflow Behandlung:
+        <ul>
+          <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX / counter) ...</pre></li>
+          <li><pre class="prettyprint" data-lang="c">if(((double)number * (double)counter) > INT_MAX) ...</pre></li>
+        </ul>
+        </li>
+    
+      </ul>
+      
+     </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>HW2 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+<img src="images/hw2_bad1.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW2 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+ <img src="images/hw2_bad2.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW2 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+
+  <img src="images/hw2_good1.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW2 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+<img src="images/hw2_bad3.png" width="55%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Funktionen</h2>
+    </hgroup>
+     <article>
+      <pre class="prettyprint" data-lang="c">
+&lt;Rueckgabewert-Typ> Funktion-Name (&lt;Parameter1>, &lt;Parameter2>...)
+{
+  // Code 
+  return &lt;Rueckgabewert> 
+}
+
+int main()
+{
+  // Aufruf:
+  &lt;Rueckgabewert-Typ> Ergebnis;
+  Ergebnis = Funktion-Name(&lt;Parameter1>, &lt;Parameter2>...);
+} </pre>
+
+<h4>R&uuml;ckgabewert der <code>main</code>-Funktion anzeigen</h4>
+      <pre class="prettyprint" data-lang="stdout">
+> echo $?
+0
+</pre>
+
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW2 mit Funktionen</h2>
+    </hgroup>
+     <article>
+<h3>Live Demo</h3>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+   <ul>
+       <li>Verkn&uuml;pfen Daten bitweise</li>
+       <li>Erfordern zwei Operanden (Ausnahme: NOT)</li>
+       <li>AND (<code>&amp;</code>), OR (<code>|</code>), XOR (<code>^</code>)</li>
+       <li>Left Shift (<code>&lt;&lt;</code>), Right Shift (<code>&gt;&gt;</code>)</li>
+       <li>NOT (<code>~</code>)</li>
+      </ul>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+<h3>AND ... &amp;</h3>
+     <table class="middle">
+      <tr><td>&amp;</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>1</td><td>0</td></tr>
+      <tr><th>0</th><td>0</td><td>0</td></tr>
+     </table>
+
+     <h3>OR ... |</h3>
+     <table class="middle">
+      <tr><td>|</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>1</td><td>1</td></tr>
+      <tr><th>0</th><td>1</td><td>0</td></tr>
+     </table>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+     <h3>XOR ... ^</h3>
+     <table class="middle">
+      <tr><td>^</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>0</td><td>1</td></tr>
+      <tr><th>0</th><td>1</td><td>0</td></tr>
+     </table>
+
+     <h3>NOT ... ~</h3>
+     <table class="middle">
+      <tr><td> </td><th>1</th><th>0</th></tr>
+      <tr><th>~</th><td>0</td><td>1</td></tr>
+     </table>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+     <h3>Shift Left ... &lt;&lt;</h3>
+     <p>
+     Verschiebt die Bits um <i>n</i> Stellen nach links<br/>
+     Beispiel: 9 ( = 0000 1001<sub>b</sub>) &lt;&lt; 1 = 18 ( = 0001 0010<sub>b</sub>)
+</p>
+<p>
+     <h3>Shift Right ... &gt;&gt;</h3>
+     Verschiebt die Bits <i>n</i> Stellen nach rechts<br/>
+     Beispiel: 27 ( = 0001 1011<sub>b</sub>) >> 2 = 6 ( = 0000 0110<sub>b</sub>)
+     </p>
+     </article>
+  </slide>
+  
+  
+    <slide>
+    <hgroup>
+      <h2>Bitoperation - Wozu?</h2>
+    </hgroup>
+     <article>
+      <ul>
+        <li>Setzen von einzelnen Bits</li>
+        <li>L&ouml;schen von einzelnen Bits</li>
+        <li>Extrahieren von Bits</li>
+        <li>Potenzen von 2 schnell berechnen</li>
+        <li>Extrahieren von Teilen eines Bytes</li>
+        <li>Tauschen von Bytes</li>
+        <li>Bitfelder</li>
+      </ul>
+    
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Bitfeld</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+int main()
+{
+  unsigned char lampen_zustand = 0; // 8 Zust&auml;nde (Lampen)
+  // Lampe 1 einschalten
+  lampen_zustand |= 1;
+  // Lampen 5-8 ausschalten
+  lampen_zustand &amp;= 15;
+  // Lampe 5 umschalten
+  lampen_zustand ^= 16;
+  // Zustand ausgeben
+  int lampe;
+  for(lampe = 0; lampe &lt; 8; lampe++) 
+  {
+    printf("Lampe %d: %s\n", lampe + 1, 
+      lampen_zustand &amp; (1 &lt;&lt; lampe) ? "ein" : "aus");
+  }
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: RGB</h2>
+    </hgroup>
+     <article>
+<img src="images/rgb_bsp.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Byte-Reihenfolge</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+
+unsigned int swapByteOrder(unsigned int value)
+{
+  value = ((value &lt;&lt; 8) &amp; 0xFF00FF00) |
+          ((value >> 8) &amp; 0xFF00FF); 
+  return (value &lt;&lt; 16) | (value >> 16);
+}
+
+int main()
+{
+  unsigned int value = 0x12345678;
+  
+  printf("value = %x\n", value);
+  printf("swapped value = %x\n", swapByteOrder(value));
+  
+  return 0;
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Hexadezimale Ausgabe</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c"  style="font-size: 55%; line-height: 120%;">
+#include &lt;stdio.h>
+
+#define BITS_PER_NIBBLE 4
+#define NIBBLE_MASK 0xF
+
+int main()
+{
+  int a_number = 17036401;
+  int index;
+  
+  printf("bin = ");
+  for( index = 32; index > 0; index-- )
+  {
+    printf( "%d", (a_number &amp; (1 &lt;&lt; (index - 1))) ? 1 : 0 );
+    if( (index - 1) % BITS_PER_NIBBLE == 0 )
+      printf(" ");
+  }
+  
+  // This should only demonstrate how to use bit operations.
+  // In practice use %x for hexadecimal output
+  printf("\nhex = ");
+  for( index = 32 / BITS_PER_NIBBLE; index > 0; index-- )
+  {
+    int nibble = (a_number >> ((index - 1) * BITS_PER_NIBBLE)) &amp; NIBBLE_MASK;
+    printf( "%4c ", nibble &lt; 10 ? nibble + '0' : nibble + 'A' - 10 );
+  }
+  
+  return 0;
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken</h2>
+    </hgroup>
+     <article>
+<iframe src="bitmask/bitmask.html" height="100%" style="border: 0px;"></iframe> 
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+if((value &amp; (value - 1) == 0)
+{
+  printf("Wann werde ich ausgef&uuml;hrt?");
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+a = a^b;
+b = b^a;
+a = a^b;
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+int log = 0;
+while(value > 0)
+{
+  value = value >> 1;
+  log++;
+}
+</pre>
+
+<a href="http://graphics.stanford.edu/~seander/bithacks.html">http://graphics.stanford.edu/~seander/bithacks.html</a>
+    
+     </article>
+  </slide>
+  
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg bei HW3!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
+        <ul>
+          <li>Mi, 5.11.2014 19:00</li>
+        </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
