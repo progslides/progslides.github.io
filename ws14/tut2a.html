@@ -325,6 +325,24 @@ summary:
   
   <slide>
     <hgroup>
+      <h2>HW1a Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+<img src="images/hw1a_bad_1.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW1a Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+<img src="images/hw1a_good.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
       <h2>Funktionen</h2>
     </hgroup>
      <article>
@@ -429,6 +447,50 @@ int main()
   printf("%dth fibonacci number = %d", fib);
  
 } </pre>
+     </article>
+  </slide>
+  
+  
+    <slide>
+    <hgroup>
+      <h2>Hw1a - Erweiterung</h2>
+    </hgroup>
+     <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 55%; line-height: 115%;" >
+//Gets a digit from a number with a given base (2, 10, ...)
+//digit_position starts at lowest power of base (least significant digit)
+int getDigitFromNumber(int number, int digit_position, int number_base)
+{
+  int count = 0;
+
+  while(count < digit_position)
+  {
+      number = number / number_base;
+      count++;
+  }
+
+  return number % number_base;
+}
+
+
+int main()
+{
+  int mat_nr = 1230319;
+  int mat_nr_length = 7;
+  int digit_count = 0;
+  int digit = 0;
+
+
+  for(digit_count = (mat_nr_length - 1); digit_count >= 0; digit_count--)
+  {
+    digit = getDigitFromNumber(mat_nr, digit_count, 10);
+    printf("%d", digit);
+  }
+
+  printf("\n");
+  return 0;
+}
+ </pre>
      </article>
   </slide>
 
