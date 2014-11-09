@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #4",
+        subtitle: "Einführung in die (strukturierte) Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+    
+            function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = 1;
+          container.src = container.src.replace(img_id + ".", new_id + "."); 
+        }
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+ol li {
+  list-style-type: decimal;
+  display: list-item;
+  }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+   <ul>
+    <li>HW3 Besprechung</li>
+    <li>Arrays</li>
+    <li>Pointer</li>
+    <li>HW4</li>
+    </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>HW3 Besprechung - H&auml;ufige Fehler</h2>
+    </hgroup>
+    <article>
+ <ul>
+       <li>Variablennamen <span class="src">A</span>, <span class="src">B</span>, <span class="src">C</span>, <span class="src">D</span></li>
+       <li>Deutsche Variablennamen (<span class="src">netzmaske</span>)</li>
+       <li>Deutsche Kommentare</li>
+       <li>Einr&uuml;ckungen (Codingstandard)</li>
+       <li>Nur die Suffixe 8, 16, 24, 32 beachtet</li>
+       <li>Shift um 32 Bit - undefiniertes Verhalten</li>
+      </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>HW3 Falle</h2>
+    </hgroup>
+    <article>
+
+    <ul>
+        <li>Shiften von <span class="src">signed</span> Variablen</li>
+        <li>Im C Standard nicht definiert was passiert!</li>
+        <li>GCC Verhalten: wenn die Zahl negativ ist, wird mit 1-Bit aufgef&uuml;llt, sonst mit 0-Bit</li>
+        <li>Beispiel:
+    <pre class="prettyprint" data-lang="c">
+unsigned char x = 0xf0;
+signed char y = 0xf0;
+x = x >> 4; // x = 0x0f
+y = y >> 4; // y = 0xff
+</pre></li>
+</ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+    <article>
+  <img src="images/hw3_bad1.png" width="50%" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+    <article>
+<img src="images/hw3_good1.png" height="99%" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+    <article>
+<img src="images/hw3_bad2.png" width="45%" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+    <article>
+<img src="images/hw3_good2.png" height="99%" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+    <article>
+ <img src="images/hw3_bad4.png" width="40%" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+    <article>
+<img src="images/hw3_bad3.png" height="99%" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Arrays</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Hintereinander liegende Daten vom gleichen Typ</li>
+        <li>Gr&ouml;&szlig;e kann nicht mehr verändert werden, muss bei Deklaration bekannt sein</li>
+        <li>Zugriff &uuml;ber [ ]</li>
+        <li>Deklaration: <pre class="prettyprint" data-lang="c">&lt;typ&gt; name[&lt;size&gt;];</pre></li>
+        <li>Initialisiertes Array: <pre class="prettyprint" data-lang="c">&lt;typ&gt; name[] = {&lt;value1&gt;, &lt;value2&gt;, ...};</pre></li>
+        <li>Zugriff: <pre class="prettyprint" data-lang="c">name[&lt;index&gt;] = &lt;value&gt;;</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Beispiel</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int fibo[5];
+3  fibo[0] = 1;
+4  fibo[1] = 1;
+5  fibo[2] = fibo[1] + fibo[0];
+6  fibo[3] = fibo[2] + fibo[1];
+7  fibo[4] = fibo[3] + fibo[2];
+   return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv"><em>1</em></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"><em>1</em></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"><em>2</em></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv">2</td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"><em>3</em></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv">2</td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv">3</td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"><em>5</em></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+</tr></table>
+</div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Variable-length-Arrays</h2>
+    </hgroup>
+    <article>
+<li>GCC akzeptiert Arrays mit variabler L&auml;nge (C99 Standard)</li>
+     <li>Beispiel
+<pre class="prettyprint" data-lang="c">
+int size = numberOfHornsOnAUnicorn();
+int array[size];
+</pre></li>
+     <li><strong>Gefährlich</strong> zu verwenden, da diese Arrays am Stack liegen &#8594; normal 8MB maximale Gr&ouml;&szlig;e, kann jedoch auch nur 64kB sein!</li>
+     <li>Ist das Array zu groß, st&uuml;rzt das Programm ohne erkennbare Ursache ab</li>
+     <li>Have fun debugging!</li>
+    </ul>
+    <img src="images/debug.png" width="25%" style="position: absolute; right: 220px; bottom: 10px;">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Array als Funktionsparameter</h2>
+    </hgroup>
+    <article>
+<ul>
+     <li>Soll ein Array an eine Funktion als Parameter &uuml;bergeben werden gibt es 3 Wege</li>
+    </ul>
+    <ol>
+     <li>Array variabler Gr&ouml;&szlig;e
+<pre class="prettyprint" data-lang="c">
+void foo(int bar[]) {
+ [..]
+}</pre>
+     </li>
+     <li>Array fixer Gr&ouml;&szlig;e
+<pre class="prettyprint" data-lang="c">
+void foo(int bar[8]) {
+ [..]
+}</pre></li>
+     <li>Als Pointer
+<pre class="prettyprint" data-lang="c">
+void foo(int* bar) {
+ [..]
+}</pre></li>
+    </ol>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Spezielle Arrays: Mehrdimensionale Arrays</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li>Arrays k&ouml;nnen mehrere Dimensionen haben</li>
+      <li>2-dimensionale Arrays: <pre class="prettyprint" data-lang="c">&lt;typ&gt; name[&lt;rows&gt;][&lt;columns&gt;];</pre>
+      <li>Zugriff &uuml;ber Zeilen- und Spaltenindex: <pre class="prettyprint" data-lang="c">name[&lt;row&gt;][&lt;column&gt;] = &lt;value&gt;;</pre>
+      <li>Beispiel Initialisierung: <pre class="prettyprint" data-lang="c">char matrix[3][3] = { {'A', 'B', 'C'}, {'D', 'E', 'F'}, 
+      {'G', 'H', 'I'} };</pre>
+    </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Mehr als 2 Dimensionen?</h2>
+    </hgroup>
+    <article>
+<ul>
+      <li>Ja, in C beliebig viele (so lange wir Speicher haben)</li>
+      <li>Schwer vorstellbar ab 4 Dimensionen, deshalb als <i>Array von Arrays</i> denken</li> 
+     </ul>
+     <img src="images/multi_dim_array.jpg" width="80%">
+     
+<pre class="prettyprint" data-lang="c">
+int cube[3][3][3];
+int hypercube[3][3][3][3];
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Beispiel: 4 Dimensionen</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+ int hypercube[3][3][3][3];
+</pre>
+<div style="float: left;">
+<h4>M&ouml;glichkeit 1: 4D-W&uuml;rfel</h4>
+<img src="../ws13/images/hypercube.gif" width="125%"/>
+</div>
+<div style="float: right;">
+<h4>M&ouml;glichkeit 2: Array von 3D W&uuml;rfeln</h4>
+<table border="1" style="width: 200px;">
+<tr><td><img src="images/cube3.png" width="50%"></td></tr>
+<tr><td><img src="images/cube3.png" width="50%"></td></tr>
+<tr><td><img src="images/cube3.png" width="50%"></td></tr>
+</table>
+</div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Mehrdimensionale Arrays als Parameter</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+
+void printMatrix3(char matrix[][3])
+{
+  int y;
+  for(y = 0; y &lt; 3; y++)
+  {
+    printf("%c %c %c\n", matrix[y][0], matrix[y][1], matrix[y][2]);
+  }
+}
+
+int main()
+{
+  char matrix[3][3] = { {'A', 'B', 'C'}, {'D', 'E', 'F'}, 
+      {'G', 'H', 'I'} };
+  printMatrix3(matrix);
+}
+</pre>
+<strong>Achtung: Nicht mehr m&ouml;glich als Pointer zu &uuml;bergeben!</strong>
+   
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Pointer</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Pointer &raquo;zeigen&laquo; auf Variablen</li>
+        <li>Pointer enth&auml;lt die Adresse einer Variable</li>
+        <li>Deklaration mit "*"
+<pre class="prettyprint" data-lang="c">&lt;datentyp&gt;* name;</pre>
+        <li>Zugriff auf die Variable durch Dereferenzieren ebenfalls mit "*"
+<pre class="prettyprint" data-lang="c">*name = &lt;value&gt;;</pre>
+        </li>
+        <li>Zuweisen einer Adresse durch den Adressoperator "&amp;"
+<pre class="prettyprint" data-lang="c">name = &amp;&lt;variable&gt;;</pre>
+        </li>
+       </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Pointer und Pointee</h2>
+    </hgroup>
+    <article>
+    <img src="../ws13/pointer/step1.png" id='pointer' width="75%">
+
+    <input type="button" onclick="nextImage(document.getElementById('pointer'), 9);" class="code_animator_button" style="position: absolute; right: 320px; bottom: 20px;" value="Weiter"></input>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Pointer - Praxisbeispiel</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int main()
+ {
+2  int a = 3;
+3  int x = 2;
+4  int* ptr = &amp;a;
+5  *ptr = 4;
+6  ptr = &amp;x;
+7  *ptr = 8;
+   return 0;
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1000</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td><em>4</em></td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1000</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>4</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td><em>0x1004</em></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>4</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td><em>8</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1004</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+
+</td></tr></table>
+</div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>HW4</h2>
+    </hgroup>
+    <article>
+        <h2>Fragen?</h2>
+    </article>
+  </slide>
+
+  </slide>
+  
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg bei HW4!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
+        <ul>
+          <li>Mi, 12.11.2014 19:00</li>
+        </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
