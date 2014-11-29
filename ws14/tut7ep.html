@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #7",
+        subtitle: "Einführung in die (strukturierte) Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+  function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+ol li {
+  list-style-type: decimal;
+  display: list-item;
+  }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  
+      <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+     <ul>
+    
+    <li>HW 6 Besprechung</li>
+    <li>Verkettete Strukturen</li>
+    <li>SVN</li>
+    <li>Gruppenbeispiel</li>
+    <li>Abgabegespr&auml;ch</li>
+    <li>Beliebte Fehler / Best Practice</li>
+    </ul>
+    </article>
+  </slide>
+  
+<slide>
+    <hgroup>
+    <h2>HW6 - Gut oder Schlecht?</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c" style="font-size: 0.55em; line-height: 0.95em;">
+int main(int argc, char *argv[]) {
+  if(argc == 3){
+    if(input) {
+      if(lSize > 0){
+        if(PascalsInFile[0] > 0){
+          if(PascalStructArray){
+            for(iC = 0;iC < PascalsInFile[0];iC++){
+              if(!ReadInPascal(&PascalStructArray[iC],input)){
+                if(!&PascalStructArray[iC]){
+                  return 5;
+                }
+                else{
+                  return 4;
+                }
+              }
+            }
+            return 0;
+          }
+          else{
+            return 5;
+          }
+        }
+        else{
+          return 3;
+        }
+      }
+      return 3;
+    }
+    else{
+      return 2;
+    }
+  }
+  else{
+    return 1;
+  }
+}
+</pre>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>HW6 - Gut oder Schlecht?</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c" style="font-size: 0.55em; line-height: 1.22em;">
+int main(int argc, char* argv[])
+{
+  if(argc != 3)
+  {
+    print(USAGE_ERROR);
+    return USAGE_ERROR;
+  }
+  char* input = NULL;
+  enum ErrorCodes enum_temp = readFileToStr(&input, argv[1]);
+  if(enum_temp != NO_ERROR)
+  {
+    print(enum_temp);
+    free(input);
+    return enum_temp;
+  }
+
+  enum_temp = writeStrToFile(input, argv[2]);
+  if(enum_temp != NO_ERROR)
+  {
+    print(enum_temp);
+    free(input);
+    return enum_temp;
+  }
+
+  free(input);
+  return NO_ERROR;
+}
+ </pre>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>HW6 - Gut oder Schlecht?</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c" style="font-size: 0.55em; line-height: 1.1em;">
+int readBinaryFile(char * filename)
+{
+ [...]
+      
+      length_of_strings = (int *)malloc(sizeof(int)*count_pascal_str);
+      if(length_of_strings==NULL)
+      {
+        printf("Error: out of memory.\n");
+        return 5;
+      }
+      
+      for(str_counter = 0; str_counter < count_pascal_str; str_counter++)
+      {
+        // read length of the string
+        str = NULL;
+        fread(&str_length,sizeof(int),1,input);
+        length_of_strings[str_counter] = str_length;
+        str = (char *) realloc(str,(str_length+1));
+
+        if(str==NULL)
+        {
+          printf("Error: out of memory.\n");
+          return 5;
+        }
+        [...]
+      }
+  [...]
+    
+  return 0;
+}
+   </pre>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>HW6 - H&auml;uftigste Fehler</h2>
+    </hgroup>
+    <article>
+<ul>
+<li>
+  Keine &Uuml;berpr&uuml;fung von NULL-Pointern nach <span class="src">malloc</span>/<span class="src">realloc</span>
+</li>
+<li>
+  Keine &Uuml;berpr&uuml;fung der R&uuml;ckgabewerte der File I/O Funktionen
+  </li>
+<li>Codingstandard!</li>
+</ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Verkettete Strukturen</h2>
+    </hgroup>
+    <article>
+<h2>Live Demo: erweiterte Stacks</h2>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Was ist SVN?</h2>
+    </hgroup>
+    <article>
+ <ul>
+    <li>Versionskontrolle</li>
+    <li>Man kann jederzeit auf eine alte Version vom Code zugreifen</li>
+    <li>Mehrere Leute können an einem Projekt arbeiten - Man sieht wer was eingecheckt hat</li>
+    <li>Vergleichs-Funktion für verschiedene Versionen</li>
+    <li>Kostenlose Repositories für TU Graz Studenten</li>
+    </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>SVN einrichten (1/6) : TUGraz online</h2>
+    </hgroup>
+    <article>
+<img style="margin-top: 70px;" src="images/TUG_svn.png" width="97%">
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>SVN einrichten (2/6) : Checkout - Windows</h2>
+    </hgroup>
+    <article>
+<p>
+    <a href="http://tortoisesvn.net/downloads.html">TortoiseSVN</a>
+    </p>
+    <img style="margin-top: 0; float:left;" src="images/TortoiseSVN_checkout.png" width="38%">
+    <img style="margin-top: 0;float:right;" src="images/TortoiseSVN_checkout2.png" width="58%">
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>SVN verwenden (3/6) : Update/Commit - Windows</h2>
+    </hgroup>
+    <article>
+    <img style="margin-top: -20px; float:left; margin-left:25%;" src="images/TortoiseSVN_Update_Commit.png" width="40%">
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>SVN verwenden (4/6) : History - Windows</h2>
+    </hgroup>
+    <article>
+ <p style="font-size: 70%;">Rechtsklick > TortoiseSVN  > Show Log</p>
+    <img style="margin-top: 0; float:left; margin-left:18%;" src="images/TortoiseSVN_History.png" width="50%" >
+   
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>SVN verwenden (5/6) : Vergleichen - Window</h2>
+    </hgroup>
+    <article>
+<p style="font-size: 70%;">Log > Show changes</p>
+    <img style="margin-top: 0; float:left;" src="images/TortoiseSVN_Vergleich.png" width="97%">
+    
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>SVN verwenden (6/6) : Linux</h2>
+    </hgroup>
+    <article>
+ <p style="font-size: 70%;">KDE-SVN (zu finden im Paket-Manager)</p>
+    <img style="margin-top: 0; float:left; margin-left:4%;" src="images/kdesvn.png" width="85%" >
+    
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>SPICE Netlist file</h2>
+    </hgroup>
+    <article>
+    <pre class="prettyprint" data-lang="SPICE" style="font-size: 0.55em; line-height: 1.1em;">
+* Simple netlist test for EP
+R1 IN K1 100K
+C0 K1 K2 1
+L1 K2 OUT 47u
+</pre>
+ <center><img src="images/Rcl3.jpg" width="50%" /></center>
+
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Bitmap header</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c" style="font-size: 0.55em; line-height: 1.1em;">
+typedef struct tagBITMAPFILEHEADER {    /* bmfh */
+    UINT    bfType; //must be 'B', 'M'
+    DWORD   bfSize; //calculate filesize
+    UINT    bfReserved1; //zero
+    UINT    bfReserved2; //zero
+    DWORD   bfOffBits;  //size of fileheader and infoheader
+} BITMAPFILEHEADER;
+
+typedef struct tagBITMAPINFOHEADER {    /* bmih */
+    DWORD   biSize; //size of infoheader
+    LONG    biWidth; //width of bitmap in pixels (100 * NUM_ELEMENTS)
+    LONG    biHeight; //height of bitmap in pixels (always 51 in our case)
+    WORD    biPlanes; //must be 1
+    WORD    biBitCount; //in our case: 24
+    DWORD   biCompression; //has to be zero for uncompressed bitmap
+    DWORD   biSizeImage; //size of the image data in bytes.
+    LONG    biXPelsPerMeter; //zero in our case
+    LONG    biYPelsPerMeter; //zero in our case
+    DWORD   biClrUsed; //zero in our case
+    DWORD   biClrImportant; //zero in our case
+} BITMAPINFOHEADER;
+
+</pre>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Gruppenbeispiel - Tipps</h2>
+    </hgroup>
+    <article>
+  <ul>
+      <li>Gut und viel testen!</li>
+      <li>R&uuml;ckgabewerte der File I/O Funktionen pr&uuml;fen!</li>
+      <li>Nie vergessen, bei <span class="src">malloc</span> und <span class="src">realloc</span> auf NULL zu pr&uuml;fen!</li>
+      <li>String-Bibliothek Funktionen anschauen (<span class="src">strtok</span>), es gibt jedoch nicht alle Funktionen die man braucht!</li>
+      <li>Codingstandard beachten!</li>
+      <li>Valgrind verwenden!</li>
+     </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Best Practice</h2>
+    </hgroup>
+    <article>
+   <ul>
+     <li>Programm sinnvoll in Funktionen einteilen</li>
+     <li>Aussagekräftige Variablennamen verwenden</li>
+     <li>Keine Variablen Recyclen</li>
+     <li>Variablen initialisieren</li>
+     <li>Lieber zu viele Klammern als zu wenig</li>
+     <li>Komplizierte Stellen kommentieren, aber keine unnötigen Kommentare</li>
+     </ul>
+    </article>
+  </slide>
+  
+  
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg bei AssA!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
+        <ul>
+          <li>Mi, 12.12.2014 19:00</li>
+        </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
