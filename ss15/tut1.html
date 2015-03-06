@@ -89,61 +89,61 @@
         <tbody>
         <tr>
           <td>Gruppe 1</td>
-          <td>Mo, 10:00 - 12:00</td>
+          <td>Mo, 13:00 - 15:00</td>
           <td>Anja Karl</td>
           <td><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></td>
         </tr>
         <tr>
           <td>Gruppe 2</td>
-          <td>Mo, 14:00 - 16:00</td>
+          <td>Mo, 15:00 - 17:00</td>
           <td>Christoph Hack</td>
           <td><a href="mailto:prog-tutor-hack@iicm.tugraz.at">prog-tutor-hack@iicm.tugraz.at</a></td>
         </tr>
         <tr>
           <td>Gruppe 3</td>
-          <td>Mo, 12:00 - 14:00</td>
+          <td>Mo, 17:00 - 19:00</td>
           <td>Michael Schwarz</td>
-          <td><a href="mailto:prog-tutor-michae@iicm.tugraz.at">prog-tutor-michae@iicm.tugraz.at</a></td>
+          <td><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michae@iicm.tugraz.at</a></td>
         </tr>
         <tr>
           <td>Gruppe 4</td>
-          <td>Di, 16:00 - 18:00</td>
+          <td>Di, 13:00 - 15:00</td>
           <td>Daniel Ellmeier</td>
           <td><a href="mailto:prog-tutor-daniel@iicm.tugraz.at">prog-tutor-daniel@iicm.tugraz.at</a></td>
         </tr>
         <tr>
           <td>Gruppe 5</td>
-          <td>Di, 12:00 - 14:00</td>
+          <td>Di, 15:00 - 17:00</td>
           <td>Christoph Maurer</td>
           <td><a href="mailto:prog-tutor-christoph@iicm.tugraz.at">prog-tutor-christoph@iicm.tugraz.at</a></td>
         </tr>
         <tr>
           <td>Gruppe 6</td>
-          <td>Di, 12:00 - 14:00</td>
+          <td>Di, 17:00 - 19:00</td>
           <td>Manuel Menzinger</td>
           <td><a href="mailto:prog-tutor-menzi@iicm.tugraz.at">prog-tutor-menzi@iicm.tugraz.at</a></td>
         </tr>
         <tr>
           <td>Gruppe 7</td>
-          <td>Di, 16:00 - 18:00</td>
+          <td>Mi, 13:00 - 15:00</td>
           <td>Thomas Neff</td>
           <td><a href="mailto:prog-tutor-thomas@iicm.tugraz.at">prog-tutor-thomas@iicm.tugraz.at</a></td>
         </tr>
         <tr>
           <td>Gruppe 8</td>
-          <td>Mi, 8:00 - 10:00</td>
+          <td>Mi, 15:00 - 17:00</td>
           <td>David Bidner</td>
           <td><a href="mailto:prog-tutor-david@iicm.tugraz.at">prog-tutor-david@iicm.tugraz.at</a></td>
         </tr>
         <tr>
           <td>Gruppe 9</td>
-          <td>Mi, 10:00 - 12:00</td>
+          <td>Mi, 17:00 - 19:00</td>
           <td>Philip Loibl</td>
           <td><a href="mailto:prog-tutor-ploibl@iicm.tugraz.at">prog-tutor-ploibl@iicm.tugraz.at</a></td>
         </tr>
         <tr>
           <td>Gruppe 10</td>
-          <td>Mi, 8:00 - 10:00</td>
+          <td>Di, 11:00 - 13:00</td>
           <td>Philipp Hafner</td>
           <td><a href="mailto:prog-tutor-phafner@iicm.tugraz.at">prog-tutor-phafner@iicm.tugraz.at</a></td>
         </tr>
@@ -160,7 +160,6 @@
       <ul>
         <li>Fragen zur Vorlesung</li>
         <li>Hilfestellungen zu den Beispielen</li>
-        <li>beispielhafte Bewertung der Hausübungen</li>
         <li>Erarbeiten ähnlicher Beispiele</li>
         <li>Eure Vorschläge?</li>
       </ul>
@@ -225,15 +224,14 @@
     </hgroup>
       <article>
       	<p>In einem Editor nach Wahl (z.B. UltraEdit,  Notepad++, Kate, Vim,
-      		Emacs, Textmate) eine Datei "hello.c" anlegen:</p>
+      		Emacs, Textmate) eine Datei "hello.cpp" anlegen:</p>
       	<pre class="prettyprint" data-lang="c">/* Hello World Example */
 
-#include &lt;stdio.h&gt;
+#include &lt;iostream&gt;
 
 int main()
 {
-  printf("Hallo ESP!\n");
-  return 0;
+  std::cout &lt;&lt; "Hallo SEP" &lt;&lt; std::endl;
 }</pre>
 			<br>
 			<p>Tutorial: <a href="http://www.student.tugraz.at/manuel.weber/sep/howto_vb.html">Linux als virtuelle Umgebung unter Windows</a></p>
@@ -247,7 +245,7 @@ int main()
     </hgroup>
     <article>
       	<p style="margin-bottom: 1em;">Die Datei auf <u>pluto.tugraz.at</u> kopieren:</p>
-      	<pre class="prettyprint" data-lang="bash">scp hello.c user@pluto.tugraz.at:</pre>
+      	<pre class="prettyprint" data-lang="bash">scp hello.cpp user@pluto.tugraz.at:</pre>
       	<p style="text-align: center;">
 					<img style="width: 70%;" src="images/filezilla.png" alt="FileZilla" />
 				</p>
@@ -273,25 +271,39 @@ int main()
       <h2>Schritt 4</h2>
     </hgroup>
     <article class="smaller">
+        <p>Neuere GCC Version verwenden (nur am Pluto nötig)</p>
+        <pre class="prettyprint" data-lang="bash">source /opt/gcc482/gcc482-envs.sh</pre>
         <p>Das Programm kompilieren:</p>
-        <pre class="prettyprint" data-lang="bash">gcc -Wall -o hello hello.c</pre>
+        <pre class="prettyprint" data-lang="bash">g++ -Wall -std=c++11 -g -o hello hello.cpp</pre>
 		<table>
     <tr><th>Eingabe</th><th>Bedeutung</th></tr>
-		<tr><td>gcc</td><td>GNU C Compiler</td></tr>
+		<tr><td>g++</td><td>GNU C++ Compiler</td></tr>
 		<tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td><tr>
+    <tr><td>-std=c++11</td><td>den C++11 Standard verwenden</td><tr>
+    <tr><td>-g</td><td>Debug-Informationen anhängen (Zeilennummern, Funktionsnamen)</td><tr>
 		<tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
-		<tr><td>hello.c</td><td>Quellcode</td></tr>
+		<tr><td>hello.cpp</td><td>Quellcode</td></tr>
 		</table>
-    <p style="margin-top: 1em;">Ausführen (und Testen):</p>
-    <pre class="prettyprint" data-lang="bash">./hello</pre>
-    <pre>Hallo ESP!</pre>
 	</article>
   </slide>
-
 
   <slide>
     <hgroup>
       <h2>Schritt 5</h2>
+    </hgroup>
+    <article class="smaller">
+      <p style="margin-top: 1em;">Ausführen (und Testen):</p>
+      <pre class="prettyprint" data-lang="bash">./hello</pre>
+      <pre>Hallo ESP!</pre>
+
+      <p style="margin-top: 2em;">Testen mit Valgrind:</p>
+      <pre>valgrind --leak-check=full ./hello</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 6</h2>
     </hgroup>
     <article>
         <p>Bei HW1 den Quellcode und das Binary laut Angabe abgeben.</p>
@@ -310,10 +322,10 @@ int main()
           <li>Editor (oder IDE) nach Wahl</li>
           <li>Referenzplattform: <code>pluto.tugraz.at</code> (Linux)
             <ul>
-              <li>Benötigte Tools: <code>gcc</code>, <code>make</code>,
+              <li>Benötigte Tools: <code>g++</code>, <code>make</code>,
                 <code>valgrind</code>, <code>svn</code></li>
               <li>Datenübertragung mittels SFTP
-                  <pre class="prettyprint" data-lang="bash">scp prog.c benutzername@pluto.tugraz.at:~/</pre>
+                  <pre class="prettyprint" data-lang="bash">scp prog.cpp benutzername@pluto.tugraz.at:~/</pre>
                   <span class="meta">(alternativ: WinSCP oder FileZilla)</span>
               </li>
               <li>Zugang über SSH
@@ -322,7 +334,7 @@ int main()
               </li>
           </ul></li>
           <li>Kompilieren mit:
-            <pre class="prettyprint" data-lang="bash">gcc -Wall -o prog prog.c</pre>
+            <pre class="prettyprint" data-lang="bash">g++ -Wall -std=c++11 -g -o hello hello.cpp</pre>
           </li>
         </ul>
       </article>
