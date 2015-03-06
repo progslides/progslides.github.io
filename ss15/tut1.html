@@ -223,8 +223,8 @@
       <h2>Schritt 1</h2>
     </hgroup>
       <article>
-      	<p>In einem Editor nach Wahl (z.B. UltraEdit,  Notepad++, Kate, Vim,
-      		Emacs, Textmate) eine Datei "hello.cpp" anlegen:</p>
+      	<p>In einem Editor / Entwicklungsumgebung nach Wahl (z.B. CodeBlocks, Sublime,
+          Notepad++, Kate, Vim, Emacs, Textmate) eine Datei "hello.cpp" anlegen:</p>
       	<pre class="prettyprint" data-lang="c">/* Hello World Example */
 
 #include &lt;iostream&gt;
@@ -294,7 +294,7 @@ int main()
     <article class="smaller">
       <p style="margin-top: 1em;">Ausführen (und Testen):</p>
       <pre class="prettyprint" data-lang="bash">./hello</pre>
-      <pre>Hallo ESP!</pre>
+      <pre>Hallo SEP!</pre>
 
       <p style="margin-top: 2em;">Testen mit Valgrind:</p>
       <pre>valgrind --leak-check=full ./hello</pre>
@@ -387,15 +387,47 @@ int main()
     </article>
     </slide>
 
+    <slide>
+      <hgroup>
+        <h2>Objektorientierte Programmierung</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li>Eine <strong>Klasse</strong> vereint Daten (Strukturen) und
+          Funktionalität (Funktionen).</li>
+        <li>Entspricht oft Objekte in der reelen Welt (Spieler, Kamera, etc.)</li>
+        <li>Vereinfachte Schnittstelle (interne Details können verborgen werden)</li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 20em;">// Ball.h
+class Ball
+{
+private:
+  std::string color_;
+  double x_, y_;
+
+public:
+  Ball(std::string color);
+  void move(double dx, double dy);
+};
+
+// Ball.cpp
+Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
+{
+}
+
+void Ball::move(double dx, double dy)
+{
+  x_ += dx;
+  y_ += dy;
+}
+      </pre>
+      </article>
+    </slide>
+
     <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
-      <h2>Viel Erfolg bei HW1!</h2>
-      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
-        <ul>
-          <li>Mi, 15.10.2014 19:00</li>
-          <li>Mi, 22.10.2014 19:00</li>
-        </ul>
+      <h2>Bis zum nächsten Tutorium!</h2>
     </article>
     </slide>
   <slide class="backdrop"></slide>
