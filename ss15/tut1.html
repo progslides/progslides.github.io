@@ -399,6 +399,8 @@ int main()
         <li>Vereinfachte Schnittstelle (interne Details können verborgen werden)</li>
       </ul>
       <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 20em;">// Ball.h
+#ifndef BALL_H_INCLUDED
+#define BALL_H_INCLUDED
 class Ball
 {
 private:
@@ -408,18 +410,55 @@ private:
 public:
   Ball(std::string color);
   void move(double dx, double dy);
+  
+  std::string getColor();
+  void setColor(std::string new_color);
 };
-
-// Ball.cpp
+#endif
+</pre>
+      </article>
+    </slide>
+    
+    <slide>
+      <hgroup>
+        <h2>Ball.cpp</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li>Trennung Implementierung und Definition.</li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 20em;">// Ball.cpp
+#include "Ball.h"
 Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
 {
 }
-
 void Ball::move(double dx, double dy)
 {
   x_ += dx;
   y_ += dy;
 }
+std::string Ball::getColor()
+{
+  return color_;
+}
+void Ball::setColor(std::string new_color)
+{
+  color_ = new_color;
+}
+      </pre>
+      </article>
+    </slide>
+    
+    <slide>
+      <hgroup>
+        <h2>Konstruktor</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li></li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 20em;">// Ball.cpp
+
       </pre>
       </article>
     </slide>
