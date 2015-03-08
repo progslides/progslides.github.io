@@ -410,7 +410,7 @@ int main()
         <li>Entspricht oft Objekten in der reellen Welt (Spieler, Kamera, etc.)</li>
         <li>Vereinfachte Schnittstelle (interne Details können verborgen werden)</li>
       </ul>
-      <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 20em;">// Ball.h
+      <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 18em;">// Ball.h
 #ifndef BALL_H_INCLUDED
 #define BALL_H_INCLUDED
 class Ball
@@ -422,7 +422,7 @@ private:
 public:
   Ball(std::string color);
   void move(double dx, double dy);
-  
+
   std::string getColor();
   void setColor(std::string new_color);
 };
@@ -430,7 +430,7 @@ public:
 </pre>
       </article>
     </slide>
-    
+
     <slide>
       <hgroup>
         <h2>Ball.cpp</h2>
@@ -460,7 +460,7 @@ void Ball::setColor(std::string new_color)
       </pre>
       </article>
     </slide>
-    
+
     <slide>
       <hgroup>
         <h2>Konstruktor</h2>
@@ -497,7 +497,7 @@ Ball::Ball() : color_("yellow"), x_(0), y_(0)
         <ul>
         <li></li>
       </ul>
-      <pre class="prettyprint" data-lang="cpp" >// Erinnerung: Ball.h 
+      <pre class="prettyprint" data-lang="cpp" >// Erinnerung: Ball.h
 ...
 public:
   Ball(std::string color);
@@ -540,6 +540,46 @@ Ball::~Ball()
 
     <slide>
       <hgroup>
+        <h2>Getter / Setter</h2>
+      </hgroup>
+      <article>
+        <p>Häufig: private Attribute, öffentliche Getter und Setter</p>
+        <ul>
+          <li>neue Werte können validiert werden</li>
+          <li>abhängige Daten können automatisch aktualisiert / angepasst werden</li>
+          <li>Werte können im Getter berechnet werden</li>
+          <li>interne Datenformat kann später geändert werden, die öffentliche
+            API bleibt gleich</li>
+        </ul>
+        <pre class="prettyprint" data-lang="cpp" >std::string Ball::getColor()
+{
+  return color_;
+}
+void Ball::setColor(std::string new_color)
+{
+  color_ = new_color;
+}</pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Methoden</h2>
+      </hgroup>
+      <article>
+        <p>Eine Funktion innerhalb einer Klasse heißt <strong>Methode</strong>.
+          Methoden werden üblicherweise mit Verben benannt.</p>
+        <pre class="prettyprint" data-lang="cpp" >void Ball::move(double dx, double dy)
+{
+  x_ += dx;
+  y_ += dy;
+}</pre>
+      </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
         <h2>Strings</h2>
       </hgroup>
       <article>
@@ -557,7 +597,7 @@ int main()
   std::string str("Hello World!");
 
   std::cout &lt;&lt; str &lt;&lt; std::endl;
-  
+
   return 0;
 }</pre>
 
@@ -589,7 +629,7 @@ int main()
   str[1] = "Y";
 
   std::cout &lt;&lt; "Second character of str: " &lt;&lt; str[1] &lt;&lt; std::endl;
-  
+
   return 0;
 }</pre>
 
@@ -626,7 +666,7 @@ int main()
   strSEP.append(str);
 
   std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
-  
+
   return 0;
 }</pre>
 
@@ -662,7 +702,7 @@ int main()
   strSEP += str;
 
   std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
-  
+
   return 0;
 }</pre>
 
@@ -699,7 +739,7 @@ int main()
   str = "World!";
 
   std::cout &lt;&lt; str &lt;&lt; std::endl;
-  
+
   return 0;
 }</pre>
 
@@ -735,7 +775,7 @@ int main()
   strSEP = str;
 
   std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
-  
+
   return 0;
 }</pre>
 
@@ -770,7 +810,7 @@ int main()
   str += "Hello World!";
 
   std::cout &lt;&lt; "length of " &lt;&lt; str &lt;&lt; ": " &lt;&lt; str.length() &lt;&lt; std::endl;
-  
+
   return 0;
 }</pre>
 
@@ -810,13 +850,13 @@ int main()
     //strings are not equal
     std::cout &lt;&lt; str &lt;&lt; " != " &lt;&lt; strSEP &lt;&lt; std::endl;
   }
- 
+
   return 0;
 }</pre>
 
 Ausgabe:
       <pre class="prettyprint" data-lang="BASH" >
-Hello World! != SEP> 
+Hello World! != SEP>
 </pre>
 
       </article>
@@ -850,13 +890,13 @@ int main()
     //strings are not equal
     std::cout &lt;&lt; str &lt;&lt; " != " &lt;&lt; strSEP &lt;&lt; std::endl;
   }
- 
+
   return 0;
 }</pre>
 
 Ausgabe:
       <pre class="prettyprint" data-lang="BASH" >
-Hello World! != SEP> 
+Hello World! != SEP>
 </pre>
 
       </article>
@@ -882,8 +922,8 @@ int main()
   std::cout &lt;&lt; "pi is " &lt;&lt; pi_str &lt;&lt; std::endl;
 
   std::cout &lt;&lt; "answer to life the universe and everything is " &lt;&lt;
-    std::to_string(42) &lt;&lt; std::endl;  
- 
+    std::to_string(42) &lt;&lt; std::endl;
+
   return 0;
 }</pre>
 
@@ -917,7 +957,7 @@ int main()
   Ball another_yellow_ball();
 
   std::string yellow_color("Yellow");
-  
+
   another_yellow_ball.setColor(yellow_color);
 
   std::string yellow_ball_color = yellow_ball.getColor();
@@ -926,7 +966,7 @@ int main()
   {
     std::cout &lt;&lt; "Both balls are yellow!" &lt;&lt; std::endl;
   }
- 
+
   return 0;
 }</pre>
 
