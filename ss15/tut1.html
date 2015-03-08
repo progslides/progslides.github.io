@@ -513,6 +513,31 @@ Ball redBall("red");
       </article>
     </slide>
 
+    <slide>
+      <hgroup>
+        <h2>Destruktor</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li>Wird automatisch aufgerufen</li>
+        <li>Sinnvoll, um dynamischen Speicher wieder freizugeben (Pointer!)</li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" >// Ball.h
+...
+public:
+  ~Ball();
+...
+      </pre>
+      <pre class="prettyprint" data-lang="cpp" >// Ball.cpp
+...
+Ball::~Ball()
+{
+}
+...
+      </pre>
+      </article>
+    </slide>
+
     <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
