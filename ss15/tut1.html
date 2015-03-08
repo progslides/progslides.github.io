@@ -407,7 +407,7 @@ int main()
         <ul>
         <li>Eine <strong>Klasse</strong> vereint Daten (Strukturen) und
           Funktionalität (Funktionen).</li>
-        <li>Entspricht oft Objekte in der reelen Welt (Spieler, Kamera, etc.)</li>
+        <li>Entspricht oft Objekten in der reellen Welt (Spieler, Kamera, etc.)</li>
         <li>Vereinfachte Schnittstelle (interne Details können verborgen werden)</li>
       </ul>
       <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 20em;">// Ball.h
@@ -537,6 +537,370 @@ Ball::~Ball()
       </pre>
       </article>
     </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Strings</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li>Repräsentieren Text bzw. Zeichenketten</li>
+        <li>C++ Variante von char*</li>
+        <li>Bietet sehr viele komfortable Funktionen zur Bearbeitung von Text</li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+  
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello World!
+</pre>
+
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Strings: Zugriff auf Zeichen mit "[ ]" oder string::at</h2>
+      </hgroup>
+      <article>
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+
+  std::cout &lt;&lt; "Second character of str: " &lt;&lt; str[1] &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; "Seventh character of str: " &lt;&lt; str.at(6) &lt;&lt; std::endl;
+
+  str[1] = "Y";
+
+  std::cout &lt;&lt; "Second character of str: " &lt;&lt; str[1] &lt;&lt; std::endl;
+  
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Second character of str: e
+Seventh character of str: W
+Second character of str: Y
+</pre>
+
+      </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>Strings: Anhängen von Text mit string::append</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  strSEP.append(str);
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+  
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+SEP&gt;
+SEP&gt; Hello World!
+</pre>
+
+      </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>Strings: Anhängen von Text mit "+="-Operator</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  strSEP += str;
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+  
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+SEP&gt;
+SEP&gt; Hello World!
+</pre>
+
+      </article>
+    </slide>
+
+
+
+            <slide>
+      <hgroup>
+        <h2>Strings: Kopieren/Zuweisen mit "="-Operator</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str;
+  str = "Hello";
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+
+  str = "World!";
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+  
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello
+World!
+</pre>
+
+      </article>
+    </slide>
+
+
+            <slide>
+      <hgroup>
+        <h2>Strings: Kopieren/Zuweisen mit "="-Operator</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  strSEP = str;
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+  
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+SEP&gt;
+Hello World!
+</pre>
+
+      </article>
+    </slide>
+
+
+                <slide>
+      <hgroup>
+        <h2>Strings: Länge bestimmen mit string::length</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("SEP> ");
+
+  std::cout &lt;&lt; "length of " &lt;&lt; str &lt;&lt; ": " &lt;&lt; str.length() &lt;&lt; std::endl;
+
+  str += "Hello World!";
+
+  std::cout &lt;&lt; "length of " &lt;&lt; str &lt;&lt; ": " &lt;&lt; str.length() &lt;&lt; std::endl;
+  
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+length of SEP&gt; : 5
+length of SEP&gt; Hello World!: 17
+</pre>
+
+      </article>
+    </slide>
+
+                <slide>
+      <hgroup>
+        <h2>Strings: Vergleichen mit string::compare</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  if(str.compare(strSEP) == 0)
+  {
+    //strings are equal
+    std::cout &lt;&lt; str &lt;&lt; " == " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+  else
+  {
+    //strings are not equal
+    std::cout &lt;&lt; str &lt;&lt; " != " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+ 
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello World! != SEP> 
+</pre>
+
+      </article>
+    </slide>
+
+
+       <slide>
+      <hgroup>
+        <h2>Strings: Vergleichen mit "=="-Operator</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  if(str == strSEP)
+  {
+    //strings are equal
+    std::cout &lt;&lt; str &lt;&lt; " == " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+  else
+  {
+    //strings are not equal
+    std::cout &lt;&lt; str &lt;&lt; " != " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+ 
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello World! != SEP> 
+</pre>
+
+      </article>
+    </slide>
+
+
+
+       <slide>
+      <hgroup>
+        <h2>Strings: Verwendung als Klassenmember</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include "Ball.h"
+
+int main()
+{
+  Ball yellow_ball("Yellow");
+  Ball another_yellow_ball();
+
+  std::string yellow_color("Yellow");
+  
+  another_yellow_ball.setColor(yellow_color);
+
+  std::string yellow_ball_color = yellow_ball.getColor();
+
+  if(yellow_ball_color == another_yellow_ball.getColor())
+  {
+    std::cout &lt;&lt; "Both balls are yellow!" &lt;&lt; std::endl;
+  }
+ 
+  return 0;
+}</pre>
+
+
+      </article>
+    </slide>
+
+
 
     <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
