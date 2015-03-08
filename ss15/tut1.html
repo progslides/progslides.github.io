@@ -863,6 +863,40 @@ Hello World! != SEP>
     </slide>
 
 
+           <slide>
+      <hgroup>
+        <h2>Strings: Umwandlung von Zahlen zu Strings mit std::to_string</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string pi_str = std::to_string(3.1415926);
+
+  std::cout &lt;&lt; "pi is " &lt;&lt; pi_str &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; "answer to life the universe and everything is " &lt;&lt;
+    std::to_string(42) &lt;&lt; std::endl;  
+ 
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+pi is 3.141593
+answer to life the universe and everything is 42
+</pre>
+
+      </article>
+    </slide>
+
+
 
        <slide>
       <hgroup>
