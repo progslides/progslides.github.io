@@ -469,8 +469,46 @@ void Ball::setColor(std::string new_color)
         <ul>
         <li></li>
       </ul>
-      <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 20em;">// Ball.cpp
+      <pre class="prettyprint" data-lang="cpp" >// Ball.h
+...
+public:
+  Ball(std::string color);
+  Ball();
+...
+      </pre>
+      <pre class="prettyprint" data-lang="cpp" >// Ball.cpp
+...
+Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
+{
+}
+Ball::Ball() : color_("yellow"), x_(0), y_(0)
+{
+}
+...
+      </pre>
+      </article>
+    </slide>
 
+        <slide>
+      <hgroup>
+        <h2>Konstruktor - Aufruf</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li></li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" >// Erinnerung: Ball.h 
+...
+public:
+  Ball(std::string color);
+  Ball();
+...
+      </pre>
+      <pre class="prettyprint" data-lang="cpp" >// main.cpp
+...
+Ball ball();
+Ball redBall("red");
+...
       </pre>
       </article>
     </slide>
