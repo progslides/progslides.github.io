@@ -911,18 +911,24 @@ Hello World! != SEP>
 
 
 
-      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 90%;">
 #include &lt;string&gt;
 #include &lt;iostream&gt;
 
 int main()
 {
-  std::string pi_str = std::to_string(3.1415926);
+  std::string pi_str = "pi is ";
+  pi_str += std::to_string(3.1415926);
 
-  std::cout &lt;&lt; "pi is " &lt;&lt; pi_str &lt;&lt; std::endl;
+  std::cout &lt;&lt; pi_str &lt;&lt; std::endl;
 
-  std::cout &lt;&lt; "answer to life the universe and everything is " &lt;&lt;
-    std::to_string(42) &lt;&lt; std::endl;
+  int forty_two = 42;
+
+  std::string str = "answer to life the universe and everything is ";
+
+  str += std::to_string(forty_two);
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
 
   return 0;
 }</pre>
