@@ -70,7 +70,7 @@
       background: #eee;
       border: 1px solid #ccc;
       padding: 1px 2px;
-    }    
+    }
   </style>
 </head>
 <body id="tugraz" style="opacity: 0">
@@ -136,17 +136,17 @@
         <li>Iteratoren zum Durchlaufen der
         Container, unabhängig von der Datenstruktur</li>
         <li>Vorgefertigte Algorithmen (copy, sort, transform, etc.)</li>
-      </ul>     
+      </ul>
      </article>
   </slide>
-  
+
   <slide>
      <article>
       <img src="images/container.png" height="105%" />
       <div style="position: absolute; right: 24px; top: 24px; font-size: 0.5em;">http://www.liamdevine.co.uk/code/images/container.png</div>
      </article>
   </slide>
-  
+
   <slide>
   <hgroup>
          <h2>Vector</h2>
@@ -158,11 +158,11 @@
          <li>Erstellen eines Vektors
                  <pre class="compact prettyprint" data-lang="C++">using std::vector;
 ...
-vector&lt;int> int_vector;</pre> 
+vector&lt;int&gt; int_vector;</pre>
               oder
           <pre class="compact prettyprint" data-lang="C++">std::vector&lt;int> int_vector;</pre><br/></li>
-                 
-                 
+
+
         <img src="images/homer2.gif" width="100px" style="float: left; margin-top: 100px;">
         <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 610px; background-color: #fcfcfc;">
         <h3 style="border-bottom: 1px solid gray;">Wichtigste Methoden</h3>
@@ -177,32 +177,32 @@ vector&lt;int> int_vector;</pre>
                    <dt>Wert <em>3</em> an letzter Stelle einf&uuml;gen</dt><dd><pre class="compact prettyprint">int_vector.push_back(3);</pre></dd>
                    <dt>Wert an Position <em>0</em></dt><dd><pre class="compact prettyprint">int element = int_vector[0];</pre></dd>
                  </dl>
-         </div>  
+         </div>
          </div>
         </ul>
      </article>
      </slide>
-     
+
      <slide>
      <hgroup>
       <h2>Vector</h2>
      </hgroup>
      <article>
-<pre class="compact prettyprint" data-lang="C++" >std::vector&lt;int> int_vector;
+<pre class="compact prettyprint" data-lang="C++" >std::vector&lt;int&gt; int_vector;
 int_vector.push_back(42);
 int_vector.push_back(13);
 int_vector.push_back(37);</pre>
-      
+
       <small>Zugriff auf alle Elemente durch Index...</small>
 <pre class="compact prettyprint" data-lang="C++" style="font-size: 0.60em;">
 int i;
 for(i = 0; i &lt; int_vector.size(); i++)
   std::cout &lt;&lt; int_vector[i] &lt;&lt; std::endl;
 </pre>
-      
+
       <small>...oder durch Iterator</small>
 <pre class="compact prettyprint"  data-lang="C++" style="font-size: 0.55em;">
-for(vector&lt;int>::iterator it = int_vector.begin(); it != int_vector.end(); it++)
+for(vector&lt;int&gt;::iterator it = int_vector.begin(); it != int_vector.end(); it++)
   std::cout &lt;&lt; *it &lt;&lt; std::endl;
 </pre>
      <small>...oder mit C++2011<img src="images/newflag.jpg" style="vertical-align: bottom;"/></small>
@@ -218,9 +218,9 @@ for(auto it = int_vector.begin(); it != int_vector.end(); it++)
        <h2>Schreiben auf <span class="src">stdout</span></h2>
        </hgroup>
          <article>
-           
-<pre class="compact prettyprint" data-lang="C++">#include &lt;iostream>
-           
+
+<pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
 int main()
 {
   std::cout &lt;&lt; "Hallo Welt!" &lt;&lt; std::endl;
@@ -230,15 +230,15 @@ int main()
 <br />
 Verketten von Strings und anderen Datentypen m&ouml;glich
 <pre class="compact prettyprint">
-std::cout &lt;&lt; "The answer to life, the universe " 
+std::cout &lt;&lt; "The answer to life, the universe "
           &lt;&lt; and everything is " &lt;&lt; 42 &lt;&lt; std::endl;
 </pre>
 <pre class="compact prettyprint">
-std::cout &lt;&lt; "string1 is " &lt;&lt; string1 
+std::cout &lt;&lt; "string1 is " &lt;&lt; string1
           &lt;&lt; ", it's length is " &lt;&lt; string1.length() &lt;&lt; std::endl;
 </pre>
 <pre class="compact prettyprint">
-std::cout &lt;&lt; 3.14 &lt;&lt; " * " &lt;&lt; 5 &lt;&lt; std::endl; 
+std::cout &lt;&lt; 3.14 &lt;&lt; " * " &lt;&lt; 5 &lt;&lt; std::endl;
 </pre>
 </article>
 </slide>
@@ -253,17 +253,17 @@ std::cout &lt;&lt; 3.14 &lt;&lt; " * " &lt;&lt; 5 &lt;&lt; std::endl;
  <li>Ändern der Basis
 <pre class="compact prettyprint">
 int value = 32;
-std::cout &lt;&lt; value &lt;&lt; " = 0x" &lt;&lt; std::hex 
+std::cout &lt;&lt; value &lt;&lt; " = 0x" &lt;&lt; std::hex
           &lt;&lt; value &lt;&lt; std::endl;
 std::cout &lt;&lt; value &lt;&lt; " = 0" &lt;&lt; std::oct
           &lt;&lt; value &lt;&lt; std::endl;
-</pre> 
+</pre>
  </li>
  <li>Ausrichtung
 <pre class="compact prettyprint">#include &lt;iomanip&gt;
 int value = 32;
 std::cout &lt;&lt; std::setw(8) &lt;&lt; value &lt;&lt; std::endl;
-std::cout &lt;&lt; std::setfill("0") &lt;&lt; std::setw(8) 
+std::cout &lt;&lt; std::setfill("0") &lt;&lt; std::setw(8)
           &lt;&lt; value &lt;&lt; std::endl;</pre>
 </li>
  <li>Kommastellen
@@ -271,7 +271,7 @@ std::cout &lt;&lt; std::setfill("0") &lt;&lt; std::setw(8)
 double value = 3.14159265;
 std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
 </li></ul>
-     </article>  
+     </article>
 </slide>
 
 <slide>
@@ -279,25 +279,59 @@ std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
         <h2>Pr&auml;dikate testen <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2>
  </hgroup>
      <article >
-     
+
      <ul><li>Testet, ob eine Eigenschaft auf ein (<small><span class="src">std::any_of</span></small>), alle (<small><span class="src">std::all_of</span></small>) oder kein (<small><span class="src">std::none_of</span></small>) Element eines Containers zutrifft.</li></ul>
      <ul><li><small>Beispiel: Test, ob eine durch 5 teilbare Zahl in einem Vector vorkommt</small></li></ul>
-     <pre class="prettyprint" data-lang="C++" style="font-size: 0.75em; line-height: 1.35em;">#include &lt;iostream>
-#include &lt;vector>
-#include &lt;algorithm>
+     <pre class="prettyprint" data-lang="C++" style="font-size: 0.75em; line-height: 1.35em;">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
 
 bool is_div5(int x) { return (x % 5 == 0); }
 
 int main() {
-  std::vector&lt;int> numbers {1, 3, 5, 7, 9, 11, 13};
-  
+  std::vector&lt;int&gt; numbers {1, 3, 5, 7, 9, 11, 13};
+
   if(std::any_of(numbers.begin(), numbers.end(), is_div5)) {
     std::cout &lt;&lt; "Durch 5 teilbare Zahl gefunden" &lt;&lt; std::endl;
   }
 }</pre>
-     
+
      </article>
 </slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Makefile</h2>
+  </hgroup>
+
+  <h3>Aufbau:</h3>
+  <p class="pre">
+  <span class="red">Ziel:</span> <span class="yellow">Abhängigkeit1 (Abhängigkeit2 ...)</span><br>
+  &nbsp;&nbsp;&lt;tab&gt;  <span class="blue">(Befehl 1)</span><br>
+  &nbsp;&nbsp;&lt;tab&gt;  <span class="blue">(Befehl 2)</span><br>
+  </p>
+
+  <br>
+  Beispiel:
+  <pre style="font-size: 0.75em; line-height: 1.35em;">SUBMISSION = assX
+EXECUTABLE = $(SUBMISSION)
+
+clean:
+  rm -f ./*.o
+  rm -f ./*.o.d
+  rm -f $(EXECUTABLE)</pre>
+  <br>
+  Verwendung:
+  <pre class="prettyprint" data-lang="sh" style="font-size: 0.75em; line-height: 1.35em;">// am pluto, vorher:
+$ make pluto
+// dann:
+$ make all
+</pre>
+</slide>
+
+
+
 
     <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
