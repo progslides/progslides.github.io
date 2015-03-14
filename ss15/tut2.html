@@ -613,7 +613,7 @@ public:
     King* blackKing = new King();
     Queen* whiteQueen = new Queen();
 
-    std::cout << blackKing->isValidMove(1,1) << std::endl;
+    std::cout &lt;&lt; blackKing->isValidMove(1,1) << std::endl;
 
     std::cout << blackKing->isValidMove(3,3) << std::endl;
 
@@ -716,6 +716,103 @@ Stattdessen steht nach der Definition <pre style="display: inline; padding-top: 
 </ul>
   </article>
   </slide>
+
+
+<slide>
+  <hrgoup>
+     <h3><span class="src">const</span> Schl&uuml;sselwort</h3>
+  </hgroup>
+     <ul>
+      <li>F&uuml;r Konstanten
+<pre class="compact">
+ const int ANSWER_TO_EVERYTHING = 42;
+</pre>
+      <li>F&uuml;r Pointer
+      <ul style="padding-top: 12px;">
+       <li>Pointer auf Konstante: <pre style="display: inline;">const int * some_pointer;</pre></li>
+       <li>Alternativ auch: <pre style="display: inline;">int const * some_pointer;</pre></li>
+       <li>Konstanter Pointer auf Variable: <pre style="display: inline;">int * const SOME_POINTER;</pre></li>
+       <li>Konstanter Pointer auf Konstante: <pre style="display: inline;">int const * const SOME_POINTER;</pre></li>
+      </ul>
+     </ul>
+     <br />
+     <img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     <span class="src">const</span> bezieht sich immer auf den linken Nachbarn. Gibt es keinen, dann auf den rechten Nachbarn.
+     </div>
+</slide>
+
+<slide>
+  <hgroup>
+     <h3><span class="src">const</span> Schl&uuml;sselwort</h3>
+  </hgroup>
+     <ul>
+      <li>F&uuml;r Funktionsparamter
+<pre class="compact">
+void doSomething(const char * str)
+{
+[...]
+}
+</pre>
+Funktion garantiert dem Aufrufer, dass sie den Wert, auf den der Pointer zeigt, nicht &auml;ndern wird (kann).</li>
+      <li style="margin-top: 28px;">F&uuml;r Methoden
+<pre class="compact">
+class SomeClass {
+  void doSomething() const;
+};
+</pre>
+Die Methode kann keine Membervariablen ver&auml;ndern.
+
+     </ul>
+</slide>
+<slide>
+  <hgroup>
+     <h3><span class="src">const</span> Schl&uuml;sselwort</h3>
+  </hgroup>
+     <br /><br />
+     <h3 style="font-size: 120%;">...und was macht das?</h3>
+     <br />
+<pre>
+int const * const doSomething(const int * const &amp; parameter) const;
+</pre>
+    <img src="images/cereal_guy.png" width="450px" style="float: right;" />
+
+</slide>
+<slide>
+  <hgroup>
+     <h3><span class="src">static</span> Schl&uuml;sselwort</h3>
+  </hgroup>
+     <br />
+     <span style="font-size: 90%;">
+     Statische Attribute und Methoden werden <strong>pro Klasse nur einmal</strong> angelegt,
+     statt wie sonst f&uuml;r jede Instanz.
+     </span><br />
+     <span style="font-size: 80%; display: block; margin-top: 16px; margin-bottom: 16px;">
+     Zugriff &uuml;ber <span class="src">Klassenname::funktion()</span> bzw. <span class="src">Klassenname::variable</span>
+     </span>
+<pre class="compact"  style="font-size: .55em; line-height: 1.25em; width: 75%; margin: 1em auto;">
+class Product
+{
+  private:
+    static int count_;
+  public:
+    Product() { count_++; }
+    ~Product() { count_--; }
+    static int getProductsCount() { return count_; }
+};
+
+int Product::count_ = 0;
+
+int main()
+{
+  std::cout &lt;&lt; Product::getProductsCount() &lt;&lt; std::endl;
+  Product p1;
+  std::cout &lt;&lt; Product::getProductsCount() &lt;&lt; std::endl;
+}
+</pre>
+</slide>
+
+
 
 </slides>
 <!--[if IE]>
