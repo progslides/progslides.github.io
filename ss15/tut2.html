@@ -140,6 +140,83 @@
     </article>
   </slide>
 
+
+  <slide>
+    <hgroup>
+      <h2>Value vs. Pointer vs. Referenz (Beispiel 1)</h2>
+    </hgroup>
+    <article>
+      <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+void funcValue(int x, int val)
+{
+  x += val;
+}
+
+int main()
+{
+  int v = 3;
+  funcValue(v, 4);
+  std::cout << v << std::endl;
+}</pre>
+  </article>
+</slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Value vs. Pointer vs. Referenz (Beispiel 2)</h2>
+    </hgroup>
+    <article>
+      <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+void funcPointer(int* x, int val)
+{
+  *x += val;
+}
+
+int main() {
+  int v = 3;
+  funcPointer(&amp;v, 4);
+  std::cout &lt;&lt; v &lt;&lt; std::endl;
+}</pre>
+  </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Value vs. Pointer vs. Referenz (Beispiel 3)</h2>
+  </hgroup>
+  <article>
+    <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+void funcReference(int&amp; x, int val)
+{
+  x += val;
+}
+
+int main()
+{
+  int v = 3;
+  funcReference(v, 4);
+  std::cout &lt;&lt; v &lt;&lt; std::endl;
+}</pre>
+</article>
+</slide>
+
+  <slide>
+    <hgroup>
+      <h2>Value vs. Pointer vs. Referenz</h2>
+    </hgroup>
+    <article>
+      <ul>
+       <li>Referenzen können <em>nicht</em> <span class="src">NULL</span> sein, Pointer schon</li>
+       <li>Referenzen können wie normale Variablen verwendet werden</li>
+       <li>Bei Referenzen und Pointern wird nur die Adresse übergeben, sonst wird kopiert</li>
+      </ul>
+   </article>
+  </slide>
+
   <slide>
     <hgroup>
        <h2>STL - Standard Template Library</h2>
@@ -720,9 +797,10 @@ Stattdessen steht nach der Definition <pre style="display: inline; padding-top: 
 
 <slide>
   <hrgoup>
-     <h3><span class="src">const</span> Schl&uuml;sselwort</h3>
+     <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
   </hgroup>
-     <ul>
+  <article>
+     <ul style="margin-top: 2em;">
       <li>F&uuml;r Konstanten
 <pre class="compact">
  const int ANSWER_TO_EVERYTHING = 42;
@@ -740,12 +818,14 @@ Stattdessen steht nach der Definition <pre style="display: inline; padding-top: 
      <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
      <span class="src">const</span> bezieht sich immer auf den linken Nachbarn. Gibt es keinen, dann auf den rechten Nachbarn.
      </div>
+  </article>
 </slide>
 
 <slide>
   <hgroup>
-     <h3><span class="src">const</span> Schl&uuml;sselwort</h3>
+     <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
   </hgroup>
+  <article>
      <ul>
       <li>F&uuml;r Funktionsparamter
 <pre class="compact">
@@ -764,33 +844,36 @@ class SomeClass {
 Die Methode kann keine Membervariablen ver&auml;ndern.
 
      </ul>
+</article>
 </slide>
+
 <slide>
   <hgroup>
-     <h3><span class="src">const</span> Schl&uuml;sselwort</h3>
+     <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
   </hgroup>
-     <br /><br />
+<article>
      <h3 style="font-size: 120%;">...und was macht das?</h3>
      <br />
 <pre>
 int const * const doSomething(const int * const &amp; parameter) const;
 </pre>
     <img src="images/cereal_guy.png" width="450px" style="float: right;" />
-
+</article>
 </slide>
 <slide>
   <hgroup>
-     <h3><span class="src">static</span> Schl&uuml;sselwort</h3>
+     <h2><span class="src">static</span> Schl&uuml;sselwort</h2>
   </hgroup>
-     <br />
-     <span style="font-size: 90%;">
+  <article>
+     <p>
      Statische Attribute und Methoden werden <strong>pro Klasse nur einmal</strong> angelegt,
      statt wie sonst f&uuml;r jede Instanz.
-     </span><br />
-     <span style="font-size: 80%; display: block; margin-top: 16px; margin-bottom: 16px;">
+   </p>
+
+      <span style="font-size: 80%; display: block; margin-top: 16px; margin-bottom: 16px;">
      Zugriff &uuml;ber <span class="src">Klassenname::funktion()</span> bzw. <span class="src">Klassenname::variable</span>
      </span>
-<pre class="compact"  style="font-size: .55em; line-height: 1.25em; width: 75%; margin: 1em auto;">
+<pre class="prettyprint" data-lang="cpp" style="height: 20em; overflow: scroll;">
 class Product
 {
   private:
@@ -810,9 +893,28 @@ int main()
   std::cout &lt;&lt; Product::getProductsCount() &lt;&lt; std::endl;
 }
 </pre>
+</article>
 </slide>
 
-
+<slide>
+  <hgroup>
+    <h2>Versionsverwaltung</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Was wurde geändert?</li>
+      <li>Wer hat was geändert?</li>
+      <li>Wie war der vorherige Stand?</li>
+      <li>Welche Änderung hat den Fehler verursacht?</li>
+      <li>Zurücknehmen von einzelnen Änderungen</li>
+      <li>Zusammenführen von Änderungen (Teamarbeit!)</li>
+      <li>Einfacher und kompfortabler als zip + E-Mail ;)</li>
+    </ul>
+    <p style="margin-top: 2em">Verbreitete VCS: Git, Subversion, Mercurial, ...</p>
+    <p>Die TU-Graz stellt unter <strong>git.tugraz.at</strong>
+      einen Git Server bereit.</p>
+  </article>
+</slide>
 
 </slides>
 <!--[if IE]>
