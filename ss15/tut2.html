@@ -92,12 +92,14 @@
     </hgroup>
     <article>
         <ul>
-         <li>STL - Standard Template Library</li>
-         <li>Vektoren</li>
-         <li>Strings</li>
-         <li>Maps</li>
-         <li>Makefiles</li>
-         <li>Ass1</li>
+         <li>Speichermanagement</li>
+         <li>Werte, Referenzen und Pointer</li>
+         <li>Vererbung, Polymorphie, abstrakte Klassen</li>
+         <li>Statische Attribute und Funktionen</li>
+         <li><code>const</code>-Corectness</li>
+         <li>STL: vector, map, sstream</li>
+         <li>Make</li>
+         <li>Versionsverwaltung (Git)</li>
         </ul>
     </article>
   </slide>
@@ -216,6 +218,304 @@ int main()
       </ul>
    </article>
   </slide>
+
+
+    <slide>
+    	<hgroup>
+    	<h2>Vererbung</h2>
+    	</hgroup>
+    	<article>
+    	<p><b>Problem</b>: Wir wollen ein sehr vereinfachtes Schachspiel implementieren. </p>
+    	<p>Es gibt die Figuren:</p>
+    	<ul>
+    	<li>König</li>
+    	<li>Dame</li>
+    	<li>Bauer</li>
+    	</ul>
+    	<p>&#10141; Viel gleicher Code, nur wenig individuelle Methoden</p>
+    	<p align="center" style="margin-top: 2em; font-size: 1.35em">&#10141; <b>Vererbung nutzen!</b></p>
+    	</article>
+    </slide>
+
+    <slide>
+    <hgroup><h2>Ohne Vererbung</h2></hgroup>
+    <article>
+    	<pre style="width: 48%; float: left" class="prettyprint" data-lang="cpp">class King
+{
+private:
+  int x_;
+  int y_;
+
+public:
+  void move(int x, int y);
+  int getX();
+  int getY();
+  ....
+  bool isValidMove(int x, int y);
+};
+    	</pre>
+    	<pre style="width: 48%; float: right" class="prettyprint" data-lang="cpp">class Queen
+{
+private:
+  int x_;
+  int y_;
+
+public:
+  void move(int x, int y);
+  int getX();
+  int getY();
+  ....
+  bool isValidMove(int x, int y);
+};
+    	</pre>
+    </article>
+    </slide>
+
+     <slide>
+    <hgroup><h2>Besser:</h2></hgroup>
+    <article>
+    	<pre style="width: 48%; float: left" class="prettyprint" data-lang="cpp">class Figure
+{
+private:
+  int x_;
+  int y_;
+
+public:
+  void move(int x, int y);
+  int getX();
+  int getY();
+  ....
+  virtual bool isValidMove(int x,
+    int y) = 0;
+};
+    	</pre>
+
+    	<div style="width: 48%; float: right">
+    	<pre  class="prettyprint" data-lang="cpp">class Queen :
+  public Figure
+{
+public:
+  bool isValidMove(int x, int y);
+};
+  </pre>
+  <pre  class="prettyprint" data-lang="cpp">class King :
+  public Figure
+{
+public:
+  bool isValidMove(int x, int y);
+};
+    	</pre>
+    	</div>
+    </article>
+    </slide>
+
+  <slide>
+    <hgroup><h2>Was wird hier ausgegeben?</h2>
+    </hgroup>
+    <article>
+    <pre class="prettyprint" data-lang="cpp">int main()
+{
+  King* blackKing = new King();
+  Queen* whiteQueen = new Queen();
+
+  std::cout &lt;&lt; blackKing->isValidMove(1,1) << std::endl;
+
+  std::cout << blackKing->isValidMove(3,3) << std::endl;
+
+  std::cout << whiteQueen->isValidMove(1,1) << std::endl;
+
+  std::cout << whiteQueen->isValidMove(3,3) << std::endl;
+
+  delete blackKing;
+  delete whiteQueen;
+}
+    </pre>
+    </article>
+    </slide>
+
+    <slide>
+    <hgroup><h2>Polymorphie: Was wird hier ausgegeben?</h2>
+    </hgroup>
+    <article>
+    <pre class="prettyprint" data-lang="cpp">int main()
+{
+  <b>Figure*</b> blackKing = new King();
+  <b>Figure*</b> whiteQueen = new Queen();
+
+  std::cout << blackKing->isValidMove(1,1) << std::endl;
+
+  std::cout << blackKing->isValidMove(3,3) << std::endl;
+
+  std::cout << whiteQueen->isValidMove(1,1) << std::endl;
+
+  std::cout << whiteQueen->isValidMove(3,3) << std::endl;
+
+  delete blackKing;
+  delete whiteQueen;
+}
+    </pre>
+    </article>
+    </slide>
+
+
+     <slide>
+    <hgroup><h2>(Pure) Virtual Methoden</h2></hgroup>
+    <article>
+    	<pre style="width: 48%; float: left" class="prettyprint" data-lang="cpp">class Figure
+{
+private:
+  int x_;
+  int y_;
+
+public:
+  void move(int x, int y);
+  int getX();
+  int getY();
+  ....
+  <b>virtual bool isValidMove(int x,
+    int y) = 0;</b>
+};
+    	</pre>
+
+    	<div style="width: 48%; float: right">
+    	<pre  class="prettyprint" data-lang="cpp">class Queen :
+  public Figure
+{
+public:
+  bool isValidMove(int x, int y);
+};
+  </pre>
+  <pre  class="prettyprint" data-lang="cpp">class King :
+  public Figure
+{
+public:
+  bool isValidMove(int x, int y);
+};
+    	</pre>
+    	</div>
+    </article>
+    </slide>
+
+
+     <slide>
+    <hgroup><h2>(Pure) Virtual Methoden</h2></hgroup>
+    <article>
+    	<pre  class="prettyprint" data-lang="cpp">class Figure
+{
+...
+  <b>virtual bool isValidMove(int x,
+    int y) = 0;</b>
+};
+    	</pre>
+  <ul>
+  <li>Programm entscheidet zur Laufzeit, welche Funktion aufgerufen wird</li>
+  <li><b>Pure</b> Virtual Methoden werden in der Basisklasse <b>nicht</b> implementiert.
+  Stattdessen steht nach der Definition <pre style="display: inline; padding-top: 0pt; padding-bottom: 0pt;"> = 0;</pre>
+  <li>Eine Klasse mit mindestens einer Pure Virtual Methode wird <b>Abstrakte Klasse</b> genannt</li>
+  <li>Von einer Abstrakten Klasse selber können <b>keine</b> Objekte erstellt werden</li>
+  </ul>
+    </article>
+    </slide>
+
+
+  <slide>
+    <hrgoup>
+       <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
+    </hgroup>
+    <article>
+       <ul style="margin-top: 2em;">
+        <li>F&uuml;r Konstanten
+  <pre class="compact">
+   const int ANSWER_TO_EVERYTHING = 42;
+  </pre>
+        <li>F&uuml;r Pointer
+        <ul style="padding-top: 12px;">
+         <li>Pointer auf Konstante: <pre style="display: inline;">const int * some_pointer;</pre></li>
+         <li>Alternativ auch: <pre style="display: inline;">int const * some_pointer;</pre></li>
+         <li>Konstanter Pointer auf Variable: <pre style="display: inline;">int * const SOME_POINTER;</pre></li>
+         <li>Konstanter Pointer auf Konstante: <pre style="display: inline;">int const * const SOME_POINTER;</pre></li>
+        </ul>
+       </ul>
+       <br />
+       <img src="images/homer2.gif" width="100px" style="float: left;"/>
+       <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+       <span class="src">const</span> bezieht sich immer auf den linken Nachbarn. Gibt es keinen, dann auf den rechten Nachbarn.
+       </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+       <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
+    </hgroup>
+    <article>
+       <ul>
+        <li>F&uuml;r Funktionsparamter
+  <pre class="compact">void doSomething(const char * str)
+{
+[...]
+}
+  </pre>
+  Funktion garantiert dem Aufrufer, dass sie den Wert, auf den der Pointer zeigt, nicht &auml;ndern wird (kann).</li>
+        <li style="margin-top: 28px;">F&uuml;r Methoden
+  <pre class="compact">class SomeClass {
+  void doSomething() const;
+};
+  </pre>
+  Die Methode kann keine Membervariablen ver&auml;ndern.
+
+       </ul>
+  </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+       <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
+    </hgroup>
+  <article>
+       <h3 style="font-size: 120%;">...und was macht das?</h3>
+       <br />
+  <pre>
+  int const * const doSomething(const int * const &amp; parameter) const;
+  </pre>
+      <img src="images/cereal_guy.png" width="450px" style="float: right;" />
+  </article>
+  </slide>
+  <slide>
+    <hgroup>
+       <h2><span class="src">static</span> Schl&uuml;sselwort</h2>
+    </hgroup>
+    <article>
+       <p>
+       Statische Attribute und Methoden werden <strong>pro Klasse nur einmal</strong> angelegt,
+       statt wie sonst f&uuml;r jede Instanz.
+     </p>
+
+        <span style="font-size: 80%; display: block; margin-top: 16px; margin-bottom: 16px;">
+       Zugriff &uuml;ber <span class="src">Klassenname::funktion()</span> bzw. <span class="src">Klassenname::variable</span>
+       </span>
+  <pre class="prettyprint" data-lang="cpp" style="height: 20em; overflow: scroll;">class Product
+{
+  private:
+    static int count_;
+  public:
+    Product() { count_++; }
+    ~Product() { count_--; }
+    static int getProductsCount() { return count_; }
+};
+
+int Product::count_ = 0;
+
+int main()
+{
+  std::cout &lt;&lt; Product::getProductsCount() &lt;&lt; std::endl;
+  Product p1;
+  std::cout &lt;&lt; Product::getProductsCount() &lt;&lt; std::endl;
+}
+  </pre>
+  </article>
+  </slide>
+
 
   <slide>
     <hgroup>
@@ -510,328 +810,13 @@ $ make
 </pre>
 </slide>
 
-
-
-
-
-
-    <slide class="thank-you-slide segue nobackground">
+  <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
       <h2>Bis zum nächsten Tutorium!</h2>
     </article>
     </slide>
   <slide class="backdrop"></slide>
-
-  <slide>
-  	<hgroup>
-  	<h2>Vererbung</h2>
-  	</hgroup>
-  	<article>
-  	<p><b>Problem</b>: Wir wollen ein sehr vereinfachtes Schachspiel implementieren. </p>
-  	<p>Es gibt die Figuren:</p>
-  	<ul>
-  	<li>König</li>
-  	<li>Dame</li>
-  	<li>Bauer</li>
-  	</ul>
-  	<p>&#10141; Viel gleicher Code, nur wenig individuelle Methoden</p>
-  	<p align="center" style="margin-top: 2em; font-size: 1.35em">&#10141; <b>Vererbung nutzen!</b></p>
-  	</article>
-  </slide>
-
-  <slide>
-  <hgroup><h2>Ohne Vererbung</h2></hgroup>
-  <article>
-  	<pre style="width: 48%; float: left" class="prettyprint" data-lang="cpp">
-class King
-{
-private:
-  int x_;
-  int y_;
-
-public:
-  void move(int x, int y);
-  int getX();
-  int getY();
-  ....
-  bool isValidMove(int x, int y);
-};
-  	</pre>
-  	<pre style="width: 48%; float: right" class="prettyprint" data-lang="cpp">
-class Queen
-{
-private:
-  int x_;
-  int y_;
-
-public:
-  void move(int x, int y);
-  int getX();
-  int getY();
-  ....
-  bool isValidMove(int x, int y);
-};
-  	</pre>
-  </article>
-  </slide>
-
-   <slide>
-  <hgroup><h2>Besser:</h2></hgroup>
-  <article>
-  	<pre style="width: 48%; float: left" class="prettyprint" data-lang="cpp">
-class Figure
-{
-private:
-  int x_;
-  int y_;
-
-public:
-  void move(int x, int y);
-  int getX();
-  int getY();
-  ....
-  virtual bool isValidMove(int x,
-    int y) = 0;
-};
-  	</pre>
-
-  	<div style="width: 48%; float: right">
-  	<pre  class="prettyprint" data-lang="cpp">
-class Queen :
-  public Figure
-{
-public:
-  bool isValidMove(int x, int y);
-};
-</pre>
-<pre  class="prettyprint" data-lang="cpp">
-class King :
-  public Figure
-{
-public:
-  bool isValidMove(int x, int y);
-};
-  	</pre>
-  	</div>
-  </article>
-  </slide>
-
-<slide>
-  <hgroup><h2>Was wird hier ausgegeben?</h2>
-  </hgroup>
-  <article>
-  <pre class="prettyprint" data-lang="cpp">
-  int main()
-  {
-    King* blackKing = new King();
-    Queen* whiteQueen = new Queen();
-
-    std::cout &lt;&lt; blackKing->isValidMove(1,1) << std::endl;
-
-    std::cout << blackKing->isValidMove(3,3) << std::endl;
-
-    std::cout << whiteQueen->isValidMove(1,1) << std::endl;
-
-    std::cout << whiteQueen->isValidMove(3,3) << std::endl;
-
-    delete blackKing;
-    delete whiteQueen;
-  }
-  </pre>
-  </article>
-  </slide>
-
-  <slide>
-  <hgroup><h2>Polymorphie: Was wird hier ausgegeben?</h2>
-  </hgroup>
-  <article>
-  <pre class="prettyprint" data-lang="cpp">
-  int main()
-  {
-    <b>Figure*</b> blackKing = new King();
-    <b>Figure*</b> whiteQueen = new Queen();
-
-    std::cout << blackKing->isValidMove(1,1) << std::endl;
-
-    std::cout << blackKing->isValidMove(3,3) << std::endl;
-
-    std::cout << whiteQueen->isValidMove(1,1) << std::endl;
-
-    std::cout << whiteQueen->isValidMove(3,3) << std::endl;
-
-    delete blackKing;
-    delete whiteQueen;
-  }
-  </pre>
-  </article>
-  </slide>
-
-
-   <slide>
-  <hgroup><h2>(Pure) Virtual Methoden</h2></hgroup>
-  <article>
-  	<pre style="width: 48%; float: left" class="prettyprint" data-lang="cpp">
-class Figure
-{
-private:
-  int x_;
-  int y_;
-
-public:
-  void move(int x, int y);
-  int getX();
-  int getY();
-  ....
-  <b>virtual bool isValidMove(int x,
-    int y) = 0;</b>
-};
-  	</pre>
-
-  	<div style="width: 48%; float: right">
-  	<pre  class="prettyprint" data-lang="cpp">
-class Queen :
-  public Figure
-{
-public:
-  bool isValidMove(int x, int y);
-};
-</pre>
-<pre  class="prettyprint" data-lang="cpp">
-class King :
-  public Figure
-{
-public:
-  bool isValidMove(int x, int y);
-};
-  	</pre>
-  	</div>
-  </article>
-  </slide>
-
-
-   <slide>
-  <hgroup><h2>(Pure) Virtual Methoden</h2></hgroup>
-  <article>
-  	<pre  class="prettyprint" data-lang="cpp">
-class Figure
-{
-...
-  <b>virtual bool isValidMove(int x,
-    int y) = 0;</b>
-};
-  	</pre>
-<ul>
-<li>Programm entscheidet zur Laufzeit, welche Funktion aufgerufen wird</li>
-<li><b>Pure</b> Virtual Methoden werden in der Basisklasse <b>nicht</b> implementiert.
-Stattdessen steht nach der Definition <pre style="display: inline; padding-top: 0pt; padding-bottom: 0pt;"> = 0;</pre>
-<li>Eine Klasse mit mindestens einer Pure Virtual Methode wird <b>Abstrakte Klasse</b> genannt</li>
-<li>Von einer Abstrakten Klasse selber können <b>keine</b> Objekte erstellt werden</li>
-</ul>
-  </article>
-  </slide>
-
-
-<slide>
-  <hrgoup>
-     <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
-  </hgroup>
-  <article>
-     <ul style="margin-top: 2em;">
-      <li>F&uuml;r Konstanten
-<pre class="compact">
- const int ANSWER_TO_EVERYTHING = 42;
-</pre>
-      <li>F&uuml;r Pointer
-      <ul style="padding-top: 12px;">
-       <li>Pointer auf Konstante: <pre style="display: inline;">const int * some_pointer;</pre></li>
-       <li>Alternativ auch: <pre style="display: inline;">int const * some_pointer;</pre></li>
-       <li>Konstanter Pointer auf Variable: <pre style="display: inline;">int * const SOME_POINTER;</pre></li>
-       <li>Konstanter Pointer auf Konstante: <pre style="display: inline;">int const * const SOME_POINTER;</pre></li>
-      </ul>
-     </ul>
-     <br />
-     <img src="images/homer2.gif" width="100px" style="float: left;"/>
-     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
-     <span class="src">const</span> bezieht sich immer auf den linken Nachbarn. Gibt es keinen, dann auf den rechten Nachbarn.
-     </div>
-  </article>
-</slide>
-
-<slide>
-  <hgroup>
-     <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
-  </hgroup>
-  <article>
-     <ul>
-      <li>F&uuml;r Funktionsparamter
-<pre class="compact">
-void doSomething(const char * str)
-{
-[...]
-}
-</pre>
-Funktion garantiert dem Aufrufer, dass sie den Wert, auf den der Pointer zeigt, nicht &auml;ndern wird (kann).</li>
-      <li style="margin-top: 28px;">F&uuml;r Methoden
-<pre class="compact">
-class SomeClass {
-  void doSomething() const;
-};
-</pre>
-Die Methode kann keine Membervariablen ver&auml;ndern.
-
-     </ul>
-</article>
-</slide>
-
-<slide>
-  <hgroup>
-     <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
-  </hgroup>
-<article>
-     <h3 style="font-size: 120%;">...und was macht das?</h3>
-     <br />
-<pre>
-int const * const doSomething(const int * const &amp; parameter) const;
-</pre>
-    <img src="images/cereal_guy.png" width="450px" style="float: right;" />
-</article>
-</slide>
-<slide>
-  <hgroup>
-     <h2><span class="src">static</span> Schl&uuml;sselwort</h2>
-  </hgroup>
-  <article>
-     <p>
-     Statische Attribute und Methoden werden <strong>pro Klasse nur einmal</strong> angelegt,
-     statt wie sonst f&uuml;r jede Instanz.
-   </p>
-
-      <span style="font-size: 80%; display: block; margin-top: 16px; margin-bottom: 16px;">
-     Zugriff &uuml;ber <span class="src">Klassenname::funktion()</span> bzw. <span class="src">Klassenname::variable</span>
-     </span>
-<pre class="prettyprint" data-lang="cpp" style="height: 20em; overflow: scroll;">
-class Product
-{
-  private:
-    static int count_;
-  public:
-    Product() { count_++; }
-    ~Product() { count_--; }
-    static int getProductsCount() { return count_; }
-};
-
-int Product::count_ = 0;
-
-int main()
-{
-  std::cout &lt;&lt; Product::getProductsCount() &lt;&lt; std::endl;
-  Product p1;
-  std::cout &lt;&lt; Product::getProductsCount() &lt;&lt; std::endl;
-}
-</pre>
-</article>
-</slide>
 
 <slide>
   <hgroup>
