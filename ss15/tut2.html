@@ -104,6 +104,44 @@
 
   <slide>
     <hgroup>
+      <h2>Objekte anlegen</h2>
+    </hgroup>
+    <article>
+<div style="width: 48%; float: left;"><strong>Automatic Storage</strong>
+<pre class="compact prettyprint" data-lang="C++">int main()
+{
+  int num(3);
+  // alternativ: int num = 3;
+
+  int arr[20];
+  for (int i = 0; i &lt; 20; i++)
+  {
+    arr[i] = i + 1;
+  }
+}</pre></div>
+
+<div style="margin-left: 52%; width: 48%;"><strong>Dynamic Storage</strong>
+<pre class="compact prettyprint" data-lang="C++">int main()
+{
+  int *num = new int(3);
+
+  int arr = new int[20];
+  for (int i = 0; i &lt; 20; i++)
+  {
+    arr[i] = 1 + i;
+  }
+
+  delete[] arr;
+  delete b;
+}</pre></div>
+  <p style="clear:left; margin-top: 2em;"><strong>Anmerkung:</strong> Statt <code>int</code> kann
+  auch jeder beliebige andere Datentyp (auch eigene Klassen!) verwendet
+  werden.</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
        <h2>STL - Standard Template Library</h2>
     </hgroup>
      <article>
@@ -214,6 +252,43 @@ for(auto it = int_vector.begin(); it != int_vector.end(); it++)
 </slide>
 
 <slide>
+  <hgroup>
+    <h2>Map</h2>
+  </hgroup>
+  <article>
+    <p>Erlaubt Werte unter einem beliebigen Schlüssel zu speichern. Der Schlüssel
+      muss dabei KEINE fortlaufende Ganzzahl wie bei Arrays / Vektoren sein.</p>
+    <pre class="compact prettyprint" data-lang="C++" style="height: 20em; overflow: scroll;">#include &lt;iostream&gt;
+#include &lt;map&gt;
+#include &lt;string&gt;
+
+int main()
+{
+  std::map<std::string, double> constants;
+  constants["pi"] = 3.1415926536;
+  constants["e"] = 2.7182818284;
+  constants["phi"] = 2.61803398875;
+
+  // find a single entry
+  auto it = constants.find("pi");
+  if (it != constants.end())
+  {
+    std::cout &lt;&lt; it-&gt;first &lt;&lt; &quot; = &quot; &lt;&lt; it-&gt;second &lt;&lt; std::endl;
+  }
+
+  // list all entries
+  for (it = constants.begin(); it != constants.end(); it++)
+  {
+    std::cout &lt;&lt; it-&gt;first &lt;&lt; &quot; = &quot; &lt;&lt; it-&gt;second; &lt;&lt; std::endl;
+  }
+}
+    </pre>
+
+
+  </article>
+</slide>
+
+<slide>
 <hgroup>
        <h2>Schreiben auf <span class="src">stdout</span></h2>
        </hgroup>
@@ -230,15 +305,15 @@ int main()
 <br />
 Verketten von Strings und anderen Datentypen m&ouml;glich
 <pre class="compact prettyprint">
-std::cout &lt;&lt; "The answer to life, the universe "
-          &lt;&lt; and everything is " &lt;&lt; 42 &lt;&lt; std::endl;
+std::cout &lt;&lt; &quot;The answer to life, the universe &quot;
+          &lt;&lt; &quot;and everything is &quot; &lt;&lt; 42 &lt;&lt; std::endl;
 </pre>
 <pre class="compact prettyprint">
-std::cout &lt;&lt; "string1 is " &lt;&lt; string1
-          &lt;&lt; ", it's length is " &lt;&lt; string1.length() &lt;&lt; std::endl;
+std::cout &lt;&lt; &quot; string1 is &quot;  &lt;&lt; string1
+          &lt;&lt; &quot; , it's length is &quot;  &lt;&lt; string1.length() &lt;&lt; std::endl;
 </pre>
 <pre class="compact prettyprint">
-std::cout &lt;&lt; 3.14 &lt;&lt; " * " &lt;&lt; 5 &lt;&lt; std::endl;
+std::cout &lt;&lt; 3.14 &lt;&lt; &quot; * &quot; &lt;&lt; 5 &lt;&lt; std::endl;
 </pre>
 </article>
 </slide>
@@ -275,6 +350,33 @@ std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
 </slide>
 
 <slide>
+  <hgroup>
+    <h2>Strings erzeugen</h2>
+  </hgroup>
+  <article>
+<pre class="prettyprint" data-lang="C++">
+#include &lt;string&gt;
+#include &lt;sstream&gt;
+
+int main()
+{
+  int groupno = 2;
+
+  std::ostringstream buffer;
+  buffer &lt;&lt; &quot;Hallo Gruppe &quot; &lt;&lt; groupno &lt;&lt; &quot;!&quot;;
+
+  std::string text(buffer.str());
+
+  std::cout &lt;&lt; text &lt;&lt; std::endl;
+
+  // C++11 only:
+  std::string text2 = &quot;Hallo Gruppe &quot; + std::to_string(groupno) + &quot;!&quot;;
+}
+</pre>
+  </article>
+</slide>
+
+<slide>
  <hgroup>
         <h2>Pr&auml;dikate testen <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2>
  </hgroup>
@@ -289,9 +391,10 @@ std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
 bool is_div5(int x) { return (x % 5 == 0); }
 
 int main() {
-  std::vector&lt;int&gt; numbers {1, 3, 5, 7, 9, 11, 13};
+  std::vector&lt;int&gt; numbers = {1, 3, 5, 7, 9, 11, 13};
 
-  if(std::any_of(numbers.begin(), numbers.end(), is_div5)) {
+  if(std::any_of(numbers.begin(), numbers.end(), is_div5))
+  {
     std::cout &lt;&lt; "Durch 5 teilbare Zahl gefunden" &lt;&lt; std::endl;
   }
 }</pre>
@@ -350,7 +453,7 @@ $ make all
   	<p>Es gibt die Figuren:</p>
   	<ul>
   	<li>König</li>
-  	<li>Dame</li>  	
+  	<li>Dame</li>
   	<li>Bauer</li>
   	</ul>
   	<p>&#10141; Viel gleicher Code, nur wenig individuelle Methoden</p>
@@ -409,14 +512,14 @@ public:
   int getX();
   int getY();
   ....
-  virtual bool isValidMove(int x, 
+  virtual bool isValidMove(int x,
     int y) = 0;
 };
   	</pre>
 
   	<div style="width: 48%; float: right">
   	<pre  class="prettyprint" data-lang="cpp">
-class Queen : 
+class Queen :
   public Figure
 {
 public:
@@ -424,7 +527,7 @@ public:
 };
 </pre>
 <pre  class="prettyprint" data-lang="cpp">
-class King : 
+class King :
   public Figure
 {
 public:
@@ -445,13 +548,13 @@ public:
     King* blackKing = new King();
     Queen* whiteQueen = new Queen();
 
-    std::cout << blackKing->isValidMove(1,1) << std::endl; 
+    std::cout << blackKing->isValidMove(1,1) << std::endl;
 
-    std::cout << blackKing->isValidMove(3,3) << std::endl; 
+    std::cout << blackKing->isValidMove(3,3) << std::endl;
 
-    std::cout << whiteQueen->isValidMove(1,1) << std::endl; 
+    std::cout << whiteQueen->isValidMove(1,1) << std::endl;
 
-    std::cout << whiteQueen->isValidMove(3,3) << std::endl; 
+    std::cout << whiteQueen->isValidMove(3,3) << std::endl;
 
     delete blackKing;
     delete whiteQueen;
@@ -470,13 +573,13 @@ public:
     <b>Figure*</b> blackKing = new King();
     <b>Figure*</b> whiteQueen = new Queen();
 
-    std::cout << blackKing->isValidMove(1,1) << std::endl; 
+    std::cout << blackKing->isValidMove(1,1) << std::endl;
 
-    std::cout << blackKing->isValidMove(3,3) << std::endl; 
+    std::cout << blackKing->isValidMove(3,3) << std::endl;
 
-    std::cout << whiteQueen->isValidMove(1,1) << std::endl; 
+    std::cout << whiteQueen->isValidMove(1,1) << std::endl;
 
-    std::cout << whiteQueen->isValidMove(3,3) << std::endl; 
+    std::cout << whiteQueen->isValidMove(3,3) << std::endl;
 
     delete blackKing;
     delete whiteQueen;
@@ -501,14 +604,14 @@ public:
   int getX();
   int getY();
   ....
-  <b>virtual bool isValidMove(int x, 
+  <b>virtual bool isValidMove(int x,
     int y) = 0;</b>
 };
   	</pre>
 
   	<div style="width: 48%; float: right">
   	<pre  class="prettyprint" data-lang="cpp">
-class Queen : 
+class Queen :
   public Figure
 {
 public:
@@ -516,7 +619,7 @@ public:
 };
 </pre>
 <pre  class="prettyprint" data-lang="cpp">
-class King : 
+class King :
   public Figure
 {
 public:
@@ -535,7 +638,7 @@ public:
 class Figure
 {
 ...
-  <b>virtual bool isValidMove(int x, 
+  <b>virtual bool isValidMove(int x,
     int y) = 0;</b>
 };
   	</pre>
