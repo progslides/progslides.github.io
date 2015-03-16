@@ -93,7 +93,7 @@
     <article>
         <ul>
          <li>Speichermanagement</li>
-         <li>Werte, Referenzen und Pointer</li>
+         <li>Werte, Zeiger und Referenzen</li>
          <li>Vererbung, Polymorphie, abstrakte Klassen</li>
          <li>Statische Attribute und Funktionen</li>
          <li><code>const</code>-Corectness</li>
@@ -145,7 +145,7 @@
 
   <slide>
     <hgroup>
-      <h2>Value vs. Pointer vs. Referenz (Beispiel 1)</h2>
+      <h2>Wert vs. Zeiger vs. Referenz (Beispiel 1)</h2>
     </hgroup>
     <article>
       <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
@@ -167,7 +167,7 @@ int main()
 
   <slide>
     <hgroup>
-      <h2>Value vs. Pointer vs. Referenz (Beispiel 2)</h2>
+      <h2>Wert vs. Zeiger vs. Referenz (Beispiel 2)</h2>
     </hgroup>
     <article>
       <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
@@ -187,7 +187,7 @@ int main() {
 
 <slide>
   <hgroup>
-    <h2>Value vs. Pointer vs. Referenz (Beispiel 3)</h2>
+    <h2>Wert vs. Zeiger vs. Referenz (Beispiel 3)</h2>
   </hgroup>
   <article>
     <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
@@ -208,13 +208,14 @@ int main()
 
   <slide>
     <hgroup>
-      <h2>Value vs. Pointer vs. Referenz</h2>
+      <h2>Wert vs. Zeiger vs. Referenz</h2>
     </hgroup>
     <article>
       <ul>
        <li>Referenzen können <em>nicht</em> <span class="src">NULL</span> sein, Pointer schon</li>
        <li>Referenzen können wie normale Variablen verwendet werden</li>
-       <li>Bei Referenzen und Pointern wird nur die Adresse übergeben, sonst wird kopiert</li>
+       <li>Bei Referenzen und Pointern wird nur die Adresse übergeben, bei Werten
+         wird kopiert</li>
       </ul>
    </article>
   </slide>
@@ -425,9 +426,7 @@ public:
     <article>
        <ul style="margin-top: 2em;">
         <li>F&uuml;r Konstanten
-  <pre class="compact">
-   const int ANSWER_TO_EVERYTHING = 42;
-  </pre>
+  <pre class="compact">const int ANSWER_TO_EVERYTHING = 42;</pre>
         <li>F&uuml;r Pointer
         <ul style="padding-top: 12px;">
          <li>Pointer auf Konstante: <pre style="display: inline;">const int * some_pointer;</pre></li>
@@ -475,9 +474,7 @@ public:
   <article>
        <h3 style="font-size: 120%;">...und was macht das?</h3>
        <br />
-  <pre>
-  int const * const doSomething(const int * const &amp; parameter) const;
-  </pre>
+  <pre>int const * const doSomething(const int * const &amp; parameter) const;</pre>
       <img src="images/cereal_guy.png" width="450px" style="float: right;" />
   </article>
   </slide>
@@ -491,9 +488,9 @@ public:
        statt wie sonst f&uuml;r jede Instanz.
      </p>
 
-        <span style="font-size: 80%; display: block; margin-top: 16px; margin-bottom: 16px;">
-       Zugriff &uuml;ber <span class="src">Klassenname::funktion()</span> bzw. <span class="src">Klassenname::variable</span>
-       </span>
+     <p>
+       Zugriff &uuml;ber <code>Klassenname::funktion()</code> bzw. <code>Klassenname::variable</code>
+     </p>
   <pre class="prettyprint" data-lang="cpp" style="height: 20em; overflow: scroll;">class Product
 {
   private:
@@ -734,6 +731,7 @@ std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
 <pre class="prettyprint" data-lang="C++">
 #include &lt;string&gt;
 #include &lt;sstream&gt;
+#include &lt;iostream&gt;
 
 int main()
 {
@@ -837,7 +835,7 @@ $ make
   </hgroup>
   <br />
 Am pluto mit <pre style="display: inline; padding-top: 0pt; padding-bottom: 0pt;">ssh-keygen</pre><br />
-<img src="images/ssh-keygen.png" style="margin: auto; display: block;">
+<img src="images/ssh-keygen.png" style="margin: .5em auto; display: block; width: 100%;">
 </slide>
 
 <slide>
@@ -849,7 +847,7 @@ Am pluto mit <pre style="display: inline; padding-top: 0pt; padding-bottom: 0pt;
 	<li>SSH-Key (GitTuGraz und GitTuGraz.pub) herunterladen</li>
 	<li>Public SSH-Key (GitTuGraz.pub) auf <a href="http://git.tugraz.at">git.tugraz.at</a> hochladen</li>
 </ul>
-<img src="images/Ssh-Link.PNG" style="margin-bottom: 1em;">
+<img src="images/Ssh-Link.PNG" style="margin-bottom: 1em; width: 100%;">
 <ul>
 	<li>Copy-Paste Inhalt von GitTuGraz.pub in Text-Feld</li>
 </ul>
@@ -911,14 +909,14 @@ git push</pre>
   <hgroup>
     <h2>SmartGit: Clone</h2>
   </hgroup>
-  <article>  
+  <article>
   <div style="text-align: center; float: left; width: 30%">
   <p>1.</p>
   <img src="images/CloneRepo.png">
 </div>
   <div style="text-align: center; float: left; width: 30%">
   <p>2.</p>
-  <img src="images/Clone2.png">
+  <img src="images/Clone2.PNG">
 </div>
 </article>
 </slide>
