@@ -92,6 +92,7 @@
     }
     prettyPrint();
   }
+
   </script>
 
 <body id="tugraz" style="opacity: 0" onload="init();">
@@ -109,15 +110,16 @@
        <slide><hgroup>
         <h2>Ablauf des Tutoriums</h2></hgroup><article>
         <ul class="compact">
-         <li>Häufige Fehler</li>
+         <li>Besprechung HW</li>
          <li>File IO</li>
          <li>Operator Overloading</li>
          <li>Casting</li>
          <li>Exceptions</li>
          <li>Ressourcenverwaltung</li>
-         <li>Auto-Pointer</li>
-         <!--<li>Templates</li>-->
-         <li>Ass3</li>
+         <li>Smart-Pointer</li>
+         <li>c++11</li>
+         <li>Basic</li>
+         <li>CommandPattern</li>
         </ul>
      </article></slide>
 
@@ -334,7 +336,7 @@ catch(std::exception&amp; e)
       <ul>
       <li><span class="src">virtual const char* what() const</span> sollte eine Fehlerbeschreibung liefern (als <span class="src">const char*</span>)</li>
       </ul>
-      <pre class="compact" style="font-size:0.60em; line-height:1.2em; margin: 0.5em auto; width: 75%;">
+      <pre class="compact" style="font-size:0.60em; line-height:1.2em; margin: 0.5em auto;">
 #include &lt;exception>
 class brick : public std::exception {
   virtual const char* what() const throw()
@@ -420,7 +422,7 @@ catch (std::bad_alloc& ba)
      <ul>
      <li>Wird im Konstruktor eine Exception geworfen, ist das Objekt nicht erstellt, und auch der Destruktor wird nicht aufgerufen.</li>
      </ul>
-<pre class="compact" style="font-size: 0.55em; line-height: 1.22em; width: 75%; margin: 1em auto;">
+<pre class="compact" style="font-size: 0.55em; line-height: 1.22em; margin: 1em auto;">
 #include &lt;memory>
 #include &lt;iostream>
 #include &lt;vector>
@@ -462,7 +464,7 @@ int main() {
 
      <slide><hgroup>
       <h2>Kein RAII - Beispiel</h2></hgroup><article>
-<pre class="compact" style="font-size: 0.55em; line-height: 1.22em; width: 65%; margin: 1em auto;">
+<pre class="compact" style="font-size: 0.55em; line-height: 1.22em;  margin: 1em auto;">
 int median(int* numbers, int count) {
   int* data = new int[count];
   std::memcpy(data, numbers, count * sizeof(int));
@@ -558,7 +560,7 @@ public:
 
      <slide><hgroup>
       <h2>Smart Pointer - Beispiel <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2></hgroup><article>
-      <pre class="compact" style="font-size: 0.6em; line-height: 1.15em; width: 80%; margin: 1em auto;">
+      <pre class="compact" style="font-size: 0.6em; line-height: 1.15em; margin: 1em auto;">
 #include &lt;iostream>
 #include &lt;memory>
 
