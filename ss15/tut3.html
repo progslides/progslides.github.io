@@ -94,6 +94,707 @@
           <small><a href="mailto:prog-tutor-thomas@iicm.tugraz.at">prog-tutor-thomas@iicm.tugraz.at</a></small><br />
         </p>
       </article>
+       <article>
+        <h3>Ablauf des Tutoriums</h3>
+        <ul class="compact">
+         <li>Häufige Fehler</li>
+         <li>File IO</li>
+         <li>Operator Overloading</li>
+         <li>Casting</li>
+         <li>Exceptions</li>
+         <li>Ressourcenverwaltung</li>
+         <li>Auto-Pointer</li>
+         <li>Templates</li>
+         <li>Ass3</li>
+        </ul>
+     </article>
+
+     <article>
+       <h3>H&auml;ufigste Fehler in Ass2</h3>
+       <ul>
+         <li>Nicht genügend getestet (z.B. "next 1a")</li>
+         <li>Messages nicht 1 zu 1 aus der Angabe kopiert</li>
+         <li>If - ElseIf - Else zum matchen von Commands</li>
+         <li>Doppelter Code (z.B. bei Next)</li>
+         <li>Zu tiefe Verschachtelungen</li>
+         <li>Speicherlöcher, Valgrindfehler</li>
+         <li>Codingstandard</li>
+       </ul>
+     </article>
+     
+     <article>
+       <h3>H&auml;ufige Fehler, die viele Punkte kosten</h3>
+       <center><br /><img src="images/segfaults.jpg" width="350"/></center>
+       <ul>
+         <li>Valgrind Warnings</li>
+         <li>unn&ouml;tiges <span class="src">this</span></li>
+         <li>Doppelter Code</li>
+         <li>C statt C++ Casts</li>
+         <li>Codingstandard</li>
+       </ul>
+     </article>
+
+
+     <article>
+      <h3>File-IO - File öffnen</h3>
+    <p>Bin&auml;rdatei zum Schreiben &ouml;ffnen</p>
+    <pre class="compact">
+  #include &lt;fstream>
+  std::ofstream file("tut4.bin",
+    std::ios::out | std::ios::trunc | std::ios::binary);
+  if (!file.is_open()) 
+  {
+    std::cerr &lt;&lt; "cannot open file" &lt;&lt; std::endl;
+  } else file.close(); </pre>
+  <p>Bin&auml;rdatei zum Lesen &ouml;ffnen</p>
+    <pre class="compact">
+  std::ifstream input("tut4.bin", std::ios::in | std::ios::binary);
+  if (!input.is_open()) 
+  {
+    std::cerr &lt;&lt; "cannot open file" &lt;&lt; std::endl;
+  } else input.close();</pre>
+     </article>
+   <article>
+   <h3>File-IO - Schreiben</h3>
+<pre class="compact">
+// schreibe "SEPRISK\0" in Datei
+file &lt;&lt; "SEPRISK";
+file &lt;&lt; '\0';
+// schreibe Zahl 7 als Bin&auml;rwert -> in char speichern 
+// und dann in Datei schreiben
+char num = 7;
+file &lt;&lt; num;
+// schreibe Zahl 7 als Ziffer ('7') -> wenn Zahl 
+// in int gespeichert ist
+int num2 = 7;
+file &lt;&lt; num2;
+// schreibe C-String mit Nullbyte
+char* str = "Hallo Welt";
+file &lt;&lt; str &lt;&lt; '\0';
+</pre>
+<br />
+<img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     Dateien können behandelt werden wie <span class="src">std::cout</span> und <span class="src">std::cin</span>
+     </div>
+   </article>
+   
+   <article>
+   <h3> File-IO - Lesen
+   </h3>
+   <pre>
+  // lese C-String Zeichenweise bis Nullbyte zur&uuml;ck
+  char c;
+  while((input >> c) &amp;&amp; c != 0) {
+   std::cout &lt;&lt; c; 
+  }
+  std::cout &lt;&lt; std::endl;
+  // lese Bin&auml;rwert 7 zur&uuml;ck (und zeige als char und integer an)
+  char y;
+  input >> y;
+  std::cout &lt;&lt; y &lt;&lt; " = " &lt;&lt; static_cast&lt;int>(y) &lt;&lt; std::endl;
+  // lese Zahl 7 als Ziffer ('7') zur&uuml;ck
+  int x;
+  input >> x;
+  std::cout &lt;&lt; x &lt;&lt; std::endl;
+  </pre>
+ </article>
+
+     <article>
+      <h3>Operator Overloading</h3>
+      <ul>
+       <li>&Uuml;berschreibt die Operatoren (<span class="src">==</span>, <span class="src">+</span>, <span class="src">-</span>, <span class="src">*</span>, <span class="src">/</span>, ...) f&uuml;r die eigene Klasse</li>
+       <li>Syntax: (<span class="src">@</span> steht f&uuml;r den Operator)
+<pre class="compact">
+return_type operator@(argumente)
+{
+    [...]
+}
+</pre></li>
+      <li>Kann als Member-Funktion oder als <span class="src">friend</span> deklariert werden</li>
+      <li>Sollte sparsam verwendet werden und nur wenn es eindeutig ist</li>
+      </ul>
+     </article>
+     
+     <article>
+      <h3>Operator Overloading - Beispiel (als Member)</h3>
+<pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
+class Complex
+{
+private:
+  float real_part_;
+  float imaginary_part_;
+  
+public:
+    bool operator==(const Complex &amp;c) const
+    {
+        return ( c.real_part_ == real_part_ &amp;&amp;
+                (c.imaginary_part_ == imaginary_part_) );
+    }
+    
+    Complex operator+(const Complex&amp; right)
+    {
+      Complex result;
+      result.setImaginary(imaginary_part_ + right.getImaginary());
+      result.setReal(real_part_ + right.getReal());
+      return result;
+    }
+    
+    [...]
+};
+</pre>
+     </article>
+     
+     <article>
+        <h3>Casts in C++</h3>
+
+        <dl class="expl">
+          <dt><span class="src">static_cast</span></dt>
+          <dd>Funktioniert wie das von C bekannte Casting <span class="src">(typ)variable</span>. Funktioniert nur, wenn der Compiler eine Regel zum Casten kennt.
+            <pre class="compact">int a = 16, b = 9;
+float ratio = static_cast&lt;float&gt;(a) / b;</pre></dd>
+          <dt><span class="src">const_cast</span></dt>
+          <dd>Nur zum Hinzuf&uuml;gen oder Entfernen <span class="meta">(gefährlich)</span>
+            des <span class="src">const</span>
+            Keywords.</dd>
+          <dt><span class="src">dynamic_cast</span></dt>
+          <dd>Casts innerhalb einer Klassenhierarchie von polymorphen Klassen. Aufw&auml;ndige Type-Checks zur Laufzeit.
+                  <pre class="compact">// Cast von *CD in *MusicCD
+MusicCD *charts = dynamic_cast&lt;*MusicCD&gt;(cd1);</pre></dd>
+          <dt><span class="src">reinterpret_cast</span></dt>
+          <dd style="width: 75%;">Keine Konvertierung, Daten werden ohne &Auml;nderung als neuer Datentyp interpretiert,
+            plattformabh&auml;ngig, sollte nur bei hardwarenaher Programmierung verwendet werden.</dd>
+        </dl>
+     </article>
+     
+     <article>
+      <h3><span class="src">static_cast</span> verlustfreie Regeln</h3>
+      <center><img src="images/casts.png" width="700px" style="padding-top: 8px;" /></center>
+      <br />
+      <img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     Castings sind nur dann ohne Datenverlust, wenn auf einen gr&ouml;&szlig;eren Datentyp gecastet wird.
+     </div>
+     </article>
+
+     <article>
+      <h3>Exceptions</h3>
+      <br />Grundlegendes Konstrukt f&uuml;r Exceptions
+<pre>
+try
+{
+  someFunction() // k&ouml;nnte eine Exception werfen...
+  [...]
+  throw(e); // ...oder manuelles Werfen einer Exception
+}
+catch(MyException&amp; e1)
+{
+  // fange Exception vom Typ MyException
+}
+catch(std::exception&amp; e)
+{
+  // fange alles, was vom Typ std::exception abgeleitet ist, 
+  // und noch nicht gefangen wurde
+}
+</pre>
+     </article>
+     
+     <article>
+      <h3>Exceptions</h3>
+      <br />
+      N&uuml;tzlich, aber nicht &uuml;bertreiben &rarr; <strong>Formale Fehlerquellen</strong>
+      <ul>
+      <li>Kontrollfluss durch Exceptions</li>
+      <li>Silent Catch von Exceptions</li>
+      <li>Wurf einer Nicht-std::exception-Unterklasse</li>
+      <li>Im Destruktor dürfen keine Exceptions geworfen werden</li>
+      </ul>
+      <br />
+      Also immer
+<pre class="compact">
+ class MyException : public std::exception {
+   [...]
+ };
+</pre>
+     </article>
+     
+     <article>
+      <h3>Exceptions - Beispiel</h3>
+      <ul>
+      <li><pre class="compact" style="display: inline;">virtual const char* what() const</pre> sollte eine Fehlerbeschreibung liefern (als <span class="src">const char*</span>)</li>
+      </ul>
+      <pre class="compact" style="font-size:0.60em; line-height:1.2em; margin: 0.5em auto; width: 75%;">
+#include &lt;exception>
+class brick : public std::exception {
+  virtual const char* what() const throw()
+  {
+    return "Achtung Ziegel!\n";
+  }
+};
+
+int main ()
+{
+  try
+  {
+    throw brick();
+  } catch (std::exception&amp; ex)
+  {
+    std::cout &lt;&lt; ex.what();
+  }
+  return 0;
+} </pre>
+     </article>
+   
+    <article>
+     <h3>Neu zu beachten: Out of Memory!</h3>
+<pre>
+int main () 
+{
+  try
+  {
+    int* myarray = new int[10000];
+  }
+  catch (std::bad_alloc& ba)
+  {
+    std::cout << "Out of Mana!" << std::endl;
+  }
+  return 0;
+}
+</pre>
+     </article>
+
+          <article>
+     <h3>Neu zu beachten: Out of Memory!</h3>
+<p style="font-size:20px;"><strong>In jedem Fall muss aller Speicher wieder freigegeben werden!</strong></p>
+
+<pre class="compact" style="font-size: 17px; line-height: 1.2em;">
+...
+try
+{
+  NextCommand* next = new NextCommand("next");  
+}
+catch (std::bad_alloc& ba)
+{
+  std::cout << "Out of Mana!" << std::endl;
+  return 0;
+}
+try
+{
+  ShowCommand* show = new ŚhowCommand("show");  
+}
+catch (std::bad_alloc& ba)
+{
+  delete next;
+  std::cout << "Out of Mana!" << std::endl;
+  return 0;
+}
+...
+</pre>
+<p style="font-size:22px;" align="center"><strong>Aber geht das nicht besser???</strong></p>
+     </article>
+
+     <article>
+     <h3>Besser:</h3>
+     <ul>
+     <li>Smart Pointer verwenden!</li>
+     <li>Variablen sofort nach dem "new" Aufruf in eine Klassen-Member-Variable Speichern, die vom Destruktor wieder freigegeben wird.</li>
+     <li>RAII</li>
+     </ul>
+     <p>-> Es reicht bad alloc in der Main zu fangen.</p>
+     <p><strong>Außer: Exceptions im Konstruktor!</strong></p>
+     </article>
+
+     <article>
+     <h3><strong>Achtung</strong>: Exception im Konstruktor</h3>
+     <ul>
+     <li>Wird im Konstruktor eine Exception geworfen, ist das Objekt nicht erstellt, und auch der Destruktor wird nicht aufgerufen.</li>
+     </ul>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.22em; width: 75%; margin: 1em auto;">
+#include &lt;memory>
+#include &lt;iostream>
+#include &lt;vector>
+class Foo {
+private:
+    std::vector&lt;int*> list;
+public:
+    Foo() {
+        list.push_back(new int);
+        list.push_back(new int);
+        throw 1;
+    }
+    
+    ~Foo() {
+      for(auto it : list) {
+          delete it;
+      }
+    }
+};
+int main() {
+    Foo f;
+    return 0;
+}</pre>
+     </article>
+
+     
+     
+     
+     <article>
+      <h3>Resource Acquisition Is Initialization (RAII)</h3>
+      <ul>
+        <li>Konzept zur Verwaltung von Ressourcen</li>
+        <li>Automatische Freigabe beim Verlassen des Scopes</li>
+        <li>Kann f&uuml;r Handles (z.B. Dateien), Locks und Speichern verwendet werden</li>
+        <li>Erleichtert das Schreiben von Exception-sicheren Programmen</li>
+      </ul>
+      <img src="images/raii.png" />
+     </article>
+     
+     <article>
+      <h3>Kein RAII - Beispiel</h3>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.22em; width: 65%; margin: 1em auto;">
+int median(int* numbers, int count) {
+  int* data = new int[count];
+  std::memcpy(data, numbers, count * sizeof(int));
+  // error handling
+  if(numbers == NULL) {
+    delete[] data; // &lt;---
+    return 0;
+  }
+  if(count == 0) {
+    delete[] data; // &lt;---
+    return 0;
+  }
+  if(count == 1) {
+    delete[] data; // &lt;---
+    return *numbers;
+  }
+  // sort
+  if(mySortFunction(data, count) == false) {
+    delete[] data; // &lt;---
+    return 0;
+  }
+  // return median
+  int result = data[count / 2];
+  delete[] data; // &lt;---
+  return result;  
+}
+</pre>
+
+     </article>
+     
+     <article>
+       <h3>RAII - Beispiel</h3>
+<pre class="compact" style="float: left; width: 47%; font-size: 0.6em; line-height: 1.3em; margin-right: 16px; margin: 1em;">
+int median(int* numbers, int count)
+{
+  Data data(count);
+  data.setData(numbers, count);
+  // error handling
+  if(numbers == NULL)
+    return 0;
+  if(count == 0) 
+    return 0;
+  if(count == 1)
+    return *numbers;
+    
+  // sort
+  if(mySortFunction(data.getData(),
+       count) == false) 
+    return 0;
+  
+  return data.getData()[count / 2];  
+}
+</pre>
+<pre class="compact" style="float: left; width: 37%; margin: 1em; font-size: 0.6em; line-height: 1.3em;">
+class Data 
+{
+private:
+  int* data_;
+public:
+  Data(int count) { 
+    data_ = new int[count]; 
+  }
+  int* getData() const {
+    return data_; 
+  }
+  void setData(int* data, 
+               int count) 
+  {
+    std::memcpy(data_, data, 
+      count * sizeof(int));             
+  }
+  ~Data() { 
+    delete[] data_; 
+  }
+};
+</pre>
+     </article>
+
+     <article>
+      <h3>Smart Pointer <img src="images/newflag.jpg" style="vertical-align: middle;" /></h3>
+      <ul>
+       <li>Helfen beim Verwalten von <u>dynamischem</u> Speicher</li>
+       <li>Zugriff wie &uuml;ber einen normalen Pointer</li>
+       <li>Im Header <span class="src">&lt;memory></span> zu finden (<a href="http://en.cppreference.com/w/cpp/memory">C++ Referenz</a>)</li>
+       <li>Syntax: <pre class="compact">std::unique_ptr&lt;typ> pointer(speicher);</pre></li>
+      </ul>
+      <br /><br />
+      <img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     "Stirbt" der Smart-Pointer, wird der reservierte Speicher (durch <span class="src">delete</span>) freigegeben.
+     </div>
+     </article>
+
+     <article>
+      <h3>Smart Pointer - Beispiel <img src="images/newflag.jpg" style="vertical-align: middle;" /></h3>
+      <pre class="compact" style="font-size: 0.6em; line-height: 1.15em; width: 80%; margin: 1em auto;">
+#include &lt;iostream>
+#include &lt;memory>
+
+class Foo {
+public:
+  void bar() {
+    std::cout  &lt;&lt; "foobar" &lt;&lt; std::endl;
+  }
+};
+
+std::unique_ptr&lt;Foo> createFoo() {
+  Foo* bar = new Foo();
+  return std::unique_ptr&lt;Foo>(bar);
+}
+
+int main() {
+    std::unique_ptr&lt;Foo> ptr = createFoo();
+    
+    std::vector&lt;std::unique_ptr&lt;Foo>> foos;
+    
+    foos.push_back(std::unique_ptr&lt;Foo>(new Foo()));
+    foos.push_back(std::unique_ptr&lt;Foo>(new Foo()));
+    foos.push_back(std::unique_ptr&lt;Foo>(new Foo()));
+    
+    ptr->bar();
+}</pre>
+     </article>
+     
+     <article>
+      <h3>Templates</h3>
+      <ul>
+       <li>Erlauben es, generische Funktionen zu schreiben</li>
+       <li>Werden in der STL ausgiebig verwendet</li>
+       <li>Es gibt Funktions- und Klassentemplates</li>
+       <li>Deklarations-Syntax: <pre class="compact">template &lt;typename identifier> function_declaration;</pre></li>
+       <li>Aufrufs-Syntax: <pre class="compact">function&lt;argument_type>(arguments);</pre> bzw. <pre class="compact">classname&lt;class_type>(constructor_values);</pre></li>
+      </ul>
+     </article>
+     
+     <article>
+      <h3>Templates - Beispiel (Funktionstemplate)</h3>
+      <br />
+<pre class="compact">
+template &lt;typename Type>
+Type max(Type a, Type b) 
+{
+    if(a > b) return a;
+    else return b;
+}
+</pre>
+<pre class="compact">
+int main()
+{
+  // ruft max&lt;int> auf (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3, 7) &lt;&lt; std::endl;
+  // ruft max&lt;double> (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3.0, 7.0) &lt;&lt; std::endl;
+  // Argumente nicht eindeutig, Typ muss angegeben werden (&lt;double>)
+  std::cout &lt;&lt; max&lt;double>(3, 7.0) &lt;&lt; std::endl;
+  return 0;
+}
+</pre>
+     </article>
+     
+     <article>
+      <h3>Templates - Beispiel (Klassentemplate)</h3>
+<pre class="compact">
+template &lt;typename T>
+class Math {
+public:
+  T getMin(T x1, T x2) {
+    if(x1 &lt; x2) return x1;
+    else return x2;
+  }
+  
+  T getMax(T x1, T x2) {
+    if(x1 > x2) return x1;
+    else return x2;
+  }
+};
+</pre>
+<pre class="compact" style="font-size: .62em; line-height: 1.3em;">
+int main() {
+  Math&lt;int> int_math;
+  Math&lt;std::string> str_math;
+  
+  std::cout &lt;&lt; "max(2, 4): " &lt;&lt; int_math.getMax(2, 4) &lt;&lt; std::endl;
+  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): " 
+    &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
+}
+</pre>
+     </article>
+
+     
+   <article>
+     <h3>Assignment 3</h3>
+         <br />
+     <img src="images/towerdefense.png" width="729" />
+     <br /><br /><a href="http://towersep.appspot.com/">http://towersep.appspot.com/</a>
+    </article>
+
+         
+    
+    
+     <article>
+     <h3>&Uuml;bernommene Befehle</h3>
+     <br />
+     
+         <div class="command">
+          <div class="title">show</div>
+          <div class="text">Ausgabe von Spielfeld, Kapital und HP</div>
+         </div>
+
+         <div class="command">
+          <div class="title">next</div>
+          <div class="text">Runde beenden bzw. <em>n</em> Runden vorspulen</div>
+         </div>
+
+         <div class="command">
+          <div class="title">quit</div>
+          <div class="text">Beendet das Programm</div>
+         </div>
+
+     
+    </article>
+     
+     <article>
+     <h3>Neue Befehle</h3>
+     <br />
+     <div class="command">
+      <div class="title">stats</div>
+      <div class="text">Zeigt Spielstatistiken an</div>
+     </div>
+     
+     <div class="command">
+      <div class="title">shop</div>
+      <div class="text">Turm-Shop aufrufen</div>
+     </div>
+
+     <div class="command">
+      <div class="title">buy</div>
+      <div class="text">Turm kaufen und errichten</div>
+     </div>
+
+     <div class="command">
+      <div class="title">show target</div>
+      <div class="text">Zeigt an, was sich auf einem Feld befindet</div>
+     </div>
+
+     <div class="command">
+      <div class="title">upgrade (Bonus)</div>
+      <div class="text"><strong>Bonus</strong>: Turm upgraden auf besseren Turm</div>
+     </div>
+
+    </article>
+        <article>
+     <h3>Ratio</h3>
+         <br />
+          Rationale Zahl, bestehend aus  <strong>zwei teilerfremden Ganzzahlen.</strong>
+    <pre class="compact" style="font-size: .62em; line-height: 1.1em;">
+int main() {
+  Ratio ratio_1(7,3);
+  Ratio ratio_2(3,2);
+  std::cout << "Ratios: " << std::endl;
+  std::cout << ratio_1 << std::endl;
+  std::cout << ratio_2 << std::endl;
+
+  Ratio sum = ratio_1 + ratio_2;
+
+  std::cout << "Sum:" << std::endl;
+  std::cout << sum << std::endl;
+
+  sum = sum - 2;
+  std::cout << "Sum - 2:" << std::endl;
+  std::cout << sum << std::endl;
+  if(sum > 1)
+    std::cout << "Ratio: " << sum << " is > 1" << std::endl;
+  else
+    std::cout << "Ratio: " << sum << " is < 1" << std::endl;
+}
+</pre>
+    </article>
+     <article>
+     <h3>Ratio</h3>
+         <br />
+          Ausgabe
+    <div class="console">
+Ratios: <br />
+7 / 3<br />
+3 / 2<br />
+Sum:<br />
+23 / 6<br />
+Sum - 2:<br />
+11 / 6<br />
+Ratio: 11 / 6 is > 1<br />
+</div>
+    </article>
+    <article>
+     <h3>SVG</h3>
+      <ul>
+       <li>Scalable Vector Graphics</li>
+       <li>Bild wird durch Vektoren beschrieben</li>
+       <li>Beschreibung als XML</li>
+       <li>Beliebig skalierbar</li>
+      </ul>
+      <center>
+      <img src="images/vector_raster.png" height="320" />
+      </center>
+    </article>
+    
+    
+    <article>
+     <h3>SVG - Aufbau</h3>
+<br />
+Header
+<pre>
+&lt;svg xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink">  
+</pre>
+
+Objekte
+<pre>
+&lt;image x="0" y="0" width="1016px" height="638px" 
+  xlink:href="base.svg"> &lt;/image>
+[...]
+</pre>
+
+Footer
+<pre>
+&lt;/svg>
+</pre>
+     
+    </article>
+    
+    
+    <article>
+     <h3>SVG - Einfache Objekte</h3>
+     <ul>
+      <li>Text: <pre class="compact" >&lt;text x="10" y="490">Player1&lt;/text></pre></li>
+      <li>Kreis: <pre class="compact" >&lt;circle cx="64" cy="90" r="14" stroke="black" 
+   stroke-width="2" fill="red"/></li>
+      <li>Rechteck: <pre class="compact">&lt;rect x="0" y="448" width="152" height="52" fill="green" /></li>
+      <li>Eingebettete Bilder: <pre class="compact">&lt;image x="0" y="0" width="1016px" height="638px"
+  xlink:href="base.png">&lt;/image></pre></li>
+     </ul>
+    </article>
+    
 
      <article>
         <h3>Ablauf des Tutoriums</h3>
