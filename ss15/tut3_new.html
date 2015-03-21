@@ -105,7 +105,7 @@
          <li>Exceptions</li>
          <li>Ressourcenverwaltung</li>
          <li>Auto-Pointer</li>
-         <li>Templates</li>
+         <!--<li>Templates</li>-->
          <li>Ass3</li>
         </ul>
      </article></slide>
@@ -547,71 +547,6 @@ int main() {
 }</pre>
      </article></slide>
 
-     <slide><hgroup>
-      <h2>Templates</h2></hgroup><article>
-      <ul>
-       <li>Erlauben es, generische Funktionen zu schreiben</li>
-       <li>Werden in der STL ausgiebig verwendet</li>
-       <li>Es gibt Funktions- und Klassentemplates</li>
-       <li>Deklarations-Syntax: <pre class="compact">template &lt;typename identifier> function_declaration;</pre></li>
-       <li>Aufrufs-Syntax: <pre class="compact">function&lt;argument_type>(arguments);</pre> bzw. <pre class="compact">classname&lt;class_type>(constructor_values);</pre></li>
-      </ul>
-     </article></slide>
-
-     <slide><hgroup>
-      <h2>Templates - Beispiel (Funktionstemplate)</h2></hgroup><article>
-      <br />
-<pre class="compact">
-template &lt;typename Type>
-Type max(Type a, Type b)
-{
-    if(a > b) return a;
-    else return b;
-}
-</pre>
-<pre class="compact">
-int main()
-{
-  // ruft max&lt;int> auf (wird an Argumenten erkannt)
-  std::cout &lt;&lt; max(3, 7) &lt;&lt; std::endl;
-  // ruft max&lt;double> (wird an Argumenten erkannt)
-  std::cout &lt;&lt; max(3.0, 7.0) &lt;&lt; std::endl;
-  // Argumente nicht eindeutig, Typ muss angegeben werden (&lt;double>)
-  std::cout &lt;&lt; max&lt;double>(3, 7.0) &lt;&lt; std::endl;
-  return 0;
-}
-</pre>
-     </article></slide>
-
-     <slide><hgroup>
-      <h2>Templates - Beispiel (Klassentemplate)</h2></hgroup><article>
-<pre class="compact">
-template &lt;typename T>
-class Math {
-public:
-  T getMin(T x1, T x2) {
-    if(x1 &lt; x2) return x1;
-    else return x2;
-  }
-
-  T getMax(T x1, T x2) {
-    if(x1 > x2) return x1;
-    else return x2;
-  }
-};
-</pre>
-<pre class="compact" style="font-size: .62em; line-height: 1.3em;">
-int main() {
-  Math&lt;int> int_math;
-  Math&lt;std::string> str_math;
-
-  std::cout &lt;&lt; "max(2, 4): " &lt;&lt; int_math.getMax(2, 4) &lt;&lt; std::endl;
-  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): "
-    &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
-}
-</pre>
-     </article></slide>
-
 
     <slide><hgroup>
          <h2>C++ 11 Gimmicks &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2></hgroup><article>
@@ -780,6 +715,72 @@ int PrintHello::execute(Game&amp; board, std::vector&lt;std::string>&amp; params
     </slide>
   <slide class="backdrop"></slide>
 </slides>
+<!--
+     <slide><hgroup>
+      <h2>Templates</h2></hgroup><article>
+      <ul>
+       <li>Erlauben es, generische Funktionen zu schreiben</li>
+       <li>Werden in der STL ausgiebig verwendet</li>
+       <li>Es gibt Funktions- und Klassentemplates</li>
+       <li>Deklarations-Syntax: <pre class="compact">template &lt;typename identifier> function_declaration;</pre></li>
+       <li>Aufrufs-Syntax: <pre class="compact">function&lt;argument_type>(arguments);</pre> bzw. <pre class="compact">classname&lt;class_type>(constructor_values);</pre></li>
+      </ul>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Templates - Beispiel (Funktionstemplate)</h2></hgroup><article>
+      <br />
+<pre class="compact">
+template &lt;typename Type>
+Type max(Type a, Type b)
+{
+    if(a > b) return a;
+    else return b;
+}
+</pre>
+<pre class="compact">
+int main()
+{
+  // ruft max&lt;int> auf (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3, 7) &lt;&lt; std::endl;
+  // ruft max&lt;double> (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3.0, 7.0) &lt;&lt; std::endl;
+  // Argumente nicht eindeutig, Typ muss angegeben werden (&lt;double>)
+  std::cout &lt;&lt; max&lt;double>(3, 7.0) &lt;&lt; std::endl;
+  return 0;
+}
+</pre>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Templates - Beispiel (Klassentemplate)</h2></hgroup><article>
+<pre class="compact">
+template &lt;typename T>
+class Math {
+public:
+  T getMin(T x1, T x2) {
+    if(x1 &lt; x2) return x1;
+    else return x2;
+  }
+
+  T getMax(T x1, T x2) {
+    if(x1 > x2) return x1;
+    else return x2;
+  }
+};
+</pre>
+<pre class="compact" style="font-size: .62em; line-height: 1.3em;">
+int main() {
+  Math&lt;int> int_math;
+  Math&lt;std::string> str_math;
+
+  std::cout &lt;&lt; "max(2, 4): " &lt;&lt; int_math.getMax(2, 4) &lt;&lt; std::endl;
+  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): "
+    &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
+}
+</pre>
+     </article></slide>
+-->
 <!--[if IE]>
   <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
   <script>CFInstall.check({mode: 'overlay'});</script>
