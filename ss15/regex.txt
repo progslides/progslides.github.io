@@ -1,0 +1,2 @@
+cat tut3.html| sed --posix s/\<article\>/\<slide\>\<hgroup\>/g | sed --posix s/\<h3\>/\<h2\>/g | sed --posix 's!\<\/h3\>!\<\/h2\>\<\/hgroup\>\<article\>!g' | sed --posix 's!\<\/article\>!\<\/article\>\<\/slide\>!g' > tut3_new.html
+ 
