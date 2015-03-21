@@ -13,7 +13,7 @@
   <script type="text/javascript">
     var SLIDE_CONFIG = {
       settings: {
-        title: "Tutorium #2",
+        title: "Tutorium #3",
         subtitle: "Softwareentwicklung Praktikum",
         fonts: [
           'Open Sans:regular,semibold,italic,italicsemibold',
@@ -73,7 +73,17 @@
     }
   </style>
 </head>
-<body id="tugraz" style="opacity: 0">
+  <script type="text/javascript">
+  function init() {
+    var pre = document.getElementsByTagName("pre");
+    for(i = 0; i < pre.length; i++) {
+      pre[i].setAttribute("data-lang", "C++");
+      pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+    }
+  }
+  </script>
+
+<body id="tugraz" style="opacity: 0" onload="init();">
 
 <slides class="layout-widescreen">
   <slide class="title-slide segue nobackground">
@@ -286,7 +296,7 @@ catch(std::exception&amp; e)
      <slide><hgroup>
       <h2>Exceptions - Beispiel</h2></hgroup><article>
       <ul>
-      <li><pre class="compact" style="display: inline;">virtual const char* what() const</pre> sollte eine Fehlerbeschreibung liefern (als <span class="src">const char*</span>)</li>
+      <li><span class="src">virtual const char* what() const</span> sollte eine Fehlerbeschreibung liefern (als <span class="src">const char*</span>)</li>
       </ul>
       <pre class="compact" style="font-size:0.60em; line-height:1.2em; margin: 0.5em auto; width: 75%;">
 #include &lt;exception>
@@ -765,38 +775,6 @@ int PrintHello::execute(Game&amp; board, std::vector&lt;std::string>&amp; params
 }
         </pre>
         </article></slide>
-
-
-         <slide><hgroup>
-     <h2>Befehle</h2></hgroup><article>
-     <br />
-     
-         <div class="command">
-          <div class="title">echo</div>
-          <div class="text">Gibt beliebig viele übergebene Parameter aus</div>
-         </div>
-
-         <div class="command">
-          <div class="title">show</div>
-          <div class="text">Ausgabe von Spielfeld, Kapital und HP</div>
-         </div>
-         
-         <div class="command">
-          <div class="title">list</div>
-          <div class="text">Informationen &uuml;ber alle T&uuml;rme und Monster ausgeben</div>
-         </div>
-         
-         <div class="command">
-          <div class="title">next</div>
-          <div class="text">Runde beenden bzw. <em>n</em> Runden vorspulen</div>
-         </div>
-
-         <div class="command">
-          <div class="title">quit</div>
-          <div class="text">Beendet das Programm</div>
-         </div>
-         
-    </article></slide>
     
 <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
