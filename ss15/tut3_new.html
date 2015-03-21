@@ -132,20 +132,16 @@
    <slide><hgroup>
    <h2>File-IO - Schreiben</h2></hgroup><article>
 <pre class="compact">
-// schreibe "SEPRISK\0" in Datei
-file &lt;&lt; "SEPRISK";
+std::ofstream file("tut4.bin",
+  std::ios::out | std::ios::trunc | std::ios::binary);
+
+// write "TRAX\0" into file
+file &lt;&lt; "TRAX";
 file &lt;&lt; '\0';
-// schreibe Zahl 7 als Bin&auml;rwert -> in char speichern
-// und dann in Datei schreiben
+
+// write character 7 as binary into file
 char num = 7;
 file &lt;&lt; num;
-// schreibe Zahl 7 als Ziffer ('7') -> wenn Zahl
-// in int gespeichert ist
-int num2 = 7;
-file &lt;&lt; num2;
-// schreibe C-String mit Nullbyte
-char* str = "Hallo Welt";
-file &lt;&lt; str &lt;&lt; '\0';
 </pre>
 <br />
 <img src="images/homer2.gif" width="100px" style="float: left;"/>
