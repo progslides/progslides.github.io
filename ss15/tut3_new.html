@@ -94,7 +94,7 @@
       <p data-config-presenter><!-- populated from slide_config.json --></p>
     </hgroup>
   </slide>
-  
+
        <slide><hgroup>
         <h2>Ablauf des Tutoriums</h2></hgroup><article>
         <ul class="compact">
@@ -117,16 +117,16 @@
   #include &lt;fstream>
   std::ofstream file("tut4.bin",
     std::ios::out | std::ios::trunc | std::ios::binary);
-  if (!file.is_open()) 
+  if (!file.is_open())
   {
-    std::cerr &lt;&lt; "cannot open file" &lt;&lt; std::endl;
+    std::cout &lt;&lt; "cannot open file" &lt;&lt; std::endl;
   } else file.close(); </pre>
   <p>Bin&auml;rdatei zum Lesen &ouml;ffnen</p>
     <pre class="compact">
   std::ifstream input("tut4.bin", std::ios::in | std::ios::binary);
-  if (!input.is_open()) 
+  if (!input.is_open())
   {
-    std::cerr &lt;&lt; "cannot open file" &lt;&lt; std::endl;
+    std::cout &lt;&lt; "cannot open file" &lt;&lt; std::endl;
   } else input.close();</pre>
      </article></slide>
    <slide><hgroup>
@@ -135,11 +135,11 @@
 // schreibe "SEPRISK\0" in Datei
 file &lt;&lt; "SEPRISK";
 file &lt;&lt; '\0';
-// schreibe Zahl 7 als Bin&auml;rwert -> in char speichern 
+// schreibe Zahl 7 als Bin&auml;rwert -> in char speichern
 // und dann in Datei schreiben
 char num = 7;
 file &lt;&lt; num;
-// schreibe Zahl 7 als Ziffer ('7') -> wenn Zahl 
+// schreibe Zahl 7 als Ziffer ('7') -> wenn Zahl
 // in int gespeichert ist
 int num2 = 7;
 file &lt;&lt; num2;
@@ -153,7 +153,7 @@ file &lt;&lt; str &lt;&lt; '\0';
      Dateien können behandelt werden wie <span class="src">std::cout</span> und <span class="src">std::cin</span>
      </div>
    </article></slide>
-   
+
    <slide><hgroup>
    <h2> File-IO - Lesen
    </h2></hgroup><article>
@@ -161,7 +161,7 @@ file &lt;&lt; str &lt;&lt; '\0';
   // lese C-String Zeichenweise bis Nullbyte zur&uuml;ck
   char c;
   while((input >> c) &amp;&amp; c != 0) {
-   std::cout &lt;&lt; c; 
+   std::cout &lt;&lt; c;
   }
   std::cout &lt;&lt; std::endl;
   // lese Bin&auml;rwert 7 zur&uuml;ck (und zeige als char und integer an)
@@ -190,7 +190,7 @@ return_type operator@(argumente)
       <li>Sollte sparsam verwendet werden und nur wenn es eindeutig ist</li>
       </ul>
      </article></slide>
-     
+
      <slide><hgroup>
       <h2>Operator Overloading - Beispiel (als Member)</h2></hgroup><article>
 <pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
@@ -199,14 +199,14 @@ class Complex
 private:
   float real_part_;
   float imaginary_part_;
-  
+
 public:
     bool operator==(const Complex &amp;c) const
     {
         return ( c.real_part_ == real_part_ &amp;&amp;
                 (c.imaginary_part_ == imaginary_part_) );
     }
-    
+
     Complex operator+(const Complex&amp; right)
     {
       Complex result;
@@ -214,12 +214,12 @@ public:
       result.setReal(real_part_ + right.getReal());
       return result;
     }
-    
+
     [...]
 };
 </pre>
      </article></slide>
-     
+
      <slide><hgroup>
         <h2>Casts in C++</h2></hgroup><article>
 
@@ -241,7 +241,7 @@ MusicCD *charts = dynamic_cast&lt;*MusicCD&gt;(cd1);</pre></dd>
             plattformabh&auml;ngig, sollte nur bei hardwarenaher Programmierung verwendet werden.</dd>
         </dl>
      </article></slide>
-     
+
      <slide><hgroup>
       <h2><span class="src">static_cast</span> verlustfreie Regeln</h2></hgroup><article>
       <center><img src="images/casts.png" width="700px" style="padding-top: 8px;" /></center>
@@ -268,12 +268,12 @@ catch(MyException&amp; e1)
 }
 catch(std::exception&amp; e)
 {
-  // fange alles, was vom Typ std::exception abgeleitet ist, 
+  // fange alles, was vom Typ std::exception abgeleitet ist,
   // und noch nicht gefangen wurde
 }
 </pre>
      </article></slide>
-     
+
      <slide><hgroup>
       <h2>Exceptions</h2></hgroup><article>
       <br />
@@ -292,7 +292,7 @@ catch(std::exception&amp; e)
  };
 </pre>
      </article></slide>
-     
+
      <slide><hgroup>
       <h2>Exceptions - Beispiel</h2></hgroup><article>
       <ul>
@@ -319,11 +319,11 @@ int main ()
   return 0;
 } </pre>
      </article></slide>
-   
+
     <slide><hgroup>
      <h2>Neu zu beachten: Out of Memory!</h2></hgroup><article>
 <pre>
-int main () 
+int main ()
 {
   try
   {
@@ -346,7 +346,7 @@ int main ()
 ...
 try
 {
-  NextCommand* next = new NextCommand("next");  
+  NextCommand* next = new NextCommand("next");
 }
 catch (std::bad_alloc& ba)
 {
@@ -355,7 +355,7 @@ catch (std::bad_alloc& ba)
 }
 try
 {
-  ShowCommand* show = new ŚhowCommand("show");  
+  ShowCommand* show = new ŚhowCommand("show");
 }
 catch (std::bad_alloc& ba)
 {
@@ -397,7 +397,7 @@ public:
         list.push_back(new int);
         throw 1;
     }
-    
+
     ~Foo() {
       for(auto it : list) {
           delete it;
@@ -410,9 +410,9 @@ int main() {
 }</pre>
      </article></slide>
 
-     
-     
-     
+
+
+
      <slide><hgroup>
       <h2>Resource Acquisition Is Initialization (RAII)</h2></hgroup><article>
       <ul>
@@ -423,7 +423,7 @@ int main() {
       </ul>
       <img src="images/raii.png" />
      </article></slide>
-     
+
      <slide><hgroup>
       <h2>Kein RAII - Beispiel</h2></hgroup><article>
 <pre class="compact" style="font-size: 0.55em; line-height: 1.22em; width: 65%; margin: 1em auto;">
@@ -451,12 +451,12 @@ int median(int* numbers, int count) {
   // return median
   int result = data[count / 2];
   delete[] data; // &lt;---
-  return result;  
+  return result;
 }
 </pre>
 
      </article></slide>
-     
+
      <slide><hgroup>
        <h2>RAII - Beispiel</h2></hgroup><article>
 <pre class="compact" style="float: left; width: 47%; font-size: 0.6em; line-height: 1.3em; margin-right: 16px; margin: 1em;">
@@ -467,39 +467,39 @@ int median(int* numbers, int count)
   // error handling
   if(numbers == NULL)
     return 0;
-  if(count == 0) 
+  if(count == 0)
     return 0;
   if(count == 1)
     return *numbers;
-    
+
   // sort
   if(mySortFunction(data.getData(),
-       count) == false) 
+       count) == false)
     return 0;
-  
-  return data.getData()[count / 2];  
+
+  return data.getData()[count / 2];
 }
 </pre>
 <pre class="compact" style="float: left; width: 37%; margin: 1em; font-size: 0.6em; line-height: 1.3em;">
-class Data 
+class Data
 {
 private:
   int* data_;
 public:
-  Data(int count) { 
-    data_ = new int[count]; 
+  Data(int count) {
+    data_ = new int[count];
   }
   int* getData() const {
-    return data_; 
+    return data_;
   }
-  void setData(int* data, 
-               int count) 
+  void setData(int* data,
+               int count)
   {
-    std::memcpy(data_, data, 
-      count * sizeof(int));             
+    std::memcpy(data_, data,
+      count * sizeof(int));
   }
-  ~Data() { 
-    delete[] data_; 
+  ~Data() {
+    delete[] data_;
   }
 };
 </pre>
@@ -540,17 +540,17 @@ std::unique_ptr&lt;Foo> createFoo() {
 
 int main() {
     std::unique_ptr&lt;Foo> ptr = createFoo();
-    
+
     std::vector&lt;std::unique_ptr&lt;Foo>> foos;
-    
+
     foos.push_back(std::unique_ptr&lt;Foo>(new Foo()));
     foos.push_back(std::unique_ptr&lt;Foo>(new Foo()));
     foos.push_back(std::unique_ptr&lt;Foo>(new Foo()));
-    
+
     ptr->bar();
 }</pre>
      </article></slide>
-     
+
      <slide><hgroup>
       <h2>Templates</h2></hgroup><article>
       <ul>
@@ -561,13 +561,13 @@ int main() {
        <li>Aufrufs-Syntax: <pre class="compact">function&lt;argument_type>(arguments);</pre> bzw. <pre class="compact">classname&lt;class_type>(constructor_values);</pre></li>
       </ul>
      </article></slide>
-     
+
      <slide><hgroup>
       <h2>Templates - Beispiel (Funktionstemplate)</h2></hgroup><article>
       <br />
 <pre class="compact">
 template &lt;typename Type>
-Type max(Type a, Type b) 
+Type max(Type a, Type b)
 {
     if(a > b) return a;
     else return b;
@@ -586,7 +586,7 @@ int main()
 }
 </pre>
      </article></slide>
-     
+
      <slide><hgroup>
       <h2>Templates - Beispiel (Klassentemplate)</h2></hgroup><article>
 <pre class="compact">
@@ -597,7 +597,7 @@ public:
     if(x1 &lt; x2) return x1;
     else return x2;
   }
-  
+
   T getMax(T x1, T x2) {
     if(x1 > x2) return x1;
     else return x2;
@@ -608,15 +608,15 @@ public:
 int main() {
   Math&lt;int> int_math;
   Math&lt;std::string> str_math;
-  
+
   std::cout &lt;&lt; "max(2, 4): " &lt;&lt; int_math.getMax(2, 4) &lt;&lt; std::endl;
-  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): " 
+  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): "
     &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
 }
 </pre>
      </article></slide>
 
-  
+
     <slide><hgroup>
          <h2>C++ 11 Gimmicks &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2></hgroup><article>
          <ul>
@@ -689,19 +689,19 @@ int main()
          <p><strong>Angeforderter Speicher ist in jedem Fall wieder freizugeben</strong></p>
     </article></slide>
 
-    
+
     <slide><hgroup>
      <h2>Command Pattern</h2></hgroup><article class="no_print">
-     
+
      <img src="images/bulb_off.png" style="position: absolute; top: 70px; left: 8px;" id="cmdBulb" />
-     
+
      <table class="classtable">
       <tr><th>Light</th></tr>
       <tr><td><pre class="syntax" id="cmdOn">void turnOn();</pre>
               <pre class="syntax" id="cmdOff">void turnOff();</pre>
 </pre></td></tr>
      </table>
-     
+
           <table class="classtable" style="position: absolute; left: 32px; top: 256px; visibility: hidden;" id="cmdCmd">
       <tr><th>Light<span id="cmdTitle">On</span>Command : Command</th></tr>
       <tr><td><pre class="syntax">int execute(Light&amp; light) {</pre>
@@ -715,16 +715,16 @@ int main()
   return cmd.execute(light);<br /> }</pre>
       </td></tr>
      </table>
-     
+
      <div id="cmdCall" style="position: absolute; left: 520px; top: 128px; visibility: hidden;">
       &lt;-
      </div>
-     
+
      <table class="classtable" style="position: absolute; left: 32px; top: 256px;">
       <tr><th>Command</th></tr>
       <tr><td><pre class="syntax">int execute(Light&amp; light) = 0;</pre></td></tr>
      </table>
-     
+
      <img src="images/run.png" style="position: absolute; left: 380px; top: 480px; visibility: hidden;" width="40px" id="cmdRun" onclick="cmdSend();" />
 
      <br /><br /> <br /><br /><br /><br /><br /> <br /><br /><br />
@@ -733,7 +733,7 @@ int main()
      </div>
 
     </article></slide>
-    
+
 
     <slide><hgroup>
          <h2>Command Pattern</h2></hgroup><article>
@@ -743,20 +743,20 @@ class Command
   private:
     Command(const Command&amp; original);
     Command&amp; operator=(const Command&amp; original);
-    
+
     std::string command_name_;
 
   public:
     Command(std::string name);
     virtual ~Command();
-        
+
     virtual int execute(Game&amp; board, std::vector&lt;std::string>&amp; params) = 0;
 
     const std::string&amp; getName();
 };
          </pre>
     </article></slide>
-    
+
         <slide><hgroup>
         <h2>Command Pattern - Beispiel</h2></hgroup><article>
         <pre style="font-size: 0.6em;">
@@ -765,7 +765,7 @@ class PrintHello : public Command
   public:
     PrintHello() : Command("PrintHello!"){}
     virtual ~PrintHello();
-        
+
     int execute(Game&amp; board, std::vector&lt;std::string>&amp; params);
 };
 
@@ -775,7 +775,7 @@ int PrintHello::execute(Game&amp; board, std::vector&lt;std::string>&amp; params
 }
         </pre>
         </article></slide>
-    
+
 <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
