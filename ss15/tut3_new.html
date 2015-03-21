@@ -135,9 +135,8 @@
 std::ofstream file("tut4.bin",
   std::ios::out | std::ios::trunc | std::ios::binary);
 
-// write "TRAX\0" into file
+// write "TRAX" into file
 file &lt;&lt; "TRAX";
-file &lt;&lt; '\0';
 
 // write character 7 as binary into file
 char num = 7;
