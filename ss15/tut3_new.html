@@ -178,7 +178,7 @@ file &lt;&lt; str &lt;&lt; '\0';
      <slide><hgroup>
       <h2>Operator Overloading</h2></hgroup><article>
       <ul>
-       <li>&Uuml;berschreibt die Operatoren (<span class="src">==</span>, <span class="src">+</span>, <span class="src">-</span>, <span class="src">*</span>, <span class="src">/</span>, ...) f&uuml;r die eigene Klasse</li>
+       <li>&Uuml;berschreibt die Operatoren (<span class="src">==, +, -, *, /, &gt;&gt;, &lt;&lt;, ...</span> ) f&uuml;r die eigene Klasse</li>
        <li>Syntax: (<span class="src">@</span> steht f&uuml;r den Operator)
 <pre class="compact">
 return_type operator@(argumente)
@@ -186,13 +186,13 @@ return_type operator@(argumente)
     [...]
 }
 </pre></li>
-      <li>Kann als Member-Funktion oder als <span class="src">friend</span> deklariert werden</li>
+      <li>Kann alsMethode oder als Funktion deklariert werden</li>
       <li>Sollte sparsam verwendet werden und nur wenn es eindeutig ist</li>
       </ul>
      </article></slide>
      
      <slide><hgroup>
-      <h2>Operator Overloading - Beispiel (als Member)</h2></hgroup><article>
+      <h2>Operator Overloading - Beispiel (als Methode)</h2></hgroup><article>
 <pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
 class Complex
 {
@@ -216,7 +216,38 @@ public:
     }
     
     [...]
+
+    float getRealPart() const;
+    float getImaginaryPart() const;
 };
+</pre>
+     </article></slide>
+
+
+     <slide><hgroup>
+      <h2>Operator Overloading - Beispiel (als Funktion)</h2></hgroup><article>
+<pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; stream, const Complex&amp; c)
+{
+  stream &lt;&lt;  c.getRealPart() &lt;&lt; " + " &lt;&lt; c.getImaginary() &lt;&lt; " i";
+
+  return stream; 
+}
+</pre>
+<br />
+<pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
+int main()
+{
+  Complex c(1,5);
+
+  std::cout &lt;&lt; c &lt;&lt; std::endl;
+
+  return 0;
+}
+</pre>
+<br />
+<pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
+1 + 5 i
 </pre>
      </article></slide>
      
