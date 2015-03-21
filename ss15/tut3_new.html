@@ -7,9 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="all" href="css/cmdpattern.css">
   <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
   <base target="_blank">
   <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/cmdpattern.js"></script>
   <script type="text/javascript">
     var SLIDE_CONFIG = {
       settings: {
@@ -77,8 +79,15 @@
   function init() {
     var pre = document.getElementsByTagName("pre");
     for(i = 0; i < pre.length; i++) {
-      pre[i].setAttribute("data-lang", "C++");
-      pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+      pretty = true;
+      if(pre[i].hasAttribute("data-nopretty"))
+        pretty = false;
+        
+      if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+      if(!pre[i].hasAttribute("data-nolang")) 
+        pre[i].setAttribute("data-lang", "C++");
+
+      if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
     }
   }
   </script>
@@ -657,21 +666,21 @@ int main()
 
      <table class="classtable">
       <tr><th>Light</th></tr>
-      <tr><td><pre class="syntax" id="cmdOn">void turnOn();</pre>
-              <pre class="syntax" id="cmdOff">void turnOff();</pre>
+      <tr><td><pre class="syntax" id="cmdOn"  data-nolang="true" >void turnOn();</pre>
+              <pre class="syntax" id="cmdOff" data-nolang="true" >void turnOff();</pre>
 </pre></td></tr>
      </table>
 
           <table class="classtable" style="position: absolute; left: 32px; top: 256px; visibility: hidden;" id="cmdCmd">
       <tr><th>Light<span id="cmdTitle">On</span>Command : Command</th></tr>
-      <tr><td><pre class="syntax">int execute(Light&amp; light) {</pre>
-<pre class="syntax" id="cmdExCmd">  light.turnOn();</pre><br />
-<pre class="syntax">}</pre></td></tr>
+      <tr><td><pre class="syntax" data-nolang="true" >int execute(Light&amp; light) {</pre>
+<pre class="syntax" data-nolang="true" id="cmdExCmd" >  light.turnOn();</pre>
+<pre class="syntax" data-nolang="true" >}</pre></td></tr>
      </table>
 
      <table class="classtable" style="position: absolute; top: 128px; right: 128px;">
       <tr><th>Invoker</th></tr>
-      <tr><td><pre id="cmdInv" class="syntax">int invoke(Command&amp; cmd) {
+      <tr><td><pre id="cmdInv" class="syntax" data-nolang="true" >int invoke(Command&amp; cmd) {
   return cmd.execute(light);<br /> }</pre>
       </td></tr>
      </table>
@@ -682,7 +691,7 @@ int main()
 
      <table class="classtable" style="position: absolute; left: 32px; top: 256px;">
       <tr><th>Command</th></tr>
-      <tr><td><pre class="syntax">int execute(Light&amp; light) = 0;</pre></td></tr>
+      <tr><td><pre class="syntax" data-nolang="true">int execute(Light&amp; light) = 0;</pre></td></tr>
      </table>
 
      <img src="images/run.png" style="position: absolute; left: 380px; top: 480px; visibility: hidden;" width="40px" id="cmdRun" onclick="cmdSend();" />
