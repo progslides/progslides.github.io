@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #4",
+        subtitle: "Softwareentwicklung Praktikum",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+    div.left {
+      float: left;
+      width: 48%;
+    }
+    div.right {
+      margin-left: 52%;
+      width: 48%;
+    }
+    span.src {
+      font-family: monospace;
+      background: #eee;
+      border: 1px solid #ccc;
+      padding: 1px 2px;
+    }
+    table.slotmachines {
+      border: none;
+      width: 100%;
+    }
+    table.slotmachines tr {
+      background: none;
+    }
+    table.slotmachines td {
+      text-align: center;
+    }
+    sub {
+      font-size: .75em;
+      vertical-align: sub;
+    }
+
+    table.tiles {
+      border-bottom: none;
+      border-spacing: 0;
+      width: auto;
+    }
+
+    table.tiles td {
+      width: 200px;
+      padding: 0;
+    }
+
+    table.tiles tr {
+      height: 200px;
+      background: none;
+    }
+
+    .tile {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      background: #000;
+      border-radius: 20px;
+    }
+
+    .path_ns.path_red, .path_ew.path_red {
+      background: #f00;
+    }
+
+    .path_ns.path_white, .path_ew.path_white {
+      background: #fff;
+    }
+
+    .path_ne.path_red, .path_sw.path_red,
+    .path_nw.path_red, .path_es.path_red {
+      border-color: #f00;
+    }
+
+    .path_ne.path_white, .path_sw.path_white,
+    .path_nw.path_white, .path_es.path_white {
+      border-color: #fff;
+    }
+
+    .path_ns {
+      position: absolute;
+      top: 0px;
+      left: 78px;
+      width: 28px;
+      height: 200px;
+      border-left: 8px solid #000;
+      border-right: 8px solid #000;
+      background: #ccc;
+    }
+
+    .path_ew {
+      position: absolute;
+      top: 78px;
+      left: 0px;
+      width: 200px;
+      height: 28px;
+      border-top: 8px solid #000;
+      border-bottom: 8px solid #000;
+      background: #ccc;
+    }
+
+    .path_ne {
+      position: absolute;
+      border-left: 28px solid #ccc;
+      border-bottom: 28px solid #ccc;
+      width: 86px;
+      height: 86px;
+      border-bottom-left-radius: 86px;
+      right: 0;
+      top: 0;
+    }
+
+    .path_sw {
+      position: absolute;
+      border-top: 28px solid #ccc;
+      border-right: 28px solid #ccc;
+      width: 86px;
+      height: 86px;
+      border-top-right-radius: 86px;
+      left: 0;
+      bottom: 0;
+    }
+
+    .path_nw {
+      position: absolute;
+      border-right: 28px solid #ccc;
+      border-bottom: 28px solid #ccc;
+      width: 86px;
+      height: 86px;
+      border-bottom-right-radius: 86px;
+      left: 0;
+      top: 0;
+    }
+
+    .path_es {
+      position: absolute;
+      border-top: 28px solid #ccc;
+      border-left: 28px solid #ccc;
+      width: 86px;
+      height: 86px;
+      border-top-left-radius: 86px;
+      right: 0;
+      bottom: 0;
+    }
+
+    .label_n {
+      position: absolute;
+      padding: 3px 3px 4px;
+      background: #FFA726;
+      color: #000;
+      top: 8px;
+      left: 100px;
+      font-size: 32px;
+    }
+
+    .label_e {
+      position: absolute;
+      color: #FFA726;
+      padding: 3px 3px 4px;
+      background: #FFA726;
+      color: #000;
+      top: 100px;
+      right: 8px;
+      font-size: 32px;
+    }
+
+    .label_w {
+      position: absolute;
+      padding: 3px 3px 4px;
+      background: #FFA726;
+      color: #000;
+      top: 100px;
+      left: 8px;
+      font-size: 32px;
+    }
+
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Ablauf des Tutoriums</h2>
+    </hgroup>
+    <article>
+        <ul>
+         <li>Fragen zum Basisbeispiel</li>
+         <li>Das erweiterte Beispiel</li>
+         <li>Entscheidungsbaum</li>
+         <li>Highscore Liste</li>
+         <li>Schnelles Erkennen der Gewinnbedingung</li>
+         <li>Profiling</li>
+         <li>Zufallszahlen</li>
+         <li>Multi-armed Bandit Problem und MCTS</li>
+         <li>Zeitmessung</li>
+         <li>Ausblick</li>
+        </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Das erweiterte Beispiel</h2>
+    </hgroup>
+    <article>
+        <ul>
+         <li>"neue" Regeln</li>
+         <li>neuer Befehl: play</li>
+         <li>neuer Befehl: whoami</li>
+        </ul>
+
+        <p style="margin-top: 5em; text-align: center; font-size: 1.4em;">30. April 2015 bis 30. Mai 2015, 16:00 Uhr</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Habe ich gewonnen?</h2>
+    </hgroup>
+    <article>
+      <div style="text-align: center;">
+      <table class="tiles" style="transform: scale(.6);">
+        <tr>
+          <td>
+            <div class="tile">
+              <div class="path_ew path_red"></div>
+              <div class="path_ns path_white"></div>
+            </div>
+          </td>
+          <td>
+            <div class="tile">
+              <div class="path_ne path_white"></div>
+              <div class="path_sw path_red"></div>
+            </div>
+          </td>
+          <td style="width: 200px; height: 200px;"></td>
+          <td style="width: 200px; height: 200px;"></td>
+          <td style="width: 200px; height: 200px;"></td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div class="tile">
+              <div class="path_ne path_red"></div>
+              <div class="path_sw path_white"></div>
+            </div>
+          </td>
+          <td><div style="width: 200px; height: 200px; text-align: center; padding-top: 90px; box-sizing: border-box;">... (4 Teile) ...</div></td>
+          <td>
+            <div class="tile">
+              <div class="path_ew path_red"></div>
+              <div class="path_ns path_white"></div>
+            </div>
+          </td>
+          <td>
+            <div class="tile">
+              <div class="path_ew path_red"></div>
+              <div class="path_ns path_white"></div>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <p style="margin-top: 1em; text-align: center; font-size: 1.4em;">Ja</p>
+    </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Habe ich gewonnen?</h2>
+    </hgroup>
+    <article>
+      <div style="text-align: center;">
+      <table class="tiles" style="transform: scale(.6);">
+        <tr>
+          <td>
+            <div class="tile">
+              <div class="path_ew path_red"></div>
+              <div class="path_ns path_white"></div>
+            </div>
+          </td>
+          <td>
+            <div class="tile">
+              <div class="path_ne path_white"></div>
+              <div class="path_sw path_red"></div>
+            </div>
+          </td>
+          <td style="width: 200px; height: 200px;"></td>
+          <td style="width: 200px; height: 200px;"></td>
+          <td style="width: 200px; height: 200px;"></td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div class="tile">
+              <div class="path_ne path_red"></div>
+              <div class="path_sw path_white"></div>
+            </div>
+          </td>
+          <td><div style="width: 200px; height: 200px; text-align: center; padding-top: 90px; box-sizing: border-box;">... (4 Teile) ...</div></td>
+          <td>
+            <div class="tile">
+              <div class="path_ew path_red"></div>
+              <div class="path_ns path_white"></div>
+            </div>
+          </td>
+          <td>
+            <div class="tile">
+              <div class="path_ne path_white"></div>
+              <div class="path_sw path_red"></div>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <p style="margin-top: 1em; text-align: center; font-size: 1.4em; line-height: 1.2em;">Nein, die Linie endet nicht am gegenüberliegenden Spielfeldrand</p>
+    </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Habe ich gewonnen?</h2>
+    </hgroup>
+    <article>
+      <div style="text-align: center;">
+      <table class="tiles" style="transform: scale(.6);">
+        <tr>
+          <td>
+            <div class="tile">
+              <div class="path_ew path_red"></div>
+              <div class="path_ns path_white"></div>
+            </div>
+          </td>
+          <td>
+            <div class="tile">
+              <div class="path_ne path_white"></div>
+              <div class="path_sw path_red"></div>
+            </div>
+          </td>
+          <td style="width: 200px; height: 200px;"></td>
+          <td style="width: 200px; height: 200px;">
+            <div class="tile">
+              <div class="path_es path_white"></div>
+              <div class="path_nw path_red"></div>
+            </div>
+          </td>
+          <td style="width: 200px; height: 200px;">
+            <div class="tile">
+              <div class="path_ew path_white"></div>
+              <div class="path_ns path_red"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div class="tile">
+              <div class="path_ne path_red"></div>
+              <div class="path_sw path_white"></div>
+            </div>
+          </td>
+          <td><div style="width: 200px; height: 200px; text-align: center; padding-top: 90px; box-sizing: border-box;">... (5 Teile) ...</div></td>
+          <td>
+            <div class="tile">
+              <div class="path_ew path_red"></div>
+              <div class="path_ns path_white"></div>
+            </div>
+          </td>
+          <td>
+          </td>
+        </tr>
+      </table>
+      <p style="margin-top: 1em; text-align: center; font-size: 1.4em; line-height: 1.2em;">Nein, die Linie endet nicht am gegenüberliegenden Spielfeldrand</p>
+    </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Ein einfacher Bot</h2>
+    </hgroup>
+    <article>
+      <p style="line-height: 1.6em; font-size: 1.8em; color: #444;">„Gibt es einen möglichen Zug mit dem ich (direkt) gewinne?“</p>
+
+      <p style="line-height: 1.4em;"><strong>Lösung: </strong> Probiere alle möglichen Züge durch.</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Ein schwierigerer Bot</h2>
+    </hgroup>
+    <article>
+      <p style="line-height: 1.6em; font-size: 1.8em; color: #444;">„Sofern es keinen Zug gibt mit dem ich gewinne, welchen Zug
+        muss ich machen damit mein Gegner nicht gewinnt?“</p>
+
+      <p style="line-height: 1.4em;"><strong>Lösung: </strong> Probiere alle möglichen eigenen Züge und
+        alle anschließenden gegnerischen Züge durch.</p>
+
+      <p style="margin-top: 3em; color: #222; font-size: .6em;">Allgemein: MinMax-Suche</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Der Entscheidungsbaum</h2>
+    </hgroup>
+    <article>
+      <img style="float: right;" src="images/directed_tree.svg" alt="directed tree" />
+      <ul>
+        <li>Aktueller Spielstand (z.B. leeres Brett)
+        <ul>
+          <li>Weiß: (0,0) +
+            <ul>
+              <li>Rot: (0,1) +</li>
+              <li>Rot: (0,1) /</li>
+              <li>Rot: (0,1) \</li>
+              <li>Rot: (1,0) +</li>
+              <li>Rot: (1,0) /</li>
+              <li>...</li>
+            </ul>
+          </li>
+          <li>Weiß: (0,0) /
+            <ul>
+              <li>Rot: (0,1) +</li>
+              <li>Rot: (0,1) /</li>
+              <li>...</li>
+            </ul>
+          </li>
+          <li>Weiß: (0,0) \
+            <ul>
+              <li>...</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Die Highscore Liste (Prototyp)</h2>
+    </hgroup>
+    <article>
+      <img style="display: block; width: 70%; margin: 1em auto;" src="images/highscore_prototyp.png" alt="highscore" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Demo</h2>
+    </hgroup>
+    <article>
+      <pre>sep> whoami
+TraxSuperHero
+sep> play
+(0,0) +
+sep> addtile (0,1) \
+sep> play
+(0,-1) \
+sep> play
+(1,0) \
+sep> </pre>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground" data-slide-num="16" data-total-slides="22">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2 style="line-height: 1.2em;">Fortgeschrittene<br>Techniken</h2>
+      <h3 class="build">// Magic. Do not touch.</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schnelles Erkennen von Zyklen</h2>
+    </hgroup>
+    <article>
+
+      <div style="text-align: center;">
+      <table class="tiles" id="pathbuilding" style="margin: 0 auto;">
+        <tr>
+          <td>
+            <div class="tile build1">
+              <div class="path_ew path_white"></div>
+              <div class="path_ns path_red"></div>
+              <div class="label_n build2">1</div>
+              <div class="label_e build3">2</div>
+            </div>
+          </td>
+          <td>
+            <div class="tile build4">
+              <div class="path_ew path_white"></div>
+              <div class="path_ns path_red"></div>
+              <div class="label_n build6">3<span class="build9">➡1</span></div>
+              <div class="label_e build5">2</div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="tile build7">
+              <div class="path_ne path_red"></div>
+              <div class="path_sw path_white"></div>
+              <div class="label_n">1</div>
+              <div class="label_w">4</div>
+            </div>
+          </td>
+          <td>
+            <div class="tile build8">
+              <div class="path_nw path_red"></div>
+              <div class="path_es path_white"></div>
+              <div class="label_n">3<span class="build9">➡1</span></div>
+              <div class="label_e">5</div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <p style="margin-top: 1em;">
+        <input type="button" value="Weiter" id="pathbuilding_next">
+      </p>
+    </div>
+
+      <script type="text/javascript">
+      (function(){
+        "use strict";
+
+        function showStep(step) {
+          var root = document.getElementById("pathbuilding");
+          var all = root.getElementsByTagName('*');
+          for (var i = 0, l = all.length; i < l; i++) {
+            var classList = all[i].className.split(' ');
+            for (var j = 0; j < classList.length; j++) {
+              if (classList[j].indexOf("build") === 0) {
+                if (parseInt(classList[j].substring(5)) <= step) {
+                  if (all[i].tagName === "SPAN") {
+                    all[i].style.display = "inline";
+                  } else {
+                    all[i].style.display = "block";
+                  }
+                } else {
+                  all[i].style.display = "none";
+                }
+              }
+            }
+          }
+        }
+
+        var step = 1;
+
+        var next = document.getElementById('pathbuilding_next');
+        next.addEventListener('click', function() {
+          step++;
+          if (step > 9) {
+            step = 1;
+          }
+          showStep(step);
+        }, false);
+
+        showStep(1);
+      })();
+      </script>
+
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schnelles Erkennen von Zyklen</h2>
+    </hgroup>
+    <article>
+      <ul style="line-height: 1.4em;">
+        <li>Ein Zyklus ist vorhanden wenn ein Teil zweimal an die gleiche
+          Pfad ID angelegt wird.</li>
+        <li>Man sollte immer auf die minimale (bzw. maximale) ID mergen, damit
+          das Verhalten wohldefiniert ist.</li>
+        <li>Mit Hilfe von geeigneten Datenstrukturen ist der Merge-Vorgang sehr
+          effizient durchführbar.</li>
+        <li>Die zweite Gewinnbedingung (Linie über 8 Zeilen/Spalten) ist
+          sogar in O(1) möglich wenn man sich die relevanten Informationen
+          im Pfad mitspeichert.</li>
+        </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Profiling</h2>
+    </hgroup>
+    <article>
+      <p>Ein CPU Profiler (z.B. <a href="https://code.google.com/p/gperftools/">gperftools</a>)
+        gibt Aufschluss darüber welche Programmteile viel Zeit benötigen.</p>
+      <pre data-lang="bash">$ pprof ./trax trax.cpuprof
+(pprof) top --cum
+Total: 502 samples
+     397  79.1%  79.1%      397  79.1% __memcpy_sse2_unaligned
+       0   0.0%  79.1%       28   5.6% 0x00ffff00ffff00fe
+       5   1.0%  80.1%       16   3.2% Board::completeNeighbors
+       1   0.2%  80.3%       13   2.6% Board::addTile
+       3   0.6%  80.9%       10   2.0% std::vector::emplace_back
+       8   1.6%  82.5%        9   1.8% Board::at (inline)
+       0   0.0%  82.5%        8   1.6% _S_construct (inline)
+       8   1.6%  84.1%        8   1.6% construct (inline)
+       2   0.4%  84.5%        8   1.6% uw_frame_state_for
+       7   1.4%  85.9%        7   1.4% read_encoded_value_with_base@5e130</pre>
+    <p><strong>Schau dir immer vorher das CPU-Profile an bevor du etwas optimierst!</strong></p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Der Einarmige Bandit</h2>
+    </hgroup>
+    <article>
+      <img src="images/slotmachine.jpg" style="width: 50%; float:right;" alt="Slot Machine" />
+
+      <div style="margin-right: 55%;">
+      <p>Ein einfacheres Spiel als Trax.</p>
+
+      <p style="margin: .2em 0 1em;"><strong>Spielprinzip</strong></p>
+
+      <ol style="list-style-type: decimal; list-style-position: outside; margin-left: 1.5em;">
+        <li style="margin-bottom: .5em;">Münze einwerfen</li>
+        <li style="margin-bottom: .5em;">Hebel nach unten drücken</li>
+        <li style="margin-bottom: .5em;">Sofern man Glück hat: Gewinnen</li>
+      </ol>
+
+      <p style="margin-top: 1.5em;">Die Gewinnwahrscheindlichkeit kann davor vom Betreiber festgelegt
+        werden.</p>
+    </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Zufallszahlen mit C++11</h2>
+    </hgroup>
+    <article>
+      <p style="margin: .6em 0 .2em;">Random Number Generator anlegen (hier Mersenne Twister):</p>
+      <pre class="prettyprint" data-lang="c++">std::mt19937 rng</pre>
+
+      <p style="margin: .6em 0 .2em;">Optional: den Generator mit der aktuellen Zeit initialisieren:</p>
+      <pre class="prettyprint" data-lang="c++">auto myseed = std::chrono::high_resolution_clock
+  ::now().time_since_epoch().count();
+rng.seed(myseed);</pre>
+
+      <p style="margin: .6em 0 .2em;">Gleichverteilte Zufallszahl zwischen 0 und 1 generieren:</p>
+      <pre class="prettyprint" data-lang="c++">std::uniform_real_distribution&lt;float&gt; dist(0, 1);
+std::cout &lt;&lt; dist(rng) &lt;&lt; std::endl;</pre>
+
+      <p style="margin: .6em 0 .2em;">Gleichverteilte ganzzahlige Zufallszahl zwischen 1 und 6:</p>
+      <pre class="prettyprint" data-lang="c++">std::uniform_int_distribution&lt;int&gt; dist(1, 6);
+std::cout &lt;&lt; dist(rng) &lt;&lt; std::endl;</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Multi-armed Bandit Problem</h2>
+    </hgroup>
+    <article>
+      <p>Mit welchem Automat soll gespielt werden?</p>
+      <table class="slotmachines">
+        <tr>
+          <td><img src="images/slotmachine.jpg" style="width: 100%;" alt="Slot Machine" /></td>
+          <td><img src="images/slotmachine.jpg" style="width: 100%;" alt="Slot Machine" /></td>
+          <td><img src="images/slotmachine.jpg" style="width: 100%;" alt="Slot Machine" /></td>
+        </tr>
+        <tr>
+          <td><strong style="font-size: 3em; margin-bottom: .2em; display: block;">30 %</strong>Win Rate</td>
+          <td><strong style="font-size: 3em; margin-bottom: .2em; display: block;">20 %</strong>Win Rate</td>
+          <td><strong style="font-size: 3em; margin-bottom: .2em; display: block;">32 %</strong>Win Rate</td>
+        </tr>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Multi-armed Bandit Problem</h2>
+    </hgroup>
+    <article>
+      <p><strong>Mögliche Lösung:</strong>
+        Wähle (nachdem jeder Automat zumindest einmal probiert wurde) immer den
+        Automat mit dem höchsten <em>UCB1</em> (Upper Confidence Bound) Wert.</p>
+      <p style="text-align: center;">
+        <img src="images/uct1.png" alt="uct1.png" style="width: 30%; margin: auto;" />
+      </p>
+      <dl>
+        <dt>w<sub>i</sub></dt>
+        <dd>Anzahl der Gewinne mit Maschine i</dd>
+        <dt>n<sub>i</sub></dt>
+        <dd>Anzahl der Versuche mit Maschine i</dd>
+        <dt>N</dt>
+        <dd>Gesamtanzahl der Versuche</dd>
+        <dt>α</dt>
+        <dd><em>exploration factor</em>, normalerweiße √2</dd>
+      </dl>
+    </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Multi-armed Bandit Problem</h2>
+    </hgroup>
+    <article>
+      <p>Nach 1000 Iterationen:</p>
+<pre data-lang="bash">$ ./bandit
+Bandit #0: 346 tries
+Bandit #1: 162 tries
+Bandit #2: 492 tries
+</pre>
+
+      <p>Nach 10000 Iterationen:</p>
+      <pre data-lang="bash">$ ./bandit
+Bandit #0: 2199 tries
+Bandit #1: 390 tries
+Bandit #2: 7411 tries
+</pre>
+
+    <p style="margin-top: 1em;">Vielversprechende Slot-Maschinen werden öfters
+    probiert. Die Maschine die am Ende am häufigsten getestet wurde
+    (größter n<sub>i</sub> Wert), ist wahrscheindlich die Beste.</p>
+
+  </article>
+</slide>
+  <slide>
+    <hgroup>
+      <h2>Monte Carlo Tree Search (MCTS)</h2>
+    </hgroup>
+    <article>
+      <p style="line-height: 1.4em;"><strong>Idee:</strong> Baue dynamisch einen Entscheidungsbaum
+        auf und verwende in jedem Knoten die zuvor vorgestellte Lösung des
+        MABP.</p>
+
+      <p style="margin-top: 2em; text-align: center;">
+        <img style="width: 80%;" src="images/mcts_algorithm.png" alt="mcts" /></p>
+  </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Monte Carlo Tree Search (MCTS)</h2>
+    </hgroup>
+    <article>
+      <p>Wiederhole beliebig oft:</p>
+
+      <ol style="list-style-type: decimal; list-style-position: outside; margin-left: 1.5em; line-height: 1.3em;">
+        <li style="margin-bottom: .5em;"><strong>Select:</strong> Starte bei der Wurzel und mache immer
+          den Zug mit dem höchsten UCB-Wert bis man bei einem Blatt oder einem
+          Knoten mit noch nicht probierten Zügen angelangt ist.</li>
+
+        <li style="margin-bottom: .5em;"><strong>Expand:</strong> Sofern beim aktuellen Knoten schon alle
+          Züge probiert wurden und das Spiel noch nicht zu Ende ist, füge einen
+          weiteren zufälligen Knoten mit allen seinen Zugmöglichkeiten hinzu.</li>
+
+        <li style="margin-bottom: .5em;"><strong>Simulate:</strong> Spiele das Spiel mit zufälligen Zügen
+          zu Ende um herauszufinden wer gewinnt.</li>
+
+        <li style="margin-bottom: .5em;"><strong>Backpropagation:</strong> Aktuallisiere alle betroffenen
+          N, n<sub>i</sub> und w<sub>i</sub> Werte auf dem gesamten Pfad.
+          Achtung: ob es ein Gewinn ist (w<sub>i</sub>) hängt vom Spieler der
+          bei diesem Knoten am Zug ist ab.</li>
+      </ol>
+  </article>
+</slide>
+
+<slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2 style="line-height: 1.4em;">Viel Erfolg beim<br>erweiterten Beispiel!</h2>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
