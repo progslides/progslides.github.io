@@ -332,6 +332,54 @@ int main() {
      </article>
     </slide>
   
+   <slide>
+     <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
+     <article>
+<pre class="prettyprint" data-lang="C++">
+template &lt;typename T&gt;
+struct LinkedList {
+  LinkedListElement&lt;T>* elements_;
+
+  LinkedList();
+  void insert(int index, T object);
+};
+
+template &lt;typename T&gt;
+struct LinkedListElement {
+  T object_;
+  LinkedListElement&lt;T>* next_;
+
+  LinkedListElement(T object);
+}
+</pre>
+ </article>
+    </slide>
+ <slide>
+     <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
+     <article>
+<pre class="prettyprint" data-lang="C++">
+void LinkedList::insert(int index, T object)
+{
+  if(elements_ == null)
+  {
+    elements_ = new LinkedListElement(object);
+    return;
+  }
+  LinkedListElement* previous = elements_;
+  for(int i = 0; i &lt; index &amp;&amp; previous != null; i++)
+  {
+    previous = previous->next_;
+  }
+
+  LinkedListElement* next = previous->next_;
+  previous->next_ = new LinkedListElement(object);
+
+  previous->next_->next_ = next;
+}
+</pre>
+ </article>
+    </slide>
+
   
   <slide>
     <hgroup>
