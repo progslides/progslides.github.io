@@ -92,6 +92,78 @@
       width: auto;
     }
 
+
+
+    table.tilessmall .tile {
+      width: 100px;
+      height: 100px;
+    }
+
+
+    table.tilessmall .path_ns {
+      position: absolute;
+      top: 0px;
+      left: 39px;
+      width: 14px;
+      height: 100px;
+      border-left-width: 4px;
+      border-right-width: 4px;
+    }
+
+    table.tilessmall .path_ew {
+      position: absolute;
+      top: 39px;
+      left: 0px;
+      width: 100px;
+      height: 14px;
+      border-top-width: 4px;
+      border-bottom-width: 4px;
+    }
+
+    table.tilessmall .path_ne {
+      position: absolute;
+      border-left-width: 14px;
+      border-bottom-width: 14px;
+      width: 43px;
+      height: 43px;
+      border-bottom-left-radius: 43px;
+      right: 0;
+      top: 0;
+    }
+
+    table.tilessmall .path_sw {
+      position: absolute;
+      border-top-width: 14px;
+      border-right-width: 14px;
+      width: 43px;
+      height: 43px;
+      border-top-right-radius: 43px;
+      left: 0;
+      bottom: 0;
+    }
+
+    table.tilessmall .path_nw {
+      position: absolute;
+      border-right-width: 14px;
+      border-bottom-width: 14px;
+      width: 43px;
+      height: 43px;
+      border-bottom-right-radius: 43px;
+      left: 0;
+      top: 0;
+    }
+
+    table.tilessmall .path_es {
+      position: absolute;
+      border-top-width: 14px;
+      border-left-width: 14px;
+      width: 43px;
+      height: 43px;
+      border-top-left-radius: 43px;
+      right: 0;
+      bottom: 0;
+    }
+
     table.tiles td {
       width: 200px;
       padding: 0;
@@ -100,6 +172,14 @@
     table.tiles tr {
       height: 200px;
       background: none;
+    }
+
+    table.tilessmall td {
+      width: 100px;
+    }
+
+    table.tilessmall tr {
+      height: 100px;
     }
 
     .tile {
@@ -261,7 +341,7 @@
     </article>
   </slide>
 
-  
+
   <slide>
    <hgroup><h2>Templates</h2></hgroup>
     <article>
@@ -274,13 +354,13 @@
       </ul>
      </article>
    </slide>
-     
+
    <slide>
     <hgroup><h2>Templates - Beispiel (Funktionstemplate)</h2></hgroup>
     <article>
 <pre class="prettyprint" data-lang="C++">
 template &lt;typename Type>
-Type max(Type a, Type b) 
+Type max(Type a, Type b)
 {
     if(a > b) return a;
     else return b;
@@ -300,7 +380,7 @@ int main()
 </pre>
      </article>
    </slide>
-     
+
    <slide>
      <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
      <article>
@@ -312,7 +392,7 @@ public:
     if(x1 &lt; x2) return x1;
     else return x2;
   }
-  
+
   T getMax(T x1, T x2) {
     if(x1 > x2) return x1;
     else return x2;
@@ -323,14 +403,15 @@ public:
 int main() {
   Math&lt;int> int_math;
   Math&lt;std::string> str_math;
-  
+
   std::cout &lt;&lt; "max(2, 4): " &lt;&lt; int_math.getMax(2, 4) &lt;&lt; std::endl;
-  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): " 
+  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): "
     &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
 }
 </pre>
      </article>
     </slide>
+<<<<<<< Updated upstream
   
    <slide>
      <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
@@ -381,6 +462,10 @@ void LinkedList::insert(int index, T object)
     </slide>
 
   
+=======
+
+
+>>>>>>> Stashed changes
   <slide>
     <hgroup>
     <h2>Das erweiterte Beispiel</h2>
@@ -401,8 +486,7 @@ void LinkedList::insert(int index, T object)
     <h2>Habe ich gewonnen?</h2>
     </hgroup>
     <article>
-      <div style="text-align: center;">
-      <table class="tiles" style="transform: scale(.6);">
+      <table class="tilessmall tiles" style="margin: 3em auto;">
         <tr>
           <td>
             <div class="tile">
@@ -416,9 +500,9 @@ void LinkedList::insert(int index, T object)
               <div class="path_sw path_red"></div>
             </div>
           </td>
-          <td style="width: 200px; height: 200px;"></td>
-          <td style="width: 200px; height: 200px;"></td>
-          <td style="width: 200px; height: 200px;"></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td>
@@ -429,7 +513,7 @@ void LinkedList::insert(int index, T object)
               <div class="path_sw path_white"></div>
             </div>
           </td>
-          <td><div style="width: 200px; height: 200px; text-align: center; padding-top: 90px; box-sizing: border-box;">... (4 Teile) ...</div></td>
+          <td><div style="text-align:center; line-height:100px box-sizing: border-box;">(4 Teile)</div></td>
           <td>
             <div class="tile">
               <div class="path_ew path_red"></div>
@@ -445,7 +529,6 @@ void LinkedList::insert(int index, T object)
         </tr>
       </table>
       <p style="margin-top: 1em; text-align: center; font-size: 1.4em;">Ja</p>
-    </div>
     </article>
   </slide>
 
@@ -454,8 +537,7 @@ void LinkedList::insert(int index, T object)
     <h2>Habe ich gewonnen?</h2>
     </hgroup>
     <article>
-      <div style="text-align: center;">
-      <table class="tiles" style="transform: scale(.6);">
+        <table class="tilessmall tiles" style="margin: 3em auto;">
         <tr>
           <td>
             <div class="tile">
@@ -469,9 +551,9 @@ void LinkedList::insert(int index, T object)
               <div class="path_sw path_red"></div>
             </div>
           </td>
-          <td style="width: 200px; height: 200px;"></td>
-          <td style="width: 200px; height: 200px;"></td>
-          <td style="width: 200px; height: 200px;"></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td>
@@ -482,7 +564,7 @@ void LinkedList::insert(int index, T object)
               <div class="path_sw path_white"></div>
             </div>
           </td>
-          <td><div style="width: 200px; height: 200px; text-align: center; padding-top: 90px; box-sizing: border-box;">... (4 Teile) ...</div></td>
+          <td><div style="text-align:center; line-height:100px box-sizing: border-box;">(4 Teile)</div></td>
           <td>
             <div class="tile">
               <div class="path_ew path_red"></div>
@@ -507,8 +589,7 @@ void LinkedList::insert(int index, T object)
     <h2>Habe ich gewonnen?</h2>
     </hgroup>
     <article>
-      <div style="text-align: center;">
-      <table class="tiles" style="transform: scale(.6);">
+        <table class="tilessmall tiles" style="margin: 3em auto;">
         <tr>
           <td>
             <div class="tile">
@@ -522,14 +603,14 @@ void LinkedList::insert(int index, T object)
               <div class="path_sw path_red"></div>
             </div>
           </td>
-          <td style="width: 200px; height: 200px;"></td>
-          <td style="width: 200px; height: 200px;">
+          <td></td>
+          <td>
             <div class="tile">
               <div class="path_es path_white"></div>
               <div class="path_nw path_red"></div>
             </div>
           </td>
-          <td style="width: 200px; height: 200px;">
+          <td>
             <div class="tile">
               <div class="path_ew path_white"></div>
               <div class="path_ns path_red"></div>
@@ -545,7 +626,7 @@ void LinkedList::insert(int index, T object)
               <div class="path_sw path_white"></div>
             </div>
           </td>
-          <td><div style="width: 200px; height: 200px; text-align: center; padding-top: 90px; box-sizing: border-box;">... (5 Teile) ...</div></td>
+          <td><div style="text-align: center; line-height: 100px;">(5 Teile)</div></td>
           <td>
             <div class="tile">
               <div class="path_ew path_red"></div>
@@ -621,6 +702,23 @@ void LinkedList::insert(int index, T object)
         </ul>
       </li>
     </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Züge Rückgängig machen</h2>
+    </hgroup>
+    <article>
+      <p style="line-height: 1.4em;">Wird benötigt da sich Züge während dem Ergänzen als ungültig herausstellen
+      können und zum Finden von allen möglichen Zügen.</p>
+      <p style="margin-top: 1em;"><strong>Mögliche Lösungen:</strong></p>
+      <ul style="line-height: 1.4em;">
+        <li>Copy-Construktor vom Spielfeld ausprogrammieren und verwenden</li>
+        <li>Hinzugefügte Teile in einem eigenen Vektor merken (z.B. <code>std::vector&lt;Pos&gt;</code>) und
+          diese anschließend wieder entfernen</li>
+        <li>...</li>
+      </ul>
     </article>
   </slide>
 
