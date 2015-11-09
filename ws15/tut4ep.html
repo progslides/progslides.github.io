@@ -196,7 +196,7 @@ ol li {
    int i = 0;
    for(i = 0; i &lt; num_studis; i++)
    {
-      printf("Student #%d received %d points!", correctCode(i));
+      printf("Student #%d received %d points!", i, correctCode(i));
    }
  } </pre>
       </article>
@@ -278,7 +278,7 @@ ol li {
       </hgroup>
       <article>
 <pre class="prettyprint" data-lang="c">
-void getHM(int minutes, int* h, int* m)
+void getHourMinutes(int minutes, int* h, int* m)
 {
   *h = minutes / 60;
   *m = minutes % 60;
@@ -734,9 +734,9 @@ int main()
       <li>
 <pre class="prettyprint" data-lang="c">
  char* str1 = "Hello";
- char c1 = str[0]; // c1 = 'H'
- char c2 = str[4]; // c2 = 'o'
- char c3 = str[5]; // c3 = '\0'
+ char c1 = str1[0]; // c1 = 'H'
+ char c2 = str1[4]; // c2 = 'o'
+ char c3 = str1[5]; // c3 = '\0'
 </pre>
       </li>
      </ul>
