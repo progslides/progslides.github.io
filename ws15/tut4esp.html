@@ -18,7 +18,7 @@
     var SLIDE_CONFIG = {
       settings: {
         title: "Tutorium #4",
-        subtitle: "Einführung in die (strukturierte) Programmierung",
+        subtitle: "Einführung in die strukturierte Programmierung",
         fonts: [
           'Open Sans:regular,semibold,italic,italicsemibold',
           'Source Code Pro'
@@ -114,6 +114,7 @@ ol li {
     <li>Strings</li>
     <li>Pointer</li>
     <li>Dynamischer Speicher</li>
+    <li>Pipes</li>
     <li>HW4</li>
     </ul>
     </article>
@@ -883,7 +884,57 @@ else
 
     </article>
   </slide>
-    <slide class="thank-you-slide segue nobackground">
+  
+  
+    <slide>
+      <hgroup>
+      <h2>Pipes</h2>
+      </hgroup>
+      <article>
+      <p>Möglichkeit, die Ausgabe der einzelnen Befehle umzuleiten bzw. an andere Befehle weiterzuleiten.</p>
+           <ul>
+            <li>Umleiten der Ausgabe in Datei</li>
+            <li>Standardeingabe von Datei lesen</li>
+            <li>Ausgabe als Eingabe f&uuml;r anderes Programm</li>
+          </ul>
+      </article>
+    </slide>
+
+      <slide>
+      <hgroup>
+      <h2>Pipes</h2>
+      </hgroup>
+      <article>
+       <h4>Ausgabe umleiten</h4>
+         <pre class="prettyprint" data-lang="bash">./programm > ausgabe.txt</pre>
+
+         <h4>Eingabe umleiten</h4>
+         <pre class="prettyprint" data-lang="bash">./programm &lt; eingabe.txt</pre>
+
+         <h4>stderr umleiten</h4>
+         <pre class="prettyprint" data-lang="bash">./programm 2> error.txt</pre>
+      </article>
+    </slide>
+
+
+      <slide>
+      <hgroup>
+      <h2>Pipes</h2>
+      </hgroup>
+      <article>
+    <h4>Beliebig kombinierbar</h4>
+         <pre class="prettyprint" data-lang="bash">./programm &lt; input.txt 1> output.txt 2> error.txt</pre>
+
+         <h4>Stdout als stdin eines anderen programms</h4>
+         <pre class="prettyprint" data-lang="bash">./programm | tail</pre>
+
+         <h4>Returncode des letzten Programms</h4>
+         <pre class="prettyprint" data-lang="bash">echo $?</pre>
+      </article>
+    </slide>
+
+  
+  <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
       <h2>Viel Erfolg bei HW4!</h2>
