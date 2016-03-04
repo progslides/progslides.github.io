@@ -57,20 +57,6 @@
       width: 100%;
       padding: .4em .5em;
     }
-    div.left {
-      float: left;
-      width: 48%;
-    }
-    div.right {
-      margin-left: 52%;
-      width: 48%;
-    }
-    span.src {
-      font-family: monospace;
-      background: #eee;
-      border: 1px solid #ccc;
-      padding: 1px 2px;
-    }
   </style>
 </head>
 <body id="tugraz" style="opacity: 0">
@@ -180,8 +166,8 @@
         <li>Eure Vorschläge?</li>
       </ul>
       <dl>
-        <dt>Achtung: Tutorien nicht unbedingt wöchentlich!</dt>
-        <dd> siehe <a href="https://palme.iicm.tugraz.at/wiki/SEP/time">Zeiteinteilung</a>
+        <dt>Achtung: Tutorien nicht jede Woche!</dt>
+        <dd> siehe <a href="https://palme.iicm.tugraz.at/wiki/SEP/time">Zeiteinteilung</a></dd>
       </dl>
     </article>
   </slide>
@@ -219,6 +205,7 @@
     <article>
       <dl>
         <dt><a href="pluto.html">Pluto und Palme Tutorial</a></dt>
+        <dt>&nbsp;</dt>
         <dt><a href="version.html">Git Tutorial</a></dt>
       </dl>
     </article>
@@ -229,25 +216,71 @@
       <h2>Bewertung</h2>
     </hgroup>
     <article>
-      <strong>Grundanforderung</strong>
       <ul>
-        <li>Gruppenbeispiel (3er Gruppen, mind. 5 von 10 Punkten)</strong>
+        <li>Praxis Teil (3er Gruppen)</strong>
         <ul>
-          <li>Basisbeispiel: max. 5 Punkte</li>
+          <li>Grundanforderung Basisbeispiel: max. 5 Punkte</li>
           <li>Abgabegespräch: max. 3 Punkte</li>
+          <li>Aufbaubeispiel: optional, max. 2 Punkte, mindestens 2 Punkte auf Basisbsp. erforderlich</li>
         </ul>
-		    <li>Klausur (mind. 3 von 5 Punkten)</li>
-        <li>alle Teilleistungen müssen erbracht werden</li>
-        <li>Bewertet wird Programmierstil, Struktur, Korrektheit und Funktionalität</li>
-        <li>Mitarbeit wird durch ein Abgabegespräch überprüft</li>
-        <li>Gruppenbeispiel kann noch einmal verbessert werden</li>
+	<li>Vorlesungsteil Teil (= Klausur)</li>
+		    
+	<li>Verteilung der Punkte in Kategorien/Lernziele<ul>
+		<li>1 Punkt, wenn Lernziel sehr gut erfüllt (weniger als 2 Fehler)</li>
+		<li>0.5 Punkte, wenn Lernziel befriedigend erfüllt (weniger als 4 Fehler)</li>
+		<li>0 Punkte, wenn Lernziel unzurecihend erfüllt (4 oder mehr Fehler)</li>
+	</ul></li>
+		
+	<li><strong>Keine Spätabgabe!</strong></li>
+	<li>Ausbesserungsmöglichkeit Basisbeispiel</li>
       </ul>
-      <strong>Erweiterte Anforderungen</strong>
-      <ul>
-        <li>Voraussetzung: mind. 2 Punkte beim Basisbeispiel</li>
-        <li>Aufbaubeispiel: max. 2 Punkte</li>
-      </ul>
+      
     </article>
+  </slide>
+  
+  <slide>
+  	   <hgroup>
+      <h2>Bewertung - Teil II</h2>
+    </hgroup>
+  	<article>
+  		<ul>
+  		<li>Keine Beurteilung, bei<ul>
+		<li>keiner Gruppenanmeldung</li>
+	</ul></li>
+	<br/>
+			<li><strong>Negative Beurteilung</strong>, bei<ul>
+		<li>fehlenden Abgaben</li>
+		<li>Plagiaten, zusätzlich Meldung an Studiendekan!</li>
+		<li>Weniger als 5 Punkte auf den Praxis Teil</li>
+		<li>Weniger als 3 Punkte auf die Klausur</li>
+	</ul></li>
+	</ul>
+  	</article>
+  </slide>
+  
+    <slide>
+  	   <hgroup>
+      <h2>Lernziele</h2>
+    </hgroup>
+  	<article>
+  		<ul>
+  		<li>Korrektheit und Struktur des Codes<ul>
+		<li>Speicherfehler</li>
+		<li>Warnings</li>
+		<li>Sinnvolle Aufteilung in Funktionen</li>
+		<li>Übersichtlicher Kontrollfluß</li>
+		<li> etc. ...</li>
+	</ul></li>
+			<li>OOP Konzepte<ul>
+		<li>Richtige Kapselung</li>
+		<li>Sinnvolle Einteilung in Klassen</li>
+		<li>etc. ...</li>
+	</ul></li>
+	<li>Dokumentation und Programmierstil</li>
+	<li>Testcases in Schritten <ul><li>&gt;90%: 1 Punkt</li><li>&gt;50%: 0.5 Punkte</li></ul></li>
+	</ul>
+	<p>Für genaue Auflistung möglicher Fehler, siehe <href src="https://palme.iicm.tugraz.at/wiki/SEP/Fehlerquellen">Palme Fehlerquellen</href>)</p>
+  	</article>
   </slide>
   
     <slide>
@@ -830,17 +863,17 @@ int main()
   <slide><hgroup>
       <h2>File-IO - File öffnen</h2></hgroup><article>
     <p>Bin&auml;rdatei zum Schreiben &ouml;ffnen</p>
-    <pre class="prettyprint" data-lang="C++">
+    <pre class="compact">
   #include &lt;fstream>
-  std::ofstream file("tut4.bin",
+  std::ofstream file("tut1.bin",
     std::ios::out | std::ios::trunc | std::ios::binary);
   if (!file.is_open())
   {
     std::cout &lt;&lt; "cannot open file" &lt;&lt; std::endl;
   } else file.close(); </pre>
   <p>Bin&auml;rdatei zum Lesen &ouml;ffnen</p>
-    <pre class="prettyprint" data-lang="C++">
-  std::ifstream input("tut4.bin", std::ios::in | std::ios::binary);
+    <pre class="compact">
+  std::ifstream input("tut1.bin", std::ios::in | std::ios::binary);
   if (!input.is_open())
   {
     std::cout &lt;&lt; "cannot open file" &lt;&lt; std::endl;
@@ -848,8 +881,8 @@ int main()
      </article></slide>
    <slide><hgroup>
    <h2>File-IO - Schreiben</h2></hgroup><article>
-<pre class="prettyprint" data-lang="C++">
-std::ofstream file("tut4.bin",
+<pre class="compact">
+std::ofstream file("tut1.bin",
   std::ios::out | std::ios::trunc | std::ios::binary);
 
 // write "TRAX" into file
