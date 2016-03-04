@@ -863,7 +863,7 @@ int main()
     <p>Bin&auml;rdatei zum Schreiben &ouml;ffnen</p>
     <pre class="compact">
   #include &lt;fstream>
-  std::ofstream file("tut4.bin",
+  std::ofstream file("tut1.bin",
     std::ios::out | std::ios::trunc | std::ios::binary);
   if (!file.is_open())
   {
@@ -871,7 +871,7 @@ int main()
   } else file.close(); </pre>
   <p>Bin&auml;rdatei zum Lesen &ouml;ffnen</p>
     <pre class="compact">
-  std::ifstream input("tut4.bin", std::ios::in | std::ios::binary);
+  std::ifstream input("tut1.bin", std::ios::in | std::ios::binary);
   if (!input.is_open())
   {
     std::cout &lt;&lt; "cannot open file" &lt;&lt; std::endl;
@@ -880,7 +880,7 @@ int main()
    <slide><hgroup>
    <h2>File-IO - Schreiben</h2></hgroup><article>
 <pre class="compact">
-std::ofstream file("tut4.bin",
+std::ofstream file("tut1.bin",
   std::ios::out | std::ios::trunc | std::ios::binary);
 
 // write "TRAX" into file
