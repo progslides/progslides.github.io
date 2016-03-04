@@ -136,7 +136,7 @@
           <td>David Bidner</td>
           <td><a href="mailto:prog-tutor-david@iicm.tugraz.at">prog-tutor-david@iicm.tugraz.at</a></td>
         </tr>
-        
+
         <tr>
           <td>Gruppe 8</td>
           <td>Mi, 15:00 - 17:00</td>
@@ -196,7 +196,7 @@
       <p>Alle nicht persönlichen Fragen <strong>ausschließlich</strong>
       in der Newsgroup stellen!</p>
     </article>
-    
+
     </slide>
       <slide>
     <hgroup>
@@ -224,20 +224,20 @@
           <li>Aufbaubeispiel: optional, max. 2 Punkte, mindestens 2 Punkte auf Basisbsp. erforderlich</li>
         </ul>
 	<li>Vorlesungsteil Teil (= Klausur)</li>
-		    
+
 	<li>Verteilung der Punkte in Kategorien/Lernziele<ul>
 		<li>1 Punkt, wenn Lernziel sehr gut erfüllt (weniger als 2 Fehler)</li>
 		<li>0.5 Punkte, wenn Lernziel befriedigend erfüllt (weniger als 4 Fehler)</li>
 		<li>0 Punkte, wenn Lernziel unzureichend erfüllt (4 oder mehr Fehler)</li>
 	</ul></li>
-		
+
 	<li><strong>Keine Spätabgabe!</strong></li>
 	<li>Ausbesserungsmöglichkeit Basisbeispiel</li>
       </ul>
-      
+
     </article>
   </slide>
-  
+
   <slide>
   	   <hgroup>
       <h2>Bewertung - Teil II</h2>
@@ -257,7 +257,7 @@
 	</ul>
   	</article>
   </slide>
-  
+
     <slide>
   	   <hgroup>
       <h2>Lernziele</h2>
@@ -288,7 +288,148 @@
 	</div>
 	</article>
   </slide>
-  
+
+  <slide>
+<hgroup>
+     <h2>Schreiben auf <span class="src">stdout</span></h2>
+     </hgroup>
+       <article>
+
+<pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+int main()
+{
+std::cout &lt;&lt; "Hallo Welt!" &lt;&lt; std::endl;
+return 0;
+}
+</pre>
+<br />
+Verketten von Strings und anderen Datentypen m&ouml;glich
+<pre class="compact prettyprint">
+std::cout &lt;&lt; &quot;The answer to life, the universe &quot;
+        &lt;&lt; &quot;and everything is &quot; &lt;&lt; 42 &lt;&lt; std::endl;
+</pre>
+<pre class="compact prettyprint">
+std::cout &lt;&lt; &quot; string1 is &quot;  &lt;&lt; string1
+        &lt;&lt; &quot; , it's length is &quot;  &lt;&lt; string1.length() &lt;&lt; std::endl;
+</pre>
+<pre class="compact prettyprint">
+std::cout &lt;&lt; 3.14 &lt;&lt; &quot; * &quot; &lt;&lt; 5 &lt;&lt; std::endl;
+</pre>
+</article>
+</slide>
+
+<slide>
+<hgroup>
+<h2>Formatieren der Ausgabe</h2>
+</hgroup>
+<article>
+
+<ul>
+<li>Ändern der Basis
+<pre class="compact prettyprint">
+int value = 32;
+std::cout &lt;&lt; value &lt;&lt; " = 0x" &lt;&lt; std::hex
+        &lt;&lt; value &lt;&lt; std::endl;
+std::cout &lt;&lt; value &lt;&lt; " = 0" &lt;&lt; std::oct
+        &lt;&lt; value &lt;&lt; std::endl;
+</pre>
+</li>
+<li>Ausrichtung
+<pre class="compact prettyprint">#include &lt;iomanip&gt;
+int value = 32;
+std::cout &lt;&lt; std::setw(8) &lt;&lt; value &lt;&lt; std::endl;
+std::cout &lt;&lt; std::setfill("0") &lt;&lt; std::setw(8)
+        &lt;&lt; value &lt;&lt; std::endl;</pre>
+</li>
+<li>Kommastellen
+<pre class="compact prettyprint">#include &lt;iomanip&gt;
+double value = 3.14159265;
+std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
+</li></ul>
+   </article>
+</slide>
+
+
+
+  <slide>
+    <hgroup>
+      <h2>Wert vs. Zeiger vs. Referenz (Beispiel 1)</h2>
+    </hgroup>
+    <article>
+      <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+void funcValue(int x, int val)
+{
+  x += val;
+}
+
+int main()
+{
+  int v = 3;
+  funcValue(v, 4);
+  std::cout << v << std::endl;
+}</pre>
+  </article>
+</slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Wert vs. Zeiger vs. Referenz (Beispiel 2)</h2>
+    </hgroup>
+    <article>
+      <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+void funcPointer(int* x, int val)
+{
+  *x += val;
+}
+
+int main() {
+  int v = 3;
+  funcPointer(&amp;v, 4);
+  std::cout &lt;&lt; v &lt;&lt; std::endl;
+}</pre>
+  </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Wert vs. Zeiger vs. Referenz (Beispiel 3)</h2>
+  </hgroup>
+  <article>
+    <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+void funcReference(int&amp; x, int val)
+{
+  x += val;
+}
+
+int main()
+{
+  int v = 3;
+  funcReference(v, 4);
+  std::cout &lt;&lt; v &lt;&lt; std::endl;
+}</pre>
+</article>
+</slide>
+
+  <slide>
+    <hgroup>
+      <h2>Wert vs. Zeiger vs. Referenz</h2>
+    </hgroup>
+    <article>
+      <ul>
+       <li>Referenzen können <em>nicht</em> <span class="src">NULL</span> sein, Pointer schon</li>
+       <li>Referenzen können wie normale Variablen verwendet werden</li>
+       <li>Bei Referenzen und Pointern wird nur die Adresse übergeben, bei Werten
+         wird kopiert</li>
+      </ul>
+   </article>
+  </slide>
+
+
     <slide>
     <hrgoup>
        <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
@@ -347,7 +488,7 @@
       <img src="images/cereal_guy.png" width="450px" style="float: right;" />
   </article>
   </slide>
-  
+
   <slide>
   <hgroup>
          <h2>Vector</h2>
@@ -413,7 +554,7 @@ for(auto it = int_vector.begin(); it != int_vector.end(); it++)
 </pre>
      </article>
 </slide>
-  
+
   <slide>
     <hgroup>
       <h2>Strings</h2>
@@ -777,67 +918,6 @@ answer to life the universe and everything is 42
 
       </article>
     </slide>
-    
-    <slide>
-<hgroup>
-       <h2>Schreiben auf <span class="src">stdout</span></h2>
-       </hgroup>
-         <article>
-
-<pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
-
-int main()
-{
-  std::cout &lt;&lt; "Hallo Welt!" &lt;&lt; std::endl;
-  return 0;
-}
-</pre>
-<br />
-Verketten von Strings und anderen Datentypen m&ouml;glich
-<pre class="compact prettyprint">
-std::cout &lt;&lt; &quot;The answer to life, the universe &quot;
-          &lt;&lt; &quot;and everything is &quot; &lt;&lt; 42 &lt;&lt; std::endl;
-</pre>
-<pre class="compact prettyprint">
-std::cout &lt;&lt; &quot; string1 is &quot;  &lt;&lt; string1
-          &lt;&lt; &quot; , it's length is &quot;  &lt;&lt; string1.length() &lt;&lt; std::endl;
-</pre>
-<pre class="compact prettyprint">
-std::cout &lt;&lt; 3.14 &lt;&lt; &quot; * &quot; &lt;&lt; 5 &lt;&lt; std::endl;
-</pre>
-</article>
-</slide>
-
-<slide>
-<hgroup>
- <h2>Formatieren der Ausgabe</h2>
-</hgroup>
-<article>
-
-<ul>
- <li>Ändern der Basis
-<pre class="compact prettyprint">
-int value = 32;
-std::cout &lt;&lt; value &lt;&lt; " = 0x" &lt;&lt; std::hex
-          &lt;&lt; value &lt;&lt; std::endl;
-std::cout &lt;&lt; value &lt;&lt; " = 0" &lt;&lt; std::oct
-          &lt;&lt; value &lt;&lt; std::endl;
-</pre>
- </li>
- <li>Ausrichtung
-<pre class="compact prettyprint">#include &lt;iomanip&gt;
-int value = 32;
-std::cout &lt;&lt; std::setw(8) &lt;&lt; value &lt;&lt; std::endl;
-std::cout &lt;&lt; std::setfill("0") &lt;&lt; std::setw(8)
-          &lt;&lt; value &lt;&lt; std::endl;</pre>
-</li>
- <li>Kommastellen
-<pre class="compact prettyprint">#include &lt;iomanip&gt;
-double value = 3.14159265;
-std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
-</li></ul>
-     </article>
-</slide>
 
 <slide>
   <hgroup>
