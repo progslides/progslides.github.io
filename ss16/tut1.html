@@ -867,7 +867,7 @@ int main()
   <slide><hgroup>
       <h2>File-IO - File öffnen</h2></hgroup><article>
     <p>Bin&auml;rdatei zum Schreiben &ouml;ffnen</p>
-    <pre class="compact">
+    <pre class="compact prettyprint" data-lang="C++">
   #include &lt;fstream>
   std::ofstream file("tut1.bin",
     std::ios::out | std::ios::trunc | std::ios::binary);
@@ -876,7 +876,7 @@ int main()
     std::cout &lt;&lt; "cannot open file" &lt;&lt; std::endl;
   } else file.close(); </pre>
   <p>Bin&auml;rdatei zum Lesen &ouml;ffnen</p>
-    <pre class="compact">
+    <pre class="compact prettyprint" data-lang="C++">
   std::ifstream input("tut1.bin", std::ios::in | std::ios::binary);
   if (!input.is_open())
   {
@@ -885,7 +885,7 @@ int main()
      </article></slide>
    <slide><hgroup>
    <h2>File-IO - Schreiben</h2></hgroup><article>
-<pre class="compact">
+<pre class="compact prettyprint" data-lang="C++">
 std::ofstream file("tut1.bin",
   std::ios::out | std::ios::trunc | std::ios::binary);
 
@@ -906,7 +906,7 @@ file &lt;&lt; num;
    <slide><hgroup>
    <h2> File-IO - Lesen
    </h2></hgroup><article>
-   <pre>
+   <pre class="compact prettyprint" data-lang="C++">
   // lese C-String Zeichenweise bis Nullbyte zur&uuml;ck
   char c;
   while((input >> c) &amp;&amp; c != 0) {
