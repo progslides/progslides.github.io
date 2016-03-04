@@ -383,7 +383,31 @@ int main()
     
   </article>
 </slide>
+<slide>
+  <hgroup>
+    <h2>Namespaces</h2>
+  </hgroup>
+  <article>
+  <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+using std::endl;
 
+int main()
+{
+  int age, number;
+  std::cout << "Hello World!" << endl;
+}</pre>
+<br>
+  <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+  int age, number;
+  cout << "Hello World!" << endl;
+}</pre>
+    
+  </article>
+</slide>
 
 
   <slide>
