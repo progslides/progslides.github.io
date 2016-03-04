@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #1",
+        subtitle: "Softwareentwicklung Praktikum",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Tutoren</h2>
+    </hgroup>
+    <article class="smaller">
+      <table>
+        <thead>
+          <tr>
+            <th>LV</th>
+            <th>Termin</th>
+            <th>Tutor</th>
+            <th>Kontakt</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Gruppe 1</td>
+          <td>Mo, 13:00 - 15:00</td>
+          <td>Anja Karl</td>
+          <td><a href="mailto:prog-tutor-anja@iicm.tugraz.at">prog-tutor-anja@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 2</td>
+          <td>Mo, 15:00 - 17:00</td>
+          <td>Christoph Hack</td>
+          <td><a href="mailto:prog-tutor-hack@iicm.tugraz.at">prog-tutor-hack@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 3</td>
+          <td>Mo, 17:00 - 19:00</td>
+          <td>Michael Schwarz</td>
+          <td><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michae@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 4</td>
+          <td>Di, 13:00 - 15:00</td>
+          <td>Daniel Ellmeier</td>
+          <td><a href="mailto:prog-tutor-daniel@iicm.tugraz.at">prog-tutor-daniel@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 5</td>
+          <td>Di, 15:00 - 17:00</td>
+          <td>Christoph Maurer</td>
+          <td><a href="mailto:prog-tutor-christoph@iicm.tugraz.at">prog-tutor-christoph@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 6</td>
+          <td>Di, 17:00 - 19:00</td>
+          <td>Manuel Menzinger</td>
+          <td><a href="mailto:prog-tutor-menzi@iicm.tugraz.at">prog-tutor-menzi@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 7</td>
+          <td>Mi, 13:00 - 15:00</td>
+          <td>Thomas Neff</td>
+          <td><a href="mailto:prog-tutor-thomas@iicm.tugraz.at">prog-tutor-thomas@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 8</td>
+          <td>Mi, 15:00 - 17:00</td>
+          <td>David Bidner</td>
+          <td><a href="mailto:prog-tutor-david@iicm.tugraz.at">prog-tutor-david@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 9</td>
+          <td>Mi, 17:00 - 19:00</td>
+          <td>Philip Loibl</td>
+          <td><a href="mailto:prog-tutor-ploibl@iicm.tugraz.at">prog-tutor-ploibl@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 10</td>
+          <td>Di, 11:00 - 13:00</td>
+          <td>Philipp Hafner</td>
+          <td><a href="mailto:prog-tutor-phafner@iicm.tugraz.at">prog-tutor-phafner@iicm.tugraz.at</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Fragen zur Vorlesung</li>
+        <li>Hilfestellungen zu den Beispielen</li>
+        <li>Erarbeiten ähnlicher Beispiele</li>
+        <li>Eure Vorschläge?</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Resourcen</h2>
+    </hgroup>
+    <article>
+      <dl>
+        <dt>Wiki:</dt>
+        <dd>https://palme.iicm.tugraz.at/wiki/SEP<br>
+        <dt>Abgabesystem:</dt>
+        <dd>https://palme.iicm.tugraz.at/</dd>
+        <dt>Tutorium:</dt>
+        <dd>http://progslides.github.io/ss15/</dt>
+        <dt>Newsgroup (nntp://news.tugraz.at:119/):</dt>
+        <dd>
+        <ul>
+          <li>tu-graz.lv.sep</li>
+          <li>tu-graz.lv.sep.organisatorisches</li>
+          <li>tu-graz.lv.sep.uebungsgruppen</li>
+        <ul>
+        </dd>
+      </dl>
+      <p>Alle nicht persönlichen Fragen <strong>ausschließlich</strong>
+      in der Newsgroup stellen!</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bewertung</h2>
+    </hgroup>
+    <article>
+      <strong>Grundanforderung</strong>
+      <ul>
+        <li>1 Hausübungsbeispiel (unbewertet)</strong>
+		    <li>1 Gruppenbeispiel (3er Gruppen, min. 8 von 16 Punkte)</li>
+        <li>Klausur-Basisteil (min. 3 von 6 Punkte)</li>
+        <li>Die Beispiele müssen rechtzeitig abgegeben werden<br>
+            (erkennbarer Versuch, keine Plagiate)</li>
+        <li>Bewertet wird Programmierstil, Struktur, Korrektheit und Funktionalität</li>
+        <li>Mitarbeit wird durch ein Abgabegespräch überprüft</li>
+        <li>Das Gruppenbeispiel kann beim 2. Abgabegespräch noch einmal
+          verbessert werden.</li>
+      </ul>
+      <strong>Erweiterte Anforderungen</strong>
+      <ul>
+        <li>1 erweitertes Gruppenbeispiel (max. 16 Punkte)</li>
+        <li>1 erweiterter Klausurteil (max. 4 Punkte)</li>
+        <li>Mitarbeit wird durch ein Abgabegespräch überprüft</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 1</h2>
+    </hgroup>
+      <article>
+      	<p>In einem Editor / Entwicklungsumgebung nach Wahl (z.B. CodeBlocks, Sublime,
+          Notepad++, Kate, Vim, Emacs, Textmate) eine Datei "hello.cpp" anlegen:</p>
+      	<pre class="prettyprint" data-lang="c">/* Hello World Example */
+
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::cout &lt;&lt; "Hallo SEP" &lt;&lt; std::endl;
+}</pre>
+			<br>
+			<p>Tutorial: <a href="http://www.student.tugraz.at/manuel.weber/sep/howto_vb.html">Linux als virtuelle Umgebung unter Windows</a></p>
+			</article>
+    </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 2</h2>
+    </hgroup>
+    <article>
+      	<p style="margin-bottom: 1em;">Die Datei auf <u>pluto.tugraz.at</u> kopieren:</p>
+      	<pre class="prettyprint" data-lang="bash">scp hello.cpp user@pluto.tugraz.at:</pre>
+      	<p style="text-align: center;">
+					<img style="width: 70%;" src="images/filezilla.png" alt="FileZilla" />
+				</p>
+			</article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 3</h2>
+    </hgroup>
+    <article>
+        <p>Zum Pluto verbinden:</p>
+        <pre class="prettyprint" data-lang="bash">ssh user@pluto.tugraz.at</pre>
+       	<p style="text-align: center;">
+        	<img style="width: 70%;" src="images/putty.png" alt="Putty">
+      	</p>
+      </article>
+    </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 4</h2>
+    </hgroup>
+    <article class="smaller">
+        <p>Neuere GCC Version verwenden (nur am Pluto nötig)</p>
+        <pre class="prettyprint" data-lang="bash">source /opt/gcc482/gcc482-envs.sh</pre>
+        <p>Das Programm kompilieren:</p>
+        <pre class="prettyprint" data-lang="bash">g++ -Wall -std=c++11 -g -o hello hello.cpp</pre>
+		<table>
+    <tr><th>Eingabe</th><th>Bedeutung</th></tr>
+		<tr><td>g++</td><td>GNU C++ Compiler</td></tr>
+		<tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td><tr>
+    <tr><td>-std=c++11</td><td>den C++11 Standard verwenden</td><tr>
+    <tr><td>-g</td><td>Debug-Informationen anhängen (Zeilennummern, Funktionsnamen)</td><tr>
+		<tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
+		<tr><td>hello.cpp</td><td>Quellcode</td></tr>
+		</table>
+	</article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 5</h2>
+    </hgroup>
+    <article class="smaller">
+      <p style="margin-top: 1em;">Ausführen (und Testen):</p>
+      <pre class="prettyprint" data-lang="bash">./hello</pre>
+      <pre>Hallo SEP!</pre>
+
+      <p style="margin-top: 2em;">Testen mit Valgrind:</p>
+      <pre>valgrind --leak-check=full ./hello</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 6</h2>
+    </hgroup>
+    <article>
+        <p>Bei HW1 den Quellcode und das Binary laut Angabe abgeben.</p>
+        <p><a href="https://palme.iicm.tugraz.at/">
+            https://palme.iicm.tugraz.at/</a></p>
+		<p style="text-align: center;"><img src="images/palme.png" alt="PALME" width="60%" /></p>
+      </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Entwicklungsumgebung</h2>
+    </hgroup>
+    <article>
+        <ul>
+          <li>Editor (oder IDE) nach Wahl</li>
+          <li>Referenzplattform: <code>pluto.tugraz.at</code> (Linux)
+            <ul>
+              <li>Benötigte Tools: <code>g++</code>, <code>make</code>,
+                <code>valgrind</code>, <code>svn</code></li>
+              <li>Datenübertragung mittels SFTP
+                  <pre class="prettyprint" data-lang="bash">scp prog.cpp benutzername@pluto.tugraz.at:~/</pre>
+                  <span class="meta">(alternativ: WinSCP oder FileZilla)</span>
+              </li>
+              <li>Zugang über SSH
+                <pre class="prettyprint" data-lang="bash">ssh benutzername@pluto.tugraz.at</pre>
+                <span class="meta">(alternativ: Putty)</span>
+              </li>
+          </ul></li>
+          <li>Kompilieren mit:
+            <pre class="prettyprint" data-lang="bash">g++ -Wall -std=c++11 -g -o hello hello.cpp</pre>
+          </li>
+        </ul>
+      </article>
+    </slide>
+
+
+    <slide>
+    <hgroup>
+      <h2>Linux Befehlsübersicht</h2>
+    </hgroup>
+    <article>
+      <aside class="note">
+        <section>
+          <p><b>NEXT: Ball-Beispiel</b></p>
+          <ul>
+            <li>Klasse (Attribute, Methoden)</li>
+            <li>Konstruktor/Destruktor</li>
+            <li>Getter/Setter</li>
+            <li>Methoden</li>
+            <li>Private/public</li>
+          </ul>
+        </section>
+      </aside>
+      <table>
+        <tr>
+        <th>Befehl</th>
+        <th>Beschreibung</th>
+        </tr>
+        <tr>
+          <td>pwd</td>
+          <td>Aktuelles Verzeichnis ausgeben (print working directory)</td>
+        </tr>
+        <tr>
+          <td>ls</td>
+          <td>Dateien im aktuellen Verzeichnis auflisten (list)</td>
+        </tr>
+        <tr>
+          <td>cd &lt;pfad&gt;</td>
+          <td>Verzeichnis wechseln (change diretory)</td>
+        </tr>
+        <tr>
+          <td>cd ..</td>
+          <td>in das das übergeordnete Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>cd</td>
+          <td>in das $HOME-Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>rm &lt;pfad&gt;</td>
+          <td>Datei löschen (remove)</td>
+        </tr>
+        <tr>
+          <td>nano &lt;pfad&gt;</td>
+          <td>Datei bearbeiten (sehr einfacher Texteditor)</td>
+        </tr>
+         <tr>
+          <td>zip &lt;name_des_archivs&gt; &lt;file_1&gt; &lt;file_2&gt; ...</td>
+          <td>Zip-Archiv erstellen</td>
+        </tr>
+      </table>
+    </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Objektorientierte Programmierung</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li>Eine <strong>Klasse</strong> vereint Daten (Strukturen) und
+          Funktionalität (Funktionen).</li>
+        <li>Entspricht oft Objekten in der reellen Welt (Spieler, Kamera, etc.)</li>
+        <li>Vereinfachte Schnittstelle (interne Details können verborgen werden)</li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 18em;">// Ball.h
+#ifndef BALL_H_INCLUDED
+#define BALL_H_INCLUDED
+class Ball
+{
+private:
+  std::string color_;
+  double x_, y_;
+
+public:
+  Ball(std::string color);
+  void move(double dx, double dy);
+
+  std::string getColor();
+  void setColor(std::string new_color);
+};
+#endif
+</pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Ball.cpp</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li>Trennung Implementierung und Definition.</li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" style="overflow:scroll; height: 20em;">// Ball.cpp
+#include "Ball.h"
+Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
+{
+}
+void Ball::move(double dx, double dy)
+{
+  x_ += dx;
+  y_ += dy;
+}
+std::string Ball::getColor()
+{
+  return color_;
+}
+void Ball::setColor(std::string new_color)
+{
+  color_ = new_color;
+}
+      </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Konstruktor</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li></li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" >// Ball.h
+...
+public:
+  Ball(std::string color);
+  Ball();
+...
+      </pre>
+      <pre class="prettyprint" data-lang="cpp" >// Ball.cpp
+...
+Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
+{
+}
+Ball::Ball() : color_("yellow"), x_(0), y_(0)
+{
+}
+...
+      </pre>
+      </article>
+    </slide>
+
+        <slide>
+      <hgroup>
+        <h2>Konstruktor - Aufruf</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li></li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" >// Erinnerung: Ball.h
+...
+public:
+  Ball(std::string color);
+  Ball();
+...
+      </pre>
+      <pre class="prettyprint" data-lang="cpp" >// main.cpp
+...
+Ball ball();
+Ball redBall("red");
+...
+      </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Destruktor</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li>Wird automatisch aufgerufen</li>
+        <li>Sinnvoll, um dynamischen Speicher wieder freizugeben (Pointer!)</li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" >// Ball.h
+...
+public:
+  virtual ~Ball();
+...
+      </pre>
+      <pre class="prettyprint" data-lang="cpp" >// Ball.cpp
+...
+Ball::~Ball()
+{
+}
+...
+      </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Getter / Setter</h2>
+      </hgroup>
+      <article>
+        <p>private Attribute, öffentliche Getter und Setter</p>
+        <ul>
+          <li>neue Werte können validiert werden</li>
+          <li>abhängige Daten können automatisch aktualisiert / angepasst werden</li>
+          <li>Werte können im Getter berechnet werden</li>
+          <li>interne Datenformat kann später geändert werden, die öffentliche
+            API bleibt gleich</li>
+        </ul>
+        <pre class="prettyprint" data-lang="cpp" >std::string Ball::getColor()
+{
+  return color_;
+}
+void Ball::setColor(std::string new_color)
+{
+  color_ = new_color;
+}</pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Methoden</h2>
+      </hgroup>
+      <article>
+        <p>Eine Funktion innerhalb einer Klasse heißt <strong>Methode</strong>.
+          Methoden werden üblicherweise mit Verben benannt.</p>
+        <pre class="prettyprint" data-lang="cpp" >void Ball::move(double dx, double dy)
+{
+  x_ += dx;
+  y_ += dy;
+}</pre>
+      </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>Strings</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li>Repräsentieren Text bzw. Zeichenketten</li>
+        <li>C++ Variante von char*</li>
+        <li>Bietet sehr viele komfortable Funktionen zur Bearbeitung von Text</li>
+      </ul>
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello World!
+</pre>
+
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Strings: Zugriff auf Zeichen mit "[ ]" oder string::at</h2>
+      </hgroup>
+      <article>
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+
+  std::cout &lt;&lt; "Second character of str: " &lt;&lt; str[1] &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; "Seventh character of str: " &lt;&lt; str.at(6) &lt;&lt; std::endl;
+
+  str[1] = "Y";
+
+  std::cout &lt;&lt; "Second character of str: " &lt;&lt; str[1] &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Second character of str: e
+Seventh character of str: W
+Second character of str: Y
+</pre>
+
+      </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>Strings: Anhängen von Text mit string::append</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  strSEP.append(str);
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+SEP&gt;
+SEP&gt; Hello World!
+</pre>
+
+      </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>Strings: Anhängen von Text mit "+="-Operator</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  strSEP += str;
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+SEP&gt;
+SEP&gt; Hello World!
+</pre>
+
+      </article>
+    </slide>
+
+
+
+            <slide>
+      <hgroup>
+        <h2>Strings: Kopieren/Zuweisen mit "="-Operator</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str;
+  str = "Hello";
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+
+  str = "World!";
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello
+World!
+</pre>
+
+      </article>
+    </slide>
+
+
+            <slide>
+      <hgroup>
+        <h2>Strings: Kopieren/Zuweisen mit "="-Operator</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  strSEP = str;
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+SEP&gt;
+Hello World!
+</pre>
+
+      </article>
+    </slide>
+
+
+                <slide>
+      <hgroup>
+        <h2>Strings: Länge bestimmen mit string::length</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("SEP> ");
+
+  std::cout &lt;&lt; "length of " &lt;&lt; str &lt;&lt; ": " &lt;&lt; str.length() &lt;&lt; std::endl;
+
+  str += "Hello World!";
+
+  std::cout &lt;&lt; "length of " &lt;&lt; str &lt;&lt; ": " &lt;&lt; str.length() &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+length of SEP&gt; : 5
+length of SEP&gt; Hello World!: 17
+</pre>
+
+      </article>
+    </slide>
+
+                <slide>
+      <hgroup>
+        <h2>Strings: Vergleichen mit string::compare</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  if(str.compare(strSEP) == 0)
+  {
+    //strings are equal
+    std::cout &lt;&lt; str &lt;&lt; " == " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+  else
+  {
+    //strings are not equal
+    std::cout &lt;&lt; str &lt;&lt; " != " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello World! != SEP>
+</pre>
+
+      </article>
+    </slide>
+
+
+       <slide>
+      <hgroup>
+        <h2>Strings: Vergleichen mit "=="-Operator</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  if(str == strSEP)
+  {
+    //strings are equal
+    std::cout &lt;&lt; str &lt;&lt; " == " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+  else
+  {
+    //strings are not equal
+    std::cout &lt;&lt; str &lt;&lt; " != " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello World! != SEP>
+</pre>
+
+      </article>
+    </slide>
+
+
+           <slide>
+      <hgroup>
+        <h2>Strings: Umwandlung von Zahlen zu Strings mit std::to_string</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 90%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string pi_str = "pi is ";
+  pi_str += std::to_string(3.1415926);
+
+  std::cout &lt;&lt; pi_str &lt;&lt; std::endl;
+
+  int forty_two = 42;
+
+  std::string str = "answer to life the universe and everything is ";
+
+  str += std::to_string(forty_two);
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+pi is 3.141593
+answer to life the universe and everything is 42
+</pre>
+
+      </article>
+    </slide>
+
+
+
+       <slide>
+      <hgroup>
+        <h2>Strings: Verwendung als Klassenmember</h2>
+      </hgroup>
+      <article>
+
+
+
+      <pre class="prettyprint" data-lang="cpp" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include "Ball.h"
+
+int main()
+{
+  Ball yellow_ball("Yellow");
+  Ball another_yellow_ball();
+
+  std::string yellow_color("Yellow");
+
+  another_yellow_ball.setColor(yellow_color);
+
+  std::string yellow_ball_color = yellow_ball.getColor();
+
+  if(yellow_ball_color == another_yellow_ball.getColor())
+  {
+    std::cout &lt;&lt; "Both balls are yellow!" &lt;&lt; std::endl;
+  }
+
+  return 0;
+}</pre>
+
+
+      </article>
+    </slide>
+
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Bis zum nächsten Tutorium!</h2>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
