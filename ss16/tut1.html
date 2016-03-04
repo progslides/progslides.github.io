@@ -236,6 +236,176 @@
     </article>
   </slide>
   
+    <slide>
+    <hrgoup>
+       <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
+    </hgroup>
+    <article>
+       <ul style="margin-top: 2em;">
+        <li>F&uuml;r Konstanten
+  <pre class="compact">const int ANSWER_TO_EVERYTHING = 42;</pre>
+        <li>F&uuml;r Pointer
+        <ul style="padding-top: 12px;">
+         <li>Pointer auf Konstante: <pre style="display: inline;">const int * some_pointer;</pre></li>
+         <li>Alternativ auch: <pre style="display: inline;">int const * some_pointer;</pre></li>
+         <li>Konstanter Pointer auf Variable: <pre style="display: inline;">int * const SOME_POINTER;</pre></li>
+         <li>Konstanter Pointer auf Konstante: <pre style="display: inline;">int const * const SOME_POINTER;</pre></li>
+        </ul>
+       </ul>
+       <br />
+       <img src="images/homer2.gif" width="100px" style="float: left;"/>
+       <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+       <span class="src">const</span> bezieht sich immer auf den linken Nachbarn. Gibt es keinen, dann auf den rechten Nachbarn.
+       </div>
+    </article>
+  </slide>
+    <slide>
+    <hgroup>
+       <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
+    </hgroup>
+    <article>
+       <ul>
+        <li>F&uuml;r Funktionsparamter
+  <pre class="compact">void doSomething(const char * str)
+{
+[...]
+}
+  </pre>
+  Funktion garantiert dem Aufrufer, dass sie den Wert, auf den der Pointer zeigt, nicht &auml;ndern wird (kann).</li>
+        <li style="margin-top: 28px;">F&uuml;r Methoden
+  <pre class="compact">class SomeClass {
+  void doSomething() const;
+};
+  </pre>
+  Die Methode kann keine Membervariablen ver&auml;ndern.
+
+       </ul>
+  </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+       <h2><span class="src">const</span> Schl&uuml;sselwort</h2>
+    </hgroup>
+  <article>
+       <h3 style="font-size: 120%;">...und was macht das?</h3>
+       <br />
+  <pre>int const * const doSomething(const int * const &amp; parameter) const;</pre>
+      <img src="images/cereal_guy.png" width="450px" style="float: right;" />
+  </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+       <h2>STL - Standard Template Library</h2>
+    </hgroup>
+     <article>
+        <div class="left">
+        <dl class="expl">
+          <dt>std::string</dt>
+          <dd>Zeichenketten</dd>
+          <dt>std::vector</dt>
+          <dd>Arrays</dd>
+          <dt>std::list</dt>
+          <dd>Doppelt-verkettete Liste</dd>
+        </dl>
+      </div>
+        <div class="right">
+        <dl class="expl" style="margin-bottom: 0px;">
+          <dt>std::set</dt>
+          <dd>Menge von eindeutigen Objekten</dd>
+          <dt>std::map</dt>
+          <dd>Assoziatives Array (Key-Value)</dd>
+          <dt>std::array <img src="images/newflag.jpg" style="height: 24px; vertical-align: middle;"/></dt>
+          <dd>Array mit zus&auml;tzlichen Funktionen</dd>
+        </dl>
+        <span>...</span>
+      </div>
+
+      <ul style="margin-top: 1.5em;">
+        <li>Generische Datentypen für unterschiedliche
+          Einsatzzwecke (z.B. <span class="src" style="font-size: .8em;">std::vector&lt;int&gt;</span> oder <span class="src" style="font-size: .8em;">std::vector&lt;std::string&gt;</span>)
+        <li>Automatisches Speichermanagement</li>
+        <li>Iteratoren zum Durchlaufen der
+        Container, unabhängig von der Datenstruktur</li>
+        <li>Vorgefertigte Algorithmen (copy, sort, transform, etc.)</li>
+      </ul>
+     </article>
+  </slide>
+
+  <slide>
+     <article>
+      <img src="images/container.png" height="105%" />
+      <div style="position: absolute; right: 24px; top: 24px; font-size: 0.5em;">http://www.liamdevine.co.uk/code/images/container.png</div>
+     </article>
+  </slide>
+
+  <slide>
+  <hgroup>
+         <h2>Vector</h2>
+  </hgroup>
+     <article class="smaller">
+           <ul>
+         <li>inkludieren mit</li>
+                 <pre class="compact prettyprint" data-lang="C++">#include &lt;vector></pre>
+         <li>Erstellen eines Vektors
+                 <pre class="compact prettyprint" data-lang="C++">using std::vector;
+...
+vector&lt;int&gt; int_vector;</pre>
+              oder
+          <pre class="compact prettyprint" data-lang="C++">std::vector&lt;int> int_vector;</pre><br/></li>
+
+
+        <img src="images/homer2.gif" width="100px" style="float: left; margin-top: 100px;">
+        <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 610px; background-color: #fcfcfc;">
+        <h3 style="border-bottom: 1px solid gray;">Wichtigste Methoden</h3>
+          <div class="left" style="padding-right: 20px;">
+                 <dl class="expl">
+                   <dt>Anzahl der Element im Vektor</dt><dd><pre class="compact prettyprint">int len = int_vector.size();</dd>
+                   <dt>Wert <em>3</em> an Position <em>0</em> einf&uuml;gen</dt><dd><pre class="compact prettyprint">int_vector.insert(0, 3);</pre></dd>
+                 </dl>
+         </div>
+         <div class="left">
+                 <dl class="expl">
+                   <dt>Wert <em>3</em> an letzter Stelle einf&uuml;gen</dt><dd><pre class="compact prettyprint">int_vector.push_back(3);</pre></dd>
+                   <dt>Wert an Position <em>0</em></dt><dd><pre class="compact prettyprint">int element = int_vector[0];</pre></dd>
+                 </dl>
+         </div>
+         </div>
+        </ul>
+     </article>
+     </slide>
+
+     <slide>
+     <hgroup>
+      <h2>Vector</h2>
+     </hgroup>
+     <article>
+<pre class="compact prettyprint" data-lang="C++" >std::vector&lt;int&gt; int_vector;
+int_vector.push_back(42);
+int_vector.push_back(13);
+int_vector.push_back(37);</pre>
+
+      <small>Zugriff auf alle Elemente durch Index...</small>
+<pre class="compact prettyprint" data-lang="C++" style="font-size: 0.60em;">
+int i;
+for(i = 0; i &lt; int_vector.size(); i++)
+  std::cout &lt;&lt; int_vector[i] &lt;&lt; std::endl;
+</pre>
+
+      <small>...oder durch Iterator</small>
+<pre class="compact prettyprint"  data-lang="C++" style="font-size: 0.55em;">
+for(vector&lt;int&gt;::iterator it = int_vector.begin(); it != int_vector.end(); it++)
+  std::cout &lt;&lt; *it &lt;&lt; std::endl;
+</pre>
+     <small>...oder mit C++2011<img src="images/newflag.jpg" style="vertical-align: bottom;"/></small>
+<pre class="compact prettyprint"  data-lang="C++" style="font-size: 0.60em;">
+for(auto it = int_vector.begin(); it != int_vector.end(); it++)
+  std::cout &lt;&lt; *it &lt;&lt; std::endl;
+</pre>
+     </article>
+</slide>
+  
   <slide>
     <hgroup>
       <h2>Strings</h2>
@@ -599,6 +769,154 @@ answer to life the universe and everything is 42
 
       </article>
     </slide>
+    
+    <slide>
+<hgroup>
+       <h2>Schreiben auf <span class="src">stdout</span></h2>
+       </hgroup>
+         <article>
+
+<pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+int main()
+{
+  std::cout &lt;&lt; "Hallo Welt!" &lt;&lt; std::endl;
+  return 0;
+}
+</pre>
+<br />
+Verketten von Strings und anderen Datentypen m&ouml;glich
+<pre class="compact prettyprint">
+std::cout &lt;&lt; &quot;The answer to life, the universe &quot;
+          &lt;&lt; &quot;and everything is &quot; &lt;&lt; 42 &lt;&lt; std::endl;
+</pre>
+<pre class="compact prettyprint">
+std::cout &lt;&lt; &quot; string1 is &quot;  &lt;&lt; string1
+          &lt;&lt; &quot; , it's length is &quot;  &lt;&lt; string1.length() &lt;&lt; std::endl;
+</pre>
+<pre class="compact prettyprint">
+std::cout &lt;&lt; 3.14 &lt;&lt; &quot; * &quot; &lt;&lt; 5 &lt;&lt; std::endl;
+</pre>
+</article>
+</slide>
+
+<slide>
+<hgroup>
+ <h2>Formatieren der Ausgabe</h2>
+</hgroup>
+<article>
+
+<ul>
+ <li>Ändern der Basis
+<pre class="compact prettyprint">
+int value = 32;
+std::cout &lt;&lt; value &lt;&lt; " = 0x" &lt;&lt; std::hex
+          &lt;&lt; value &lt;&lt; std::endl;
+std::cout &lt;&lt; value &lt;&lt; " = 0" &lt;&lt; std::oct
+          &lt;&lt; value &lt;&lt; std::endl;
+</pre>
+ </li>
+ <li>Ausrichtung
+<pre class="compact prettyprint">#include &lt;iomanip&gt;
+int value = 32;
+std::cout &lt;&lt; std::setw(8) &lt;&lt; value &lt;&lt; std::endl;
+std::cout &lt;&lt; std::setfill("0") &lt;&lt; std::setw(8)
+          &lt;&lt; value &lt;&lt; std::endl;</pre>
+</li>
+ <li>Kommastellen
+<pre class="compact prettyprint">#include &lt;iomanip&gt;
+double value = 3.14159265;
+std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
+</li></ul>
+     </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Strings erzeugen</h2>
+  </hgroup>
+  <article>
+<pre class="prettyprint" data-lang="C++">
+#include &lt;string&gt;
+#include &lt;sstream&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  int groupno = 2;
+
+  std::ostringstream buffer;
+  buffer &lt;&lt; &quot;Hallo Gruppe &quot; &lt;&lt; groupno &lt;&lt; &quot;!&quot;;
+
+  std::string text(buffer.str());
+
+  std::cout &lt;&lt; text &lt;&lt; std::endl;
+
+  // C++11 only:
+  std::string text2 = &quot;Hallo Gruppe &quot; + std::to_string(groupno) + &quot;!&quot;;
+}
+</pre>
+  </article>
+</slide>
+  <slide><hgroup>
+      <h2>File-IO - File öffnen</h2></hgroup><article>
+    <p>Bin&auml;rdatei zum Schreiben &ouml;ffnen</p>
+    <pre class="compact">
+  #include &lt;fstream>
+  std::ofstream file("tut4.bin",
+    std::ios::out | std::ios::trunc | std::ios::binary);
+  if (!file.is_open())
+  {
+    std::cout &lt;&lt; "cannot open file" &lt;&lt; std::endl;
+  } else file.close(); </pre>
+  <p>Bin&auml;rdatei zum Lesen &ouml;ffnen</p>
+    <pre class="compact">
+  std::ifstream input("tut4.bin", std::ios::in | std::ios::binary);
+  if (!input.is_open())
+  {
+    std::cout &lt;&lt; "cannot open file" &lt;&lt; std::endl;
+  } else input.close();</pre>
+     </article></slide>
+   <slide><hgroup>
+   <h2>File-IO - Schreiben</h2></hgroup><article>
+<pre class="compact">
+std::ofstream file("tut4.bin",
+  std::ios::out | std::ios::trunc | std::ios::binary);
+
+// write "TRAX" into file
+file &lt;&lt; "TRAX";
+
+// write character 7 as binary into file
+char num = 7;
+file &lt;&lt; num;
+</pre>
+<br />
+<img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     Dateien können behandelt werden wie <span class="src">std::cout</span> und <span class="src">std::cin</span>
+     </div>
+   </article></slide>
+
+   <slide><hgroup>
+   <h2> File-IO - Lesen
+   </h2></hgroup><article>
+   <pre>
+  // lese C-String Zeichenweise bis Nullbyte zur&uuml;ck
+  char c;
+  while((input >> c) &amp;&amp; c != 0) {
+   std::cout &lt;&lt; c;
+  }
+  std::cout &lt;&lt; std::endl;
+  // lese Bin&auml;rwert 7 zur&uuml;ck (und zeige als char und integer an)
+  char y;
+  input >> y;
+  std::cout &lt;&lt; y &lt;&lt; " = " &lt;&lt; static_cast&lt;int>(y) &lt;&lt; std::endl;
+  // lese Zahl 7 als Ziffer ('7') zur&uuml;ck
+  int x;
+  input >> x;
+  std::cout &lt;&lt; x &lt;&lt; std::endl;
+  </pre>
+ </article></slide>
 
     <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
