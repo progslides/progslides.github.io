@@ -57,6 +57,20 @@
       width: 100%;
       padding: .4em .5em;
     }
+    div.left {
+      float: left;
+      width: 48%;
+    }
+    div.right {
+      margin-left: 52%;
+      width: 48%;
+    }
+    span.src {
+      font-family: monospace;
+      background: #eee;
+      border: 1px solid #ccc;
+      padding: 1px 2px;
+    }
   </style>
 </head>
 <body id="tugraz" style="opacity: 0">
@@ -299,8 +313,8 @@
 
 int main()
 {
-std::cout &lt;&lt; "Hallo Welt!" &lt;&lt; std::endl;
-return 0;
+  std::cout &lt;&lt; "Hallo Welt!" &lt;&lt; std::endl;
+  return 0;
 }
 </pre>
 <br />
@@ -348,6 +362,26 @@ double value = 3.14159265;
 std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
 </li></ul>
    </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Lesen von <span class="src">stdin</span></h2>
+  </hgroup>
+  <article>
+  <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+  
+int main()
+{
+  int age, number;
+  std::cout << "Type in age and matrikelnumber" << std::endl;
+  std::cin >> age >> number;
+  std::cout << "Age:" << age << " Number:" << number << std::endl;
+  
+  return 0;
+}</pre>
+    
+  </article>
 </slide>
 
 
@@ -460,14 +494,14 @@ int main()
     <article>
        <ul>
         <li>F&uuml;r Funktionsparamter
-  <pre class="compact">void doSomething(const char * str)
+  <pre class="prettyprint">void doSomething(const char * str)
 {
 [...]
 }
   </pre>
   Funktion garantiert dem Aufrufer, dass sie den Wert, auf den der Pointer zeigt, nicht &auml;ndern wird (kann).</li>
         <li style="margin-top: 28px;">F&uuml;r Methoden
-  <pre class="compact">class SomeClass {
+  <pre class="prettyprint">class SomeClass {
   void doSomething() const;
 };
   </pre>
