@@ -138,20 +138,31 @@
   
     <slide>
     <hgroup>
-    <h2>Oh Gott, was ist denn ein SSH-Key? :/</h2>
+    <h2>Oh Gott, was ist denn ein SSH-Key? :-/</h2>
     </hgroup>
     <article >
-		<h4>Authetifizierungsmöglichkeit für SSH (Secure Shell)</h4>
+		<h4>Authentifizierungsmöglichkeit für SSH (Secure Shell)</h4>
 		<br/>
 			<ul> 
-			<li>Kann mit PuTTYgen oder <code>ssh-keygen</code> in der Shell erstellt werden</li>
-			<li>Besteht aus einem Private-Key und einem Public-Key</li>
+			<li>Kann mit <code>ssh-keygen</code> in der Shell erstellt werden</li>
+			<li>Besteht aus einem Private Key und einem Public Key</li>
 			<li>Der PUBLIC Key wird auf git.tugraz.at hochgeladen</li>
 			<li>Der PRIVATE Key liegt bei euch und wird verwendet, um sich beim Server zu authentifizieren.</li>
 			</ul>
 		
     </article>
   </slide>
+
+      <slide>
+    <hgroup>
+    <h2>SSH-Keygen</h2>
+    </hgroup>
+    <article >
+    <img src="images/ssh-keygen.png" />
+    </article>
+  </slide>
+
+  
   	<slide>
     <hgroup>
     <h2>Ich hab ein Repository und einen SSH-Key hochgeladen, was mache ich jetzt?</h2>
@@ -160,7 +171,8 @@
 			<ul> 
 			<li><code>git clone &lt;repository-url&gt;</code> in der Shell</li>
 			<li>ODER</li>
-			<li>Nutzen einer der vielen GIT-GUIs, und "Clone" UI nutzen:
+			<li>Nutzen einer der vielen GIT-GUIs, und "Clone" UI nutzen.
+      Kostenfrei sind zum Beispiel:
 			<ul>
 			<li><a href="http://www.syntevo.com/smartgit/">SmartGit</a></li>
 			<li><a href="https://www.sourcetreeapp.com/">SourceTree</a></li>
@@ -180,7 +192,7 @@
 			<ul> 
 			<li>Erstelle deine Dateien</li>
 			<li><code>git add &lt;filename(s)&gt;</code> (Diese Files gehören zu meiner neuen Version)</li>
-			<li>Oder in GUI auswahl der Files und oder bestimmter Zeilen und "Stage"</li>
+			<li>Oder in GUI Auswahl der Files oder bestimmter Zeilen und "Stage"</li>
 			<li><code>git commit -m "&lt;message&gt;"</code> Um eine neue Version zu erstellen.
 					Hilfreiche Messages enthalten:
 			<ul>
@@ -191,9 +203,19 @@
 			</li>
 	
 			
-			<li><code>git push</code>Sobald die Versionen auf den Server hochgeladen werden sollen</li>
+			<li><code>git push</code> Sobald die Versionen auf den Server hochgeladen werden sollen</li>
 			</ul>
-			<p><strong>Committe NUR in Ausnahmefällen ("Zeig mal, vielleicht finde ich den Fehler") etwas, das nicht compiliert!</strong></p>
+			<p><strong>Push NUR in Ausnahmefällen ("Zeig mal, vielleicht finde ich den Fehler") etwas, das nicht compiliert!</strong></p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Was wurde zuletzt gemacht? - GIT Log</h2>
+    </hgroup>
+    <article >
+    <code>git log</code>
+    <img src="images/git_log1.png" />
     </article>
   </slide>
   
