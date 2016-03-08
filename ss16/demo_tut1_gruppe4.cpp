@@ -1,3 +1,7 @@
+/*
+ Achtung!: Keine Gewähr auf korrekten Codingstandard/Stil/Korrektheit!
+*/
+
 #include <iostream>
 #include <vector>
 #include <algorithm>  
