@@ -516,14 +516,14 @@ void Ball::setColor(std::string new_color)
 {
   int *num = new int(3);
 
-  int arr = new int[20];
+  int *arr = new int[20];
   for (int i = 0; i &lt; 20; i++)
   {
     arr[i] = 1 + i;
   }
 
   delete[] arr;
-  delete b;
+  delete num;
 }</pre>
             </div>
             <p style="clear:left; margin-top: 2em;"><strong>Anmerkung:</strong> Statt <code>int</code> kann
