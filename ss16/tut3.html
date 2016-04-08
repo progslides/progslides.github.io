@@ -324,27 +324,6 @@ public:
 
    
     <slide><hgroup>
-         <h2>C++ 11 Gimmicks &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2></hgroup><article>
-         <ul>
-           <li><span class="src">auto</span></li>
-           <li>for each</li>
-           <li>initializer lists</li>
-         </ul>
-         <pre style="font-size: 0.6em">
-#include &lt;iostream&gt;
-#include &lt;vector&gt;
-
-int main()
-{
-  std::vector&lt;int&gt; numbers = {1, 2, 3, 4};
-  for(const auto&amp; number : numbers)
-  {
-    std::cout &lt;&lt; number &lt;&lt; std::endl;
-  }
-}</pre>
-    </article></slide>
-
-    <slide><hgroup>
          <h2>C++ 11 <span class="src">nullptr</span> &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2></hgroup><article>
          <pre style="font-size: 0.6em">
 #include &lt;iostream&gt;
@@ -387,6 +366,335 @@ int main()
 }</pre>
     </article></slide>
 
+    
+    <slide>
+        <hgroup>
+            <h2><span class="src">auto</span> Datentyp</h2>
+        </hgroup>
+        <article>
+            <ul>
+                <li>Datentypen m&uuml;ssen in vielen F&auml;llen nicht explizit angegeben werden, sondern k&ouml;nnen
+                    durch <span class="src">auto</span> ersetzt werden
+                </li>
+                <li>Beispiel:<pre class="prettyprint compact">auto count = 3; // equal to int count = 3;
+auto result = do_something();</pre>
+                </li>
+                <li>Vor allem praktisch f&uuml;r Iteratoren
+<pre class="prettyprint compact">
+std::vector&lt;int> numbers = {1, 2, 4, 8, 16, 32};
+for(auto it = numbers.begin(); it != numbers.end(); ++it) {
+  std::cout << *it << std::endl;
+}</pre>
+<pre class="prettyprint compact">
+std::map&lt;std::string, double> numbers;
+numbers["pi"] = 3.14159265;
+numbers["e"] = 2.71828;
+for(auto it = numbers.begin(); it != numbers.end(); ++it) {
+  std::cout << it->first << ": " << it->second << std::endl;
+}</pre>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2><span class="src">decltype</span> Datentyp</h2></hgroup>
+        <article>
+            <ul>
+                <li>Bestimmen des Typs zur Compile-Zeit</li>
+                <li>&Uuml;bernimmt den Datentyp einer anderen Variable</li>
+                <li>Meistens in Verwendung mit <span class="src">auto</span></li>
+            </ul>
+            <br/>
+            Beispiel um zwei Variablen unbekannten Typs zu tauschen:
+<pre class="prettyprint">
+auto x = 2;
+auto y = 3;
+decltype(x) temp = x; // we don't know the type of x
+x = y;
+y = temp;
+std::cout << x << ", " << y << std::endl;</pre>
+
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup>
+            <h2>Initialisierungslisten</h2>
+        </hgroup>
+        <article>
+
+            <ul>
+                <li>Erlaubt es, Arrays, Strukturen und Klassen direkt zu initialisieren</li>
+                <li>Kann auch für eigene Klassen verwendet werden</li>
+            </ul>
+            <ul>
+                <li>
+                    <small>Beispiel: Vektor und Struktur direkt initialisieren</small>
+                </li>
+            </ul>
+     <pre class="prettyprint" data-lang="C++" style="font-size: 0.75em; line-height: 1.35em;">
+struct Coordinate {
+  int x, y;
+};
+
+int main() {
+  std::vector&lt;int&gt; numbers = {1, 3, 5, 7, 9, 11, 13};
+  Coordinate start = {0, 0};
+  std::vector&lt;Coordinate> path = {
+      start,
+      {1, 0}, // full recursive initialization
+      {2}, // incomplete recursive initialization (only x)
+      {.x = 2, .y = 1}, // full named initialization
+      {.x = 2} // incomplete named initialization
+  };
+}</pre>
+
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup>
+            <h2>Initialisierungslisten f&uuml;r eigene Klassen</h2>
+        </hgroup>
+        <article>
+     <pre class="prettyprint" data-lang="C++" style="font-size: 0.68em; line-height: 1.18em;">
+class Coordinate {
+private:
+  int x_, y_;
+
+public:
+  Coordinate(std::initializer_list&lt;int> list) {
+    auto values = list.begin();
+    x_ = *values++;
+    y_ = *values;
+  }
+
+  void setXY(std::initializer_list&lt;int> list) {
+    auto values = list.begin();
+    x_ = *values++;
+    y_ = *values;
+  }
+
+  int getX() { return x_; }
+  int getY() { return y_; }
+};
+
+int main() {
+  Coordinate start = {3, 4};
+  start.setXY({1, 2});
+  std::cout << start.getX() << "," << start.getY() << std::endl;
+}
+</pre>
+
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup>
+            <h2>Bereichsbasierte for-Schleife<br/>
+                <small>(range-based for loop)</small>
+            </h2>
+        </hgroup>
+        <article>
+            <ul>
+                <li>K&uuml;rzere Variante von <span class="src">for</span></li>
+                <li>Funktioniert f&uuml;r Arrays und Klassen die Iteratoren zur Verf&uuml;gung stellen</li>
+            </ul>
+            <pre class="prettyprint">
+// for classes with iterator
+std::vector&lt;int> primes = {2, 3, 5, 7, 11, 13};
+for(int p : primes) {
+  std::cout << p << std::endl;
+}
+// for arrays
+int fibonacci[] = {1, 1, 2, 3, 5, 8, 13};
+for(int number : fibonacci) {
+  std::cout << number << std::endl;
+}
+// explicit
+for(int x : {1, 2, 3, 4, 5, 6}) {
+  std::cout << x << std::endl;
+}</pre>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Range-based for f&uuml;r eigene Klassen</h2></hgroup>
+        <article>
+            <ul>
+                <li>Klasse muss entweder <span class="src">begin()</span> und <span class="src">end()</span>
+                    implementieren....
+                </li>
+                <li>...oder die globalen Funktionen <span class="src">std::begin()</span> und <span class="src">std::end()</span> &uuml;berladen
+                </li>
+            </ul>
+            <pre class="prettyprint" style="float: left; width: 58%; line-height: 1.2em;">
+class Test {
+private:
+    string text;
+
+public:
+    Test(string t) : text(t) {}
+
+    const char* begin() {
+      return text.c_str();
+    }
+
+    const char* end() {
+      return text.c_str() + text.size();
+    }
+};</pre>
+<pre class="prettyprint" style="float: right; width: 40%;">
+int main() {
+    Test test("Test");
+
+    for(auto t : test) {
+      cout << t << endl;
+    }
+}
+</pre>
+            </pre>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Lambda Ausdr&uuml;cke</h2></hgroup>
+        <article>
+            <ul>
+                <li>C++ 11 unterst&uuml;tzt anonyme Funktionen der Form
+                    <pre>[capture](parameters) -> return_type { function_body }</pre>
+                </li>
+                <li>Beispiel einer Lambda-Funktion um zwei Zahlen zu addieren:
+                    <pre class="prettyprint">[](int x, int y) -> int { return x + y; }</pre>
+                </li>
+                <li>In <span class="code">capture</span> stehen (vereinfacht gesagt) die Variablen au&szlig;erhalb des
+                    Lambda-Ausdrucks, auf die man zugreifen darf. <br><strong>Werden sie nicht als Referenz angegeben,
+                        kann man nur
+                        lesend darauf zugreifen.</strong>
+                <pre class="prettyprint">#include &lt;algorithm>
+[...]
+std::vector&lt;int> numbers = {2, 1, 4, 3, 5};
+int sum = 0, last_nr = 0;
+std::for_each(numbers.begin(), numbers.end(),
+              [&sum, &last_nr](int x) { sum += x; last_nr = x;});
+std::cout &lt;&lt; sum &lt;&lt; ", " &lt;&lt; last_nr &lt;&lt; std::endl;</pre>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Lambda Ausdr&uuml;cke (II)</h2></hgroup>
+        <article>
+            <ul>
+                <li>Speichern am einfachsten in einer Variable vom Datentyp <span class="src">auto</span>
+                    <pre class="prettyprint">auto add = [](int x, int y) -> int {return x + y;};</pre>
+                </li>
+                <li>Oder in einem <span class="src">std::function</span> Object aus dem Header <span class="src">&lt;functional></span>
+                <pre class="prettyprint">
+#include &lt;functional>
+[...]
+std::function&lt;int(int, int)> max =
+    [](int x, y) -> int {return x > y ? x : y};</pre>
+                </li>
+                <li>Werden wie eine normale Funktionen aufgerufen
+                <pre class="prettyprint">
+std::cout << add(2, 3) << std::endl;
+std::cout << max(10, 15) << std::endl;</pre>
+                </li>
+                <li>K&ouml;nnen auch in Containern gespeichert werden
+                <pre class="prettyprint">std::vector&lt;decltype(max)> fnc = { max, add };
+std::cout << fnc[0](6, 8) << std::endl;</pre>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Benutzerdefinierte Suffixe</h2></hgroup>
+        <article>
+            <ul>
+                <li>Erg&auml;nzen die bereits bekannten <span class="src">f</span>, <span class="src">ul</span>, etc.
+                </li>
+                <li>M&uuml;ssen mit einem Unterstrich (_) beginnen</li>
+                <li>K&ouml;nnen beliebige Funktionen ausf&uuml;hren, nicht nur konstante Ausdr&uuml;cke</li>
+            </ul>
+            <pre class="prettyprint" style="float: left; width: 58%; font-size: 0.7em; line-height: 1.5em;">
+constexpr unsigned long long int operator""
+    _mb (unsigned long long int mb) {
+  return mb * 1024 * 1024;
+}
+
+std::vector&lt;int> operator""
+    _bin(unsigned long long int number) {
+  std::vector&lt;int> bin;
+  while(number) {
+    bin.insert(bin.begin(), number % 2);
+    number /= 2;
+  }
+  return bin;
+}</pre>
+<pre class="prettyprint" style="float: right; width: 40%; font-size: 0.7em;">
+int main() {
+    std::cout << "100MB = "
+        << 100_mb << " Bytes"
+        << std::endl;
+    for(int i : 42_bin) {
+        std::cout << i;
+    }
+    std::cout << std::endl;
+}
+</pre>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup>
+            <h2>Pr&auml;dikate testen</h2>
+        </hgroup>
+        <article>
+
+            <ul>
+                <li>Testet, ob eine Eigenschaft auf ein (
+                    <small><span class="src">std::any_of</span></small>
+                    ), alle (
+                    <small><span class="src">std::all_of</span></small>
+                    ) oder kein (
+                    <small><span class="src">std::none_of</span></small>
+                    ) Element eines Containers zutrifft.
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <small>Beispiel: Test, ob eine durch 5 teilbare Zahl in einem Vector vorkommt</small>
+                </li>
+            </ul>
+     <pre class="prettyprint" data-lang="C++" style="font-size: 0.75em; line-height: 1.35em;">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+bool is_div5(int x) { return (x % 5 == 0); }
+
+int main() {
+  std::vector&lt;int&gt; numbers = {1, 3, 5, 7, 9, 11, 13};
+
+  if(std::any_of(numbers.begin(), numbers.end(), is_div5))
+  {
+    std::cout &lt;&lt; "Durch 5 teilbare Zahl gefunden" &lt;&lt; std::endl;
+  }
+}</pre>
+
+        </article>
+    </slide>
+
+    
+    
 <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
