@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="all" href="css/cmdpattern.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/cmdpattern.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #4",
+        subtitle: "Softwareentwicklung Praktikum",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+    div.left {
+      float: left;
+      width: 48%;
+    }
+    div.right {
+      margin-left: 52%;
+      width: 48%;
+    }
+    span.src {
+      font-family: monospace;
+      background: #eee;
+      border: 1px solid #ccc;
+      padding: 1px 2px;
+    }
+  </style>
+</head>
+  <script type="text/javascript">
+  function init() {
+    var pre = document.getElementsByTagName("pre");
+    for(i = 0; i < pre.length; i++) {
+      pretty = true;
+      if(pre[i].hasAttribute("data-nopretty"))
+        pretty = false;
+        
+      if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+      if(!pre[i].hasAttribute("data-nolang")) 
+        pre[i].setAttribute("data-lang", "C++");
+
+      if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+
+    }
+    prettyPrint();
+  }
+
+  </script>
+
+<body id="tugraz" style="opacity: 0" onload="init();">
+
+<slides class="layout-widescreen">
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+       <slide><hgroup>
+        <h2>Ablauf des Tutoriums</h2></hgroup><article>
+        <ul class="compact">
+         <li>Zeitplan</li>
+         <li>Aufbaubeispiel</li>
+         <li>Live-Demo</li>
+         <li>Dijkstra</li>
+        </ul>
+     </article></slide>
+     
+     
+     <slide><hgroup>
+      <h2>Zeitplan</h2></hgroup><article>
+      <ul>
+        <li>Ausgabe Aufbaubeispiel: 19.05.16</li>
+        <li>Abgabe Aufbaubeispiel: 09.06.16</li>
+        <li>Abgabegespräche: ab dem 20.06.16</li>
+      </ul>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Bewertung</h2></hgroup><article>
+      <ul>
+        <li>Basisbeispiel</strong>
+        <ul>
+          <li>Grundanforderung Basisbeispiel: max. 5 Punkte</li>
+          <li>Abgabegespräch: max. 3 Punkte</li>
+          <li>Aufbaubeispiel: optional, max. 2 Punkte, mindestens 2 Punkte auf Basisbsp. erforderlich</li>
+        </ul>
+	<li>Vorlesungsteil Teil (= Klausur)</li>
+	</ul>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Aufbaubeispiel</h2></hgroup><article>
+     <ul>
+        <li>neue Feldtypen:</strong>
+        <ul>
+          <li>Counter</li>
+          <li>Hole</li>
+        </ul>
+        <li>neue Befehle:</strong>
+        <ul>
+          <li>whoami</li>
+          <li><b>solve</b></li>
+          <li>show more</li>
+        </ul>
+	</ul>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Solve</h2></hgroup><article>
+     <ul>
+        <li>KI:</strong>
+        <ul>
+          <li>Pfad vom aktuellen Standpunkt zum Ziel berechnen</li>
+          <li>Mit den wenigsten Schritten</li>
+          <li>Fastmove ausführen</li>
+          <li>Speichern</li>
+        </ul>
+        <li>Nur Felder aus Basisbeispiel</li>
+        <li>Mindestanforderungen:</strong>
+        <ul>
+          <li>Lösen des Maze</li>
+          <li>Beachtung der max. Steps</li>
+        </ul>
+        <li>Restriktionen:</strong>
+        <ul>
+          <li>15 Sekunden</li>
+          <li>400 MB Arbeitsspeicher</li>
+        </ul>
+	</ul>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Live-Demo</h2></hgroup><article>	
+            <center>
+                <img src="images/viewer.png" width="95%"/>
+                <br /><br /><br />
+            </center>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Highscore</h2></hgroup><article>
+            <center>
+                <img src="images/highscore.png" width="100%"/>
+                <br /><br /><br />
+                <a href="https://server.nasahl.net/sep/">https://server.nasahl.net/sep/</a>
+            </center>
+        </article></slide>
+
+    <slide><hgroup>
+      <h2>Dijkstra-Algorithmus</h2></hgroup><article>
+      
+      </article></slide>
+    
+    
+<slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Bis zum Abgabegespräch!</h2>
+    </article></slide>
+    </slide>
+  <slide class="backdrop"></slide>
+</slides>
+<!--
+     <slide><hgroup>
+      <h2>Templates</h2></hgroup><article>
+      <ul>
+       <li>Erlauben es, generische Funktionen zu schreiben</li>
+       <li>Werden in der STL ausgiebig verwendet</li>
+       <li>Es gibt Funktions- und Klassentemplates</li>
+       <li>Deklarations-Syntax: <pre class="compact">template &lt;typename identifier> function_declaration;</pre></li>
+       <li>Aufrufs-Syntax: <pre class="compact">function&lt;argument_type>(arguments);</pre> bzw. <pre class="compact">classname&lt;class_type>(constructor_values);</pre></li>
+      </ul>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Templates - Beispiel (Funktionstemplate)</h2></hgroup><article>
+      <br />
+<pre class="compact">
+template &lt;typename Type>
+Type max(Type a, Type b)
+{
+    if(a > b) return a;
+    else return b;
+}
+</pre>
+<pre class="compact">
+int main()
+{
+  // ruft max&lt;int> auf (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3, 7) &lt;&lt; std::endl;
+  // ruft max&lt;double> (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3.0, 7.0) &lt;&lt; std::endl;
+  // Argumente nicht eindeutig, Typ muss angegeben werden (&lt;double>)
+  std::cout &lt;&lt; max&lt;double>(3, 7.0) &lt;&lt; std::endl;
+  return 0;
+}
+</pre>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Templates - Beispiel (Klassentemplate)</h2></hgroup><article>
+<pre class="compact">
+template &lt;typename T>
+class Math {
+public:
+  T getMin(T x1, T x2) {
+    if(x1 &lt; x2) return x1;
+    else return x2;
+  }
+
+  T getMax(T x1, T x2) {
+    if(x1 > x2) return x1;
+    else return x2;
+  }
+};
+</pre>
+<pre class="compact" style="font-size: .62em; line-height: 1.3em;">
+int main() {
+  Math&lt;int> int_math;
+  Math&lt;std::string> str_math;
+
+  std::cout &lt;&lt; "max(2, 4): " &lt;&lt; int_math.getMax(2, 4) &lt;&lt; std::endl;
+  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): "
+    &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
+}
+</pre>
+     </article></slide>
+-->
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
