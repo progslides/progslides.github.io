@@ -1,216 +1,762 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
-  <link rel="stylesheet" media="all" href="css/cmdpattern.css">
-  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
-  <base target="_blank">
-  <script src="../slides/js/require-1.0.8.min.js"></script>
-  <script src="js/cmdpattern.js"></script>
-  <script type="text/javascript">
-    var SLIDE_CONFIG = {
-      settings: {
-        title: "Tutorium #4",
-        subtitle: "Softwareentwicklung Praktikum",
-        fonts: [
-          'Open Sans:regular,semibold,italic,italicsemibold',
-          'Source Code Pro'
-        ]
-      }
-    };
-    require([
-         '../slides/js/order!../slides/js/modernizr.custom.45394',
-         '../slides/js/order!../slides/js/prettify/prettify',
-         '../slides/js/order!../slides/js/hammer',
-         '../slides/js/order!../slides/js/slide-controller',
-         '../slides/js/order!../slides/js/slide-deck'],
-         function(someModule) {}
-    );
-  </script>
-  <style type="text/css">
-    slides > slide:not(.nobackground):before {
-      background: none;
-      display: none;
-    }
-    slides > slide {
-      color: #222;
-    }
-    h2 {
-      color: #ee1952;
-    }
-    strong {
-      color: #ee1952;
-      font-weight: bold;
-    }
-    dt {
-      margin: .4em 0 .2em 0;
-    }
-    dd {
-      margin: .2em 0 .2em 1.5em;
-    }
-    pre {
-      margin: .4em 0 .4em 0;
-      left: 0;
-      width: 100%;
-      padding: .4em .5em;
-    }
-    div.left {
-      float: left;
-      width: 48%;
-    }
-    div.right {
-      margin-left: 52%;
-      width: 48%;
-    }
-    span.src {
-      font-family: monospace;
-      background: #eee;
-      border: 1px solid #ccc;
-      padding: 1px 2px;
-    }
-  </style>
+    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+    <link rel="stylesheet" media="all" href="css/cmdpattern.css">
+    <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+    <base target="_blank">
+    <script src="../slides/js/require-1.0.8.min.js"></script>
+    <script src="js/cmdpattern.js"></script>
+    <script type="text/javascript">
+        var SLIDE_CONFIG = {
+            settings: {
+                title: "Tutorium #4",
+                subtitle: "Softwareentwicklung Praktikum",
+                fonts: [
+                    'Open Sans:regular,semibold,italic,italicsemibold',
+                    'Source Code Pro'
+                ]
+            }
+        };
+        require([
+                    '../slides/js/order!../slides/js/modernizr.custom.45394',
+                    '../slides/js/order!../slides/js/prettify/prettify',
+                    '../slides/js/order!../slides/js/hammer',
+                    '../slides/js/order!../slides/js/slide-controller',
+                    '../slides/js/order!../slides/js/slide-deck'],
+                function (someModule) {
+                }
+        );
+    </script>
+    <style type="text/css">
+        slides > slide:not(.nobackground):before {
+            background: none;
+            display: none;
+        }
+
+        slides > slide {
+            color: #222;
+        }
+
+        h2 {
+            color: #ee1952;
+        }
+
+        strong {
+            color: #ee1952;
+            font-weight: bold;
+        }
+
+        dt {
+            margin: .4em 0 .2em 0;
+        }
+
+        dd {
+            margin: .2em 0 .2em 1.5em;
+        }
+
+        pre {
+            margin: .4em 0 .4em 0;
+            left: 0;
+            width: 100%;
+            padding: .4em .5em;
+        }
+
+        div.left {
+            float: left;
+            width: 48%;
+        }
+
+        div.right {
+            margin-left: 52%;
+            width: 48%;
+        }
+
+        span.src {
+            font-family: monospace;
+            background: #eee;
+            border: 1px solid #ccc;
+            padding: 1px 2px;
+        }
+
+        span.code {
+            font-family: monospace;
+            color: #444;
+        }
+
+        .stretched {
+            line-height: 200%;
+        }
+
+        .small-stretched {
+            line-height: 150%;
+        }
+    </style>
 </head>
-  <script type="text/javascript">
-  function init() {
-    var pre = document.getElementsByTagName("pre");
-    for(i = 0; i < pre.length; i++) {
-      pretty = true;
-      if(pre[i].hasAttribute("data-nopretty"))
-        pretty = false;
-        
-      if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
-      if(!pre[i].hasAttribute("data-nolang")) 
-        pre[i].setAttribute("data-lang", "C++");
+<script type="text/javascript">
+    function init() {
+        var pre = document.getElementsByTagName("pre");
+        for (i = 0; i < pre.length; i++) {
+            pretty = true;
+            if (pre[i].hasAttribute("data-nopretty"))
+                pretty = false;
 
-      if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+            if (pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+            if (!pre[i].hasAttribute("data-nolang"))
+                pre[i].setAttribute("data-lang", "C++");
 
+            if (pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+
+        }
+        prettyPrint();
     }
-    prettyPrint();
-  }
 
-  </script>
+</script>
 
 <body id="tugraz" style="opacity: 0" onload="init();">
 
 <slides class="layout-widescreen">
-  <slide class="title-slide segue nobackground">
-    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
-    <hgroup class="auto-fadein">
-      <h1 data-config-title><!-- populated from slide_config.json --></h1>
-      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
-      <p data-config-presenter><!-- populated from slide_config.json --></p>
-    </hgroup>
-  </slide>
+    <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+        <hgroup class="auto-fadein">
+            <h1 data-config-title><!-- populated from slide_config.json --></h1>
+            <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+            <p data-config-presenter><!-- populated from slide_config.json --></p>
+        </hgroup>
+    </slide>
 
-       <slide><hgroup>
-        <h2>Ablauf des Tutoriums</h2></hgroup><article>
-        <ul class="compact">
-         <li>Zeitplan</li>
-         <li>Aufbaubeispiel</li>
-         <li>Live-Demo</li>
-         <li>Dijkstra</li>
-        </ul>
-     </article></slide>
-     
-     
-     <slide><hgroup>
-      <h2>Zeitplan</h2></hgroup><article>
-      <ul>
-        <li>Ausgabe Aufbaubeispiel: 19.05.16</li>
-        <li>Abgabe Aufbaubeispiel: 09.06.16</li>
-        <li>Abgabegespräche: ab dem 20.06.16</li>
-      </ul>
-     </article></slide>
+    <slide>
+        <hgroup>
+            <h2>Ablauf des Tutoriums</h2></hgroup>
+        <article>
+            <ul class="compact">
+                <li>Templates</li>
+                <li>Profiling</li>
+                <li>Zeitplan</li>
+                <li>Aufbaubeispiel</li>
+                <li>Live-Demo</li>
+                <li>Dijkstra</li>
+            </ul>
+        </article>
+    </slide>
 
-     <slide><hgroup>
-      <h2>Bewertung</h2></hgroup><article>
-      <ul>
-        <li>Basisbeispiel</strong>
-        <ul>
-          <li>Grundanforderung Basisbeispiel: max. 5 Punkte</li>
-          <li>Abgabegespräch: max. 3 Punkte</li>
-          <li>Aufbaubeispiel: optional, max. 2 Punkte, mindestens 2 Punkte auf Basisbsp. erforderlich</li>
-        </ul>
-		<li>Vorlesungsteil Teil (= Klausur)</li>
-	</ul>
-     </article></slide>
 
-     <slide><hgroup>
-     <h2>Aufbaubeispiel</h2></hgroup><article>
-       <ul>
-       <li>neue Feldtypen:</strong>
-        <ul>
-          <li>Counter</li>
-          <li>Hole</li>
-        </ul>
-        <li>neue Befehle:</strong>
-        <ul>
-          <li>whoami</li>
-          <li>solve</li>
-          <li>show more</li>
-        </ul>
-	  </ul>
-     </article></slide>
+    <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>Templates</h2>
+        </hgroup>
+    </slide>
 
-     <slide><hgroup>
-      <h2>Solve</h2></hgroup><article>
-     <ul>
-        <li>KI:</strong>
-        <ul>
-          <li>Pfad vom aktuellen Standpunkt zum Ziel berechnen</li>
-          <li>Mit den wenigsten Schritten</li>
-          <li>Fastmove ausführen</li>
-          <li>Speichern</li>
-        </ul>
-        <li>Nur Felder aus Basisbeispiel</li>
-        <li>Mindestanforderungen:</strong>
-        <ul>
-          <li>Lösen des Maze</li>
-          <li>Beachtung der max. Steps</li>
-        </ul>
-        <li>Restriktionen:</strong>
-        <ul>
-          <li>15 Sekunden</li>
-          <li>400 MB Arbeitsspeicher</li>
-        </ul>
-	</ul>
-     </article></slide>
+    <slide>
+        <hgroup><h2>Templates</h2></hgroup>
+        <article>
+            <ul>
+                <li>Erlauben es, generische Funktionen zu schreiben</li>
+                <li>Werden in der STL ausgiebig verwendet</li>
+                <li>Es gibt Funktions- und Klassentemplates</li>
+                <li>Deklarations-Syntax:
+                    <pre class="prettyprint">template &lt;typename identifier> function_declaration;</pre>
+                </li>
+                <li>Aufrufs-Syntax:
+                    <pre class="prettyprint">function&lt;argument_type>(arguments);</pre>
+                    bzw.
+                    <pre class="prettyprint">classname&lt;class_type>(constructor_values);</pre>
+                </li>
+            </ul>
+        </article>
+    </slide>
 
-     <slide><hgroup>
-      <h2>Live-Demo</h2></hgroup><article>	
+    <slide>
+        <hgroup><h2>Templates - Beispiel (Funktionstemplate)</h2></hgroup>
+        <article>
+<pre class="prettyprint" data-lang="C++">
+template &lt;typename Type>
+Type max(Type a, Type b)
+{
+    if(a > b) return a;
+    else return b;
+}
+</pre>
+<pre class="prettyprint" data-lang="C++">
+int main()
+{
+  // ruft max&lt;int> auf (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3, 7) &lt;&lt; std::endl;
+  // ruft max&lt;double> (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3.0, 7.0) &lt;&lt; std::endl;
+  // Argumente nicht eindeutig, Typ muss angegeben werden (&lt;double>)
+  std::cout &lt;&lt; max&lt;double>(3, 7.0) &lt;&lt; std::endl;
+  return 0;
+}
+</pre>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
+        <article>
+<pre class="prettyprint" data-lang="C++">
+template &lt;typename T>
+class Math {
+public:
+  T getMin(T x1, T x2) {
+    if(x1 &lt; x2) return x1;
+    else return x2;
+  }
+
+  T getMax(T x1, T x2) {
+    if(x1 > x2) return x1;
+    else return x2;
+  }
+};
+</pre>
+<pre class="prettyprint" data-lang="C++" style="font-size: .62em; line-height: 1.3em;">
+int main() {
+  Math&lt;int> int_math;
+  Math&lt;std::string> str_math;
+
+  std::cout &lt;&lt; "max(2, 4): " &lt;&lt; int_math.getMax(2, 4) &lt;&lt; std::endl;
+  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): "
+    &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
+}
+</pre>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
+        <article>
+<pre class="prettyprint" data-lang="C++">
+template &lt;typename T&gt;
+struct LinkedList {
+  LinkedListElement&lt;T>* elements_;
+
+  LinkedList();
+  void insert(int index, T object);
+};
+
+template &lt;typename T&gt;
+struct LinkedListElement {
+  T object_;
+  LinkedListElement&lt;T>* next_;
+
+  LinkedListElement(T object);
+}
+</pre>
+        </article>
+    </slide>
+    <slide>
+        <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
+        <article>
+<pre class="prettyprint" data-lang="C++">
+void LinkedList::insert(int index, T object)
+{
+  if(elements_ == null)
+  {
+    elements_ = new LinkedListElement(object);
+    return;
+  }
+  LinkedListElement* previous = elements_;
+  for(int i = 0; i &lt; index &amp;&amp; previous != null; i++)
+  {
+    previous = previous->next_;
+  }
+
+  LinkedListElement* next = previous->next_;
+  previous->next_ = new LinkedListElement(object);
+
+  previous->next_->next_ = next;
+}
+</pre>
+        </article>
+    </slide>
+
+
+    <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>Profiling</h2>
+
+            <h3>// Premature optimization is the root of all evil <span style="font-size: 60%;">(Donald Knuth)</span>
+            </h3>
+        </hgroup>
+    </slide>
+
+    </slide>
+
+    <slide>
+        <hgroup><h2>Optimieren</h2></hgroup>
+        <article>
+            <ul class="small-stretched">
+                <li>Optimierungen k&ouml;nnen enorm viel Geschwindigkeit herausholen</li>
+                <li>Wichtig ist es, die richtigen Dinge zu optimieren</li>
+                <li>Durch Profiling findet man heraus, was sich auszahlt zu optimieren</li>
+                <li>F&uuml;r Profiling ben&ouml;tigt man einen CPU Profiler:
+                    <ul>
+                        <li>Googles <span class='code'>gperf</span> (<a
+                                href="https://github.com/gperftools/gperftools">https://github.com/gperftools/gperftools</a>)
+                        </li>
+                        <li>oder Valgrinds <span class='code'>callgrind</span> zusammen mit KCachegrind (<a
+                                href="https://kcachegrind.github.io/">https://kcachegrind.github.io/</a>)
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2><span class="code">gperf</span></h2></hgroup>
+        <article>
+            <ul>
+                <li>Unter Ubuntu im Paketmanager als <span class='code'>google-perftools</span></li>
+                <li>C++ Code mit Compiler Flag <span class='src'>-pg</span> kompilieren und starten</li>
+                <li>Mit <span class='src'>gprof [binary] gmon.out</span> analysieren</li>
+            </ul>
+            <pre style="font-size: 60%; line-height: 120%;">
+ time   seconds   seconds    calls   name
+26.96      0.28     0.28 10252798   void std::__adjust_heap
+23.53      0.52     0.24 61948292   std::remove_reference
+11.77      0.64     0.12 10252798   void std::__push_heap
+ 6.86      0.71     0.07 31071480   DijkstraSolverExtended::InfoComp::operator()
+ 5.88      0.77     0.06 20338780   bool __gnu_cxx::__ops::_Iter_comp_iter&lt;DijkstraSolverExtended::InfoComp>::operator()
+ 4.90 0.82 0.05 10591122 bool __gnu_cxx::__ops::_Iter_comp_val&lt;DijkstraSolverExtended::InfoComp>::operator()
+ 4.90 0.87 0.05 12792 void std::__make_heap
+ 3.43 0.90 0.04 10265590 __gnu_cxx::__ops::_Iter_comp_val&lt;DijkstraSolverExtended::InfoComp>
+ 2.45 0.93 0.03 25600 __gnu_cxx::__normal_iterator
+ 1.96 0.95 0.02 12796 void __gnu_cxx::new_allocator&lt;DijkstraSolverExtended::Info*>::destroy
+ 1.96 0.97 0.02 108 void std::vector::_M_emplace_back_aux
+ 1.47 0.98 0.02 25588 __gnu_cxx::__ops::_Iter_comp_iter
+ 0.98 0.99 0.01 10278386 __gnu_cxx::__ops::_Iter_comp_val
+ 0.98 1.00 0.01 12796 std::enable_if
+ 0.98 1.01 0.01 1 MazeGame::solve(std::vector&lt;std::string, std::allocator&lt;std::string> >)
+ 0.98 1.02 0.01 MazeGame::checkWinning()            </pre>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2><span class="code">Valgrind</span></h2></hgroup>
+        <article>
+            <ul>
+                <li>Programm mit <br/><span class='src'>valgrind --tool=callgrind --dump-instr=yes [binary]</span>
+                    starten
+                </li>
+                <li>Mit <span class='src'>kcachegrind callgrind.out.*</span> analysieren</li>
+            </ul>
+            <center>
+                <img src="images/kcachegrind.png" width="650px">
+            </center>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup>
+            <h2>Zeitplan</h2></hgroup>
+        <article>
+            <ul class="stretched">
+                <li>Ausgabe Aufbaubeispiel: <strong>19.05.16</strong></li>
+                <li>Abgabe Aufbaubeispiel: <strong>09.06.16</strong></li>
+                <li>Abgabegespräche: ab dem <strong>20.06.16</strong></li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup>
+            <h2>Bewertung</h2></hgroup>
+        <article>
+            <ul class="stretched">
+                <li>Basisbeispiel</strong>
+                    <ul class="small-stretched">
+                        <li>Grundanforderung Basisbeispiel: max. 5 Punkte</li>
+                        <li>Abgabegespräch: max. 3 Punkte</li>
+                        <li>Aufbaubeispiel: optional, max. 2 Punkte, mindestens 2 Punkte auf Basisbsp. erforderlich</li>
+                    </ul>
+                </li>
+                <li>Vorlesungsteil Teil (= Klausur)</li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup>
+            <h2>Aufbaubeispiel</h2></hgroup>
+        <article>
+            <ul class="stretched">
+                <li>neue <strong>Feldtypen</strong>:</strong>
+                    <ul clsas="stretched">
+                        <li>Counter</li>
+                        <li>Hole</li>
+                    </ul>
+                </li>
+                <li>neue <strong>Befehle</strong>:</strong>
+                    <ul class="stretched">
+                        <li>whoami</li>
+                        <li>solve</li>
+                        <li>show more</li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup>
+            <h2>Solve</h2></hgroup>
+        <article>
+            <ul>
+                <li>KI:</strong>
+                    <ul>
+                        <li>Pfad vom aktuellen Standpunkt zum Ziel berechnen</li>
+                        <li>Mit den wenigsten Schritten</li>
+                        <li>Fastmove ausführen</li>
+                        <li>Speichern</li>
+                    </ul>
+                </li>
+                <li>Nur Felder aus Basisbeispiel</li>
+                <li>Mindestanforderungen:</strong>
+                    <ul>
+                        <li>Lösen des Maze</li>
+                        <li>Beachtung der max. Steps</li>
+                    </ul>
+                </li>
+                <li>Restriktionen:</strong>
+                    <ul>
+                        <li>15 Sekunden</li>
+                        <li>400 MB Arbeitsspeicher</li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup>
+            <h2>Live-Demo</h2></hgroup>
+        <article>
             <center>
                 <img src="images/viewer.png" width="95%"/>
-                <br /><br /><br />
+                <br/><br/><br/>
             </center>
-     </article></slide>
+        </article>
+    </slide>
 
-     <slide><hgroup>
-      <h2>Highscore</h2></hgroup><article>
+    <slide>
+        <hgroup>
+            <h2>Highscore</h2></hgroup>
+        <article>
             <center>
                 <img src="images/highscore.png" width="100%"/>
-                <br /><br /><br />
+                <br/><br/><br/>
                 <a href="https://server.nasahl.net/sep/">https://server.nasahl.net/sep/</a>
             </center>
-        </article></slide>
-
-    <slide><hgroup>
-      <h2>Dijkstra-Algorithmus</h2></hgroup><article>
-      
-      </article></slide>
-    
-    
-<slide class="thank-you-slide segue nobackground">
-    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
-    <article class="flexbox vleft auto-fadein">
-      <h2>Bis zum Abgabegespräch!</h2>
-    </article></slide>
+        </article>
     </slide>
-  <slide class="backdrop"></slide>
+
+
+    <slide class="segue dark nobackground" data-slide-num="16" data-total-slides="22">
+        <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+        <hgroup class="auto-fadein">
+            <h2 style="line-height: 1.2em;">Wegsuche</h2>
+
+            <h3>// Damn it, how will I ever get out of this labyrinth? <span
+                    style="font-size: 60%;">(Simón Bolívar)</span></h3>
+        </hgroup>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Labyrinth zu Graphen</h2></hgroup>
+        <article>
+            <ul>
+                <li>Labyrinthe geh&ouml;ren zu den klassischen Problemen der Wegsuche in Graphen</li>
+                <li>Prominente Beispiele sind Navigationssoftware oder KI in Computerspielen</li>
+                <li>Es gibt effiziente Algorithmen zur L&ouml;sung</li>
+                <li>Wir k&ouml;nnen jedes Labyrinth in einen Graphen umwandeln
+                    <ul class="build">
+                        <li>Jedes Feld ist ein <strong>Knoten</strong></li>
+                        <li>Wenn man von einem Feld auf ein anderes gelangt, werden sie durch eine
+                            <strong>Kante</strong>
+                            verbunden
+                        </li>
+                        <li>Wichtig: Kanten sind <strong>gerichtet</strong>, da es z.B. Einbahnen gibt</li>
+                        <li>Das <strong>Gewicht</strong> der Kante ist die Anzahl der Schritte, die man f&uuml;r die
+                            Verbindung
+                            braucht (durch Bonus- oder Treibsand-Felder)
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Beispiel: Labyrinth zu Graphen</h2></hgroup>
+        <article>
+            <center>
+                <img src="images/graph_pre.png" width="80%">
+            </center>
+            <br/>
+            <ul>
+                <li>Mauern sind keine Knoten im Graph (da man sie nicht "besuchen" kann)</li>
+                <li>Wir bilden alle m&ouml;glichen Bewegungen ab (und die Schritte dazu)</li>
+            </ul>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Beispiel: Labyrinth zu Graphen</h2></hgroup>
+        <article>
+            <br/>
+            <center>
+                <img src="images/graph.svg" width="90%">
+            </center>
+
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Erster Versuch: Breitensuche</h2></hgroup>
+        <article>
+            <ul class="small-stretched">
+                <li>Breitensuche (Breadth-First-Search, BFS) ist eine M&ouml;glichkeiten, den gesamten Graphen zu
+                    durchsuchen
+                </li>
+                <li>Wir beginnen beim Start, und suchen das Ausgangsfeld</li>
+                <li><b>Idee:</b>
+                    <ul class="build">
+                        <li>Wir bauen eine Warteschlange, in der wir die n&auml;chsten zu untersuchenden Knoten
+                            speichern
+                        </li>
+                        <li>Von jedem Knoten den wir besuchen, legen wir die Nachbar-Knoten in die Warteschlange</li>
+                        <li>Wir betrachten (und entfernen) immer den ersten Knoten der Warteschlange, bis wir das Ziel
+                            gefunden haben
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Erster Versuch: Breitensuche</h2></hgroup>
+        <article class="build">
+            <ul>
+                <li><b>Pro</b>
+                    <ul class="build">
+                        <li><strong>Einfach</strong> zu implementieren</li>
+                        <li>Findet <strong>immer</strong> einen Weg</li>
+                    </ul>
+                </li>
+                <li><b>Contra</b>
+                    <ul class="build">
+                        <li><strong>Langsam</strong>, da Felder immer wieder untersucht werden</li>
+                        <li>Umso mehr Wege es gibt, umso l&auml;nger braucht die Suche</li>
+                        <li>Findet <strong>irgendeinen</strong> Pfad, nicht unbedingt den k&uuml;rzesten Pfad</li>
+                    </ul>
+                </li>
+
+            </ul>
+            <ul>
+                <li>Geht das noch besser?
+                    <ul class="build">
+                        <li>Besuchte Knoten markieren, und nicht erneut besuchen</li>
+                        <li>Vor dem Hinzuf&uuml;gen in die Warteschlange schauen ob man schon das Ziel erreicht hat</li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Schnelle Wegsuche: Dijkstra</h2></hgroup>
+        <article>
+            <ul>
+                <li><a href="https://de.wikipedia.org/wiki/Dijkstra-Algorithmus">Dijkstra-Algorithmus</a> findet den k&uuml;rzesten
+                    Weg in einem Graph
+                </li>
+                <li><b>Idee:</b>
+                    <ul>
+                        <li>Alle Knoten haben am Anfang "Distanz" = &infin; (Startknoten hat "Distanz" = 0) und "Vorg&auml;nger"
+                            = <span class="code">NULL</span></li>
+                        <li>Solange es <strong>unbesuchte</strong> Knoten gibt, w&auml;hle den mit <strong>niedrigster
+                            Distanz</strong>
+                            <ul class="build">
+                                <li>Markiere Knoten als <strong>besucht</strong></li>
+                                <li>F&uuml;r alle <strong>unbesuchten</strong> Nachbarn, berechne die Summe des
+                                    jeweiligen Kantengewichtes und der aktuellen Distanz
+                                </li>
+                                <li>Ist der Wert <strong>kleiner</strong> als die Distanz des Knotens, <strong>aktualisiere</strong>
+                                    sie und setze aktuellen Knoten als Vorg&auml;nger.
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Schnelle Wegsuche: Dijkstra</h2></hgroup>
+        <article class="build">
+            <ul>
+                <li><b>Pro</b>
+                    <ul class="build">
+                        <li>Relativ <strong>einfach</strong> zu implementieren</li>
+                        <li>Findet den <strong>k&uuml;rzesten</strong> Weg</li>
+                        <li>Sehr <strong>schnell</strong></li>
+                    </ul>
+                </li>
+                <li><b>Contra</b>
+                    <ul class="build">
+                        <li>Kann <strong>nicht</strong> mit <strong>Bonus-Feldern</strong> umgehen</li>
+                    </ul>
+                </li>
+
+            </ul>
+            <ul>
+                <li>Warum kann Dijkstra Level mit Bonus nicht l&ouml;sen?
+                    <ul class="build">
+                        <li>Bonus Felder sind <strong>Endlosschleifen</strong>, wenn der Graph nicht aktualisiert wird
+                        </li>
+                        <li>Den Graph zu aktualisieren w&auml;hrend der Algorithmus l&auml;uft ist
+                            <strong>kompliziert</strong></li>
+                        <li>Dijkstra kann allgemein nicht mit <strong>negativen Kantengewichten</strong> umgehen</li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Alternativen zu Dijkstra</h2></hgroup>
+        <article>
+            <ul class="stretched">
+                <li>Algorithmen, die negative Kanten unterst&uuml;tzen
+                    <ul>
+                        <li><strong>Floyd-Warshall</strong>
+                            <ul>
+                                <li>berechnet die k&uuml;rzesten Pfade zwischen <strong>allen</strong> Knoten</li>
+                                <li>dadurch sehr langsam</li>
+                            </ul>
+                        </li>
+                        <li><strong>Bellman-Ford</strong>
+                            <ul>
+                                <li>wie Dijkstra, kann allerdings negative Kanten</li>
+                                <li>viel langsamer als Dijkstra
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Benchmark (25x25 Labyrinth)</h2></hgroup>
+        <article class="smaller">
+            <table>
+                <tr>
+                    <th>Algorithmus</th>
+                    <th>Zeit</th>
+                    <th>Laufzeit</th>
+                </tr>
+                <tr>
+                    <td>BFS</td>
+                    <td>0,6ms</td>
+                    <td><span class="code"><span style="font-style: italic;">O</span>(E)</span></td>
+                </tr>
+                <tr>
+                    <td>Dijkstra</td>
+                    <td>5ms</td>
+                    <td><span class="code"><span style="font-style: italic;">O</span>(E + V * log(V))</span></td>
+                </tr>
+                <tr>
+                    <td>Bellman-Ford</td>
+                    <td>30ms</td>
+                    <td><span class="code"><span style="font-style: italic;">O</span>(V * E)</span></td>
+                </tr>
+                <tr>
+                    <td>Floyd-Warshall</td>
+                    <td>23 278ms</td>
+                    <td><span class="code"><span style="font-style: italic;">O</span>(V<sup>3</sup>)</span></td>
+                </tr>
+
+            </table>
+            <br/>
+            <center>
+                <img src="images/comparison.png" height="260px">
+            </center>
+
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Zur&uuml;ck zu Dijkstra</h2></hgroup>
+        <article>
+            <ul class="stretched">
+                <li>K&ouml;nnen wir Dijkstra &auml;ndern, um mit Bonus-Feldern umzugehen?</li>
+                <li><b>Grundidee</b>:
+                    <ul class="build">
+                        <li>Problem in Teilprobleme zerlegen</li>
+                        <li>Start, Ziel und jedes Bonusfeld ist ein <strong>Wegpunkt</strong></li>
+                        <li>K&uuml;rzeste Wege zwischen allen Wegpunkten berechnen</li>
+                        <li>Beste Kombination an Wegpunkten w&auml;hlen</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Zur&uuml;ck zu Dijkstra</h2></hgroup>
+        <article class="build">
+            <ul>
+                <li><b>Pro</b>
+                    <ul class="stretched build">
+                        <li>Funktioniert f&uuml;r Bonusfelder</li>
+                        <li><strong>Schnell</strong> f&uuml;r wenige Bonusfelder</li>
+                    </ul>
+                </li>
+                <li><b>Contra</b>
+                    <ul class="stretched build">
+                        <li><strong>Langsam</strong>, f&uuml;r viele Bonusfelder</li>
+                        <li><strong>Komplizierter</strong> zu implementieren</li>
+                        <li>Braucht <strong>Sonderbehandlung</strong>, wenn Bonusfelder auf einem Weg liegen</li>
+                    </ul>
+                </li>
+
+            </ul>
+        </article>
+    </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+        <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+        <article class="flexbox vleft auto-fadein">
+            <h2>Bis zum Abgabegespräch!</h2>
+        </article>
+    </slide>
+    </slide>
+    <slide class="backdrop"></slide>
 </slides>
 <!--
      <slide><hgroup>
@@ -279,8 +825,8 @@ int main() {
      </article></slide>
 -->
 <!--[if IE]>
-  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
-  <script>CFInstall.check({mode: 'overlay'});</script>
+<script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+<script>CFInstall.check({mode: 'overlay'});</script>
 <![endif]-->
 </body>
 </html>
