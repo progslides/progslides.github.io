@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #6",
+        subtitle: "Einführung in die Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+
+            function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = 1;
+          container.src = container.src.replace(img_id + ".", new_id + ".");
+        }
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+ol li {
+  list-style-type: decimal;
+  display: list-item;
+  }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+      <ul>
+       <li>Übungsbeispiel: Spielfeld</li>
+       <li>Übungsbeispiel: Siegbedingung</li>
+       <li>Übungsbeispiel: File-I/O</li>
+       </ul>
+    </article>
+  </slide>
+
+ <slide>
+    <hgroup>
+    <h2>Wiederholung: Mehrdimensionale Arrays</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li>Arrays k&ouml;nnen mehrere Dimensionen haben</li>
+      <li>2-dimensionale Arrays: <pre class="prettyprint" data-lang="c">&lt;typ&gt; name[&lt;rows&gt;][&lt;columns&gt;];</pre>
+      <li>Zugriff &uuml;ber Zeilen- und Spaltenindex: <pre class="prettyprint" data-lang="c">name[&lt;row&gt;][&lt;column&gt;] = &lt;value&gt;;</pre>
+      <li>Beispiel Initialisierung: <pre class="prettyprint" data-lang="c">char matrix[3][3] = { {'A', 'B', 'C'}, {'D', 'E', 'F'},
+      {'G', 'H', 'I'} };</pre>
+    </ul>
+    </article>
+  </slide>
+
+  <slide>
+      <hgroup>
+      <h2>Übungsbeispiel: Spielfeld</h2>
+      </hgroup>
+      <article>
+      <pre class="prettyprint" data-lang="bash">
+ep> show
+1 -  -  -  -  -  -
+2 -  -  -  -  -  -
+3 -  -  -  -  -  -
+4 -  -  -  -  -  -
+5 -  -  -  -  -  -
+6 -  -  -  -  -  -
+7 -  -  -  -  -  -
+  A  B  C  D  E  F
+  </pre>
+   <ul>
+<li> (Dynamische) Gr&ouml;&szlig;e? </li>
+<li> &Uuml;bergabe an Funktionen? </li>
+  </ul>
+      </article>
+  </slide>
+
+   <slide>
+      <hgroup>
+      <h2>Übungsbeispiel: Siegbedingungen</h2>
+      </hgroup>
+      <article>
+      <pre class="prettyprint" data-lang="bash">
+ep> show
+1 -  -  -  -  -  -
+2 -  -  -  -  -  -
+3 -  -  -  -  -  -
+4 -  -  -  -  -  -
+5 -  -  O  X  -  -
+6 -  -  O  X  -  -
+7 -  -  O  X  -  -
+  A  B  C  D  E  F
+ep> set C
+  </pre>
+      </article>
+  </slide>
+  
+     <slide>
+      <hgroup>
+      <h2>Übungsbeispiel: Siegbedingungen</h2>
+      </hgroup>
+      <article>
+      <pre class="prettyprint" data-lang="bash">
+1 -  -  -  -  -  -
+2 -  -  -  -  -  -
+3 -  -  -  -  -  -
+4 -  -  O  -  -  -
+5 -  -  O  X  -  -
+6 -  -  O  X  -  -
+7 -  -  O  X  -  -
+  A  B  C  D  E  F
+  </pre>
+
+  Es gibt natürlich noch mehr Siegbedingungen, wichtig ist, im Programm alle möglichen Fälle abzudecken!
+  
+      </article>
+  </slide>
+  
+   <slide>
+ <hgroup>
+ <h2>Wiederholung: File I/O</h2>
+ </hgroup>
+ <article>
+<ul>
+     <li>Textdateien und Bin&auml;rdateien</li>
+     <li>Textdateien
+       <ul>
+         <li>enthalten nur Text</li>
+         <li>k&ouml;nnen mit dem normalen Editor gelesen werden</li>
+         <li>z.B. .txt Dateien</li>
+       </ul>
+       </li>
+     <li><strong>Bin&auml;rdateien</strong>
+       <ul>
+        <li>enthalten beliebige bin&auml;re Daten</li>
+        <li>sind <strong>nicht</strong> mit dem normalen Editor lesbar</li>
+        <li>z.B. Bilder, Musik</li>
+       </ul>
+       </li>
+   </ul>
+ </article>
+</slide>
+  
+   <slide>
+ <hgroup>
+ <h2>Beispieldatei - Hex-Editor</h2>
+ </hgroup>
+ <article>
+<br />
+  <center><img src="images/hex_sample_4g.PNG" width="100%" /></center>
+  <pre class="prettyprint" data-lang="bash">
+1 -  -  -  -  -  -
+2 -  -  -  -  -  -
+3 -  -  -  -  -  -
+4 -  -  -  -  -  -
+5 -  -  -  -  -  -
+6 -  -  -  -  -  -
+7 X  O  X  O  X  -
+  A  B  C  D  E  F
+  </pre>
+ 
+ </article>
+</slide>
+
+ <slide>
+ <hgroup>
+ <h2>Wichtige File-I/O Funktionen</h2>
+ </hgroup>
+ <article>
+<ul>
+   <li><code>fopen</code> <a href = "http://www.cplusplus.com/reference/cstdio/fopen/">(http://www.cplusplus.com/reference/cstdio/fopen/)</a></li>
+   <li><code>fread</code> <a href = "http://www.cplusplus.com/reference/cstdio/fread/">(http://www.cplusplus.com/reference/cstdio/fread/)</a></li>
+   <li><code>fwrite</code> <a href = "http://www.cplusplus.com/reference/cstdio/fwrite/">(http://www.cplusplus.com/reference/cstdio/fwrite/)</a></li>
+  </ul>
+ </article>
+</slide>
+  
+<slide>
+<hgroup>
+<h2>Übungsbeispiel: Fragen?</h2>
+</hgroup>
+<article>
+
+</article>
+</slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg beim Übungsbeispiel!</h2>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
