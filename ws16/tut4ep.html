@@ -124,11 +124,82 @@ ol li {
   </slide>
 
   <slide>
-    <h2>HW3 Besprechung - H&auml;ufige Fehler</h2>
+    <hgroup>
+      <h2>HW3 Besprechung - H&auml;ufige Fehler</h2>
     </hgroup>
-    <article>
-    <img src="images/hw4_cheat.png" height="99%" />
-    </article>
+     <article>
+      <ul>
+       <li>Nur eine Schleife verwendet (Spezifikation: <strong>zwei</strong> Schleifen)</li>
+       <li>Codingstandard (Tabulatoren, Zeile zu lang, Einr&uuml;ckungen, ...)</li>
+       <li>Deutsche Variablennamen und deutsche Kommentare</li>
+       <li>Schlechte Variablennamen (<code>i</code>, <code>tmp</code>, ...)</li>
+       <li>Falsche Overflow Behandlung</li>
+      </ul>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW3 Besprechung - H&auml;ufige Fehler</h2>
+    </hgroup>
+     <article>
+      <ul>
+        <li>Falsche Overflow Behandlung:
+         <ul>
+           <li><pre class="prettyprint" data-lang="c">if(number &lt; 0) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if((number * counter) &lt; number) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX - number) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if(nubmer * counter >= INT_MAX) ...</pre></li>
+         </ul>        
+        </li>
+        <li>Richtige Overflow Behandlung:
+        <ul>
+          <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX / counter) ...</pre></li>
+          <li><pre class="prettyprint" data-lang="c">if(((double)number * (double)counter) > INT_MAX) ...</pre></li>
+        </ul>
+        </li>
+    
+      </ul>
+      
+     </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+<img src="images/hw2_bad1.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+ <img src="images/hw2_bad2.png" height="90%" />
+     </article>
+  </slide>
+<!--
+  <slide>
+    <hgroup>
+      <h2>HW2 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+
+  <img src="images/hw2_good1.png" height="90%" />
+     </article>
+  </slide>
+  -->
+  <slide>
+    <hgroup>
+      <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+<img src="images/hw2_bad3.png" width="55%" />
+     </article>
   </slide>
 
   <slide>
