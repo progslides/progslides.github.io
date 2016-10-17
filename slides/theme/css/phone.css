@@ -14,4 +14,13 @@ and (max-width : 480px) {
     -webkit-transition: none !important;
     transition: none !important;
   }
+  
+  input.code_animator_button {
+  font-weight: bold;
+  padding: 8px;
+  margin: 8px;
+  width: 100px;
+  height: 60px;
+
+  }
 }
