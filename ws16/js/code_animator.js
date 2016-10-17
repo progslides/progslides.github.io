@@ -40,11 +40,12 @@ function animateCode() {
           }
           table += "</table>";
           table += "<div style=\"padding-left: 10em;\">";
-          table += "<input type=\"button\" value=\"&laquo; back\" onclick=\"animateCodeStep(" + id + ", -1);\" class=\"code_animator_button\">";
-          table += "<input type=\"button\" value=\"&raquo; step\" onclick=\"animateCodeStep(" + id + ", 1);\" class=\"code_animator_button\">";
+          table += "<input type=\"button\" value=\"&laquo; back\" ontouchend=\"animateCodeStep(" + id + ", -1);\" onclick=\"animateCodeStep(" + id + ", -1);\" class=\"code_animator_button\">";
+          table += "<input type=\"button\" value=\"&raquo; step\" ontouchend=\"animateCodeStep(" + id + ", 1);\" onclick=\"animateCodeStep(" + id + ", 1);\" class=\"code_animator_button\">";
           table += "<input type=\"hidden\" id=\"ca_" + id + "_step\" value=\"1\">";
           table += "<input type=\"hidden\" id=\"ca_" + id + "_max_step\" value=\"" + (max_step - 1) + "\">";
           table += "</div>";
+
           inner_divs[j].innerHTML = table;
         }
       }
