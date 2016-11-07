@@ -320,42 +320,7 @@ ol li {
       </article>
    </slide>
 
-   <slide>
-      <hgroup>
-      <h2>Call-by-Reference</h2>
-      </hgroup>
-      <article>
-       <ul>
-         <li>Bei Funktionsaufruf nicht Variable, sondern Adresse &uuml;bergeben</li>
-         <li>mehrere R&uuml;ckgabewerte m&ouml;glich</li>
-         <li>z.B. n&uuml;tzlich damit eine Funktion einen Wert sowie einen Fehlercode liefern kann</li>
-       </ul>
-      </article>
-    </slide>
-
-    <slide>
-      <hgroup>
-      <h2>Beispiel</h2>
-      </hgroup>
-      <article>
-<pre class="prettyprint" data-lang="c">
-void getHourMinutes(int minutes, int* h, int* m)
-{
-  *h = minutes / 60;
-  *m = minutes % 60;
-}
-
-int main()
-{
-  int hour = 0, minutes = 0;
-  getHourMinutes(320, &amp;hour, &amp;minutes);
-  printf("%d:%d\n", hour, minutes);
-  return 0;
-}
-</pre>
-      </article>
-    </slide>
-
+   
 
   <slide>
     <hgroup>
@@ -740,6 +705,43 @@ int main()
     </article>
   </slide>
 
+  <slide>
+      <hgroup>
+      <h2>Call-by-Reference</h2>
+      </hgroup>
+      <article>
+       <ul>
+         <li>Bei Funktionsaufruf nicht Variable, sondern Adresse &uuml;bergeben</li>
+         <li>mehrere R&uuml;ckgabewerte m&ouml;glich</li>
+         <li>z.B. n&uuml;tzlich damit eine Funktion einen Wert sowie einen Fehlercode liefern kann</li>
+       </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+      <h2>Beispiel</h2>
+      </hgroup>
+      <article>
+<pre class="prettyprint" data-lang="c">
+void getHourMinutes(int minutes, int* h, int* m)
+{
+  *h = minutes / 60;
+  *m = minutes % 60;
+}
+
+int main()
+{
+  int hour = 0, minutes = 0;
+  getHourMinutes(320, &amp;hour, &amp;minutes);
+  printf("%d:%d\n", hour, minutes);
+  return 0;
+}
+</pre>
+      </article>
+    </slide>
+
+  
   <slide>
     <hgroup>
     <h2>Strings - auch nur Arrays</h2>
