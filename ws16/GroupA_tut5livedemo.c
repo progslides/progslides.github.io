@@ -1,6 +1,3 @@
-// Tut4LiveDemo.cpp : Defines the entry point for the console application.
-//
-
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
