@@ -73,10 +73,11 @@ Mario loadMario(char* file_name)
 int main(int argc, char *argv[])
 {
 	Mario mario;
-	char* file_name = NULL;
 	mario.size = 0;
 	mario.position.x = 0;
 	mario.position.y = 0;
+	
+	printMario(mario);
 	if (argc == 2)
 	{
 		mario = loadMario(argv[1]);
@@ -89,7 +90,7 @@ int main(int argc, char *argv[])
 	}
 	
 
-	printMario(mario);
+	
 
 	/*Vector2D direction;
 	direction.x = 10;
