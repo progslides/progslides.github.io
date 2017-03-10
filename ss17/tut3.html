@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="all" href="css/cmdpattern.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/cmdpattern.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #3",
+        subtitle: "Softwareentwicklung Praktikum",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+    div.left {
+      float: left;
+      width: 48%;
+    }
+    div.right {
+      margin-left: 52%;
+      width: 48%;
+    }
+    span.src {
+      font-family: monospace;
+      background: #eee;
+      border: 1px solid #ccc;
+      padding: 1px 2px;
+    }
+  </style>
+</head>
+  <script type="text/javascript">
+  function init() {
+    var pre = document.getElementsByTagName("pre");
+    for(i = 0; i < pre.length; i++) {
+      pretty = true;
+      if(pre[i].hasAttribute("data-nopretty"))
+        pretty = false;
+        
+      if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+      if(!pre[i].hasAttribute("data-nolang")) 
+        pre[i].setAttribute("data-lang", "C++");
+
+      if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
+
+    }
+    prettyPrint();
+  }
+
+  </script>
+
+<body id="tugraz" style="opacity: 0" onload="init();">
+
+<slides class="layout-widescreen">
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+       <slide><hgroup>
+        <h2>Ablauf des Tutoriums</h2></hgroup><article>
+        <ul class="compact">
+         <li>Operator Overloading</li>
+         <li>Casting</li>
+         <li>Ressourcenverwaltung</li>
+         <li>c++11</li>
+        </ul>
+     </article></slide>
+     
+     
+     <slide><hgroup>
+      <h2>Operator Overloading</h2></hgroup><article>
+      <ul>
+       <li>&Uuml;berschreibt die Operatoren (<span class="src">==, +, -, *, /, &gt;&gt;, &lt;&lt;, ...</span> ) f&uuml;r die eigene Klasse</li>
+       <li>Syntax: (<span class="src">@</span> steht f&uuml;r den Operator)
+<pre class="compact">
+return_type operator@(argumente)
+{
+    [...]
+}
+</pre></li>
+      <li>Kann als Methode oder als Funktion deklariert werden</li>
+      <li>Sollte sparsam verwendet werden und nur wenn es eindeutig ist</li>
+      </ul>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Operator Overloading - Beispiel (als Methode)</h2></hgroup><article>
+<pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
+class Complex
+{
+private:
+  float real_part_;
+  float imaginary_part_;
+
+public:
+    bool operator==(const Complex &amp;c) const
+    {
+        return ( c.real_part_ == real_part_ &amp;&amp;
+                (c.imaginary_part_ == imaginary_part_) );
+    }
+
+    Complex operator+(const Complex&amp; right)
+    {
+      Complex result;
+      result.setImaginary(imaginary_part_ + right.getImaginary());
+      result.setReal(real_part_ + right.getReal());
+      return result;
+    }
+
+    [...]
+
+    float getRealPart() const;
+    float getImaginaryPart() const;
+};
+</pre>
+     </article></slide>
+
+
+     <slide><hgroup>
+      <h2>Operator Overloading - Beispiel (als Funktion)</h2></hgroup><article>
+<pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; stream, const Complex&amp; c)
+{
+  stream &lt;&lt;  c.getRealPart() &lt;&lt; " + " &lt;&lt; c.getImaginary() &lt;&lt; " i";
+
+  return stream; 
+}
+</pre>
+<br />
+<pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
+int main()
+{
+  Complex c(1,5);
+
+  std::cout &lt;&lt; c &lt;&lt; std::endl;
+
+  return 0;
+}
+</pre>
+<br />
+<pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
+1 + 5 i
+</pre>
+     </article></slide>
+     <slide><hgroup>
+        <h2>Casts in C++</h2></hgroup><article>
+
+        <dl class="expl">
+          <dt><span class="src">static_cast</span></dt>
+          <dd>Funktioniert wie das von C bekannte Casting <span class="src">(typ)variable</span>. Funktioniert nur, wenn der Compiler eine Regel zum Casten kennt.
+            <pre class="compact">int a = 16, b = 9;
+float ratio = static_cast&lt;float&gt;(a) / b;</pre></dd>
+          <dt><span class="src">const_cast</span></dt>
+          <dd>Nur zum Hinzuf&uuml;gen oder Entfernen <span class="meta">(gefährlich)</span>
+            des <span class="src">const</span>
+            Keywords.</dd>
+          <dt><span class="src">dynamic_cast</span></dt>
+          <dd>Casts innerhalb einer Klassenhierarchie von polymorphen Klassen. Aufw&auml;ndige Type-Checks zur Laufzeit.
+                  <pre class="compact">// Cast von *CD in *MusicCD
+MusicCD *charts = dynamic_cast&lt;*MusicCD&gt;(cd1);</pre></dd>
+          <dt><span class="src">reinterpret_cast</span></dt>
+          <dd style="width: 75%;">Keine Konvertierung, Daten werden ohne &Auml;nderung als neuer Datentyp interpretiert,
+            plattformabh&auml;ngig, sollte nur bei hardwarenaher Programmierung verwendet werden.</dd>
+        </dl>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2><span class="src">static_cast</span> verlustfreie Regeln</h2></hgroup><article>
+      <center><img src="images/casts.png" width="700px" style="padding-top: 8px;" /></center>
+      <br />
+      <img src="images/homer2.gif" width="100px" style="float: left;"/>
+     <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+     Castings sind nur dann ohne Datenverlust, wenn auf einen gr&ouml;&szlig;eren Datentyp gecastet wird.
+     </div>
+     </article></slide>
+
+     
+
+     
+
+
+     <slide><hgroup>
+      <h2>Resource Acquisition Is Initialization (RAII)</h2></hgroup><article>
+      <ul>
+        <li>Konzept zur Verwaltung von Ressourcen</li>
+        <li>Automatische Freigabe beim Verlassen des Scopes</li>
+        <li>Kann f&uuml;r Handles (z.B. Dateien), Locks und Speichern verwendet werden</li>
+        <li>Erleichtert das Schreiben von Exception-sicheren Programmen</li>
+      </ul>
+      <img src="images/raii.png" />
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Kein RAII - Beispiel</h2></hgroup><article>
+<pre class="compact" style="font-size: 0.55em; line-height: 1.22em;  margin: 1em auto;">
+int median(int* numbers, int count) {
+  int* data = new int[count];
+  std::memcpy(data, numbers, count * sizeof(int));
+  // error handling
+  if(numbers == NULL) {
+    delete[] data; // &lt;---
+    return 0;
+  }
+  if(count == 0) {
+    delete[] data; // &lt;---
+    return 0;
+  }
+  if(count == 1) {
+    delete[] data; // &lt;---
+    return *numbers;
+  }
+  // sort
+  if(mySortFunction(data, count) == false) {
+    delete[] data; // &lt;---
+    return 0;
+  }
+  // return median
+  int result = data[count / 2];
+  delete[] data; // &lt;---
+  return result;
+}
+</pre>
+
+     </article></slide>
+
+     <slide><hgroup>
+       <h2>RAII - Beispiel</h2></hgroup><article>
+<pre class="compact" style="float: left; width: 47%; font-size: 0.6em; line-height: 1.3em; margin-right: 16px; margin: 1em;">
+int median(int* numbers, int count)
+{
+  Data data(count);
+  data.setData(numbers, count);
+  // error handling
+  if(numbers == NULL)
+    return 0;
+  if(count == 0)
+    return 0;
+  if(count == 1)
+    return *numbers;
+
+  // sort
+  if(mySortFunction(data.getData(),
+       count) == false)
+    return 0;
+
+  return data.getData()[count / 2];
+}
+</pre>
+<pre class="compact" style="float: left; width: 37%; margin: 1em; font-size: 0.6em; line-height: 1.3em;">
+class Data
+{
+private:
+  int* data_;
+public:
+  Data(int count) {
+    data_ = new int[count];
+  }
+  int* getData() const {
+    return data_;
+  }
+  void setData(int* data,
+               int count)
+  {
+    std::memcpy(data_, data,
+      count * sizeof(int));
+  }
+  ~Data() {
+    delete[] data_;
+  }
+};
+</pre>
+     </article></slide>
+
+   
+    <slide><hgroup>
+         <h2>C++ 11 <span class="src">nullptr</span> &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2></hgroup><article>
+         <pre style="font-size: 0.6em">
+#include &lt;iostream&gt;
+
+void foo(int number)
+{
+  std::cout &lt;&lt; "Number: " &lt;&lt; number &lt;&lt; std::endl;
+}
+
+void foo(void* pointer)
+{
+  std::cout &lt;&lt; "Pointer: " &lt;&lt; pointer &lt;&lt; std::endl;
+}
+
+int main()
+{
+  foo(nullptr); // NULL doesn't work!
+}</pre>
+    </article></slide>
+
+    <slide><hgroup>
+         <h2>C++ 11 <span class="src">delete</span> und <span class="src">default</span> &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2></hgroup><article>
+         <pre style="font-size: 0.6em">
+class Foo
+{
+public:
+  Foo(Foo&amp; foo) = delete;
+  Foo&amp; operator=(Foo&amp; foo) = delete;
+  Foo() = default; // keep default constructor
+  Foo(double number) {}
+  Foo(int number) = delete;
+};
+
+int main()
+{
+  Foo f1; // works, default constructor
+  Foo f2 = f1; // doesn't work
+  Foo f3(0); // doesn't work either
+  Foo f4(3.1415); // works again
+}</pre>
+    </article></slide>
+
+    
+    <slide>
+        <hgroup>
+            <h2><span class="src">auto</span> Datentyp</h2>
+        </hgroup>
+        <article>
+            <ul>
+                <li>Datentypen m&uuml;ssen in vielen F&auml;llen nicht explizit angegeben werden, sondern k&ouml;nnen
+                    durch <span class="src">auto</span> ersetzt werden
+                </li>
+                <li>Beispiel:<pre class="prettyprint compact">auto count = 3; // equal to int count = 3;
+auto result = do_something();</pre>
+                </li>
+                <li>Vor allem praktisch f&uuml;r Iteratoren
+<pre class="prettyprint compact">
+std::vector&lt;int> numbers = {1, 2, 4, 8, 16, 32};
+for(auto it = numbers.begin(); it != numbers.end(); ++it) {
+  std::cout << *it << std::endl;
+}</pre>
+<pre class="prettyprint compact">
+std::map&lt;std::string, double> numbers;
+numbers["pi"] = 3.14159265;
+numbers["e"] = 2.71828;
+for(auto it = numbers.begin(); it != numbers.end(); ++it) {
+  std::cout << it->first << ": " << it->second << std::endl;
+}</pre>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2><span class="src">decltype</span> Datentyp</h2></hgroup>
+        <article>
+            <ul>
+                <li>Bestimmen des Typs zur Compile-Zeit</li>
+                <li>&Uuml;bernimmt den Datentyp einer anderen Variable</li>
+                <li>Meistens in Verwendung mit <span class="src">auto</span></li>
+            </ul>
+            <br/>
+            Beispiel um zwei Variablen unbekannten Typs zu tauschen:
+<pre class="prettyprint">
+auto x = 2;
+auto y = 3;
+decltype(x) temp = x; // we don't know the type of x
+x = y;
+y = temp;
+std::cout << x << ", " << y << std::endl;</pre>
+
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup>
+            <h2>Initialisierungslisten</h2>
+        </hgroup>
+        <article>
+
+            <ul>
+                <li>Erlaubt es, Arrays, Strukturen und Klassen direkt zu initialisieren</li>
+                <li>Kann auch für eigene Klassen verwendet werden</li>
+            </ul>
+            <ul>
+                <li>
+                    <small>Beispiel: Vektor und Struktur direkt initialisieren</small>
+                </li>
+            </ul>
+     <pre class="prettyprint" data-lang="C++" style="font-size: 0.75em; line-height: 1.35em;">
+struct Coordinate {
+  int x, y;
+};
+
+int main() {
+  std::vector&lt;int&gt; numbers = {1, 3, 5, 7, 9, 11, 13};
+  Coordinate start = {0, 0};
+  std::vector&lt;Coordinate> path = {
+      start,
+      {1, 0}, // full recursive initialization
+      {2}, // incomplete recursive initialization (only x)
+      {.x = 2, .y = 1}, // full named initialization
+      {.x = 2} // incomplete named initialization
+  };
+}</pre>
+
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup>
+            <h2>Initialisierungslisten f&uuml;r eigene Klassen</h2>
+        </hgroup>
+        <article>
+     <pre class="prettyprint" data-lang="C++" style="font-size: 0.68em; line-height: 1.18em;">
+class Coordinate {
+private:
+  int x_, y_;
+
+public:
+  Coordinate(std::initializer_list&lt;int> list) {
+    auto values = list.begin();
+    x_ = *values++;
+    y_ = *values;
+  }
+
+  void setXY(std::initializer_list&lt;int> list) {
+    auto values = list.begin();
+    x_ = *values++;
+    y_ = *values;
+  }
+
+  int getX() { return x_; }
+  int getY() { return y_; }
+};
+
+int main() {
+  Coordinate start = {3, 4};
+  start.setXY({1, 2});
+  std::cout << start.getX() << "," << start.getY() << std::endl;
+}
+</pre>
+
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup>
+            <h2>Bereichsbasierte for-Schleife<br/>
+                <small>(range-based for loop)</small>
+            </h2>
+        </hgroup>
+        <article>
+            <ul>
+                <li>K&uuml;rzere Variante von <span class="src">for</span></li>
+                <li>Funktioniert f&uuml;r Arrays und Klassen die Iteratoren zur Verf&uuml;gung stellen</li>
+            </ul>
+            <pre class="prettyprint">
+// for classes with iterator
+std::vector&lt;int> primes = {2, 3, 5, 7, 11, 13};
+for(int p : primes) {
+  std::cout << p << std::endl;
+}
+// for arrays
+int fibonacci[] = {1, 1, 2, 3, 5, 8, 13};
+for(int number : fibonacci) {
+  std::cout << number << std::endl;
+}
+// explicit
+for(int x : {1, 2, 3, 4, 5, 6}) {
+  std::cout << x << std::endl;
+}</pre>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Range-based for f&uuml;r eigene Klassen</h2></hgroup>
+        <article>
+            <ul>
+                <li>Klasse muss entweder <span class="src">begin()</span> und <span class="src">end()</span>
+                    implementieren....
+                </li>
+                <li>...oder die globalen Funktionen <span class="src">std::begin()</span> und <span class="src">std::end()</span> &uuml;berladen
+                </li>
+            </ul>
+            <pre class="prettyprint" style="float: left; width: 58%; line-height: 1.2em;">
+class Test {
+private:
+    string text;
+
+public:
+    Test(string t) : text(t) {}
+
+    const char* begin() {
+      return text.c_str();
+    }
+
+    const char* end() {
+      return text.c_str() + text.size();
+    }
+};</pre>
+<pre class="prettyprint" style="float: right; width: 40%;">
+int main() {
+    Test test("Test");
+
+    for(auto t : test) {
+      cout << t << endl;
+    }
+}
+</pre>
+            </pre>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Lambda Ausdr&uuml;cke</h2></hgroup>
+        <article>
+            <ul>
+                <li>C++ 11 unterst&uuml;tzt anonyme Funktionen der Form
+                    <pre>[capture](parameters) -> return_type { function_body }</pre>
+                </li>
+                <li>Beispiel einer Lambda-Funktion um zwei Zahlen zu addieren:
+                    <pre class="prettyprint">[](int x, int y) -> int { return x + y; }</pre>
+                </li>
+                <li>In <span class="code">capture</span> stehen (vereinfacht gesagt) die Variablen au&szlig;erhalb des
+                    Lambda-Ausdrucks, auf die man zugreifen darf. <br><strong>Werden sie nicht als Referenz angegeben,
+                        kann man nur
+                        lesend darauf zugreifen.</strong>
+                <pre class="prettyprint">#include &lt;algorithm>
+[...]
+std::vector&lt;int> numbers = {2, 1, 4, 3, 5};
+int sum = 0, last_nr = 0;
+std::for_each(numbers.begin(), numbers.end(),
+              [&sum, &last_nr](int x) { sum += x; last_nr = x;});
+std::cout &lt;&lt; sum &lt;&lt; ", " &lt;&lt; last_nr &lt;&lt; std::endl;</pre>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>Lambda Ausdr&uuml;cke (II)</h2></hgroup>
+        <article>
+            <ul>
+                <li>Speichern am einfachsten in einer Variable vom Datentyp <span class="src">auto</span>
+                    <pre class="prettyprint">auto add = [](int x, int y) -> int {return x + y;};</pre>
+                </li>
+                <li>Oder in einem <span class="src">std::function</span> Object aus dem Header <span class="src">&lt;functional></span>
+                <pre class="prettyprint">
+#include &lt;functional>
+[...]
+std::function&lt;int(int, int)> max =
+    [](int x, y) -> int {return x > y ? x : y};</pre>
+                </li>
+                <li>Werden wie eine normale Funktionen aufgerufen
+                <pre class="prettyprint">
+std::cout << add(2, 3) << std::endl;
+std::cout << max(10, 15) << std::endl;</pre>
+                </li>
+                <li>K&ouml;nnen auch in Containern gespeichert werden
+                <pre class="prettyprint">std::vector&lt;decltype(max)> fnc = { max, add };
+std::cout << fnc[0](6, 8) << std::endl;</pre>
+                </li>
+            </ul>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Benutzerdefinierte Suffixe</h2></hgroup>
+        <article>
+            <ul>
+                <li>Erg&auml;nzen die bereits bekannten <span class="src">f</span>, <span class="src">ul</span>, etc.
+                </li>
+                <li>M&uuml;ssen mit einem Unterstrich (_) beginnen</li>
+                <li>K&ouml;nnen beliebige Funktionen ausf&uuml;hren, nicht nur konstante Ausdr&uuml;cke</li>
+            </ul>
+            <pre class="prettyprint" style="float: left; width: 58%; font-size: 0.7em; line-height: 1.5em;">
+constexpr unsigned long long int operator""
+    _mb (unsigned long long int mb) {
+  return mb * 1024 * 1024;
+}
+
+std::vector&lt;int> operator""
+    _bin(unsigned long long int number) {
+  std::vector&lt;int> bin;
+  while(number) {
+    bin.insert(bin.begin(), number % 2);
+    number /= 2;
+  }
+  return bin;
+}</pre>
+<pre class="prettyprint" style="float: right; width: 40%; font-size: 0.7em;">
+int main() {
+    std::cout << "100MB = "
+        << 100_mb << " Bytes"
+        << std::endl;
+    for(int i : 42_bin) {
+        std::cout << i;
+    }
+    std::cout << std::endl;
+}
+</pre>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup>
+            <h2>Pr&auml;dikate testen</h2>
+        </hgroup>
+        <article>
+
+            <ul>
+                <li>Testet, ob eine Eigenschaft auf ein (
+                    <small><span class="src">std::any_of</span></small>
+                    ), alle (
+                    <small><span class="src">std::all_of</span></small>
+                    ) oder kein (
+                    <small><span class="src">std::none_of</span></small>
+                    ) Element eines Containers zutrifft.
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <small>Beispiel: Test, ob eine durch 5 teilbare Zahl in einem Vector vorkommt</small>
+                </li>
+            </ul>
+     <pre class="prettyprint" data-lang="C++" style="font-size: 0.75em; line-height: 1.35em;">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+bool is_div5(int x) { return (x % 5 == 0); }
+
+int main() {
+  std::vector&lt;int&gt; numbers = {1, 3, 5, 7, 9, 11, 13};
+
+  if(std::any_of(numbers.begin(), numbers.end(), is_div5))
+  {
+    std::cout &lt;&lt; "Durch 5 teilbare Zahl gefunden" &lt;&lt; std::endl;
+  }
+}</pre>
+
+        </article>
+    </slide>
+
+    
+    
+<slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Bis zum nächsten Tutorium!</h2>
+    </article></slide>
+    </slide>
+  <slide class="backdrop"></slide>
+</slides>
+<!--
+     <slide><hgroup>
+      <h2>Templates</h2></hgroup><article>
+      <ul>
+       <li>Erlauben es, generische Funktionen zu schreiben</li>
+       <li>Werden in der STL ausgiebig verwendet</li>
+       <li>Es gibt Funktions- und Klassentemplates</li>
+       <li>Deklarations-Syntax: <pre class="compact">template &lt;typename identifier> function_declaration;</pre></li>
+       <li>Aufrufs-Syntax: <pre class="compact">function&lt;argument_type>(arguments);</pre> bzw. <pre class="compact">classname&lt;class_type>(constructor_values);</pre></li>
+      </ul>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Templates - Beispiel (Funktionstemplate)</h2></hgroup><article>
+      <br />
+<pre class="compact">
+template &lt;typename Type>
+Type max(Type a, Type b)
+{
+    if(a > b) return a;
+    else return b;
+}
+</pre>
+<pre class="compact">
+int main()
+{
+  // ruft max&lt;int> auf (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3, 7) &lt;&lt; std::endl;
+  // ruft max&lt;double> (wird an Argumenten erkannt)
+  std::cout &lt;&lt; max(3.0, 7.0) &lt;&lt; std::endl;
+  // Argumente nicht eindeutig, Typ muss angegeben werden (&lt;double>)
+  std::cout &lt;&lt; max&lt;double>(3, 7.0) &lt;&lt; std::endl;
+  return 0;
+}
+</pre>
+     </article></slide>
+
+     <slide><hgroup>
+      <h2>Templates - Beispiel (Klassentemplate)</h2></hgroup><article>
+<pre class="compact">
+template &lt;typename T>
+class Math {
+public:
+  T getMin(T x1, T x2) {
+    if(x1 &lt; x2) return x1;
+    else return x2;
+  }
+
+  T getMax(T x1, T x2) {
+    if(x1 > x2) return x1;
+    else return x2;
+  }
+};
+</pre>
+<pre class="compact" style="font-size: .62em; line-height: 1.3em;">
+int main() {
+  Math&lt;int> int_math;
+  Math&lt;std::string> str_math;
+
+  std::cout &lt;&lt; "max(2, 4): " &lt;&lt; int_math.getMax(2, 4) &lt;&lt; std::endl;
+  std::cout &lt;&lt; "min(\"abc\", \"bcd\"): "
+    &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
+}
+</pre>
+     </article></slide>
+-->
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
