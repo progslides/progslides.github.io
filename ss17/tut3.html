@@ -111,6 +111,7 @@
         <h2>Ablauf des Tutoriums</h2></hgroup><article>
         <ul class="compact">
          <li>Exceptions</li>
+         <li>OOP Konzepte<li>
          <li>Operator Overloading</li>
          <li>Casting</li>
          <li>Ressourcenverwaltung</li>
@@ -118,7 +119,7 @@
         </ul>
      </article></slide>
      
-         <slide class="segue dark nobackground">
+    <slide class="segue dark nobackground">
         <hgroup class="auto-fadein">
             <h2>Exceptions</h2>
         </hgroup>
@@ -205,7 +206,220 @@ int main ()
     </slide>
      
      
-     <slide><hgroup>
+     <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>OOP Konzepte</h2>
+        </hgroup>
+    </slide>
+
+
+    <slide>
+        <hgroup>
+            <h2>Vererbung</h2>
+        </hgroup>
+        <article>
+            <p><b>Problem</b>: Wir wollen ein sehr vereinfachtes Schachspiel implementieren. </p>
+
+            <p>Es gibt die Figuren:</p>
+            <ul>
+                <li>König</li>
+                <li>Dame</li>
+                <li>Bauer</li>
+            </ul>
+            <p>&#10141; Viel gleicher Code, nur wenig individuelle Methoden</p>
+
+            <p align="center" style="margin-top: 2em; font-size: 1.35em">&#10141; <b>Vererbung nutzen!</b></p>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Ohne Vererbung</h2></hgroup>
+        <article>
+      <pre style="width: 48%; float: left" class="prettyprint" data-lang="C++">class King
+{
+private:
+  int x_;
+  int y_;
+
+public:
+  void move(int x, int y);
+  int getX();
+  int getY();
+  ....
+  bool isValidMove(int x, int y);
+};
+      </pre>
+      <pre style="width: 48%; float: right" class="prettyprint" data-lang="C++">class Queen
+{
+private:
+  int x_;
+  int y_;
+
+public:
+  void move(int x, int y);
+  int getX();
+  int getY();
+  ....
+  bool isValidMove(int x, int y);
+};
+      </pre>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Besser:</h2></hgroup>
+        <article>
+      <pre style="width: 48%; float: left" class="prettyprint" data-lang="C++">class Figure
+{
+private:
+  int x_;
+  int y_;
+
+public:
+  void move(int x, int y);
+  int getX();
+  int getY();
+  ....
+  virtual bool isValidMove(int x,
+    int y) = 0;
+};
+      </pre>
+
+            <div style="width: 48%; float: right">
+      <pre class="prettyprint" data-lang="C++">class Queen :
+  public Figure
+{
+public:
+  bool isValidMove(int x, int y);
+};
+  </pre>
+  <pre class="prettyprint" data-lang="C++">class King :
+  public Figure
+{
+public:
+  bool isValidMove(int x, int y);
+};
+      </pre>
+            </div>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Was wird hier ausgegeben?</h2>
+        </hgroup>
+        <article>
+    <pre class="prettyprint" data-lang="C++">int main()
+{
+  King* blackKing = new King();
+  Queen* whiteQueen = new Queen();
+
+  std::cout &lt;&lt; blackKing->isValidMove(1,1) &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; blackKing->isValidMove(3,3) &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; whiteQueen->isValidMove(1,1) &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; whiteQueen->isValidMove(3,3) &lt;&lt; std::endl;
+
+  delete blackKing;
+  delete whiteQueen;
+}
+    </pre>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup><h2>Polymorphie: Was wird hier ausgegeben?</h2>
+        </hgroup>
+        <article>
+    <pre class="prettyprint" data-lang="C++">int main()
+{
+  <b>Figure*</b> blackKing = new King();
+  <b>Figure*</b> whiteQueen = new Queen();
+
+  std::cout &lt;&lt; blackKing->isValidMove(1,1) &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; blackKing->isValidMove(3,3) &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; whiteQueen->isValidMove(1,1) &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; whiteQueen->isValidMove(3,3) &lt;&lt; std::endl;
+
+  delete blackKing;
+  delete whiteQueen;
+}
+    </pre>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>(Pure) Virtual Methoden</h2></hgroup>
+        <article>
+      <pre style="width: 48%; float: left" class="prettyprint" data-lang="C++">class Figure
+{
+private:
+  int x_;
+  int y_;
+
+public:
+  void move(int x, int y);
+  int getX();
+  int getY();
+  ....
+  <b>virtual bool isValidMove(int x,
+      int y) = 0;</b>
+};
+      </pre>
+
+            <div style="width: 48%; float: right">
+      <pre class="prettyprint" data-lang="C++">class Queen :
+  public Figure
+{
+public:
+  bool isValidMove(int x, int y);
+};
+  </pre>
+  <pre class="prettyprint" data-lang="C++">class King :
+  public Figure
+{
+public:
+  bool isValidMove(int x, int y);
+};
+      </pre>
+            </div>
+        </article>
+    </slide>
+
+
+    <slide>
+        <hgroup><h2>(Pure) Virtual Methoden</h2></hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="C++">class Figure
+{
+...
+  <b>virtual bool isValidMove(int x,
+      int y) = 0;</b>
+};
+      </pre>
+            <ul>
+                <li>Programm entscheidet zur Laufzeit, welche Funktion aufgerufen wird</li>
+                <li><b>Pure</b> Virtual Methoden werden in der Basisklasse <b>nicht</b> implementiert.
+                    Stattdessen steht nach der Definition
+                    <pre style="display: inline; padding-top: 0pt; padding-bottom: 0pt;"> = 0;</pre>
+                <li>Eine Klasse mit mindestens einer Pure Virtual Methode wird <b>Abstrakte Klasse</b> genannt</li>
+                <li>Von einer Abstrakten Klasse selber können <b>keine</b> Objekte erstellt werden</li>
+            </ul>
+        </article>
+    </slide>
+    
+    <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>Operator Overloading</h2>
+        </hgroup>
+    </slide>
+    
+    <slide><hgroup>
       <h2>Operator Overloading</h2></hgroup><article>
       <ul>
        <li>&Uuml;berschreibt die Operatoren (<span class="src">==, +, -, *, /, &gt;&gt;, &lt;&lt;, ...</span> ) f&uuml;r die eigene Klasse</li>
