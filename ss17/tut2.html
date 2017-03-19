@@ -108,7 +108,6 @@
             <ul>
                 <li>GIT</li>
                 <li>STL: vector, map, sstream</li>
-                <li>Exceptions</li>
                 <li>Speichermanagement</li>
                 <li>Smartpointer</li>
                 <li>Vererbung, Polymorphie, abstrakte Klassen</li>
@@ -230,93 +229,6 @@ int main()
     </pre>
 
 
-        </article>
-    </slide>
-
-
-    <slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-            <h2>Exceptions</h2>
-        </hgroup>
-    </slide>
-
-
-    <slide>
-        <hgroup>
-            <h2>Exceptions</h2></hgroup>
-        <article>
-            <br/>Grundlegendes Konstrukt f&uuml;r Exceptions
-<pre class="prettyprint" data-lang="C++">
-try
-{
-  someFunction() // k&ouml;nnte eine Exception werfen...
-  [...]
-  throw(e); // ...oder manuelles Werfen einer Exception
-}
-catch(MyException&amp; e1)
-{
-  // fange Exception vom Typ MyException
-}
-catch(std::exception&amp; e)
-{
-  // fange alles, was vom Typ std::exception abgeleitet ist,
-  // und noch nicht gefangen wurde
-}
-</pre>
-        </article>
-    </slide>
-
-    <slide>
-        <hgroup>
-            <h2>Exceptions</h2></hgroup>
-        <article>
-            <br/>
-            N&uuml;tzlich, aber nicht &uuml;bertreiben &rarr; <strong>Formale Fehlerquellen</strong>
-            <ul>
-                <li>Kontrollfluss durch Exceptions</li>
-                <li>Silent Catch von Exceptions</li>
-                <li>Wurf einer Nicht-std::exception-Unterklasse</li>
-                <li>Im Destruktor dürfen keine Exceptions geworfen werden</li>
-            </ul>
-            <br/>
-            Also immer
-<pre class="prettyprint" data-lang="C++">
- class MyException : public std::exception {
-   [...]
- };
-</pre>
-        </article>
-    </slide>
-
-    <slide>
-        <hgroup>
-            <h2>Exceptions - Beispiel</h2></hgroup>
-        <article>
-            <ul>
-                <li><span class="src">virtual const char* what() const</span> sollte eine Fehlerbeschreibung liefern
-                    (als <span class="src">const char*</span>)
-                </li>
-            </ul>
-      <pre class="prettyprint" data-lang="C++" style="font-size:0.60em; line-height:1.2em; margin: 0.5em auto;">
-#include &lt;exception>
-class brick : public std::exception {
-  virtual const char* what() const throw()
-  {
-    return "Achtung Ziegel!\n";
-  }
-};
-
-int main ()
-{
-  try
-  {
-    throw brick();
-  } catch (std::exception&amp; ex)
-  {
-    std::cout &lt;&lt; ex.what();
-  }
-  return 0;
-} </pre>
         </article>
     </slide>
 
