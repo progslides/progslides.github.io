@@ -138,12 +138,7 @@
             </ul>
         </article>
     </slide>
-    
-    <slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-            <h2>Makefile Demo</h2>
-        </hgroup>
-    </slide>
+
     
     <slide class="segue dark nobackground">
         <hgroup class="auto-fadein">
@@ -426,7 +421,43 @@ void Ball::setColor(std::string new_color)
         </article>
     </slide>
 
+<slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>Makefile Demo</h2>
+        </hgroup>
+    </slide>
+    
+        
+    <slide>
+        <hgroup>
+            <h2>Makefile</h2>
+        </hgroup>
 
+        <h3>Aufbau:</h3>
+
+        <p class="pre">
+            <span class="red">Ziel:</span> <span class="yellow">Abhängigkeit1 (Abhängigkeit2 ...)</span><br>
+            &nbsp;&nbsp;&lt;tab&gt; <span class="blue">(Befehl 1)</span><br>
+            &nbsp;&nbsp;&lt;tab&gt; <span class="blue">(Befehl 2)</span><br>
+        </p>
+
+        <br>
+        Beispiel:
+  <pre style="font-size: 0.75em; line-height: 1.35em;">EXECUTABLE = assx
+all:
+  g++ -Wall main.cpp -o assx
+  
+clean:
+  rm -f ./*.o
+  rm -f ./*.o.d
+  rm -f $(EXECUTABLE)</pre>
+        <br>
+        Verwendung:
+  <pre class="prettyprint" data-lang="sh" style="font-size: 0.75em; line-height: 1.35em;">// am pluto:
+$ make
+</pre>
+    </slide>
+    
     <slide class="segue dark nobackground">
         <hgroup class="auto-fadein">
             <h2>Dynamischer Speicher</h2>
@@ -640,42 +671,6 @@ int main() {
         </article>
     </slide>
 
-
-    
-
-
-    <!--
-    <slide>
-        <hgroup>
-            <h2>Makefile</h2>
-        </hgroup>
-
-        <h3>Aufbau:</h3>
-
-        <p class="pre">
-            <span class="red">Ziel:</span> <span class="yellow">Abhängigkeit1 (Abhängigkeit2 ...)</span><br>
-            &nbsp;&nbsp;&lt;tab&gt; <span class="blue">(Befehl 1)</span><br>
-            &nbsp;&nbsp;&lt;tab&gt; <span class="blue">(Befehl 2)</span><br>
-        </p>
-
-        <br>
-        Beispiel:
-  <pre style="font-size: 0.75em; line-height: 1.35em;">SUBMISSION = assX
-EXECUTABLE = $(SUBMISSION)
-
-clean:
-  rm -f ./*.o
-  rm -f ./*.o.d
-  rm -f $(EXECUTABLE)</pre>
-        <br>
-        Verwendung:
-  <pre class="prettyprint" data-lang="sh" style="font-size: 0.75em; line-height: 1.35em;">// am pluto:
-$ make pluto
-// sonst einfach:
-$ make
-</pre>
-    </slide>
--->
     <slide class="segue dark nobackground">
         <hgroup class="auto-fadein">
             <h2>Basisbeispiel</h2>
