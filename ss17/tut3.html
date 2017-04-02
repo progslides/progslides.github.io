@@ -405,10 +405,10 @@ public:
             <ul>
                 <li>Programm entscheidet zur Laufzeit, welche Funktion aufgerufen wird</li>
                 <li><b>Pure</b> Virtual Methoden werden in der Basisklasse <b>nicht</b> implementiert.
-                    Stattdessen steht nach der Definition
-                    <pre style="display: inline; padding-top: 0pt; padding-bottom: 0pt;"> = 0;</pre>
+                    Stattdessen steht nach der Definition 
+                    <pre class="prettyprint"> = 0;</pre> </li>
                 <li>Eine Klasse mit mindestens einer Pure Virtual Methode wird <b>Abstrakte Klasse</b> genannt</li>
-                <li>Von einer Abstrakten Klasse selber können <b>keine</b> Objekte erstellt werden</li>
+                <li>Von einer Abstrakten Klasse selbst können <b>keine</b> Objekte erstellt werden</li>
             </ul>
         </article>
     </slide>
@@ -994,7 +994,117 @@ int main() {
         </article>
     </slide>
 
+    <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>Deliverable 2</h2>
+        </hgroup>
+    </slide>
+    <slide><hgroup>
+      <h2>Deliverable 2</h2></hgroup><article>
+      <ul>
+      <li>Erzeugen einer Basis-HTML-Datei mit leeren &lt;body&gt; tags (HTMLWriter)</li>
+      <li>Erzeugen einer Umwelt-HTML-Datei mit Daten aus einer <strong>EnvironmentalCondition</strong> zwischen den &lt;body&gt; tags (HTMLWriterEnvironment)</li>
+      <li>Erzeugen einer Balance-HTML-Datei mit Werten für <strong>lemon</strong>, <strong>sugar</strong>, <strong>cash</strong> und <strong>delta</strong>, zwischen den &lt;body&gt; tags (HTMLWriterBalance)</li>
+      </ul>
+      
+      
+      
+
+     </article></slide>
     
+    <slide><hgroup>
+      <h2>Deliverable 2</h2></hgroup><article>
+      <p>Beispiel-Basis-HTML-Datei:</p>
+
+      <pre class="prettyprint" data-lang="HTML" style="font-size: 0.75em; line-height: 1.35em;">&lt;!DOCTYPE html&gt;
+
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta http-equiv=&quot;refresh&quot; content=&quot;3&quot;&gt;
+    &lt;title&gt;SEP 2017&lt;/title&gt;
+    &lt;style&gt;body{margin: 0px; padding: 0px;}&lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+     </article></slide>
+     
+     <slide><hgroup>
+      <h2>Deliverable 2</h2></hgroup><article>
+      <p>Beispiel-Umwelt-HTML-Datei:</p>
+
+      <pre class="prettyprint" data-lang="HTML" style="font-size: 0.5em; line-height: 1.2em;">&lt;!DOCTYPE html&gt;
+
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta http-equiv=&quot;refresh&quot; content=&quot;3&quot;&gt;
+    &lt;title&gt;SEP 2017&lt;/title&gt;
+    &lt;style&gt;body{margin: 0px; padding: 0px;}&lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Sky cover&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;img src=&quot;https://palme.iicm.tugraz.at/wiki/images/3/30/Very_overcast.png&quot; alt=&quot;&quot; width=&quot;128&quot; height=&quot;128&quot; /&gt;&lt;/td&gt;
+          &lt;td&gt;
+            &lt;p&gt;&lt;strong&gt;Precipitation: &lt;/strong&gt;medium&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Temperature: &lt;/strong&gt;14.6&deg;C&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Wind: &lt;/strong&gt;medium&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Hot: &lt;/strong&gt;false&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Rainy: &lt;/strong&gt;true&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Stormy: &lt;/strong&gt;true&lt;/p&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+     </article></slide>
+     
+     <slide><hgroup>
+      <h2>Deliverable 2</h2></hgroup><article>
+      <p>Beispiel-Balance-HTML-Datei:</p>
+
+      <pre class="prettyprint" data-lang="HTML" style="font-size: 0.5em; line-height: 1.2em;">&lt;!DOCTYPE html&gt;
+
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta http-equiv=&quot;refresh&quot; content=&quot;3&quot;&gt;
+    &lt;title&gt;SEP 2017&lt;/title&gt;
+    &lt;style&gt;body{margin: 0px; padding: 0px;}&lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;img src=&quot;https://palme.iicm.tugraz.at/wiki/images/3/35/Lemon.png&quot; alt=&quot;&quot; width=&quot;64&quot; height=&quot;64&quot; /&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;Lemons: &lt;/strong&gt;7&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;img src=&quot;https://palme.iicm.tugraz.at/wiki/images/a/a9/Sugar.png&quot; alt=&quot;&quot; width=&quot;64&quot; height=&quot;64&quot; /&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;Sugar: &lt;/strong&gt;5&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;img src=&quot;https://palme.iicm.tugraz.at/wiki/images/f/f0/Coins.png&quot; alt=&quot;&quot; width=&quot;64&quot; height=&quot;64&quot; /&gt;&lt;/td&gt;
+          &lt;td&gt;
+            &lt;p&gt;&lt;strong&gt;Cash: &lt;/strong&gt;997$&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Delta: &lt;/strong&gt;-3$&lt;/p&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+     </article></slide>
     
 <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
