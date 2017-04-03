@@ -509,7 +509,7 @@ float ratio = static_cast&lt;float&gt;(a) / b;</pre></dd>
           <dt><span class="src">dynamic_cast</span></dt>
           <dd>Casts innerhalb einer Klassenhierarchie von polymorphen Klassen. Aufw&auml;ndige Type-Checks zur Laufzeit.
                   <pre class="compact">// Cast von *CD in *MusicCD
-MusicCD *charts = dynamic_cast&lt;*MusicCD&gt;(cd1);</pre></dd>
+MusicCD *charts = dynamic_cast&lt;MusicCD *&gt;(cd1);</pre></dd>
           <dt><span class="src">reinterpret_cast</span></dt>
           <dd style="width: 75%;">Keine Konvertierung, Daten werden ohne &Auml;nderung als neuer Datentyp interpretiert,
             plattformabh&auml;ngig, sollte nur bei hardwarenaher Programmierung verwendet werden.</dd>
