@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #3",
+        subtitle: "Einführung in die (strukturierte) Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+   <ul>
+    <li>Testreports</li>
+    <li>HW3 Besprechung</li>
+    <li>Funktionen</li>
+    <li>Arrays</li>
+    </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>What does the Palme say? - Die magischen Codes</h2>
+    </hgroup>
+    <article>
+      <ul>
+      <li>Was bedeuten die Codes wie <code class="mark">6a7</code>, <code class="mark">1,6c1,6</code>, <code class="mark">6d5</code>?</li>
+      <li>Am Testsystem werden die Ausgabe eures Programms mit der korrekten Ausgabe verglichen (mit <code>diff</code>).</li>
+      <li>Die Codes geben an, was an der Musterausgabe ge&auml;ndert werden m&uuml;sste, um eure Ausgabe zu erhalten</li>
+      <li>Es gibt dabei die Codes <code class="mark">a</code> (append), <code class="mark">d</code> (delete) und <code class="mark">c</code> (change)</li>
+     </ul> 
+    <pre class="prettyprint" data-lang="Palme" style="font-size: 65%;">
+CHANCE #1
+  description:
+    check whether output is correct
+  summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+    #0: 6d5 
+</pre>
+    
+    </article>
+    
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Beispiel</h2>
+    </hgroup>
+     <article>
+      <ul>
+           <li><code class="mark">6a7</code>: Nach der 6. Zeile der Musterausgabe, m&uuml;sste die folgende 7. Zeile angeh&auml;ngt werden (Zeile folgt). Das heißt, ihr gebt dieses Zeile zuviel aus</li>
+           <li><code class="mark">6d5</code>: Die 6. Zeile der Musterausgabe (Zeile folgt) m&uuml;sste gel&ouml;scht werden. Das heißt, ihr gebt eine Zeile nicht aus, obwohl ihr solltet</li>
+           <li><code class="mark">2c2</code>: Die 2. Zeile der Musterausgabe stimmt nicht mit eurer 2. Zeile &uuml;berein, daraufhin folgt die Zeile der Musterausgabe und eure Zeile</li>
+        </ul>
+     </article>
+  </slide>
+    
+  <slide>
+    <hgroup>
+      <h2>Was stimmt hier nicht?</h2>
+    </hgroup>
+     <article>
+    <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+=====================================================================================
+TESTCASES
+
+testcase #1 [FAILED]
+  there were 1 chance(s) to pass testcase
+
+CHANCE #1
+  description:
+    check whether output is correct
+  summary:
+    [FAILED] return check - ref: 0 user: 255
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+
+-------------------------------------------------------------------------------------
+===================================================================================== 
+   </pre>
+    <img src="images/fu.png" style="position: absolute; right: 40px; bottom: 20px;"/>
+     </article>
+  </slide>
+  
+    
+  <slide>
+    <hgroup>
+      <h2>Und hier?</h2>
+    </hgroup>
+     <article>
+   <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+=====================================================================================
+TESTCASES
+
+testcase #1 [FAILED]
+  there were 1 chance(s) to pass testcase
+
+CHANCE #1
+  description:
+    check whether output is correct
+  summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+    #0: 6a7
+    #0: > 1915657434 * 8
+
+-------------------------------------------------------------------------------------
+===================================================================================== 
+   </pre>
+     </article>
+  </slide>
+  
+    
+  <slide>
+    <hgroup>
+      <h2>Findet den Fehler...</h2>
+    </hgroup>
+     <article>
+   <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+OUTPUT
+    Archive:  Term_6/Course_11/Assignment_58/Group_7642/Submission_1_hw1a.zip
+      inflating: Course_11/Assignment_58/Group_7642/14960/1381852533/hw1a/hw1a.c
+    Returnvalue was: 0 - should be 0
+=====================================================================================
+CHECK
+
+check #1
+  Result:
+    [FAILED] File hw1a.c not found
+=====================================================================================
+COMPILE
+
+executable #1
+  using file_set #1
+  return was: 1 - should be 0
+
+OUTPUT
+  gcc44: hw1a.c: No such file or directory
+  gcc44: no input files  
+   </pre>
+     </article>
+  </slide>
+  
+    
+  <slide>
+    <hgroup>
+      <h2>... noch mehr Fehler ...</h2>
+    </hgroup>
+     <article>
+   <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+    #0: 1,7c1,7
+    #0: &lt;    xxxxxxx * 2
+    #0: &lt;    xxxxxxx * 3
+    #0: &lt;    xxxxxxx * 4
+    #0: &lt;   xxxxxxxx * 5
+    #0: &lt;  xxxxxxxxx * 6
+    #0: &lt;  xxxxxxxxx * 7
+    #0: &lt; An overflow has occurred!
+    #0: ---
+    #0: > xxxxxxx * 2
+    #0: > xxxxxxx * 3
+    #0: > xxxxxxx * 4
+    #0: > xxxxxxxx * 5
+    #0: > xxxxxxxxx * 6
+    #0: > xxxxxxxxx * 7
+    #0: > An overflow has occured!    
+   </pre>
+     </article>
+  </slide>
+  
+    
+  <slide>
+    <hgroup>
+      <h2>Auch hier gibt es einen Fehler!</h2>
+    </hgroup>
+     <article>
+   <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+summary:
+    [FAILED] comparing "$STDOUT"
+
+  compares:
+        &lt; REFERENCE
+        > USER CREATED
+
+    #0: 1,6c1,6
+    #0: &lt;    xxxxxxx * 2
+    #0: &lt;    xxxxxxx * 3
+    #0: &lt;    xxxxxxx * 4
+    #0: &lt;   xxxxxxxx * 5
+    #0: &lt;  xxxxxxxxx * 6
+    #0: &lt;  xxxxxxxxx * 7
+
+    #0: ---
+    #0: >    xxxxxxx * 2 
+    #0: >    xxxxxxx * 3 
+    #0: >    xxxxxxx * 4 
+    #0: >   xxxxxxxx * 5 
+    #0: >  xxxxxxxxx * 6 
+    #0: >  xxxxxxxxx * 7 
+
+   </pre>
+     </article>
+  </slide>
+  
+  
+  <slide>
+    <hgroup>
+      <h2>HW3 Besprechung - H&auml;ufige Fehler</h2>
+    </hgroup>
+     <article>
+      <ul>
+       <li>Nur eine Schleife verwendet (Spezifikation: <strong>zwei</strong> Schleifen)</li>
+       <li>Codingstandard (Tabulatoren, Zeile zu lang, Einr&uuml;ckungen, ...)</li>
+       <li>Deutsche Variablennamen und deutsche Kommentare</li>
+       <li>Schlechte Variablennamen (<code>i</code>, <code>tmp</code>, ...)</li>
+       <li>Falsche Overflow Behandlung</li>
+      </ul>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW3 Besprechung - H&auml;ufige Fehler</h2>
+    </hgroup>
+     <article>
+      <ul>
+        <li>Falsche Overflow Behandlung:
+         <ul>
+           <li><pre class="prettyprint" data-lang="c">if(number &lt; 0) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if((number * counter) &lt; number) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX - number) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX) ...</pre></li>
+           <li><pre class="prettyprint" data-lang="c">if(nubmer * counter >= INT_MAX) ...</pre></li>
+         </ul>        
+        </li>
+        <li>Richtige Overflow Behandlung:
+        <ul>
+          <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX / counter) ...</pre></li>
+          <li><pre class="prettyprint" data-lang="c">if(((double)number * (double)counter) > INT_MAX) ...</pre></li>
+        </ul>
+        </li>
+    
+      </ul>
+      
+     </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+<img src="images/hw2_bad1.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+ <img src="images/hw2_bad2.png" height="90%" />
+     </article>
+  </slide>
+<!--
+  <slide>
+    <hgroup>
+      <h2>HW2 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+
+  <img src="images/hw2_good1.png" height="90%" />
+     </article>
+  </slide>
+  -->
+  <slide>
+    <hgroup>
+      <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+     <article>
+<img src="images/hw2_bad3.png" width="55%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Funktionen</h2>
+    </hgroup>
+     <article>
+      <pre class="prettyprint" data-lang="c">
+&lt;Rueckgabewert-Typ> Funktion-Name (&lt;Parameter1>, &lt;Parameter2>...)
+{
+  // Code 
+  return &lt;Rueckgabewert> 
+}
+
+int main()
+{
+  // Aufruf:
+  &lt;Rueckgabewert-Typ> Ergebnis;
+  Ergebnis = Funktion-Name(&lt;Parameter1>, &lt;Parameter2>...);
+} </pre>
+
+<h4>R&uuml;ckgabewert der <code>main</code>-Funktion anzeigen</h4>
+      <pre class="prettyprint" data-lang="stdout">
+> echo $?
+0
+</pre>
+
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>HW3 mit Funktionen</h2>
+    </hgroup>
+     <article>
+<h3>Live Demo</h3>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Arrays</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Hintereinander liegende Daten vom gleichen Typ</li>
+        <li>Gr&ouml;&szlig;e kann nicht mehr verändert werden, muss bei Deklaration bekannt sein</li>
+        <li>Zugriff &uuml;ber [ ]</li>
+        <li>Deklaration: <pre class="prettyprint" data-lang="c">&lt;typ&gt; name[&lt;size&gt;];</pre></li>
+        <li>Initialisiertes Array: <pre class="prettyprint" data-lang="c">&lt;typ&gt; name[] = {&lt;value1&gt;, &lt;value2&gt;, ...};</pre></li>
+        <li>Zugriff: <pre class="prettyprint" data-lang="c">name[&lt;index&gt;] = &lt;value&gt;;</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Beispiel</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int fibo[5];
+3  fibo[0] = 1;
+4  fibo[1] = 1;
+5  fibo[2] = fibo[1] + fibo[0];
+6  fibo[3] = fibo[2] + fibo[1];
+7  fibo[4] = fibo[3] + fibo[2];
+   return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv"><em>1</em></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"><em>1</em></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"><em>2</em></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv">2</td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"><em>3</em></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>fibo</strong> &nbsp; 0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv">2</td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv">3</td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"><em>5</em></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+
+</tr></table>
+</div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Variable-length-Arrays</h2>
+    </hgroup>
+    <article>
+<li>GCC akzeptiert Arrays mit variabler L&auml;nge (C99 Standard)</li>
+     <li>Beispiel
+<pre class="prettyprint" data-lang="c">
+int size = numberOfHornsOnAUnicorn();
+int array[size];
+</pre></li>
+     <li><strong>Gefährlich</strong> zu verwenden, da diese Arrays am Stack liegen &#8594; normal 8MB maximale Gr&ouml;&szlig;e, kann jedoch auch nur 64kB sein!</li>
+     <li>Ist das Array zu groß, st&uuml;rzt das Programm ohne erkennbare Ursache ab</li>
+     <li>Have fun debugging!</li>
+    </ul>
+    <img src="images/debug.png" width="25%" style="position: absolute; right: 220px; bottom: 10px;">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Array als Funktionsparameter</h2>
+    </hgroup>
+    <article>
+<ul>
+     <li>Soll ein Array an eine Funktion als Parameter &uuml;bergeben werden gibt es 3 Wege</li>
+    </ul>
+    <ol>
+     <li>Array variabler Gr&ouml;&szlig;e
+<pre class="prettyprint" data-lang="c">
+void foo(int bar[]) {
+ [..]
+}</pre>
+     </li>
+     <li>Array fixer Gr&ouml;&szlig;e
+<pre class="prettyprint" data-lang="c">
+void foo(int bar[8]) {
+ [..]
+}</pre></li>
+     <li>Als Pointer
+<pre class="prettyprint" data-lang="c">
+void foo(int* bar) {
+ [..]
+}</pre></li>
+    </ol>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Spezielle Arrays: Mehrdimensionale Arrays</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li>Arrays k&ouml;nnen mehrere Dimensionen haben</li>
+      <li>2-dimensionale Arrays: <pre class="prettyprint" data-lang="c">&lt;typ&gt; name[&lt;rows&gt;][&lt;columns&gt;];</pre>
+      <li>Zugriff &uuml;ber Zeilen- und Spaltenindex: <pre class="prettyprint" data-lang="c">name[&lt;row&gt;][&lt;column&gt;] = &lt;value&gt;;</pre>
+      <li>Beispiel Initialisierung: <pre class="prettyprint" data-lang="c">char matrix[3][3] = { {'A', 'B', 'C'}, {'D', 'E', 'F'}, 
+      {'G', 'H', 'I'} };</pre>
+    </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Mehr als 2 Dimensionen?</h2>
+    </hgroup>
+    <article>
+<ul>
+      <li>Ja, in C beliebig viele (so lange wir Speicher haben)</li>
+      <li>Schwer vorstellbar ab 4 Dimensionen, deshalb als <i>Array von Arrays</i> denken</li> 
+     </ul>
+     <img src="images/multi_dim_array.jpg" width="80%">
+     
+<pre class="prettyprint" data-lang="c">
+int cube[3][3][3];
+int hypercube[3][3][3][3];
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Beispiel: 4 Dimensionen</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+ int hypercube[3][3][3][3];
+</pre>
+<div style="float: left;">
+<h4>M&ouml;glichkeit 1: 4D-W&uuml;rfel</h4>
+<img src="../ws13/images/hypercube.gif" width="125%"/>
+</div>
+<div style="float: right;">
+<h4>M&ouml;glichkeit 2: Array von 3D W&uuml;rfeln</h4>
+<table border="1" style="width: 200px;">
+<tr><td><img src="images/cube3.png" width="50%"></td></tr>
+<tr><td><img src="images/cube3.png" width="50%"></td></tr>
+<tr><td><img src="images/cube3.png" width="50%"></td></tr>
+</table>
+</div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Mehrdimensionale Arrays als Parameter</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+
+void printMatrix3(char matrix[][3])
+{
+  int y;
+  for(y = 0; y &lt; 3; y++)
+  {
+    printf("%c %c %c\n", matrix[y][0], matrix[y][1], matrix[y][2]);
+  }
+}
+
+int main()
+{
+  char matrix[3][3] = { {'A', 'B', 'C'}, {'D', 'E', 'F'}, 
+      {'G', 'H', 'I'} };
+  printMatrix3(matrix);
+}
+</pre>
+<strong>Achtung: Nicht mehr m&ouml;glich als Pointer zu &uuml;bergeben!</strong>
+   
+    </article>
+  </slide>
+  
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg bei den Haus&uuml;bungen!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss f&uuml;r HW 2-9:</p>
+          <ul>
+            <li>(ESP) Mo, 28.11.2016 14:00</li>
+          </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

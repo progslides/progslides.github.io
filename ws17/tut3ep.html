@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #3",
+        subtitle: "Einführung in die Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+
+  <slide>
+      <hgroup>
+      <h2>Tutoriumsinhalt</h2>
+      </hgroup>
+      <article>
+     <ul>
+      <li>Testreports</li>
+      <li>HW2: Häufige Fehler</li>
+      <li>Schleifen und Abfragen</li>
+      <li>HW3: Besprechung</li>
+      </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>What does the Palme say? - Die magischen Codes</h2>
+      </hgroup>
+      <article>
+        <ul>
+        <li>Was bedeuten die Codes wie <code class="mark">6a7</code>, <code class="mark">1,6c1,6</code>, <code class="mark">6d5</code>?</li>
+        <li>Am Testsystem werden die Ausgabe eures Programms mit der korrekten Ausgabe verglichen (mit <code>diff</code>).</li>
+        <li>Die Codes geben an, was an der Musterausgabe ge&auml;ndert werden m&uuml;sste, um eure Ausgabe zu erhalten</li>
+        <li>Es gibt dabei die Codes <code class="mark">a</code> (append), <code class="mark">d</code> (delete) und <code class="mark">c</code> (change)</li>
+       </ul>
+      <pre class="prettyprint" data-lang="Palme" style="font-size: 65%;">
+  CHANCE #1
+    description:
+      check whether output is correct
+    summary:
+      [FAILED] comparing "$STDOUT"
+
+    compares:
+          &lt; REFERENCE
+          > USER CREATED
+
+      #0: 6d5
+  </pre>
+
+      </article>
+
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Beispiel</h2>
+      </hgroup>
+       <article>
+        <ul>
+             <li><code class="mark">6a7</code>: Nach der 6. Zeile der Musterausgabe, m&uuml;sste die folgende 7. Zeile angeh&auml;ngt werden (Zeile folgt). Das heißt, ihr gebt dieses Zeile zuviel aus</li>
+             <li><code class="mark">6d5</code>: Die 6. Zeile der Musterausgabe (Zeile folgt) m&uuml;sste gel&ouml;scht werden. Das heißt, ihr gebt eine Zeile nicht aus, obwohl ihr solltet</li>
+             <li><code class="mark">2c2</code>: Die 2. Zeile der Musterausgabe stimmt nicht mit eurer 2. Zeile &uuml;berein, daraufhin folgt die Zeile der Musterausgabe und eure Zeile</li>
+          </ul>
+       </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Was stimmt hier nicht?</h2>
+      </hgroup>
+       <article>
+      <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+  =====================================================================================
+  TESTCASES
+
+  testcase #1 [FAILED]
+    there were 1 chance(s) to pass testcase
+
+  CHANCE #1
+    description:
+      check whether output is correct
+    summary:
+      [FAILED] return check - ref: 0 user: 255
+
+    compares:
+          &lt; REFERENCE
+          > USER CREATED
+
+
+  -------------------------------------------------------------------------------------
+  =====================================================================================
+     </pre>
+      <img src="images/fu.png" style="position: absolute; right: 40px; bottom: 20px;"/>
+       </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>Und hier?</h2>
+      </hgroup>
+       <article>
+     <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+  =====================================================================================
+  TESTCASES
+
+  testcase #1 [FAILED]
+    there were 1 chance(s) to pass testcase
+
+  CHANCE #1
+    description:
+      check whether output is correct
+    summary:
+      [FAILED] comparing "$STDOUT"
+
+    compares:
+          &lt; REFERENCE
+          > USER CREATED
+
+      #0: 6a7
+      #0: > 1915657434 * 8
+
+  -------------------------------------------------------------------------------------
+  =====================================================================================
+     </pre>
+       </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>Findet den Fehler...</h2>
+      </hgroup>
+       <article>
+     <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+  OUTPUT
+      Archive:  Term_6/Course_11/Assignment_58/Group_7642/Submission_1_hw2.zip
+        inflating: Course_11/Assignment_58/Group_7642/14960/1381852533/hw2/hw2.c
+      Returnvalue was: 0 - should be 0
+  =====================================================================================
+  CHECK
+
+  check #1
+    Result:
+      [FAILED] File hw2.c not found
+  =====================================================================================
+  COMPILE
+
+  executable #1
+    using file_set #1
+    return was: 1 - should be 0
+
+  OUTPUT
+    gcc44: hw2.c: No such file or directory
+    gcc44: no input files
+     </pre>
+       </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>... noch mehr Fehler ...</h2>
+      </hgroup>
+       <article>
+     <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+  summary:
+      [FAILED] comparing "$STDOUT"
+
+    compares:
+          &lt; REFERENCE
+          > USER CREATED
+
+      #0: 1,7c1,7
+      #0: &lt;    xxxxxxx * 2
+      #0: &lt;    xxxxxxx * 3
+      #0: &lt;    xxxxxxx * 4
+      #0: &lt;   xxxxxxxx * 5
+      #0: &lt;  xxxxxxxxx * 6
+      #0: &lt;  xxxxxxxxx * 7
+      #0: &lt; An overflow has occurred!
+      #0: ---
+      #0: > xxxxxxx * 2
+      #0: > xxxxxxx * 3
+      #0: > xxxxxxx * 4
+      #0: > xxxxxxxx * 5
+      #0: > xxxxxxxxx * 6
+      #0: > xxxxxxxxx * 7
+      #0: > An overflow has occured!
+     </pre>
+       </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>Auch hier gibt es einen Fehler!</h2>
+      </hgroup>
+       <article>
+     <pre class="prettyprint" data-lang="Palme" style="font-size: 55%; line-height: 150%;" >
+  summary:
+      [FAILED] comparing "$STDOUT"
+
+    compares:
+          &lt; REFERENCE
+          > USER CREATED
+
+      #0: 1,6c1,6
+      #0: &lt;    xxxxxxx * 2
+      #0: &lt;    xxxxxxx * 3
+      #0: &lt;    xxxxxxx * 4
+      #0: &lt;   xxxxxxxx * 5
+      #0: &lt;  xxxxxxxxx * 6
+      #0: &lt;  xxxxxxxxx * 7
+
+      #0: ---
+      #0: >    xxxxxxx * 2 
+      #0: >    xxxxxxx * 3 
+      #0: >    xxxxxxx * 4 
+      #0: >   xxxxxxxx * 5 
+      #0: >  xxxxxxxxx * 6 
+      #0: >  xxxxxxxxx * 7 
+
+     </pre>
+       </article>
+    </slide>
+
+
+    <slide>
+      <hgroup>
+        <h2>HW2 Besprechung - H&auml;ufige Fehler</h2>
+      </hgroup>
+       <article>
+        <ul>
+         <li>Berechnung der Differenz und Multiplikation im selben Statement</li>
+         <li>Codingstandard (Tabulatoren, Zeile zu lang, Einr&uuml;ckungen, ...)</li>
+         <li>Deutsche Variablennamen und deutsche Kommentare</li>
+         <li>Nicht aussagekr&auml;ftige Variablennamen (<code>i</code>, <code>tmp</code>, ...)</li>
+        </ul>
+       </article>
+    </slide>
+
+<!--    <slide>
+      <hgroup>
+        <h2>HW1a Beispiele - Gut oder schlecht?</h2>
+      </hgroup>
+       <article>
+  <img src="images/hw1a_bad_1.png" height="90%" />
+       </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>HW1a Beispiele - Gut oder schlecht?</h2>
+      </hgroup>
+       <article>
+  <img src="images/hw1a_good.png" height="90%" />
+       </article>
+    </slide>
+ -->
+  
+    <slide>
+        <hgroup>
+          <h2>Abfragen</h2>
+        </hgroup>
+          <article>
+         <p>Code wird nur dann ausgef&uuml;hrt wenn eine bestimmte Bedingung erf&uuml;llt ist.</p>
+          <pre class="prettyprint" data-lang="c">
+    if(bedingung)
+    {
+     // wird ausgef&uuml;hrt wenn die Bedingung er&uuml;llt ist
+    }
+    else
+    {
+     // wird ausgef&uuml;hrt wenn die Bedingung <strong>nicht</strong> erf&uuml;llt ist
+    }</pre>
+         <p>Als Bedingung wird meistens ein Vergleich verwendet (z.B. <code>age > 18</code>)</p>
+    </article>
+      </slide>
+
+    <slide>
+        <article>
+        <hgroup>
+         <h2>Abfragen</h2>
+        </hgroup>
+        <br />
+        <div class="codeAnimator">
+    <table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int age = 17;
+3  if(age >= 18)
+   {
+     printf("Willkommen im Casino!");
+   }
+4  else
+   {
+5    printf("Zutritt verweigert!");
+   }
+6  return 0;
+ }
+</div>
+
+    </td><td>
+
+    <div class="code_1">
+     <table class="ptr_table">
+      <tr><th>0x1000</th><td></td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    <div class="code_2">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+
+    <div class="code_3">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    <div class="code_4">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    <div class="code_5">
+    <table class="ptr_table">
+     <tr><th><p class="stdout">Zutritt verweigert!</p></th></tr>
+    </table>
+    </div>
+
+    <div class="code_6">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    </tr></table>
+    </div>
+        </article>
+
+    </slide>
+
+
+
+        <slide>
+        <hgroup>
+          <h2>Schleifen</h2>
+        </hgroup>
+          <article>
+            <ul>
+         <li>Schleifen wiederholen einen Codeteil (Block) solange eine Bedingung erf&uuml;llt ist</li>
+         <li>Arten von Schleifen: <code>for</code>, <code>while</code>, <code>do</code> (<code>if</code> <strong> ist keine Schleife!</strong>)</li>
+         <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    #include &lt;stdio.h>
+    int main()
+    {
+      int beer = 99;
+      while(beer > 0)
+      {
+        printf("%d bottles of beer on the wall, %d bottles of beer.\n", beer, beer);
+        beer = beer - 1;
+        printf("Take one down and pass it around, %d bottles of beer on the wall.\n", beer);
+      }
+      printf("No more bottles of beer on the wall, no more bottles of beer.\n");
+      return 0;
+    }
+    </pre>
+    </article>
+      </slide>
+
+      <slide>
+        <hgroup>
+          <h2>For-Schleife</h2>
+        </hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    /* For-Loop example */
+    #include &lt;stdio.h&gt;
+
+    int main()
+    {
+      int number_of_students = 20;
+      int student_id = 0;
+
+      //Init, Condition
+      for (student_id = 0; student_id < number_of_students; student_id++)
+      {
+        printf("Student-ID: %d\n", student_id);
+        //Step
+      }
+      return 0;
+    }
+    </pre>
+    	</article>
+      </slide>
+
+        <slide>
+        <hgroup>
+          <h2>While-Schleife</h2>
+        </hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    /* While-Loop example */
+    #include &lt;stdio.h&gt;
+
+    int main()
+    {
+      int number_of_students = 20;
+
+      int student_id = 0; //Init
+      while(student_id < number_of_students) //Condition
+      {
+        printf("Student-ID: %d\n", student_id);
+        student_id++; //Step
+      }
+      return 0;
+    }
+    </pre>
+    	</article>
+      </slide>
+
+      <slide>
+        <hgroup>
+          <h2>While-Schleife</h2>
+        </hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    /* While-Loop example 2 */
+    #include &lt;stdio.h&gt;
+
+    int main()
+    {
+      int max_value = 100;
+      int current_value = 1;
+      int add_value = 2;
+      int iterations = 0; //Init
+      while(current_value < max_value) //Condition
+      {
+        current_value += add_value;
+        iterations++; //Step
+      }
+      printf("Iterations: %d\n", iterations);
+      return 0;
+    }
+    </pre>
+    	</article>
+      </slide>
+
+      <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>HW3: Besprechung / Livedemo</h2>
+        </hgroup>
+</slide>
+
+      <slide>
+       <article>
+        <iframe style="height: 100%;" src="http://blockly-demo.appspot.com/blockly/demos/maze/index.html"></iframe>
+       </article>
+    </slide>
+
+
+
+      <slide class="thank-you-slide segue nobackground">
+      <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+      <article class="flexbox vleft auto-fadein">
+        <h2>Viel Erfolg bei den Haus&uuml;bungen!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
+          <ul>
+            <li>Fr, 02.12.2016 14:00</li>
+          </ul>
+      </article>
+      </slide>
+    <slide class="backdrop"></slide>
+
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

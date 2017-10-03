@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #4",
+        subtitle: "Einführung in die strukturierte Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+    
+            function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = 1;
+          container.src = container.src.replace(img_id + ".", new_id + "."); 
+        }
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+ol li {
+  list-style-type: decimal;
+  display: list-item;
+  }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+   <ul>
+    <li>Strings</li>
+    <li>Pointer</li>
+    <li>Dynamischer Speicher</li>
+    <li>Pipes</li>
+    </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>HW3 Beispiele - Gut oder schlecht?</h2>
+    </hgroup>
+    <article>
+<img src="images/hw4_cheat.png" height="99%" />
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Strings - auch nur Arrays</h2>
+    </hgroup>
+    <article>
+<ul>
+     <li>String = Zeichenkette, &raquo;Text&laquo;</li>
+     <li>String ist nur ein Array von <code>char</code> (Zeichen)</li>
+     <li>Strings enden mit einem 0-Byte ('\0', nicht dem Zeichen 0!)</li>
+     <li>Deklaration (am h&auml;ufigsten):
+<pre class="prettyprint" data-lang="c">char* text = "Hallo!";</pre>
+     </li>Andere Varianten:
+<pre class="prettyprint" data-lang="c">char text[] = "Hallo!";</pre>
+<pre class="prettyprint" data-lang="c">char text[] = {'H', 'a', 'l', 'l', 'o', '!', '\0'};</pre>
+    </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Strings: Vergleich</h2>
+    </hgroup>
+    <article>
+<ul>
+      <li>Funktion <code>strcmp</code> aus <code>string.h</code> verwenden</li>
+      <li><code>==</code> funktioniert nicht, vergleicht nur die Speicheradressen</li>
+      <li>
+<pre class="prettyprint" data-lang="c">
+ char* str1 = "Hello";
+ char* str2 = "World";
+ if(strcmp(str1, str2) == 0) 
+ {
+   // strings sind gleich
+ } 
+ else 
+ {
+   // strings sind ungleich
+ }
+</pre>
+     </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Strings: Zugriff auf einzelne Buchstaben</h2>
+    </hgroup>
+    <article>
+  <ul>
+      <li>Zugriff durch Array-Schreibweise (<code>[]</code>)</li>
+      <li>Erstes Zeichen hat Index 0!</li>
+      <li>Letztes Zeichen ist 0-Byte (<code>'\0'</code>)</li>
+      <li>
+<pre class="prettyprint" data-lang="c">
+ char* str1 = "Hello";
+ char c1 = str[0]; // c1 = 'H'
+ char c2 = str[4]; // c2 = 'o'
+ char c3 = str[5]; // c3 = '\0'
+</pre>
+      </li>
+     </ul>
+
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Strings: Funktionen</h2>
+    </hgroup>
+    <article>
+<ul>
+      <li>Weitere Funktionen die mit Strings arbeiten in <span class="src">string.h</span></li>
+      <li><a href="http://www.cplusplus.com/reference/cstring/">http://www.cplusplus.com/reference/cstring/</a></li>
+      <li>Einbinden mit <pre class="prettyprint" data-lang="c">#include &lt;string.h></pre></li>
+      <li>N&uuml;tzliche Funktionen:
+       <dl>
+        <dt><span class="src">strlen</span></dt><dd>L&auml;nge des Strings (ohne 0-Byte!)</dd>
+        <dt><span class="src">strcpy</span></dt><dd>String in einen anderen kopieren</dd>
+        <dt><span class="src">strcat</span></dt><dd>Strings aneinanderh&auml;ngen</dd>
+        <dt><span class="src">sprintf</span></dt><dd>Wie printf, aber Ausgabe wird in String gespeichert</dd>
+       </dl>
+      </li>
+     </ul>
+    </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+    <h2>Pointer</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Pointer &raquo;zeigen&laquo; auf Variablen</li>
+        <li>Pointer enth&auml;lt die Adresse einer Variable</li>
+        <li>Deklaration mit "*"
+<pre class="prettyprint" data-lang="c">&lt;datentyp&gt;* name;</pre>
+        <li>Zugriff auf die Variable durch Dereferenzieren ebenfalls mit "*"
+<pre class="prettyprint" data-lang="c">*name = &lt;value&gt;;</pre>
+        </li>
+        <li>Zuweisen einer Adresse durch den Adressoperator "&amp;"
+<pre class="prettyprint" data-lang="c">name = &amp;&lt;variable&gt;;</pre>
+        </li>
+       </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Pointer und Pointee</h2>
+    </hgroup>
+    <article>
+    <img src="../ws13/pointer/step1.png" id='pointer' width="75%">
+
+    <input type="button" onclick="nextImage(document.getElementById('pointer'), 9);" class="code_animator_button" style="position: absolute; right: 320px; bottom: 20px;" value="Weiter"></input>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Pointer - Praxisbeispiel</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int main()
+ {
+2  int a = 3;
+3  int x = 2;
+4  int* ptr = &amp;a;
+5  *ptr = 4;
+6  ptr = &amp;x;
+7  *ptr = 8;
+   return 0;
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1000</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td><em>4</em></td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1000</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>4</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td><em>0x1004</em></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>4</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td><em>8</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1004</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+
+</td></tr></table>
+</div>
+    </article>
+  </slide>
+  
+  
+
+    <slide>
+    <hgroup>
+    <h2>Verwendung von Pointern: Dynamischer Speicher</h2>
+    </hgroup>
+    <article>
+<ul>
+        <li>Wird zur Laufzeit angefordert</li>
+        <li>Hat keinen &raquo;Namen&laquo;, nur eine Adresse &#8594; Zugriff &uuml;ber Pointer</li>
+        <li>Angeforderter Speicher muss auch wieder freigegeben werden</li>
+        <li><span class="src">void* malloc(size_t size)</span> fordert Speicher der Gr&ouml;&szlig;e <code>size</code> an (in Bytes angegeben)</li>
+        <li><span class="src">void free(void* ptr)</span> gibt angeforderten Speicher wieder frei</li>
+        <li><span class="src">void* realloc(void* ptr, size_t new_size)</span> vergr&ouml;&szlig;ert einen angeforderten Speicherbereich</li>
+      </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Beispiel</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int main()
+ {
+2  int* mem = (int*)malloc(sizeof(int) * 2);
+3  if(mem == NULL) return 0; 
+4  *mem = 1;
+5  *(mem + 1) = 2;
+6  mem[0] = 3;
+7  mem[1] = 4;
+8  free(mem);
+   return 0;
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td><em>0x1000</em></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"><em>1</em></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"><em>2</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"><em>3</em></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv">3</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"><em>4</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_8">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Call-by-Reference</h2>
+    </hgroup>
+    <article>
+
+         <ul>
+       <li>Bei Funktionsaufruf nicht Variable, sondern Adresse &uuml;bergeben</li>
+       <li>mehrere R&uuml;ckgabewerte m&ouml;glich</li>
+       <li>z.B. n&uuml;tzlich damit eine Funktion einen Wert sowie einen Fehlercode liefern kann</li>
+     </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Beispiel</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+4void getHM(int minutes, int* h, int* m)
+ {
+5  *h = minutes / 60;
+6  *m = minutes % 60;
+ }
+  
+1int main()
+ {
+2  int hour = 0, minutes = 0;
+3  getHourMinutes(320, &amp;hour, &amp;minutes);
+7  printf("%d:%d\n", hour, minutes);
+   return 0;
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th>0x2000</th><td></td></tr>
+  <tr><th>0x2004</th><td></td></tr>
+  <tr><th>0x2008</th><td></td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td><em>0</em></td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td><em>0</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th>0x2000</th><td></td></tr>
+  <tr><th>0x2004</th><td></td></tr>
+  <tr><th>0x2008</th><td></td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td>0</td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td>0</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th><strong>min</strong> &nbsp; 0x2000</th><td><em>320</em></td></tr>
+  <tr><th><strong>h</strong> &nbsp; 0x2004</th><td><em>0x1000</em></td></tr>
+  <tr><th><strong>m</strong> &nbsp; 0x2008</th><td><em>0x1004</em></td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td>0</td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td>0</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th><strong>min</strong> &nbsp; 0x2000</th><td>320</td></tr>
+  <tr><th><strong>h</strong> &nbsp; 0x2004</th><td>0x1000</td></tr>
+  <tr><th><strong>m</strong> &nbsp; 0x2008</th><td>0x1004</td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td><em>5</em></td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td>0</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th><strong>min</strong> &nbsp; 0x2000</th><td>320</td></tr>
+  <tr><th><strong>h</strong> &nbsp; 0x2004</th><td>0x1000</td></tr>
+  <tr><th><strong>m</strong> &nbsp; 0x2008</th><td>0x1004</td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td>5</td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td><em>20</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th><strong>min</strong> &nbsp; 0x2000</th><td>320</td></tr>
+  <tr><th><strong>h</strong> &nbsp; 0x2004</th><td>0x1000</td></tr>
+  <tr><th><strong>m</strong> &nbsp; 0x2008</th><td>0x1004</td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>hour</strong> &nbsp; 0x1000</th><td>5</td></tr>
+  <tr><th><strong>minutes</strong> &nbsp; 0x1004</th><td>20</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>&#8285;</th><th>&#8285;</th></tr>
+  <tr><th>0x2000</th><td></td></tr>
+  <tr><th>0x2004</th><td></td></tr>
+  <tr><th>0x2008</th><td></td></tr>
+  <tr><th>0x200C</th><td></td></tr>
+  <tr><th><strong>stdout</strong></th><th style="border: 1px solid black;"><em>5:20</em></th></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Valgrind</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li>Tool zum Finden von
+       <ul>
+        <li>Memory Leaks</li>
+        <li>unitialiserten Variablen</li>
+        <li>Off-by-one Fehlern</li>
+        <li>Segmentation Faults</li>
+       </ul>
+      </li>
+      <li>Testsystem verwendet Valgrind &#8594; Valgrind Fehler geben Punkteabzug!</li>
+      <li>Nur f&uuml;r Linux, aber auf Pluto schon installiert</li>
+     </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Beispiel</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+#include &lt;stdlib.h>
+#include &lt;string.h>
+
+int main()
+{
+  char* text = (char*)malloc(6 * sizeof(char));
+  strcpy(text, "Hallo!");
+  printf("%s\n", text);
+  return 0;
+}
+</pre>
+
+Kompilieren:
+<pre class="prettyprint" data-lang="bash">
+gcc -Wall -g -o valgrind_test valgrind_test.c
+</pre>
+
+Valgrind:
+<pre class="prettyprint" data-lang="bash">
+valgrind --leak-check=full ./valgrind_test
+</pre>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Weitere Valgrind-Beispiele</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind1.c">Beispiel 1</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind2.c">Beispiel 2</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind3.c">Beispiel 3</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind_4.c">Beispiel 4</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind_5.c">Beispiel 5</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind_6.c">Beispiel 6</a></li>
+      </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Häufige Fehler / Best Practice</h2>
+    </hgroup>
+    <article>
+<ul>
+      <li>Pointer auf <code>NULL</code> initialisieren</li> 
+      <li>Pointer nach <code>free</code> auf <code>NULL</code> setzen</li>
+      <li><strong><code><strong>malloc</strong></code>/<code><strong>realloc</strong></code> auf <code><strong>NULL</strong></code> &uuml;berpr&uuml;fen</strong></li>
+      <li><strong>Bei <code><strong>realloc</strong></code> Hilfspointer verwenden:</strong>
+<pre class="prettyprint" data-lang="c">
+char* text = (char*)malloc(8 * sizeof(char));
+char* new_text = (char*)realloc(text, 16 * sizeof(char));
+if(new_text != NULL)
+{
+  text = new_text;
+}
+else
+{
+  free(text);
+  printf("Out of memory!\n");
+}
+</pre>
+</li>
+     </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Warum nicht einfach?</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int* x = (int*)malloc(3);
+2x = (int*)realloc(x, 16);
+3if(x == NULL)
+ {
+4  free(x);
+5  printf("Out of memory!");
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td><em>0x1008</em></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td><em>NULL</em></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>NULL</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>NULL</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>NULL</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th><strong>stdout</strong><th style="border: 1px solid black;">Out of memory!</th></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Deshalb mit Hilfspointer</h2>
+    </hgroup>
+    <article>
+
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int* x = (int*)malloc(3);
+2int* new_x = (int*)realloc(x, 16);
+3if(new_x != NULL)
+ {
+   x = new_x;
+ }
+4else
+ {
+5  free(x);
+6  printf("Out of memory!\n");
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td><em>0x1008</em></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td><em>NULL</em></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th><strong>stdout</strong></th><th style="border: 1px solid black;">Out of memory!</th></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+  </slide>
+  
+  
+    <slide>
+      <hgroup>
+      <h2>Pipes</h2>
+      </hgroup>
+      <article>
+      <p>Möglichkeit, die Ausgabe der einzelnen Befehle umzuleiten bzw. an andere Befehle weiterzuleiten.</p>
+           <ul>
+            <li>Umleiten der Ausgabe in Datei</li>
+            <li>Standardeingabe von Datei lesen</li>
+            <li>Ausgabe als Eingabe f&uuml;r anderes Programm</li>
+          </ul>
+      </article>
+    </slide>
+
+      <slide>
+      <hgroup>
+      <h2>Pipes</h2>
+      </hgroup>
+      <article>
+       <h4>Ausgabe umleiten</h4>
+         <pre class="prettyprint" data-lang="bash">./programm > ausgabe.txt</pre>
+
+         <h4>Eingabe umleiten</h4>
+         <pre class="prettyprint" data-lang="bash">./programm &lt; eingabe.txt</pre>
+
+         <h4>stderr umleiten</h4>
+         <pre class="prettyprint" data-lang="bash">./programm 2> error.txt</pre>
+      </article>
+    </slide>
+
+
+      <slide>
+      <hgroup>
+      <h2>Pipes</h2>
+      </hgroup>
+      <article>
+    <h4>Beliebig kombinierbar</h4>
+         <pre class="prettyprint" data-lang="bash">./programm &lt; input.txt 1> output.txt 2> error.txt</pre>
+
+         <h4>Stdout als stdin eines anderen programms</h4>
+         <pre class="prettyprint" data-lang="bash">./programm | tail</pre>
+
+         <h4>Returncode des letzten Programms</h4>
+         <pre class="prettyprint" data-lang="bash">echo $?</pre>
+      </article>
+    </slide>
+
+  
+  <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg bei den Haus&uuml;bungen!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss f&uuml;r HW 2-9:</p>
+          <ul>
+            <li>(ESP) Mo, 28.11.2016 14:00</li>
+          </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #5",
+        subtitle: "Einführung in die strukturierte Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+  function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+ol li {
+  list-style-type: decimal;
+  display: list-item;
+  }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  
+      <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+     <ul>
+     
+    <li>HW 4 Besprechung</li>
+    <li>Bitoperatoren</li>
+    <li>sizeof</li>
+    <li>Strukturen</li>
+    <li>File I/O</li>
+    <li>Gruppenbeispiel</li>
+    </ul>
+    </article>
+  </slide>
+
+      <slide>
+    <hgroup>
+    <h2>HW4 - Gut oder Schlecht?</h2>
+    </hgroup>
+    <article>
+ <pre class="prettyprint" data-lang="c" style="font-size: 0.55em; line-height: 1.1em;">
+int errorMemory()
+{
+  printf("Error: Out of memory!\n");
+  return ERROR_MEM;
+}
+
+[...]
+
+int main()
+{
+  char *input = (char*)malloc(STRING_LENGTH * sizeof(char));
+  if(input == NULL)
+  {
+    errorMemory();
+  }
+  
+  while((character_from_stdin = getchar()) != EOF)
+  {
+    input[input_counter] = character_from_stdin;
+  
+  [...]
+  }
+  
+  [...]
+  
+}
+</pre>
+    </article>
+  </slide>
+  
+      <slide>
+    <hgroup>
+    <h2>HW4 - Gut oder Schlecht?</h2>
+    </hgroup>
+    <article>
+ <pre class="prettyprint" data-lang="c" style="font-size: 0.55em; line-height: 1.1em;">
+  [...]
+int max_char = 32;
+int pos = 0;
+
+char *ptr = (char*) malloc(max_char * (sizeof(char)));
+  
+if (ptr == NULL)
+{
+  printf ("Error: Out of memory!\n");
+  return 1; 
+}
+
+char input;
+do
+{
+  input = getchar();
+  if (pos == max_char)
+  {
+    max_char += 16;
+    char* tmp = (char*) realloc (ptr, max_char * (sizeof(char)));
+    if (tmp == NULL)
+    {
+      printf ("Error: Out of memory!\n");
+      free(ptr);
+      return 1; 
+    }
+    ptr = tmp;
+  }
+  [...]
+}
+[...]
+  </pre>
+    </article>
+  </slide>
+  
+      <slide>
+    <hgroup>
+    <h2>HW4 - Gut oder Schlecht?</h2>
+    </hgroup>
+    <article>
+ <pre class="prettyprint" data-lang="c" style="font-size: 0.55em; line-height: 1.3em;">
+[...]
+
+char* text = malloc(10000 * sizeof(char));
+
+gets(text);
+
+int length = strlen(text);
+int i = 0;
+for(i = length - 1; i >= 0; i--)
+  printf("%c", text[i]);
+
+[...]
+</pre>
+    </article>
+  </slide>
+  
+      <slide>
+    <hgroup>
+    <h2>HW4 - Gut oder Schlecht?</h2>
+    </hgroup>
+    <article>
+ <pre class="prettyprint" data-lang="c" style="font-size: 0.55em; line-height: 1.1em;">
+[...]
+#define BLOCKSIZE 50
+
+char* text = malloc(BLOCKSIZE * sizeof(char));
+
+[...] // NULL-Pointercheck
+
+char letter = getchar();
+
+int index = 0;
+int size = BLOCKSIZE;
+
+while(letter != EOF)
+{
+  if(index == size)
+  {
+    size += BLOCKSIZE;
+    char* tmp = realloc(text, size * sizeof(char));
+    [...] //NULL-Pointer check
+  }
+  text[index] = letter;
+  letter = getchar();
+}
+
+while(index >= 0)
+{
+  printf("%c", text[index]);
+  index--;
+}
+printf("\n");
+[...]
+
+</pre>
+    </article>
+  </slide>
+  
+      <slide>
+    <hgroup>
+    <h2>HW4 - Häuftigste Fehler</h2>
+    </hgroup>
+    <article>
+   <ul>
+<li>
+  Keine Überprüfung von NULL-Pointern nach malloc/realloc
+</li>
+<li>
+  Keine Verwendung von Temp-Pointern für realloc
+  </li>
+<li>
+  Zeichenweises Vergrößern des Speichers
+</li>
+<li>
+  NULL-Byte vergessen
+  </li>
+<li>
+Memcopy nach realloc
+</li>
+<li>
+Falsche Verwendung von realloc
+</li>
+</ul>
+    </article>
+  </slide>
+
+  
+    <slide>
+    <hgroup>
+    <h2>realloc - blockweises allokieren</h2>
+    </hgroup>
+    <article>
+  <ul>
+       <li>Wenn Speicher vergr&ouml;&szlig;ert wird, sollte das nie byteweise erfolgen!</li>
+       <li>Entweder linear mit sinnvoller Blockgr&ouml;&szlig;e, oder verdoppeln</li>
+       <li>Vergleich</li>
+       <table>
+        <tr><th>&nbsp;</th><th>+1 Byte</th><th>+16 Byte</th><th>Verdoppeln</th></tr>
+        <tr><th>100MB</th><td>1,82s</td><td>0,97s</td><td>0,78s</td></tr>
+        <tr><th>500MB</th><td>8,94s</td><td>4,81s</td><td>3,92s</td></tr>
+        <tr><th>1,5GB</th><td>44,89s</td><td>17,23s</td><td>9,38s</td></tr>
+       </table>
+      </ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+   <ul>
+       <li>Verkn&uuml;pfen Daten bitweise</li>
+       <li>Erfordern zwei Operanden (Ausnahme: NOT)</li>
+       <li>AND (<code>&amp;</code>), OR (<code>|</code>), XOR (<code>^</code>)</li>
+       <li>Left Shift (<code>&lt;&lt;</code>), Right Shift (<code>&gt;&gt;</code>)</li>
+       <li>NOT (<code>~</code>)</li>
+      </ul>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+<h3>AND ... &amp;</h3>
+     <table class="middle">
+      <tr><td>&amp;</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>1</td><td>0</td></tr>
+      <tr><th>0</th><td>0</td><td>0</td></tr>
+     </table>
+
+     <h3>OR ... |</h3>
+     <table class="middle">
+      <tr><td>|</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>1</td><td>1</td></tr>
+      <tr><th>0</th><td>1</td><td>0</td></tr>
+     </table>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+     <h3>XOR ... ^</h3>
+     <table class="middle">
+      <tr><td>^</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>0</td><td>1</td></tr>
+      <tr><th>0</th><td>1</td><td>0</td></tr>
+     </table>
+
+     <h3>NOT ... ~</h3>
+     <table class="middle">
+      <tr><td> </td><th>1</th><th>0</th></tr>
+      <tr><th>~</th><td>0</td><td>1</td></tr>
+     </table>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+     <h3>Shift Left ... &lt;&lt;</h3>
+     <p>
+     Verschiebt die Bits um <i>n</i> Stellen nach links<br/>
+     Beispiel: 9 ( = 0000 1001<sub>b</sub>) &lt;&lt; 1 = 18 ( = 0001 0010<sub>b</sub>)
+</p>
+<p>
+     <h3>Shift Right ... &gt;&gt;</h3>
+     Verschiebt die Bits <i>n</i> Stellen nach rechts<br/>
+     Beispiel: 27 ( = 0001 1011<sub>b</sub>) >> 2 = 6 ( = 0000 0110<sub>b</sub>)
+     </p>
+     </article>
+  </slide>
+  
+  
+    <slide>
+    <hgroup>
+      <h2>Bitoperation - Wozu?</h2>
+    </hgroup>
+     <article>
+      <ul>
+        <li>Setzen von einzelnen Bits</li>
+        <li>L&ouml;schen von einzelnen Bits</li>
+        <li>Extrahieren von Bits</li>
+        <li>Potenzen von 2 schnell berechnen</li>
+        <li>Extrahieren von Teilen eines Bytes</li>
+        <li>Tauschen von Bytes</li>
+        <li>Bitfelder</li>
+      </ul>
+    
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Bitfeld</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+int main()
+{
+  unsigned char lampen_zustand = 0; // 8 Zust&auml;nde (Lampen)
+  // Lampe 1 einschalten
+  lampen_zustand |= 1;
+  // Lampen 5-8 ausschalten
+  lampen_zustand &amp;= 15;
+  // Lampe 5 umschalten
+  lampen_zustand ^= 16;
+  // Zustand ausgeben
+  int lampe;
+  for(lampe = 0; lampe &lt; 8; lampe++) 
+  {
+    printf("Lampe %d: %s\n", lampe + 1, 
+      lampen_zustand &amp; (1 &lt;&lt; lampe) ? "ein" : "aus");
+  }
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: RGB</h2>
+    </hgroup>
+     <article>
+<img src="images/rgb_bsp.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Byte-Reihenfolge</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+
+unsigned int swapByteOrder(unsigned int value)
+{
+  value = ((value &lt;&lt; 8) &amp; 0xFF00FF00) |
+          ((value >> 8) &amp; 0xFF00FF); 
+  return (value &lt;&lt; 16) | (value >> 16);
+}
+
+int main()
+{
+  unsigned int value = 0x12345678;
+  
+  printf("value = %x\n", value);
+  printf("swapped value = %x\n", swapByteOrder(value));
+  
+  return 0;
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Hexadezimale Ausgabe</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c"  style="font-size: 55%; line-height: 120%;">
+#include &lt;stdio.h>
+
+#define BITS_PER_NIBBLE 4
+#define NIBBLE_MASK 0xF
+
+int main()
+{
+  int a_number = 17036401;
+  int index;
+  
+  printf("bin = ");
+  for( index = 32; index > 0; index-- )
+  {
+    printf( "%d", (a_number &amp; (1 &lt;&lt; (index - 1))) ? 1 : 0 );
+    if( (index - 1) % BITS_PER_NIBBLE == 0 )
+      printf(" ");
+  }
+  
+  // This should only demonstrate how to use bit operations.
+  // In practice use %x for hexadecimal output
+  printf("\nhex = ");
+  for( index = 32 / BITS_PER_NIBBLE; index > 0; index-- )
+  {
+    int nibble = (a_number >> ((index - 1) * BITS_PER_NIBBLE)) &amp; NIBBLE_MASK;
+    printf( "%4c ", nibble &lt; 10 ? nibble + '0' : nibble + 'A' - 10 );
+  }
+  
+  return 0;
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken</h2>
+    </hgroup>
+     <article>
+<iframe src="bitmask/bitmask.html" height="100%" style="border: 0px;"></iframe> 
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+if((value &amp; (value - 1) == 0)
+{
+  printf("Wann werde ich ausgef&uuml;hrt?");
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+a = a^b;
+b = b^a;
+a = a^b;
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+int log = 0;
+while(value > 0)
+{
+  value = value >> 1;
+  log++;
+}
+</pre>
+
+<a href="http://graphics.stanford.edu/~seander/bithacks.html">http://graphics.stanford.edu/~seander/bithacks.html</a>
+    
+     </article>
+  </slide>
+  
+  
+  
+  
+  
+  
+  
+    <slide>
+    <hgroup>
+    <h2>Der sizeof Operator</h2>
+    </hgroup>
+    <article>
+  <ul>
+         <li>Operator (keine Funktion), nur f&uuml;r Gr&ouml;&szlig;en, die zur Kompilierzeit bekannt sind</li>
+       </ul>
+       <div style="float: left; width: 45%">
+       <h4>Funktioniert</h4>
+       <ul>
+        <li><pre class="prettyprint" data-lang="c">int charsize = sizeof(char);</pre></li>
+        <li><pre class="prettyprint" data-lang="c">int ptrsize = sizeof(int*);</pre></li>
+        <li><pre class="prettyprint" data-lang="c">int size = sizeof("Hallo");</pre></li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+int x[20];
+int len = 
+  sizeof(x) / sizeof(x[0]);
+</pre>
+       </ul>
+       </div>
+       
+       <div style="float: left; width: 45%; padding-left: 7%;">
+       <h4>Funktioniert nicht</h4>
+       <ul>
+        <li><pre class="prettyprint" data-lang="c">
+int* x = (int*)malloc(100);
+int len = sizeof(x);</pre></li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+int x[20];
+int* y = x;
+int len = 
+  sizeof(y) / sizeof(y[0]);
+</pre></li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+char* hallo = "Hallo";
+int size = sizeof(hallo);
+</pre>
+        </li>
+        </ul>
+       </div>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Verwendung von sizeof</h2>
+    </hgroup>
+    <article>
+ <ul>
+       <li>Soll bei <span class="src">malloc</span>/<span class="src">realloc</span> verwendet werden, da diese die Gr&ouml;&szlig;e in Byte verlangen</li>
+       <li><em>Beispiel</em>: Integer Array mit 10 Elementen</li>
+       <li><strong>Falsch</strong>
+<pre class="prettyprint" data-lang="c">
+int* x = (int*)malloc(10);
+</pre></li>
+       <li><strong>Richtig</strong>
+<pre class="prettyprint" data-lang="c">
+int* x = (int*)malloc(10 * sizeof(int));
+</pre>
+      </ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Strukturen</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Zusammenfassung mehrer Variablen zu neuem Datentyp</li>
+        <li>Zugriff mit &raquo;.&laquo; bzw. &raquo;->&laquo; bei Pointern</li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+struct _Person_ {
+  char* name;
+  int age;
+};
+
+int main()
+{
+  struct _Person_ petra;
+  petra.name = "Petra";
+  petra.age = 17;
+  return 0;
+}
+</pre></li>
+      </ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Strukturen</h2>
+    </hgroup>
+    <article>
+    <ul>
+       <li>K&uuml;rzere Schreibweise mit <code>typedef</code>:
+<pre class="prettyprint" data-lang="c">
+[...]
+
+struct _Person_ {
+  char* name;
+  int age;
+};
+typedef struct _Person_ Person;
+
+[...]
+
+Person petra;
+petra.name = "Petra";
+petra.age = 17;
+
+[...]
+</pre>
+      </ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Strukturen dynamisch anlegen</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Strukturen k&ouml;nnen ebenso wie andere Daten dynamisch angelegt werden</li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+[...]
+struct _Person_ {
+  char* name;
+  int age;
+};
+typedef struct _Person_ Person;
+
+[...]
+Person* petra = (Person*)malloc(sizeof(Person));
+petra->name = "Petra";
+petra->age = 17;
+
+[...]
+free(petra);
+</pre>
+        </li>
+      </ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Selbstreferenzierende Strukturen</h2>
+    </hgroup>
+    <article>
+   <ul>
+        <li>Struktur kann Pointer auf Objekte vom eigenem Typ enthalten</li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+struct _Person_ {
+  char* name;
+  int age;
+  struct _Person_* father;
+  struct _Person_* mother;
+};
+</pre></li>
+      <li>Funktioniert, da Pointer immer gleich gro&szlig; sind (4 bzw. 8 Byte)</li>
+      <li>F&uuml;r viele Datenstrukturen ben&ouml;tigt (z.B. Baum, Linked List)</li>
+      </ul>
+    </article>
+  </slide>
+  
+  
+    <slide>
+    <hgroup>
+    <h2>File I/O</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Textdateien und Bin&auml;rdateien</li>
+        <li>Textdateien
+          <ul>
+            <li>enthalten nur Text</li>
+            <li>k&ouml;nnen mit dem normalen Editor gelesen werden</li>
+            <li>z.B. .txt Dateien</li>
+          </ul>
+          </li>
+        <li>Bin&auml;rdateien
+          <ul>
+           <li>enthalten beliebige bin&auml;re Daten</li>
+           <li>sind <strong>nicht</strong> mit dem normalen Editor lesbar</li>
+           <li>z.B. Bilder, Musik</li>
+          </ul>
+          </li>
+      </ul>
+    </article>
+  </slide>
+
+    <slide>
+    <hgroup>
+    <h2>File I/O</h2>
+    </hgroup>
+    <article>
+    <ul>
+        <li>Datei öffnen
+          <ul>
+           <li>
+             <pre class="prettyprint" data-lang="c">
+fopen(const char * filename, const char * mode);</pre></li>
+          
+          <li>
+           <b>r</b>ead
+          </li>
+          <li>
+           <b>w</b>rite
+          </li>
+          <li>
+           <b>a</b>ppend
+          </li>
+        </ul>
+        
+        </li>
+        <li>Daten lesen
+          <ul>
+           <li>
+             <pre class="prettyprint" data-lang="c">
+fread(void * dst, size_t size, size_t items, FILE * file); </pre></li>
+          </ul>
+        </li>
+        <li>Daten schreiben 
+          <ul>
+           <li>
+             <pre class="prettyprint" data-lang="c">
+ fwrite(const void * data, size_t size, size_t items, FILE * file); </pre></li>
+          </ul>
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+
+  
+    <slide>
+    <hgroup>
+    <h2><code>struct</code> in Datei speichern</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li><code>struct</code>s k&ouml;nnen in Bin&auml;rdateien gespeichert werden</li>
+      <li>
+<pre class="prettyprint" data-lang="c">
+[...]
+struct _Phone_ {
+  int country_code;
+  int number;
+}__attribute__((packed));
+
+[...]
+struct _Phone_ number;
+number.number = 1234567;
+number.country_code = 43;
+
+FILE* file = fopen("phone_numbers", "wb"); // w<strong>b</strong> = write binary
+fwrite(&amp;number, sizeof(struct _Phone_), 1, file);
+fclose(file);
+</pre>
+      </li>
+     </ul>
+    </article>
+  </slide>
+  
+  
+    <slide>
+    <hgroup>
+    <h2><code>struct</code> aus Datei lesen</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li><code>struct</code>s k&ouml;nnen aus Bin&auml;rdateien geladen werden</li>
+      <li>
+<pre class="prettyprint" data-lang="c">
+[...]
+struct _Phone_ {
+  int country_code;
+  int number;
+}__attribute__((packed));
+
+[...]
+struct _Phone_ number;
+
+FILE* file = fopen("phone_numbers", "rb"); // r<strong>b</strong> = read binary
+fread(&amp;number, sizeof(struct _Phone_), 1, file);
+fclose(file);
+</pre>
+      </li>
+     </ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Wie schaut ein <code>int</code> in einer Datei aus?</h2>
+    </hgroup>
+    <article>
+  <ul>
+      <li>Integer hat 4 Byte</li>
+      <li>Jedes der Bytes kann wie eine &raquo;Ziffer&laquo; gesehen werden</li>
+      <li>Die Umrechung zur&uuml;ck in einen Integer erfolgt dann wie in jedem anderen Zahlensystem<li>
+      <li>Achtung Endianness: Intel ist Little-Endian, d.h. die Byte-Reihenfolge ist &raquo;verkehrt&laquo;</li>
+      <li>Beispiel: Integer 0x12345678 (= 305.419.896) in einer Datei:
+      <code>78 56 34 12</code></li>
+     </ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Beispiel zur Umrechnung</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li>Inhalt der Datei als <code>char</code> Array eingelesen: <code>02 01 00 00</code></li>
+      <li>Umrechnung ins Dezimalsystem:
+      <table>
+       <tr><th><sub>256</sub><sup>0</sup></th><th><sub>256</sub><sup>1</sup></th><th><sub>256</sub><sup>2</sup></th><th><sub>256</sub><sup>3</sup></th></tr>
+       <tr><td>02</td><td>01</td><td>00</td><td>00</td></tr>
+      </table></li>
+      <li>= <u>0x02</u> * 256<sup>0</sup> + <u>0x01</u> * 256<sup>1</sup> + <u>0x00</u> * 256<sup>2</sup> + <u>0x00</u> * 256<sup>3</sup></li>
+      <li>= 258</li>
+     </ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Geht das auch einfacher?</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li>Nat&uuml;rlich, wir lassen den Compiler f&uuml;r uns arbeiten</li>
+      <li>Direktes Einlesen in einen Integer mit <code>fread</code>:
+      <pre class="prettyprint" data-lang="c">int length;
+fread(&amp;length, sizeof(int), 1, file);</pre></li>
+      <li>&Uuml;ber Pointer, indem wir den Speicherinhalt neu &raquo;interpretieren&laquo; lassen:
+      <pre class="prettyprint" data-lang="c">// buffer is the char array containing the file
+int length = *((int*)buffer);</pre></li>
+      <li>Mit <code>memcpy</code> in einen Integer kopieren:
+      <pre class="prettyprint" data-lang="c">// buffer is the char array containing the file
+int length;
+memcpy(&amp;length, buffer, sizeof(int));</pre>
+     </ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Dateigr&ouml;&szlig;e ermitteln</h2>
+    </hgroup>
+    <article>
+ <ul>
+ <li>Keine C Funktion um die Dateigr&ouml;&szlig;e zu ermitteln</li>
+ <li>Folgende Vorgehensweise:
+  <ol>
+   <li>Dateizeiger an das Ende der Datei setzen</li>
+   <li>Abfragen, wo der Dateizeiger steht</li>
+   <li>Dateizeiger wieder auf den Anfang der Datei setzen</li>
+  </ol></li> 
+ <li>Der Code dazu:
+ <pre class="prettyprint" data-lang="c">
+long size;
+fseek(file, 0, SEEK_END);
+size = ftell(file);
+fseek(file, 0, SEEK_SET);
+</pre></li>
+</ul>
+    </article>
+  </slide>
+  
+    <slide>
+    <hgroup>
+    <h2>Gruppenbeispiel - Tipps</h2>
+    </hgroup>
+    <article>
+  <ul>
+      <li>Gut und viel testen!</li>
+      <li>R&uuml;ckgabewerte der File I/O Funktionen pr&uuml;fen!</li>
+      <li>Nie vergessen, bei <span class="src">malloc</span> und <span class="src">realloc</span> auf NULL zu pr&uuml;fen!</li>
+      <li>String-Bibliothek Funktionen anschauen (<span class="src">strtok</span>), es gibt jedoch nicht alle Funktionen die man braucht!</li>
+      <li>Codingstandard beachten!</li>
+      <li>Valgrind verwenden!</li>
+     </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Best Practice</h2>
+    </hgroup>
+    <article>
+   <ul>
+     <li>Programm sinnvoll in Funktionen einteilen</li>
+     <li>Aussagekräftige Variablennamen verwenden</li>
+     <li>Keine Variablen Recyclen</li>
+     <li>Variablen initialisieren</li>
+     <li>Lieber zu viele Klammern als zu wenig</li>
+     <li>Komplizierte Stellen kommentieren, aber keine unnötigen Kommentare</li>
+     </ul>
+    </article>
+  </slide>
+
+  
+  
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg beim AssA!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
+        <ul>
+          <li>Mi, 22.12.2016 14:00</li>
+        </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #1",
+        subtitle: "Einführung in die (strukturierte) Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+    .stretched li {
+        margin-bottom: 1.5em;
+    }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Tutoren</h2>
+    </hgroup>
+    <article class="smaller">
+      <table>
+        <thead>
+          <tr>
+            <th>LV</th>
+            <th>Termin</th>
+            <th>Tutor</th>
+            <th>Kontakt</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Gruppe 1 (ESP)</td>
+          <td>Mo, 10:00 - 12:00</td>
+          <td>Philipp Hafner</td>
+          <td><a href="mailto:prog-tutor-phafner@iicm.tugraz.at">prog-tutor-phafner@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 2 (ESP)</td>
+          <td>Mo, 14:00 - 16:00</td>
+          <td>Hasan Durmaz</td>
+          <td><a href="mailto:prog-tutor-hasan@iicm.tugraz.at">prog-tutor-hasan@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 7 (ESP)</td>
+          <td>Di, 10:00 - 12:00</td>
+          <td>Philip Loibl</td>
+          <td><a href="mailto:prog-tutor-ploibl@iicm.tugraz.at">prog-tutor-ploibl@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 4 (ESP)</td>
+          <td>Di, 12:00 - 14:00</td>
+          <td>Martin Winter</td>
+          <td><a href="mailto:prog-tutor-martin@iicm.tugraz.at">prog-tutor-martin@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 3 (ESP)</td>
+          <td>Di, 14:00 - 16:00</td>
+          <td>Lorenz Kofler</td>
+          <td><a href="mailto:prog-tutor-lorenz@iicm.tugraz.at">prog-tutor-lorenz@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 5 (ESP)</td>
+          <td>Di, 16:00 - 18:00</td>
+          <td>Pascal Nasahl</td>
+          <td><a href="mailto:prog-tutor-pascal@iicm.tugraz.at">prog-tutor-pascal@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 6 (ESP)</td>
+          <td>Mi, 12:00 - 14:00</td>
+          <td>Angela Promitzer</td>
+          <td><a href="mailto:prog-tutor-angela@iicm.tugraz.at">prog-tutor-angela@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe A (EP)</td>
+          <td>Mo, 12:00 - 14:00</td>
+          <td>Thomas Neff</td>
+          <td><a href="mailto:prog-tutor-thomas@iicm.tugraz.at">prog-tutor-thomas@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe B (EP)</td>
+          <td>Mo, 16:00 - 18:00</td>
+          <td>Paul Nagele</td>
+          <td><a href="mailto:prog-tutor-paul@iicm.tugraz.at">prog-tutor-paul@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe C (EP)</td>
+          <td>Di, 8:00 - 10:00</td>
+          <td>David Bidner</td>
+          <td><a href="mailto:prog-tutor-david@iicm.tugraz.at">prog-tutor-david@iicm.tugraz.at</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Fragen zur Vorlesung</li>
+        <li>Hilfestellungen zu den Beispielen</li>
+        <li>Besprechung häufiger Fehler</li>
+        <li>Erarbeiten &auml;hnlicher Beispiele</li>
+        <li>Eure Vorschl&auml;ge?</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Resourcen</h2>
+    </hgroup>
+    <article>
+      <dl>
+        <dt>Wiki:</dt>
+        <dd>https://palme.iicm.tugraz.at/wiki/EP<br>
+        https://palme.iicm.tugraz.at/wiki/ESP</dd>
+        <dt>Abgabesystem:</dt>
+        <dd>https://palme.iicm.tugraz.at/</dd>
+        <dt>Tutorium:</dt>
+        <dd>http://progslides.github.io/ws16/</dt>
+        <dt>Newsgroup (nntp://news.tugraz.at:119/):</dt>
+        <dd>
+        <ul>
+          <li>tu-graz.lv.e(s)p</li>
+          <li>tu-graz.lv.e(s)p.organisatorisches</li>
+          <li>tu-graz.lv.e(s)p.uebungsgruppen</li>
+        <ul>
+        </dd>
+      </dl>
+      <p>Alle nicht persönlichen Fragen <strong>ausschließlich</strong>
+      in der Newsgroup stellen!</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bewertung</h2>
+    </hgroup>
+    <article>
+      <ul class="stretched">
+        <li>Erste <b>Haus&uuml;bung ist verpflichtend</b>, sowie <b>3 weitere Haus&uuml;bungen nach Wahl</b></li>
+        <ul><li>Haus&uuml;bungen sind unbewertet</li></ul>
+        <li>Alle Beispiele müssen rechtzeitig (siehe Abgabenliste im wiki) abgegeben werden <br>
+            (erkennbarer Versuch, <strong>keine Plagiate</strong>)</li>
+      </ul>
+    </article>
+  </slide>
+
+   <slide>
+    <hgroup>
+      <h2>Bewertung</h2>
+    </hgroup>
+    <article>
+      <ul class="stretched">
+        <li>Ein bewertetes <b>Gruppenbeispiel</b> (20 Punkte) und eine <b>Klausur</b> (10 Punkte)</li>
+        <li>Bewertet wird Programmierstil, Struktur, Korrektheit und Funktionalität</li>
+        <li>Mitarbeit wird durch ein <b>Abgabegespräch</b> überprüft</li>
+        <li><b>Wiederholungsm&ouml;glichkeit:</b> Feedback des <b>Gruppenbeispiels</b> nach der Abgabe, Fehler k&ouml;nnen ausgebessert werden</li>
+        <li>Benotet wird ab der Anmeldung zum Gruppenbeispiel</li>
+      </ul>
+    </article>
+  </slide>
+  
+  
+
+  <slide>
+    <hgroup>
+      <h2>Abgabegespr&auml;ch</h2>
+    </hgroup>
+    <article>
+      <ul class="stretched">
+        <li>Jedes Gruppenmitglied muss den kompletten Code erkl&auml;ren k&ouml;nnen</li>
+        <li>Programm nicht erkl&auml;ren &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Nicht vorprogrammieren &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Keine &Auml;nderungen am Programm durchf&uuml;hren &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Unentschuldigt nicht erscheinen &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Mitschwimmer &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li><strong>Wenn der Code selbst geschrieben und verstanden wurde - kein Problem!</strong></li>
+      </ul>
+    </article>
+  </slide>
+
+<slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>Kompilieren am Pluto</h2>
+        </hgroup>
+</slide>
+
+  
+  <slide>
+    <hgroup>
+      <h2>Schritt 1</h2>
+    </hgroup>
+      <article>
+      	<p>In einem Editor nach Wahl (z.B. UltraEdit,  Notepad++, Kate, Vim,
+      		Emacs, Textmate) eine Datei "hello.c" anlegen:</p>
+      	<pre class="prettyprint" data-lang="c">/* Hello World Example */
+
+#include &lt;stdio.h&gt;
+
+int main()
+{
+  printf("Hallo ESP!\n");
+  return 0;
+}</pre>
+			<br>
+			<p>Tutorial: <a href="http://www.student.tugraz.at/manuel.weber/sep/howto_vb.html">Linux als virtuelle Umgebung unter Windows</a></p>
+			</article>
+    </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 2</h2>
+    </hgroup>
+    <article>
+      	<p style="margin-bottom: 1em;">Die Datei auf <u>pluto.tugraz.at</u> kopieren:</p>
+      	<pre class="prettyprint" data-lang="bash">scp hello.c user@pluto.tugraz.at:</pre>
+      	<p style="text-align: center;">
+					<img style="width: 70%;" src="images/filezilla.png" alt="FileZilla" />
+				</p>
+			</article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 3</h2>
+    </hgroup>
+    <article>
+        <p>Zum Pluto verbinden:</p>
+        <pre class="prettyprint" data-lang="bash">ssh user@pluto.tugraz.at</pre>
+       	<p style="text-align: center;">
+        	<img style="width: 70%;" src="images/putty.png" alt="Putty">
+      	</p>
+      </article>
+    </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 4</h2>
+    </hgroup>
+    <article class="smaller">
+        <p>Das Programm kompilieren:</p>
+        <pre class="prettyprint" data-lang="bash">gcc -Wall -o hello hello.c</pre>
+		<table>
+    <tr><th>Eingabe</th><th>Bedeutung</th></tr>
+		<tr><td>gcc</td><td>GNU C Compiler</td></tr>
+		<tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td><tr>
+		<tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
+		<tr><td>hello.c</td><td>Quellcode</td></tr>
+		</table>
+    <p style="margin-top: 1em;">Ausführen (und Testen):</p>
+    <pre class="prettyprint" data-lang="bash">./hello</pre>
+    <pre>Hallo ESP!</pre>
+	</article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 5</h2>
+    </hgroup>
+    <article>
+        <p>Bei HW1 den Quellcode und das <b>Pluto</b>-Binary laut Angabe abgeben.</p>
+        <p><a href="https://palme.iicm.tugraz.at/">
+            https://palme.iicm.tugraz.at/</a></p>
+		<p style="text-align: center;"><img src="images/palme.png" alt="PALME" width="60%" /></p>
+      </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Entwicklungsumgebung</h2>
+    </hgroup>
+    <article>
+        <ul>
+          <li>Editor (oder IDE) nach Wahl</li>
+          <li>Referenzplattform: <code>pluto.tugraz.at</code> (Linux)
+            <ul>
+              <li>Benötigte Tools: <code>gcc</code>, <code>make</code>,
+                <code>valgrind</code>, <code>svn</code></li>
+              <li>Datenübertragung mittels SFTP
+                  <pre class="prettyprint" data-lang="bash">scp prog.c benutzername@pluto.tugraz.at:~/</pre>
+                  <span class="meta">(alternativ: WinSCP oder FileZilla)</span>
+              </li>
+              <li>Zugang über SSH
+                <pre class="prettyprint" data-lang="bash">ssh benutzername@pluto.tugraz.at</pre>
+                <span class="meta">(alternativ: Putty)</span>
+              </li>
+          </ul></li>
+          <li>Kompilieren mit:
+            <pre class="prettyprint" data-lang="bash">gcc -Wall -o prog prog.c</pre>
+          </li>
+        </ul>
+      </article>
+    </slide>
+
+
+    <slide>
+    <hgroup>
+      <h2>Linux Befehlsübersicht</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tr>
+        <th>Befehl</th>
+        <th>Beschreibung</th>
+        </tr>
+        <tr>
+          <td>pwd</td>
+          <td>Aktuelles Verzeichnis ausgeben (print working directory)</td>
+        </tr>
+        <tr>
+          <td>ls</td>
+          <td>Dateien im aktuellen Verzeichnis auflisten (list)</td>
+        </tr>
+	<tr>
+          <td>mkdir &lt;name_des_ordners&gt;</td>
+          <td>Ordner erstellen</td>
+        </tr>
+        <tr>
+          <td>cd &lt;pfad&gt;</td>
+          <td>Verzeichnis wechseln (change diretory)</td>
+        </tr>
+        <tr>
+          <td>cd ..</td>
+          <td>in das das übergeordnete Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>cd</td>
+          <td>in das $HOME-Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>rm &lt;pfad&gt;</td>
+          <td>Datei löschen (remove)</td>
+        </tr>
+        <tr>
+          <td>nano &lt;pfad&gt;</td>
+          <td>Datei bearbeiten (sehr einfacher Texteditor)</td>
+        </tr>
+         <tr>
+          <td>zip &lt;name_des_archivs&gt; &lt;file_1&gt; &lt;file_2&gt; ...</td>
+          <td>Zip-Archiv erstellen</td>
+        </tr>
+      </table>
+    </article>
+    </slide>
+
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg bei HW1!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
+        <ul>
+          <li>(EP) Di, 11.10.2016 14:00</li>
+          <li>(ESP) Do, 27.10.2016 14:00</li>
+        </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
