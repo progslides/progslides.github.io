@@ -285,12 +285,11 @@
     </article>
   </slide>
 
-<slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-            <h2>Kompilieren am Pluto</h2>
-        </hgroup>
-</slide>
-
+  <slide class="segue dark nobackground">
+          <hgroup class="auto-fadein">
+              <h2>Kompilieren am Pluto</h2>
+          </hgroup>
+  </slide>
 
   <slide>
     <hgroup>
@@ -347,11 +346,12 @@ int main()
     </hgroup>
     <article class="smaller">
         <p>Das Programm kompilieren:</p>
-        <pre class="prettyprint" data-lang="bash">gcc -Wall -o hello hello.c</pre>
+        <pre class="prettyprint" data-lang="bash">gcc -std=c11 -Wall -o hello hello.c</pre>
 		<table>
     <tr><th>Eingabe</th><th>Bedeutung</th></tr>
 		<tr><td>gcc</td><td>GNU C Compiler</td></tr>
-		<tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td><tr>
+		<tr><td>-std=c11</td><td>C Language Standard</td></tr>
+		<tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td></tr>
 		<tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
 		<tr><td>hello.c</td><td>Quellcode</td></tr>
 		</table>
@@ -367,7 +367,8 @@ int main()
       <h2>Schritt 5</h2>
     </hgroup>
     <article>
-        <p>Bei HW1 den Quellcode und das <b>Pluto</b>-Binary laut Angabe abgeben.</p>
+				<p>Abgabe laut Abgabeliste(siehe Wiki) packen und auf die Palme
+				hochladen.
         <p><a href="https://palme.iicm.tugraz.at/">
             https://palme.iicm.tugraz.at/</a></p>
 		<p style="text-align: center;"><img src="images/palme.png" alt="PALME" width="60%" /></p>
@@ -384,18 +385,18 @@ int main()
           <li>Referenzplattform: <code>pluto.tugraz.at</code> (Linux)
             <ul>
               <li>Benötigte Tools: <code>gcc</code>, <code>make</code>,
-                <code>valgrind</code>, <code>svn</code></li>
+                <code>valgrind</code>, <code><a href="https://git.tugraz.at">git</a></code></li>
               <li>Datenübertragung mittels SFTP
                   <pre class="prettyprint" data-lang="bash">scp prog.c benutzername@pluto.tugraz.at:~/</pre>
-                  <span class="meta">(alternativ: WinSCP oder FileZilla)</span>
+                  <span class="meta">(alternativ: <a href="https://winscp.net">WinSCP</a> oder <a href="https://filezilla-project.org">FileZilla</a>)</span>
               </li>
               <li>Zugang über SSH
                 <pre class="prettyprint" data-lang="bash">ssh benutzername@pluto.tugraz.at</pre>
-                <span class="meta">(alternativ: Putty)</span>
+                <span class="meta">(alternativ: <a href="http://www.putty.org">Putty</a>)</span>
               </li>
           </ul></li>
           <li>Kompilieren mit:
-            <pre class="prettyprint" data-lang="bash">gcc -Wall -o prog prog.c</pre>
+            <pre class="prettyprint" data-lang="bash">gcc -std=c11 -Wall -o prog prog.c</pre>
           </li>
         </ul>
       </article>
@@ -452,10 +453,28 @@ int main()
     </article>
     </slide>
 
-    <slide class="segue dark nobackground">
-            <hgroup class="auto-fadein">
-                <h2>Bash for Windows</h2>
-            </hgroup>
+    <slide>
+      <hgroup>
+        <h2>Windows Subsystem for Linux</h2>
+      </hgroup>
+      <article>     
+        <ul>
+          <li><b>Voraussetzung</b>: nur für Windows 10 <b>64-bit</b></li>
+          <ul>
+            <li>Windows 10 für Studenten: <a href="http://www.tugraz.at/software/microsoft">Dreamspark</a></li>
+          </ul>
+          <li><b>Installationsanleitung</b>: <a href="https://msdn.microsoft.com/en-us/commandline/wsl/install_guide">Windows Subsystem for Linux</a></li>
+          <li>
+            <b>Compiler installieren</b>:
+            <pre class="prettyprint" data-lang="bash">sudo apt update && sudo apt dist-upgrade
+sudo apt install build-essential</pre>
+          </li>
+          <li>
+            <b>Kontextmenüeintrag</b> (optional): Download <a href="dl/bash.reg">Registry Eintrag</a> und Ausführen.
+          </li>
+        </ul>
+          <center><img src="images/bash_for_windows.png"/></center>
+      </article>
     </slide>
 
     <slide class="thank-you-slide segue nobackground">
