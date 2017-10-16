@@ -98,9 +98,11 @@ bottom: -0.25em;
     <article>
    <ul>
     <li>Testreports</li>
-    <li>HW3 Besprechung</li>
     <li>Funktionen</li>
     <li>Arrays</li>
+    <li>Strings</li>
+    <li>Pointer</li>
+    <li>Bitoperationen</li>
     </ul>
     </article>
   </slide>
@@ -311,85 +313,6 @@ summary:
   
   <slide>
     <hgroup>
-      <h2>HW3 Besprechung - H&auml;ufige Fehler</h2>
-    </hgroup>
-     <article>
-      <ul>
-       <li>Nur eine Schleife verwendet (Spezifikation: <strong>zwei</strong> Schleifen)</li>
-       <li>Codingstandard (Tabulatoren, Zeile zu lang, Einr&uuml;ckungen, ...)</li>
-       <li>Deutsche Variablennamen und deutsche Kommentare</li>
-       <li>Schlechte Variablennamen (<code>i</code>, <code>tmp</code>, ...)</li>
-       <li>Falsche Overflow Behandlung</li>
-      </ul>
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>HW3 Besprechung - H&auml;ufige Fehler</h2>
-    </hgroup>
-     <article>
-      <ul>
-        <li>Falsche Overflow Behandlung:
-         <ul>
-           <li><pre class="prettyprint" data-lang="c">if(number &lt; 0) ...</pre></li>
-           <li><pre class="prettyprint" data-lang="c">if((number * counter) &lt; number) ...</pre></li>
-           <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX - number) ...</pre></li>
-           <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX) ...</pre></li>
-           <li><pre class="prettyprint" data-lang="c">if(nubmer * counter >= INT_MAX) ...</pre></li>
-         </ul>        
-        </li>
-        <li>Richtige Overflow Behandlung:
-        <ul>
-          <li><pre class="prettyprint" data-lang="c">if(number > INT_MAX / counter) ...</pre></li>
-          <li><pre class="prettyprint" data-lang="c">if(((double)number * (double)counter) > INT_MAX) ...</pre></li>
-        </ul>
-        </li>
-    
-      </ul>
-      
-     </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>HW3 Beispiele - Gut oder schlecht?</h2>
-    </hgroup>
-     <article>
-<img src="images/hw2_bad1.png" height="90%" />
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>HW3 Beispiele - Gut oder schlecht?</h2>
-    </hgroup>
-     <article>
- <img src="images/hw2_bad2.png" height="90%" />
-     </article>
-  </slide>
-<!--
-  <slide>
-    <hgroup>
-      <h2>HW2 Beispiele - Gut oder schlecht?</h2>
-    </hgroup>
-     <article>
-
-  <img src="images/hw2_good1.png" height="90%" />
-     </article>
-  </slide>
-  -->
-  <slide>
-    <hgroup>
-      <h2>HW3 Beispiele - Gut oder schlecht?</h2>
-    </hgroup>
-     <article>
-<img src="images/hw2_bad3.png" width="55%" />
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
       <h2>Funktionen</h2>
     </hgroup>
      <article>
@@ -416,14 +339,7 @@ int main()
      </article>
   </slide>
   
-  <slide>
-    <hgroup>
-      <h2>HW3 mit Funktionen</h2>
-    </hgroup>
-     <article>
-<h3>Live Demo</h3>
-     </article>
-  </slide>
+
   
   <slide>
     <hgroup>
@@ -679,14 +595,484 @@ int main()
    
     </article>
   </slide>
+    <slide>
+    <hgroup>
+    <h2>Strings - auch nur Arrays</h2>
+    </hgroup>
+    <article>
+<ul>
+     <li>String = Zeichenkette, &raquo;Text&laquo;</li>
+     <li>String ist nur ein Array von <code>char</code> (Zeichen)</li>
+     <li>Strings enden mit einem 0-Byte ('\0', nicht dem Zeichen 0!)</li>
+     <li>Deklaration (am h&auml;ufigsten):
+<pre class="prettyprint" data-lang="c">char* text = "Hallo!";</pre>
+     </li>Andere Varianten:
+<pre class="prettyprint" data-lang="c">char text[] = "Hallo!";</pre>
+<pre class="prettyprint" data-lang="c">char text[] = {'H', 'a', 'l', 'l', 'o', '!', '\0'};</pre>
+    </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Strings: Vergleich</h2>
+    </hgroup>
+    <article>
+<ul>
+      <li>Funktion <code>strcmp</code> aus <code>string.h</code> verwenden</li>
+      <li><code>==</code> funktioniert nicht, vergleicht nur die Speicheradressen</li>
+      <li>
+<pre class="prettyprint" data-lang="c">
+ char* str1 = "Hello";
+ char* str2 = "World";
+ if(strcmp(str1, str2) == 0) 
+ {
+   // strings sind gleich
+ } 
+ else 
+ {
+   // strings sind ungleich
+ }
+</pre>
+     </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Strings: Zugriff auf einzelne Buchstaben</h2>
+    </hgroup>
+    <article>
+  <ul>
+      <li>Zugriff durch Array-Schreibweise (<code>[]</code>)</li>
+      <li>Erstes Zeichen hat Index 0!</li>
+      <li>Letztes Zeichen ist 0-Byte (<code>'\0'</code>)</li>
+      <li>
+<pre class="prettyprint" data-lang="c">
+ char* str1 = "Hello";
+ char c1 = str[0]; // c1 = 'H'
+ char c2 = str[4]; // c2 = 'o'
+ char c3 = str[5]; // c3 = '\0'
+</pre>
+      </li>
+     </ul>
+
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+    <h2>Strings: Funktionen</h2>
+    </hgroup>
+    <article>
+<ul>
+      <li>Weitere Funktionen die mit Strings arbeiten in <span class="src">string.h</span></li>
+      <li><a href="http://www.cplusplus.com/reference/cstring/">http://www.cplusplus.com/reference/cstring/</a></li>
+      <li>Einbinden mit <pre class="prettyprint" data-lang="c">#include &lt;string.h></pre></li>
+      <li>N&uuml;tzliche Funktionen:
+       <dl>
+        <dt><span class="src">strlen</span></dt><dd>L&auml;nge des Strings (ohne 0-Byte!)</dd>
+        <dt><span class="src">strcpy</span></dt><dd>String in einen anderen kopieren</dd>
+        <dt><span class="src">strcat</span></dt><dd>Strings aneinanderh&auml;ngen</dd>
+        <dt><span class="src">sprintf</span></dt><dd>Wie printf, aber Ausgabe wird in String gespeichert</dd>
+       </dl>
+      </li>
+     </ul>
+    </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+    <h2>Pointer</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Pointer &raquo;zeigen&laquo; auf Variablen</li>
+        <li>Pointer enth&auml;lt die Adresse einer Variable</li>
+        <li>Deklaration mit "*"
+<pre class="prettyprint" data-lang="c">&lt;datentyp&gt;* name;</pre>
+        <li>Zugriff auf die Variable durch Dereferenzieren ebenfalls mit "*"
+<pre class="prettyprint" data-lang="c">*name = &lt;value&gt;;</pre>
+        </li>
+        <li>Zuweisen einer Adresse durch den Adressoperator "&amp;"
+<pre class="prettyprint" data-lang="c">name = &amp;&lt;variable&gt;;</pre>
+        </li>
+       </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Pointer und Pointee</h2>
+    </hgroup>
+    <article>
+    <img src="../ws13/pointer/step1.png" id='pointer' width="75%">
+
+    <input type="button" onclick="nextImage(document.getElementById('pointer'), 9);" class="code_animator_button" style="position: absolute; right: 320px; bottom: 20px;" value="Weiter"></input>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Pointer - Praxisbeispiel</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int main()
+ {
+2  int a = 3;
+3  int x = 2;
+4  int* ptr = &amp;a;
+5  *ptr = 4;
+6  ptr = &amp;x;
+7  *ptr = 8;
+   return 0;
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>3</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1000</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td><em>4</em></td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1000</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>4</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td>2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td><em>0x1004</em></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>a</strong> &nbsp; 0x1000</th><td>4</td></tr>
+  <tr><th><strong>x</strong> &nbsp; 0x1004</th><td><em>8</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th><strong>ptr</strong> &nbsp; 0x100C</th><td>0x1004</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+
+</td></tr></table>
+</div>
+    </article>
+  </slide>
+
+  
+   
+    <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+   <ul>
+       <li>Verkn&uuml;pfen Daten bitweise</li>
+       <li>Erfordern zwei Operanden (Ausnahme: NOT)</li>
+       <li>AND (<code>&amp;</code>), OR (<code>|</code>), XOR (<code>^</code>)</li>
+       <li>Left Shift (<code>&lt;&lt;</code>), Right Shift (<code>&gt;&gt;</code>)</li>
+       <li>NOT (<code>~</code>)</li>
+      </ul>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+<h3>AND ... &amp;</h3>
+     <table class="middle">
+      <tr><td>&amp;</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>1</td><td>0</td></tr>
+      <tr><th>0</th><td>0</td><td>0</td></tr>
+     </table>
+
+     <h3>OR ... |</h3>
+     <table class="middle">
+      <tr><td>|</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>1</td><td>1</td></tr>
+      <tr><th>0</th><td>1</td><td>0</td></tr>
+     </table>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+     <h3>XOR ... ^</h3>
+     <table class="middle">
+      <tr><td>^</td><th>1</th><th>0</th></tr>
+      <tr><th>1</th><td>0</td><td>1</td></tr>
+      <tr><th>0</th><td>1</td><td>0</td></tr>
+     </table>
+
+     <h3>NOT ... ~</h3>
+     <table class="middle">
+      <tr><td> </td><th>1</th><th>0</th></tr>
+      <tr><th>~</th><td>0</td><td>1</td></tr>
+     </table>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+     <article>
+     <h3>Shift Left ... &lt;&lt;</h3>
+     <p>
+     Verschiebt die Bits um <i>n</i> Stellen nach links<br/>
+     Beispiel: 9 ( = 0000 1001<sub>b</sub>) &lt;&lt; 1 = 18 ( = 0001 0010<sub>b</sub>)
+</p>
+<p>
+     <h3>Shift Right ... &gt;&gt;</h3>
+     Verschiebt die Bits <i>n</i> Stellen nach rechts<br/>
+     Beispiel: 27 ( = 0001 1011<sub>b</sub>) >> 2 = 6 ( = 0000 0110<sub>b</sub>)
+     </p>
+     </article>
+  </slide>
+  
+  
+    <slide>
+    <hgroup>
+      <h2>Bitoperation - Wozu?</h2>
+    </hgroup>
+     <article>
+      <ul>
+        <li>Setzen von einzelnen Bits</li>
+        <li>L&ouml;schen von einzelnen Bits</li>
+        <li>Extrahieren von Bits</li>
+        <li>Potenzen von 2 schnell berechnen</li>
+        <li>Extrahieren von Teilen eines Bytes</li>
+        <li>Tauschen von Bytes</li>
+        <li>Bitfelder</li>
+      </ul>
+    
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Bitfeld</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+int main()
+{
+  unsigned char lampen_zustand = 0; // 8 Zust&auml;nde (Lampen)
+  // Lampe 1 einschalten
+  lampen_zustand |= 1;
+  // Lampen 5-8 ausschalten
+  lampen_zustand &amp;= 15;
+  // Lampe 5 umschalten
+  lampen_zustand ^= 16;
+  // Zustand ausgeben
+  int lampe;
+  for(lampe = 0; lampe &lt; 8; lampe++) 
+  {
+    printf("Lampe %d: %s\n", lampe + 1, 
+      lampen_zustand &amp; (1 &lt;&lt; lampe) ? "ein" : "aus");
+  }
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: RGB</h2>
+    </hgroup>
+     <article>
+<img src="images/rgb_bsp.png" height="90%" />
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Byte-Reihenfolge</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+
+unsigned int swapByteOrder(unsigned int value)
+{
+  value = ((value &lt;&lt; 8) &amp; 0xFF00FF00) |
+          ((value >> 8) &amp; 0xFF00FF); 
+  return (value &lt;&lt; 16) | (value >> 16);
+}
+
+int main()
+{
+  unsigned int value = 0x12345678;
+  
+  printf("value = %x\n", value);
+  printf("swapped value = %x\n", swapByteOrder(value));
+  
+  return 0;
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Hexadezimale Ausgabe</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c"  style="font-size: 55%; line-height: 120%;">
+#include &lt;stdio.h>
+
+#define BITS_PER_NIBBLE 4
+#define NIBBLE_MASK 0xF
+
+int main()
+{
+  int a_number = 17036401;
+  int index;
+  
+  printf("bin = ");
+  for( index = 32; index > 0; index-- )
+  {
+    printf( "%d", (a_number &amp; (1 &lt;&lt; (index - 1))) ? 1 : 0 );
+    if( (index - 1) % BITS_PER_NIBBLE == 0 )
+      printf(" ");
+  }
+  
+  // This should only demonstrate how to use bit operations.
+  // In practice use %x for hexadecimal output
+  printf("\nhex = ");
+  for( index = 32 / BITS_PER_NIBBLE; index > 0; index-- )
+  {
+    int nibble = (a_number >> ((index - 1) * BITS_PER_NIBBLE)) &amp; NIBBLE_MASK;
+    printf( "%4c ", nibble &lt; 10 ? nibble + '0' : nibble + 'A' - 10 );
+  }
+  
+  return 0;
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bitmasken</h2>
+    </hgroup>
+     <article>
+<iframe src="bitmask/bitmask.html" height="100%" style="border: 0px;"></iframe> 
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+if((value &amp; (value - 1) == 0)
+{
+  printf("Wann werde ich ausgef&uuml;hrt?");
+}
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+a = a^b;
+b = b^a;
+a = a^b;
+</pre>
+     </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+     <article>
+<pre class="prettyprint" data-lang="c">
+int log = 0;
+while(value > 0)
+{
+  value = value >> 1;
+  log++;
+}
+</pre>
+
+<a href="http://graphics.stanford.edu/~seander/bithacks.html">http://graphics.stanford.edu/~seander/bithacks.html</a>
+    
+     </article>
+  </slide>
+  
+
   
     <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
-      <h2>Viel Erfolg bei den Haus&uuml;bungen!</h2>
-      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss f&uuml;r HW 2-9:</p>
+      <p style="margin-top: 1em; font-size: 32pt">Viel Erfolg beim <br> ersten Gruppenbeispiel!</p>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss f&uuml;r Ass1:</p>
           <ul>
-            <li>(ESP) Mo, 28.11.2016 14:00</li>
+            <li>3.11.2017 14:00:00 Uhr</li>
           </ul>
     </article>
     </slide>
