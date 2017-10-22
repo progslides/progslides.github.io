@@ -33,6 +33,14 @@
          '../slides/js/order!../slides/js/slide-deck'],
          function(someModule) {}
     );
+    function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = 1;
+          container.src = container.src.replace(img_id + ".", new_id + "."); 
+        }
   </script>
   <style type="text/css">
 
