@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Anleitung Pluto und Abgabesystem",
+        subtitle: "Softwareentwicklung Praktikum",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+  <slide>
+    <hgroup>
+      <h2>Schritt 1</h2>
+    </hgroup>
+      <article>
+      	<p>In einem Editor / Entwicklungsumgebung nach Wahl (z.B. CodeBlocks, Sublime,
+          Notepad++, Kate, Vim, Emacs, Textmate) eine Datei "hello.cpp" anlegen:</p>
+      	<pre class="prettyprint" data-lang="c">/* Hello World Example */
+
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::cout &lt;&lt; "Hallo SEP" &lt;&lt; std::endl;
+}</pre>
+			<br>
+			<p>Tutorial: <a href="http://www.student.tugraz.at/manuel.weber/sep/howto_vb.html">Linux als virtuelle Umgebung unter Windows</a></p>
+			</article>
+    </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 2</h2>
+    </hgroup>
+    <article>
+      	<p style="margin-bottom: 1em;">Die Datei auf <u>pluto.tugraz.at</u> kopieren:</p>
+      	<pre class="prettyprint" data-lang="bash">scp hello.cpp user@pluto.tugraz.at:</pre>
+      	<p style="text-align: center;">
+					<img style="width: 70%;" src="images/filezilla.png" alt="FileZilla" />
+				</p>
+			</article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 3</h2>
+    </hgroup>
+    <article>
+        <p>Zum Pluto verbinden:</p>
+        <pre class="prettyprint" data-lang="bash">ssh user@pluto.tugraz.at</pre>
+       	<p style="text-align: center;">
+        	<img style="width: 70%;" src="images/putty.png" alt="Putty">
+      	</p>
+      </article>
+    </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 4</h2>
+    </hgroup>
+    <article class="smaller">
+        <p>Neuere GCC Version verwenden (nur am Pluto nötig)</p>
+        <pre class="prettyprint" data-lang="bash">source /opt/gcc482/gcc482-envs.sh</pre>
+        <p>Das Programm kompilieren:</p>
+        <pre class="prettyprint" data-lang="bash">g++ -Wall -std=c++11 -g -o hello hello.cpp</pre>
+		<table>
+    <tr><th>Eingabe</th><th>Bedeutung</th></tr>
+		<tr><td>g++</td><td>GNU C++ Compiler</td></tr>
+		<tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td><tr>
+    <tr><td>-std=c++11</td><td>den C++11 Standard verwenden</td><tr>
+    <tr><td>-g</td><td>Debug-Informationen anhängen (Zeilennummern, Funktionsnamen)</td><tr>
+		<tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
+		<tr><td>hello.cpp</td><td>Quellcode</td></tr>
+		</table>
+	</article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 5</h2>
+    </hgroup>
+    <article class="smaller">
+      <p style="margin-top: 1em;">Ausführen (und Testen):</p>
+      <pre class="prettyprint" data-lang="bash">./hello</pre>
+      <pre>Hallo SEP!</pre>
+
+      <p style="margin-top: 2em;">Testen mit Valgrind:</p>
+      <pre>valgrind --leak-check=full ./hello</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 6</h2>
+    </hgroup>
+    <article>
+        <p>Bei HW1 den Quellcode und das Binary laut Angabe abgeben.</p>
+        <p><a href="https://palme.iicm.tugraz.at/">
+            https://palme.iicm.tugraz.at/</a></p>
+		<p style="text-align: center;"><img src="images/palme.png" alt="PALME" width="60%" /></p>
+      </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Entwicklungsumgebung</h2>
+    </hgroup>
+    <article>
+        <ul>
+          <li>Editor (oder IDE) nach Wahl</li>
+          <li>Referenzplattform: <code>pluto.tugraz.at</code> (Linux)
+            <ul>
+              <li>Benötigte Tools: <code>g++</code>, <code>make</code>,
+                <code>valgrind</code>, <code>svn</code></li>
+              <li>Datenübertragung mittels SFTP
+                  <pre class="prettyprint" data-lang="bash">scp prog.cpp benutzername@pluto.tugraz.at:~/</pre>
+                  <span class="meta">(alternativ: WinSCP oder FileZilla)</span>
+              </li>
+              <li>Zugang über SSH
+                <pre class="prettyprint" data-lang="bash">ssh benutzername@pluto.tugraz.at</pre>
+                <span class="meta">(alternativ: Putty)</span>
+              </li>
+          </ul></li>
+          <li>Kompilieren mit:
+            <pre class="prettyprint" data-lang="bash">g++ -Wall -std=c++11 -g -o hello hello.cpp</pre>
+          </li>
+        </ul>
+      </article>
+    </slide>
+
+
+    <slide>
+    <hgroup>
+      <h2>Linux Befehlsübersicht</h2>
+    </hgroup>
+    <article>
+      <aside class="note">
+        <section>
+          <p><b>NEXT: Ball-Beispiel</b></p>
+          <ul>
+            <li>Klasse (Attribute, Methoden)</li>
+            <li>Konstruktor/Destruktor</li>
+            <li>Getter/Setter</li>
+            <li>Methoden</li>
+            <li>Private/public</li>
+          </ul>
+        </section>
+      </aside>
+      <table>
+        <tr>
+        <th>Befehl</th>
+        <th>Beschreibung</th>
+        </tr>
+        <tr>
+          <td>pwd</td>
+          <td>Aktuelles Verzeichnis ausgeben (print working directory)</td>
+        </tr>
+        <tr>
+          <td>ls</td>
+          <td>Dateien im aktuellen Verzeichnis auflisten (list)</td>
+        </tr>
+        <tr>
+          <td>cd &lt;pfad&gt;</td>
+          <td>Verzeichnis wechseln (change diretory)</td>
+        </tr>
+        <tr>
+          <td>cd ..</td>
+          <td>in das das übergeordnete Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>cd</td>
+          <td>in das $HOME-Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>rm &lt;pfad&gt;</td>
+          <td>Datei löschen (remove)</td>
+        </tr>
+        <tr>
+          <td>nano &lt;pfad&gt;</td>
+          <td>Datei bearbeiten (sehr einfacher Texteditor)</td>
+        </tr>
+         <tr>
+          <td>zip &lt;name_des_archivs&gt; &lt;file_1&gt; &lt;file_2&gt; ...</td>
+          <td>Zip-Archiv erstellen</td>
+        </tr>
+      </table>
+    </article>
+    </slide>
+
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Bis zum nächsten Tutorium!</h2>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

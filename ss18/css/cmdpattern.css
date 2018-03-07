@@ -1,0 +1,37 @@
+.classtable {
+  font-size: 0.65em;
+  line-height: 1em;
+  width: 200px;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+.classtable tr td {
+  border: 1px solid #333;
+}
+
+.classtable tr td pre {
+   font-size: 0.85em; 
+}
+
+.classtable tr th {
+  background-color: #2a7fff;   
+  color: #ffffff;
+  font-weight: bold;
+  border: 1px solid #333;
+}
+
+.cmdprompt {
+ background-color: #eee; 
+ color: #000;
+ margin: 2px;
+ padding: 2px;
+ font-size: 0.8em;
+ border: 2px inset #222;
+}
+
+.cmdprompt input {
+ width: 90%;
+ font-size: 1em;
+ height: 100%;
+}
