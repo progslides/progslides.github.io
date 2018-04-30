@@ -82,9 +82,9 @@
       pretty = true;
       if(pre[i].hasAttribute("data-nopretty"))
         pretty = false;
-        
+
       if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
-      if(!pre[i].hasAttribute("data-nolang")) 
+      if(!pre[i].hasAttribute("data-nolang"))
         pre[i].setAttribute("data-lang", "C++");
 
       if(pretty) pre[i].setAttribute("class", pre[i].getAttribute("class") + " prettyprint");
@@ -110,105 +110,17 @@
        <slide><hgroup>
         <h2>Ablauf des Tutoriums</h2></hgroup><article>
         <ul class="compact">
+         <li>Vererbung<li>
          <li>Exceptions</li>
-         <li>OOP Konzepte<li>
          <li>Operator Overloading</li>
-         <li>Casting</li>
-         <li>Ressourcenverwaltung</li>
+         <li>C++ casts</li>
          <li>c++11</li>
         </ul>
      </article></slide>
-     
-    <slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-            <h2>Exceptions</h2>
-        </hgroup>
-    </slide>
 
-
-    <slide>
-        <hgroup>
-            <h2>Exceptions</h2></hgroup>
-        <article>
-            <br/>Grundlegendes Konstrukt f&uuml;r Exceptions
-<pre class="prettyprint" data-lang="C++">
-try
-{
-  someFunction() // k&ouml;nnte eine Exception werfen...
-  [...]
-  throw(e); // ...oder manuelles Werfen einer Exception
-}
-catch(MyException&amp; e1)
-{
-  // fange Exception vom Typ MyException
-}
-catch(std::exception&amp; e)
-{
-  // fange alles, was vom Typ std::exception abgeleitet ist,
-  // und noch nicht gefangen wurde
-}
-</pre>
-        </article>
-    </slide>
-
-    <slide>
-        <hgroup>
-            <h2>Exceptions</h2></hgroup>
-        <article>
-            <br/>
-            N&uuml;tzlich, aber nicht &uuml;bertreiben &rarr; <strong>Formale Fehlerquellen</strong>
-            <ul>
-                <li>Kontrollfluss durch Exceptions</li>
-                <li>Silent Catch von Exceptions</li>
-                <li>Wurf einer Nicht-std::exception-Unterklasse</li>
-                <li>Im Destruktor dürfen keine Exceptions geworfen werden</li>
-            </ul>
-            <br/>
-            Also immer
-<pre class="prettyprint" data-lang="C++">
- class MyException : public std::exception {
-   [...]
- };
-</pre>
-        </article>
-    </slide>
-
-    <slide>
-        <hgroup>
-            <h2>Exceptions - Beispiel</h2></hgroup>
-        <article>
-            <ul>
-                <li><span class="src">virtual const char* what() const</span> sollte eine Fehlerbeschreibung liefern
-                    (als <span class="src">const char*</span>)
-                </li>
-            </ul>
-      <pre class="prettyprint" data-lang="C++" style="font-size:0.60em; line-height:1.2em; margin: 0.5em auto;">
-#include &lt;exception>
-class brick : public std::exception {
-  virtual const char* what() const throw()
-  {
-    return "Achtung Ziegel!\n";
-  }
-};
-
-int main ()
-{
-  try
-  {
-    throw brick();
-  } catch (std::exception&amp; ex)
-  {
-    std::cout &lt;&lt; ex.what();
-  }
-  return 0;
-} </pre>
-        </article>
-    </slide>
-     
-     
      <slide class="segue dark nobackground">
         <hgroup class="auto-fadein">
-            <h2>OOP Konzepte</h2>
+            <h2>Vererbung</h2>
         </hgroup>
     </slide>
 
@@ -405,20 +317,105 @@ public:
             <ul>
                 <li>Programm entscheidet zur Laufzeit, welche Funktion aufgerufen wird</li>
                 <li><b>Pure</b> Virtual Methoden werden in der Basisklasse <b>nicht</b> implementiert.
-                    Stattdessen steht nach der Definition 
+                    Stattdessen steht nach der Definition
                     <pre class="prettyprint"> = 0;</pre> </li>
                 <li>Eine Klasse mit mindestens einer Pure Virtual Methode wird <b>Abstrakte Klasse</b> genannt</li>
                 <li>Von einer Abstrakten Klasse selbst können <b>keine</b> Objekte erstellt werden</li>
             </ul>
         </article>
     </slide>
-    
+
+    <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>Exceptions</h2>
+        </hgroup>
+    </slide>
+
+    <slide>
+        <hgroup>
+            <h2>Exceptions</h2></hgroup>
+        <article>
+            <br/>Grundlegendes Konstrukt f&uuml;r Exceptions
+    <pre class="prettyprint" data-lang="C++">
+    try
+    {
+    someFunction() // k&ouml;nnte eine Exception werfen...
+    [...]
+    throw(e); // ...oder manuelles Werfen einer Exception
+    }
+    catch(MyException&amp; e1)
+    {
+    // fange Exception vom Typ MyException
+    }
+    catch(std::exception&amp; e)
+    {
+    // fange alles, was vom Typ std::exception abgeleitet ist,
+    // und noch nicht gefangen wurde
+    }
+    </pre>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup>
+            <h2>Exceptions</h2></hgroup>
+        <article>
+            <br/>
+            N&uuml;tzlich, aber nicht &uuml;bertreiben &rarr; <strong>Formale Fehlerquellen</strong>
+            <ul>
+                <li>Kontrollfluss durch Exceptions</li>
+                <li>Silent Catch von Exceptions</li>
+                <li>Wurf einer Nicht-std::exception-Unterklasse</li>
+                <li>Im Destruktor dürfen keine Exceptions geworfen werden</li>
+            </ul>
+            <br/>
+            Also immer
+    <pre class="prettyprint" data-lang="C++">
+    class MyException : public std::exception {
+    [...]
+    };
+    </pre>
+        </article>
+    </slide>
+
+    <slide>
+        <hgroup>
+            <h2>Exceptions - Beispiel</h2></hgroup>
+        <article>
+            <ul>
+                <li><span class="src">virtual const char* what() const</span> sollte eine Fehlerbeschreibung liefern
+                    (als <span class="src">const char*</span>)
+                </li>
+            </ul>
+      <pre class="prettyprint" data-lang="C++" style="font-size:0.60em; line-height:1.2em; margin: 0.5em auto;">
+    #include &lt;exception>
+    class brick : public std::exception {
+    virtual const char* what() const throw()
+    {
+    return "Achtung Ziegel!\n";
+    }
+    };
+
+    int main ()
+    {
+    try
+    {
+    throw brick();
+    } catch (std::exception&amp; ex)
+    {
+    std::cout &lt;&lt; ex.what();
+    }
+    return 0;
+    } </pre>
+        </article>
+    </slide>
+
     <slide class="segue dark nobackground">
         <hgroup class="auto-fadein">
             <h2>Operator Overloading</h2>
         </hgroup>
     </slide>
-    
+
     <slide><hgroup>
       <h2>Operator Overloading</h2></hgroup><article>
       <ul>
@@ -475,7 +472,7 @@ std::ostream&amp; operator&lt;&lt;(std::ostream&amp; stream, const Complex&amp; 
 {
   stream &lt;&lt;  c.getRealPart() &lt;&lt; " + " &lt;&lt; c.getImaginary() &lt;&lt; " i";
 
-  return stream; 
+  return stream;
 }
 </pre>
 <br />
@@ -494,6 +491,13 @@ int main()
 1 + 5 i
 </pre>
      </article></slide>
+
+     <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>C++ Casts</h2>
+        </hgroup>
+     </slide>
+
      <slide><hgroup>
         <h2>Casts in C++</h2></hgroup><article>
 
@@ -526,104 +530,12 @@ MusicCD *charts = dynamic_cast&lt;MusicCD *&gt;(cd1);</pre></dd>
      </div>
      </article></slide>
 
-     
+     <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>C++ 11</h2>
+        </hgroup>
+     </slide>
 
-     
-
-
-     <slide><hgroup>
-      <h2>Resource Acquisition Is Initialization (RAII)</h2></hgroup><article>
-      <ul>
-        <li>Konzept zur Verwaltung von Ressourcen</li>
-        <li>Automatische Freigabe beim Verlassen des Scopes</li>
-        <li>Kann f&uuml;r Handles (z.B. Dateien), Locks und Speichern verwendet werden</li>
-        <li>Erleichtert das Schreiben von Exception-sicheren Programmen</li>
-      </ul>
-      <img src="images/raii.png" />
-     </article></slide>
-
-     <slide><hgroup>
-      <h2>Kein RAII - Beispiel</h2></hgroup><article>
-<pre class="compact" style="font-size: 0.55em; line-height: 1.22em;  margin: 1em auto;">
-int median(int* numbers, int count) {
-  int* data = new int[count];
-  std::memcpy(data, numbers, count * sizeof(int));
-  // error handling
-  if(numbers == NULL) {
-    delete[] data; // &lt;---
-    return 0;
-  }
-  if(count == 0) {
-    delete[] data; // &lt;---
-    return 0;
-  }
-  if(count == 1) {
-    delete[] data; // &lt;---
-    return *numbers;
-  }
-  // sort
-  if(mySortFunction(data, count) == false) {
-    delete[] data; // &lt;---
-    return 0;
-  }
-  // return median
-  int result = data[count / 2];
-  delete[] data; // &lt;---
-  return result;
-}
-</pre>
-
-     </article></slide>
-
-     <slide><hgroup>
-       <h2>RAII - Beispiel</h2></hgroup><article>
-<pre class="compact" style="float: left; width: 47%; font-size: 0.6em; line-height: 1.3em; margin-right: 16px; margin: 1em;">
-int median(int* numbers, int count)
-{
-  Data data(count);
-  data.setData(numbers, count);
-  // error handling
-  if(numbers == NULL)
-    return 0;
-  if(count == 0)
-    return 0;
-  if(count == 1)
-    return *numbers;
-
-  // sort
-  if(mySortFunction(data.getData(),
-       count) == false)
-    return 0;
-
-  return data.getData()[count / 2];
-}
-</pre>
-<pre class="compact" style="float: left; width: 37%; margin: 1em; font-size: 0.6em; line-height: 1.3em;">
-class Data
-{
-private:
-  int* data_;
-public:
-  Data(int count) {
-    data_ = new int[count];
-  }
-  int* getData() const {
-    return data_;
-  }
-  void setData(int* data,
-               int count)
-  {
-    std::memcpy(data_, data,
-      count * sizeof(int));
-  }
-  ~Data() {
-    delete[] data_;
-  }
-};
-</pre>
-     </article></slide>
-
-   
     <slide><hgroup>
          <h2>C++ 11 <span class="src">nullptr</span> &nbsp;  <img src="images/newflag.jpg" style="vertical-align: middle;" /></h2></hgroup><article>
          <pre style="font-size: 0.6em">
@@ -667,7 +579,7 @@ int main()
 }</pre>
     </article></slide>
 
-    
+
     <slide>
         <hgroup>
             <h2><span class="src">auto</span> Datentyp</h2>
@@ -826,10 +738,8 @@ for(int x : {1, 2, 3, 4, 5, 6}) {
         <hgroup><h2>Range-based for f&uuml;r eigene Klassen</h2></hgroup>
         <article>
             <ul>
-                <li>Klasse muss entweder <span class="src">begin()</span> und <span class="src">end()</span>
-                    implementieren....
-                </li>
-                <li>...oder die globalen Funktionen <span class="src">std::begin()</span> und <span class="src">std::end()</span> &uuml;berladen
+                <li>Klasse muss <span class="src">begin()</span> und <span class="src">end()</span>
+                    implementieren
                 </li>
             </ul>
             <pre class="prettyprint" style="float: left; width: 58%; line-height: 1.2em;">
@@ -994,118 +904,18 @@ int main() {
         </article>
     </slide>
 
-    <slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-            <h2>Deliverable 2</h2>
-        </hgroup>
-    </slide>
-    <slide><hgroup>
-      <h2>Deliverable 2</h2></hgroup><article>
-      <ul>
-      <li>Erzeugen einer Basis-HTML-Datei mit Parameter zwischen den &lt;body&gt; tags (HTMLWriter)</li>
-      <li>Erzeugen einer Umwelt-HTML-Datei mit Daten aus einer <strong>EnvironmentalCondition</strong> zwischen den &lt;body&gt; tags (HTMLWriterEnvironment)</li>
-      <li>Erzeugen einer Balance-HTML-Datei mit Werten für <strong>lemon</strong>, <strong>sugar</strong>, <strong>cash</strong> und <strong>delta</strong>, zwischen den &lt;body&gt; tags (HTMLWriterBalance)</li>
-      </ul>
-      
-      
-      
+  </slide>
+  <slide class="thank-you-slide segue nobackground">
+    <hgroup class="auto-fadein">
+      <h2>Fragen zu Deliverable 2?</h2>
+      </br>
+    </hgroup>
+  </slide>
 
      </article></slide>
-    
-    <slide><hgroup>
-      <h2>Deliverable 2</h2></hgroup><article>
-      <p>Beispiel-Basis-HTML-Datei:</p>
 
-      <pre class="prettyprint" data-lang="HTML" style="font-size: 0.75em; line-height: 1.35em;">&lt;!DOCTYPE html&gt;
 
-&lt;html lang=&quot;en&quot;&gt;
-  &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;meta http-equiv=&quot;refresh&quot; content=&quot;3&quot;&gt;
-    &lt;title&gt;SEP 2017&lt;/title&gt;
-    &lt;style&gt;body{margin: 0px; padding: 0px;}&lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-     </article></slide>
-     
-     <slide><hgroup>
-      <h2>Deliverable 2</h2></hgroup><article>
-      <p>Beispiel-Umwelt-HTML-Datei:</p>
 
-      <pre class="prettyprint" data-lang="HTML" style="font-size: 0.5em; line-height: 1.2em;">&lt;!DOCTYPE html&gt;
-
-&lt;html lang=&quot;en&quot;&gt;
-  &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;meta http-equiv=&quot;refresh&quot; content=&quot;3&quot;&gt;
-    &lt;title&gt;SEP 2017&lt;/title&gt;
-    &lt;style&gt;body{margin: 0px; padding: 0px;}&lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;&lt;strong&gt;Sky cover&lt;/strong&gt;&lt;/td&gt;
-          &lt;td&gt;&lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-          &lt;td&gt;&lt;img src=&quot;https://palme.iicm.tugraz.at/wiki/images/3/30/Very_overcast.png&quot; alt=&quot;&quot; width=&quot;128&quot; height=&quot;128&quot; /&gt;&lt;/td&gt;
-          &lt;td&gt;
-            &lt;p&gt;&lt;strong&gt;Precipitation: &lt;/strong&gt;medium&lt;/p&gt;
-            &lt;p&gt;&lt;strong&gt;Temperature: &lt;/strong&gt;14.6&deg;C&lt;/p&gt;
-            &lt;p&gt;&lt;strong&gt;Wind: &lt;/strong&gt;medium&lt;/p&gt;
-            &lt;p&gt;&lt;strong&gt;Hot: &lt;/strong&gt;false&lt;/p&gt;
-            &lt;p&gt;&lt;strong&gt;Rainy: &lt;/strong&gt;true&lt;/p&gt;
-            &lt;p&gt;&lt;strong&gt;Stormy: &lt;/strong&gt;true&lt;/p&gt;
-          &lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
-     </article></slide>
-     
-     <slide><hgroup>
-      <h2>Deliverable 2</h2></hgroup><article>
-      <p>Beispiel-Balance-HTML-Datei:</p>
-
-      <pre class="prettyprint" data-lang="HTML" style="font-size: 0.5em; line-height: 1.2em;">&lt;!DOCTYPE html&gt;
-
-&lt;html lang=&quot;en&quot;&gt;
-  &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;meta http-equiv=&quot;refresh&quot; content=&quot;3&quot;&gt;
-    &lt;title&gt;SEP 2017&lt;/title&gt;
-    &lt;style&gt;body{margin: 0px; padding: 0px;}&lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;&lt;img src=&quot;https://palme.iicm.tugraz.at/wiki/images/3/35/Lemon.png&quot; alt=&quot;&quot; width=&quot;64&quot; height=&quot;64&quot; /&gt;&lt;/td&gt;
-          &lt;td&gt;&lt;strong&gt;Lemons: &lt;/strong&gt;7&lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-          &lt;td&gt;&lt;img src=&quot;https://palme.iicm.tugraz.at/wiki/images/a/a9/Sugar.png&quot; alt=&quot;&quot; width=&quot;64&quot; height=&quot;64&quot; /&gt;&lt;/td&gt;
-          &lt;td&gt;&lt;strong&gt;Sugar: &lt;/strong&gt;5&lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-          &lt;td&gt;&lt;img src=&quot;https://palme.iicm.tugraz.at/wiki/images/f/f0/Coins.png&quot; alt=&quot;&quot; width=&quot;64&quot; height=&quot;64&quot; /&gt;&lt;/td&gt;
-          &lt;td&gt;
-            &lt;p&gt;&lt;strong&gt;Cash: &lt;/strong&gt;997$&lt;/p&gt;
-            &lt;p&gt;&lt;strong&gt;Delta: &lt;/strong&gt;-3$&lt;/p&gt;
-          &lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
-     </article></slide>
-    
 <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
