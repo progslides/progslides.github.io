@@ -114,7 +114,7 @@
          <li>Exceptions</li>
          <li>Operator Overloading</li>
          <li>C++ casts</li>
-         <li>c++11</li>
+         <li>C++11</li>
         </ul>
      </article></slide>
 
@@ -337,21 +337,21 @@ public:
         <article>
             <br/>Grundlegendes Konstrukt f&uuml;r Exceptions
     <pre class="prettyprint" data-lang="C++">
-    try
-    {
-    someFunction() // k&ouml;nnte eine Exception werfen...
-    [...]
-    throw(e); // ...oder manuelles Werfen einer Exception
-    }
-    catch(MyException&amp; e1)
-    {
-    // fange Exception vom Typ MyException
-    }
-    catch(std::exception&amp; e)
-    {
-    // fange alles, was vom Typ std::exception abgeleitet ist,
-    // und noch nicht gefangen wurde
-    }
+try
+{
+  someFunction() // k&ouml;nnte eine Exception werfen...
+  [...]
+  throw(e); // ...oder manuelles Werfen einer Exception
+}
+  catch(MyException&amp; e1)
+{
+  // fange Exception vom Typ MyException
+}
+catch(std::exception&amp; e)
+{
+  // fange alles, was vom Typ std::exception abgeleitet ist,
+  // und noch nicht gefangen wurde
+}
     </pre>
         </article>
     </slide>
@@ -371,9 +371,9 @@ public:
             <br/>
             Also immer
     <pre class="prettyprint" data-lang="C++">
-    class MyException : public std::exception {
-    [...]
-    };
+class MyException : public std::exception {
+  [...]
+};
     </pre>
         </article>
     </slide>
@@ -388,25 +388,26 @@ public:
                 </li>
             </ul>
       <pre class="prettyprint" data-lang="C++" style="font-size:0.60em; line-height:1.2em; margin: 0.5em auto;">
-    #include &lt;exception>
-    class brick : public std::exception {
-    virtual const char* what() const throw()
-    {
+#include &lt;exception>
+class brick : public std::exception {
+  virtual const char* what() const throw()
+  {
     return "Achtung Ziegel!\n";
-    }
-    };
+  }
+};
 
-    int main ()
-    {
-    try
-    {
+int main ()
+{
+  try
+  {
     throw brick();
-    } catch (std::exception&amp; ex)
-    {
+  } catch (std::exception&amp; ex)
+  {
     std::cout &lt;&lt; ex.what();
-    }
-    return 0;
-    } </pre>
+  }
+  return 0;
+}
+</pre>
         </article>
     </slide>
 
@@ -424,7 +425,7 @@ public:
 <pre class="compact">
 return_type operator@(argumente)
 {
-    [...]
+  [...]
 }
 </pre></li>
       <li>Kann als Methode oder als Funktion deklariert werden</li>
@@ -437,11 +438,11 @@ return_type operator@(argumente)
 <pre class="compact" style="font-size: .62em; line-height: 1.22em; width: 90%; margin: 0.5em auto;">
 class Complex
 {
-private:
-  float real_part_;
-  float imaginary_part_;
+  private:
+    float real_part_;
+    float imaginary_part_;
 
-public:
+  public:
     bool operator==(const Complex &amp;c) const
     {
         return ( c.real_part_ == real_part_ &amp;&amp;
@@ -506,14 +507,14 @@ int main()
           <dd>Funktioniert wie das von C bekannte Casting <span class="src">(typ)variable</span>. Funktioniert nur, wenn der Compiler eine Regel zum Casten kennt.
             <pre class="compact">int a = 16, b = 9;
 float ratio = static_cast&lt;float&gt;(a) / b;</pre></dd>
-          <dt><span class="src">const_cast</span></dt>
-          <dd>Nur zum Hinzuf&uuml;gen oder Entfernen <span class="meta">(gefährlich)</span>
-            des <span class="src">const</span>
-            Keywords.</dd>
           <dt><span class="src">dynamic_cast</span></dt>
           <dd>Casts innerhalb einer Klassenhierarchie von polymorphen Klassen. Aufw&auml;ndige Type-Checks zur Laufzeit.
                   <pre class="compact">// Cast von *CD in *MusicCD
 MusicCD *charts = dynamic_cast&lt;MusicCD *&gt;(cd1);</pre></dd>
+          <dt><span class="src">const_cast</span></dt>
+          <dd>Nur zum Entfernen <span class="meta">(gefährlich)</span>
+            des <span class="src">const</span>
+            Keywords.</dd>
           <dt><span class="src">reinterpret_cast</span></dt>
           <dd style="width: 75%;">Keine Konvertierung, Daten werden ohne &Auml;nderung als neuer Datentyp interpretiert,
             plattformabh&auml;ngig, sollte nur bei hardwarenaher Programmierung verwendet werden.</dd>
@@ -554,7 +555,8 @@ void foo(void* pointer)
 int main()
 {
   foo(nullptr); // NULL doesn't work!
-}</pre>
+}
+</pre>
     </article></slide>
 
     <slide><hgroup>
