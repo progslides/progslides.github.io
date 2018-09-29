@@ -1,0 +1,16 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\shell]
+	@="none"
+[HKEY_CLASSES_ROOT\Directory\shell\bash]
+	"Icon"="%USERPROFILE%\\AppData\\Local\\lxss\\bash.ico"
+	"MUIVerb"="Bash"
+	"Position"="bottom" 
+[HKEY_CLASSES_ROOT\Directory\Background\shell\bash]
+	"Icon"="%USERPROFILE%\\AppData\\Local\\lxss\\bash.ico"
+	"MUIVerb"="Bash"
+	"Position"="bottom" 
+[HKEY_CLASSES_ROOT\Directory\shell\bash\command]
+	@="C:\\Windows\\System32\\bash.exe"
+[HKEY_CLASSES_ROOT\Directory\Background\shell\bash\command]
+	@="C:\\Windows\\System32\\bash.exe"

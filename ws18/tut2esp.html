@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <link rel="stylesheet" media="only screen and (max-width: 740px) " href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #2",
+        subtitle: "Einführung in die (strukturierte) Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+  <ul>
+    <li>Codingstandard</li>
+    <li>HW1: Häufige Fehler</li>
+    <li>Variablen</li>
+    <li>Operatoren</li>
+    <li>Abfragen und Schleifen</li>
+    <li>HW2: Besprechung</li>
+    </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Coding Standard 1</h2>
+    </hgroup>
+    <article>
+    <pre class="prettyprint" data-lang="c">
+    [...]
+    if(a>=18) {
+      if(wd != 0){if( 100&lt;=m) {
+e = 1;printf("Herzlich willkommen im Casino!\n");
+      } else { printf("Zugang verweigert!\n");}
+  }else { puts("Zugang verweigert!");}
+  } else { printf("Zugang verweigert!\n");}
+[...]
+</pre>
+
+    </article>
+  </slide>
+  <slide>
+    <hgroup>
+      <h2>Coding Standard</h2>
+    </hgroup>
+     <article>
+
+       <p>
+       Einheitliche Formatierung des Programms um die Zusammenarbeit zu vereinfachen.
+       </p>
+
+       <ul>
+        <li>Blockklammern ({ und }) in eigene Zeile</li>
+        <li>Keine Tabulatoren, Einr&uuml;cken mit 2 Leerzeichen</li>
+        <li>Aussagekräftige Namen f&uuml;r Variablen und Funktionen</li>
+        <li>Naming Convention (long_variable_name, functionName(), CONSTANT_VALUE)</li>
+        <li>Kommentare</li>
+       </ul>
+      <br />
+      siehe <a href="https://palme.iicm.tugraz.at/wiki/ESP/CS">https://palme.iicm.tugraz.at/wiki/ESP/CS</a>
+     </article>
+  </slide>
+
+    <slide>
+    <hgroup>
+      <h2>Coding Standard 2 - Besser so!</h2>
+    </hgroup>
+     <article>
+     <pre class="prettyprint" data-lang="c">
+if (age >= 18 && well_dressed && money >= 100)
+{
+  entry = TRUE;
+  printf("Herzlich willkommen im Casino!\n");
+}
+else
+{
+  printf("Zugang verweigert!\n");
+}
+      </pre>
+     </article>
+  </slide>
+
+     <slide>
+    <hgroup>
+     <h2>HW1 Besprechung</h2>
+    </hgroup>
+     <article>
+
+     </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+     <h2>Gut oder schlecht?</h2>
+
+    </hgroup>
+     <article>
+      <img src="images/good1.png" width="60%" />
+     </article>
+  </slide>
+   <slide>
+    <hgroup>
+     <h2>Gut oder schlecht?</h2>
+
+    </hgroup>
+     <article>
+      <img src="images/bad1.png" width="90%" />
+     </article>
+  </slide>
+   <slide>
+    <hgroup>
+     <h2>Gut oder schlecht?</h2>
+
+    </hgroup>
+     <article>
+      <img src="images/ok1.png" width="90%" />
+     </article>
+  </slide>
+   <slide>
+    <hgroup>
+     <h2>Gut oder schlecht?</h2>
+
+    </hgroup>
+     <article>
+     <img src="images/archive_bad.png" width="100%" />
+     </article>
+  </slide>
+
+       <slide>
+    <hgroup>
+      <h2>Variablen</h2>
+    </hgroup>
+     <article>
+        <p>Eine Variable ist eine Speicherstellen im Arbeitsspeicher, die einen Wert eines bestimmten Typs speichern kann.</p>
+      <ul>
+       <li>Definition einer Variable vom Typ <code>int</code> mit <pre class="prettyprint" data-lang="c">int age = 20;</pre></li>
+       <li>Zuweisen eines neuen Wertes <pre class="prettyprint" data-lang="c">age = 21;</pre></li>
+       <li>Den Wert um 3 erh&ouml;hen <pre class="prettyprint" data-lang="c">age = age + 3;</pre></li>
+       <li>Ausgabe der ganzen Zahl <pre class="prettyprint" data-lang="c">printf("%d\n", age);</pre>
+      </ul>
+     </article>
+  </slide>
+
+  <slide>
+  <article>
+  <hgroup>
+    <h3>Variablen</h3>
+    </hgroup>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int apples = 0;
+3  apples = 5;
+4  printf("I have %d apples.\n", apples);
+5  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>0</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>5</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><p class="stdout">I have 5 apples.</p></th></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>5</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+    </article>
+    </slide>
+
+    <slide>
+    <article>
+    <hgroup>
+    <h3>Operatoren</h3>
+    </hgroup>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int apples = 15;
+3  apples = apples + 5;
+4  apples = apples - 5;
+5  int persons = 5;
+6  int apple_per_person = apples/persons;
+7  int more_persons = persons * 2;
+8  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>20</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>3</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>3</td></tr>
+  <tr><th><strong>more_persons</strong> 0x100C</th><td>10</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_8">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>15</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>5</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>3</td></tr>
+  <tr><th><strong>more_persons</strong> 0x100C</th><td>10</td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+</article>
+</slide>
+
+
+<slide>
+ <article>
+ <hgroup>
+    <h3>Operatoren - Achtung!</h3>
+  </hgroup>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int apples = 2;
+3  int persons = 4;
+4  int apple_per_person = apples/persons;
+5  return 0;
+ }
+</div>
+
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+</article>
+</slide>
+
+<slide>
+ <article>
+ <hgroup>
+    <h3>Gleitkommazahlen</h3>
+ </hgroup>
+    <div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  double apples = 2;
+3  double persons = 4;
+4  double apple_per_person = apples/persons;
+5  return 0;
+ }
+</div>
+
+</td><td>
+
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4.0</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4.0</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0.5</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>apples</strong> 0x1000</th><td>2.0</td></tr>
+  <tr><th><strong>persons</strong> 0x1004</th><td>4.0</td></tr>
+  <tr><th><strong>apple_per_person</strong> 0x1008</th><td>0.5</td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th>0x1014</th><td></td></tr>
+ </table>
+</div>
+</table></div>
+</article>
+</slide>
+
+      <slide>
+    <hgroup>
+      <h2>Übersicht über die Datentypen</h2>
+    </hgroup>
+    <article>
+<table>
+<tr><th>Ganzzahlen</th></tr>
+<tr><td>&nbsp;&nbsp;char</td></tr>
+<tr><td>&nbsp;&nbsp;short</td></tr>
+<tr><td>&nbsp;&nbsp;int</td></tr>
+<tr><td>&nbsp;&nbsp;long</td></tr>
+</table><table>
+<tr><th>Dezimalzahlen</th></tr>
+<tr><td>&nbsp;&nbsp;float</td></tr>
+<tr><td>&nbsp;&nbsp;double</td></tr>
+</table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Rechenoperationen</h2>
+    </hgroup>
+      <article>
+      	<table>
+		<tr><td>a + b;</td><td>Summe</td></tr>
+		<tr><td>a - b;</td><td>Differenz</td></tr>
+		<tr><td>a * b;</td><td>Produkt</td></tr>
+		<tr><td>a / b;</td><td>Division</td></tr>
+		<tr><td>a % b;</td><td>Modulo</td></tr>
+	</table>
+</article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+<h2>Rechenoperationen</h2>
+    </hgroup>
+    <article>
+       	<p><h4>Pre- &amp; Post-Increment</h4></p>
+	<pre class="prettyprint" data-lang="c">++i;
+i++;</pre>
+	<p><h4>Pre- &amp; Post-Decrement</h4></p>
+	<pre class="prettyprint" data-lang="c">--i;
+i--;</pre>
+	<p><h4>Zuweisung + Rechenoperation kombiniert</h4></p>
+	<pre class="prettyprint" data-lang="c">i += 3;
+i -= 2;
+i *= 4;
+i /= 5;</pre>
+      </article>
+    </slide>
+
+
+        <slide>
+        <hgroup>
+          <h2>Abfragen</h2>
+        </hgroup>
+          <article>
+         <p>Code wird nur dann ausgef&uuml;hrt wenn eine bestimmte Bedingung erf&uuml;llt ist.</p>
+          <pre class="prettyprint" data-lang="c">
+    if(bedingung)
+    {
+     // wird ausgef&uuml;hrt wenn die Bedingung er&uuml;llt ist
+    }
+    else
+    {
+     // wird ausgef&uuml;hrt wenn die Bedingung <strong>nicht</strong> erf&uuml;llt ist
+    }</pre>
+         <p>Als Bedingung wird meistens ein Vergleich verwendet (z.B. <code>age > 18</code>)</p>
+    </article>
+      </slide>
+
+    <slide>
+        <article>
+        <hgroup>
+         <h2>Abfragen</h2>
+        </hgroup>
+        <br />
+        <div class="codeAnimator">
+    <table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int age = 17;
+3  if(age >= 18)
+   {
+     printf("Willkommen im Casino!");
+   }
+4  else
+   {
+5    printf("Zutritt verweigert!");
+   }
+6  return 0;
+ }
+</div>
+
+    </td><td>
+
+    <div class="code_1">
+     <table class="ptr_table">
+      <tr><th>0x1000</th><td></td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    <div class="code_2">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+
+    <div class="code_3">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    <div class="code_4">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    <div class="code_5">
+    <table class="ptr_table">
+     <tr><th><p class="stdout">Zutritt verweigert!</p></th></tr>
+    </table>
+    </div>
+
+    <div class="code_6">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    </tr></table>
+    </div>
+        </article>
+
+    </slide>
+
+
+
+        <slide>
+        <hgroup>
+          <h2>Schleifen</h2>
+        </hgroup>
+          <article>
+            <ul>
+         <li>Schleifen wiederholen einen Codeteil (Block) solange eine Bedingung erf&uuml;llt ist</li>
+         <li>Arten von Schleifen: <code>for</code>, <code>while</code>, <code>do</code> (<code>if</code> <strong> ist keine Schleife!</strong>)</li>
+         <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    #include &lt;stdio.h>
+    int main()
+    {
+      int beer = 99;
+      while(beer > 0)
+      {
+        printf("%d bottles of beer on the wall, %d bottles of beer.\n", beer, beer);
+        beer = beer - 1;
+        printf("Take one down and pass it around, %d bottles of beer on the wall.\n", beer);
+      }
+      printf("No more bottles of beer on the wall, no more bottles of beer.\n");
+      return 0;
+    }
+    </pre>
+    </article>
+      </slide>
+
+        <slide>
+        <hgroup>
+          <h2>While-Schleife</h2>
+        </hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    /* While-Loop example */
+    #include &lt;stdio.h&gt;
+
+    int main()
+    {
+      int number_of_students = 20;
+
+      int student_id = 0; //Init
+      while(student_id < number_of_students) //Condition
+      {
+        printf("Student-ID: %d\n", student_id);
+        student_id++; //Step
+      }
+      return 0;
+    }
+    </pre>
+    	</article>
+      </slide>
+
+      <slide>
+        <hgroup>
+          <h2>While-Schleife</h2>
+        </hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    /* While-Loop example 2 */
+    #include &lt;stdio.h&gt;
+
+    int main()
+    {
+      int max_value = 100;
+      int current_value = 1;
+      int add_value = 2;
+      int iterations = 0; //Init
+      while(current_value < max_value) //Condition
+      {
+        current_value += add_value;
+        iterations++; //Step
+      }
+      printf("Iterations: %d\n", iterations);
+      return 0;
+    }
+    </pre>
+    	</article>
+      </slide>
+
+      <slide>
+        <hgroup>
+          <h2>For-Schleife</h2>
+        </hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    /* For-Loop example */
+    #include &lt;stdio.h&gt;
+
+    int main()
+    {
+      int number_of_students = 20;
+      int student_id = 0;
+
+      //Init, Condition
+      for (student_id = 0; student_id < number_of_students; student_id++)
+      {
+        printf("Student-ID: %d\n", student_id);
+        //Step
+      }
+      return 0;
+    }
+    </pre>
+      </article>
+      </slide>
+
+
+      <slide>
+       <article>
+        <iframe style="height: 100%;" src="https://blockly-demo.appspot.com/blockly/demos/maze/index.html"></iframe>
+       </article>
+    </slide>
+
+
+
+    <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>HW2: Besprechung / Livedemo</h2>
+        </hgroup>
+</slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg bei den Haus&uuml;bungen!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss f&uuml;r HW 2:</p>
+          <ul>
+            <li>(EP)  Dienstag, 17.10.2017 14:00:00 Uhr</li>
+            <li>(ESP) Donnerstag, 19.10.2017 14:00:00 Uhr</li>
+          </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
