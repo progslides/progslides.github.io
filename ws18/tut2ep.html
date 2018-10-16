@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
-  
+
   <link rel="stylesheet" href="css/prettify.css">
   <link rel="stylesheet" href="css/code_animator.css">
   <link rel="stylesheet" media="only screen and (max-width: 740px) " href="../slides/theme/css/phone.css">
@@ -76,7 +76,7 @@
       <p data-config-presenter><!-- populated from slide_config.json --></p>
     </hgroup>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Tutoriumsinhalt</h2>
@@ -85,12 +85,12 @@
   <ul>
     <li>Codingstandard</li>
     <li>HW1: Häufige Fehler</li>
-    <li>Variablen</li>
-    <li>Operatoren</li>
+    <li>Variablen & Operatoren</li>
+    <li>Abfragen & Schleifen</li>
     </ul>
     </article>
   </slide>
-  
+
   <slide class="segue dark nobackground">
     <hgroup class="auto-fadein">
       <h2>Codingstandard</h2>
@@ -168,7 +168,7 @@ else
 
     </hgroup>
      <article>
-      <img src="images/ep_hw1_ok1.png" width="100%" />
+      <img src="images/good1.png" width="60%" />
      </article>
   </slide>
    <slide>
@@ -177,7 +177,7 @@ else
 
     </hgroup>
      <article>
-      <img src="images/ep_hw1_bad1.png" width="100%" />
+      <img src="images/bad1.png" width="90%" />
      </article>
   </slide>
    <slide>
@@ -197,6 +197,12 @@ else
      <article>
      <img src="images/archive_bad.png" width="100%" />
      </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+      <hgroup class="auto-fadein">
+          <h2>Variablen & Operatoren</h2>
+      </hgroup>
   </slide>
 
        <slide>
@@ -594,14 +600,248 @@ i /= 5;</pre>
       </article>
     </slide>
 
+    <slide class="segue dark nobackground">
+        <hgroup class="auto-fadein">
+            <h2>Abfragen & Schleifen</h2>
+        </hgroup>
+    </slide>
+
+
+        <slide>
+        <hgroup>
+          <h2>Abfragen</h2>
+        </hgroup>
+          <article>
+         <p>Code wird nur dann ausgef&uuml;hrt wenn eine bestimmte Bedingung erf&uuml;llt ist.</p>
+          <pre class="prettyprint" data-lang="c">
+    if(bedingung)
+    {
+     // wird ausgef&uuml;hrt wenn die Bedingung er&uuml;llt ist
+    }
+    else
+    {
+     // wird ausgef&uuml;hrt wenn die Bedingung <strong>nicht</strong> erf&uuml;llt ist
+    }</pre>
+         <p>Als Bedingung wird meistens ein Vergleich verwendet (z.B. <code>age > 18</code>)</p>
+    </article>
+      </slide>
+
+    <slide>
+        <article>
+        <hgroup>
+         <h2>Abfragen</h2>
+        </hgroup>
+        <br />
+        <div class="codeAnimator">
+    <table class="ptr_table_format"><tr><td>
+
+<div class="code">
+1int main()
+ {
+2  int age = 17;
+3  if(age >= 18)
+   {
+     printf("Willkommen im Casino!");
+   }
+4  else
+   {
+5    printf("Zutritt verweigert!");
+   }
+6  return 0;
+ }
+</div>
+
+    </td><td>
+
+    <div class="code_1">
+     <table class="ptr_table">
+      <tr><th>0x1000</th><td></td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    <div class="code_2">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+
+    <div class="code_3">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    <div class="code_4">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    <div class="code_5">
+    <table class="ptr_table">
+     <tr><th><p class="stdout">Zutritt verweigert!</p></th></tr>
+    </table>
+    </div>
+
+    <div class="code_6">
+     <table class="ptr_table">
+      <tr><th><strong>age</strong> &nbsp; 0x1000</th><td class="ptr_resv">17</td></tr>
+      <tr><th>0x1004</th><td></td></tr>
+      <tr><th>0x1008</th><td></td></tr>
+      <tr><th>0x100C</th><td></td></tr>
+      <tr><th>0x1010</th><td></td></tr>
+      <tr><th>0x1014</th><td></td></tr>
+     </table>
+    </div>
+
+    </tr></table>
+    </div>
+        </article>
+
+    </slide>
+
+
+
+        <slide>
+        <hgroup>
+          <h2>Schleifen</h2>
+        </hgroup>
+          <article>
+            <ul>
+         <li>Schleifen wiederholen einen Codeteil (Block) solange eine Bedingung erf&uuml;llt ist</li>
+         <li>Arten von Schleifen: <code>for</code>, <code>while</code>, <code>do</code> (<code>if</code> <strong> ist keine Schleife!</strong>)</li>
+         <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    #include &lt;stdio.h>
+    int main()
+    {
+      int beer = 99;
+      while(beer > 0)
+      {
+        printf("%d bottles of beer on the wall, %d bottles of beer.\n", beer, beer);
+        beer = beer - 1;
+        printf("Take one down and pass it around, %d bottles of beer on the wall.\n", beer);
+      }
+      printf("No more bottles of beer on the wall, no more bottles of beer.\n");
+      return 0;
+    }
+    </pre>
+    </article>
+      </slide>
+
+        <slide>
+        <hgroup>
+          <h2>While-Schleife</h2>
+        </hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    /* While-Loop example */
+    #include &lt;stdio.h&gt;
+
+    int main()
+    {
+      int number_of_students = 20;
+
+      int student_id = 0; //Init
+      while(student_id < number_of_students) //Condition
+      {
+        printf("Student-ID: %d\n", student_id);
+        student_id++; //Step
+      }
+      return 0;
+    }
+    </pre>
+      </article>
+      </slide>
+
+      <slide>
+        <hgroup>
+          <h2>While-Schleife</h2>
+        </hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    /* While-Loop example 2 */
+    #include &lt;stdio.h&gt;
+
+    int main()
+    {
+      int max_value = 100;
+      int current_value = 1;
+      int add_value = 2;
+      int iterations = 0; //Init
+      while(current_value < max_value) //Condition
+      {
+        current_value += add_value;
+        iterations++; //Step
+      }
+      printf("Iterations: %d\n", iterations);
+      return 0;
+    }
+    </pre>
+      </article>
+      </slide>
+
+      <slide>
+        <hgroup>
+          <h2>For-Schleife</h2>
+        </hgroup>
+        <article>
+      <pre class="prettyprint" data-lang="c" style="font-size: 65%;">
+    /* For-Loop example */
+    #include &lt;stdio.h&gt;
+
+    int main()
+    {
+      int number_of_students = 20;
+      int student_id = 0;
+
+      //Init, Condition
+      for (student_id = 0; student_id < number_of_students; student_id++)
+      {
+        printf("Student-ID: %d\n", student_id);
+        //Step
+      }
+      return 0;
+    }
+    </pre>
+      </article>
+      </slide>
+
+
+      <slide>
+       <article>
+        <iframe style="height: 100%;" src="https://blockly-demo.appspot.com/blockly/demos/maze/index.html"></iframe>
+       </article>
+    </slide>
+
+
+
+
     <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
       <h2>Viel Erfolg bei den Haus&uuml;bungen!</h2>
-      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss f&uuml;r Ass1:</p>
-          <ul>
-            <li>Dienstag, 23.10.2018 14:00:00 Uhr</li>
-          </ul>
+
     </article>
     </slide>
   <slide class="backdrop"></slide>
