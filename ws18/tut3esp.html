@@ -18,7 +18,7 @@
     var SLIDE_CONFIG = {
       settings: {
         title: "Tutorium #3",
-        subtitle: "Einführung in die (strukturierte) Programmierung",
+        subtitle: "Einführung in die strukturierte Programmierung",
         fonts: [
           'Open Sans:regular,semibold,italic,italicsemibold',
           'Source Code Pro'
@@ -101,10 +101,16 @@ bottom: -0.25em;
     <li>Testreports</li>
     <li>Funktionen</li>
     <li>Arrays</li>
-    <li>Strings</li>
-    <li>Bitoperationen</li>
+     <li>Bitoperationen</li>
+     <li>Strings</li>
     </ul>
     </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+      <h2>Testreports</h2>
+    </hgroup>
   </slide>
 
   <slide>
@@ -309,7 +315,12 @@ summary:
    </pre>
      </article>
   </slide>
-  
+
+  <slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+      <h2>Funktionen</h2>
+    </hgroup>
+  </slide>
   
   <slide>
     <hgroup>
@@ -338,8 +349,68 @@ int main()
 
      </article>
   </slide>
-  
 
+  <slide>
+    <hgroup>
+      <h2>Funktionen - Schlecht!</h2>
+    </hgroup>
+    <article>
+   <pre class="prettyprint" data-lang="C" style="font-size: 55%; line-height: 150%;" >
+int calculateSomeValues(int a, int b, int c, int d)
+{
+  int result_1 = a + b;
+  result_1 = result_1 * c;
+  result_1 = result_1 / d;
+
+  int result_2 = b + c;
+  result_2 = result_1 * d;
+  result_2 = result_1 / a;
+
+  int result_3 = c + d;
+  result_3 = result_1 * a;
+  result_3 = result_1 / b;
+
+  int final_result = result_1 + result_2 + result_3;
+  return final_result;
+}
+</pre>
+    </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Funktionen - Besser!</h2>
+    </hgroup>
+    <article>
+   <pre class="prettyprint" data-lang="C" style="font-size: 55%; line-height: 150%;" >
+int subCalculation(int summand_1, int summand_2, int multiplier, int divisor)
+{
+  int sum = summand_1 + summand_2;
+  int product = sum * multiplier;
+  int quotient = product / divisor;
+}
+
+int calculateSomeValues(int a, int b, int c, int d)
+{
+  int result_1 = subCalculation(a, b, c, d);
+  int result_2 = subCalculation(b, c, d, a);
+  int result_3 = subCalculation(c, d, a, b);
+
+  int final_result = result_1 + result_2 + result_3;
+  return final_result;
+}
+</pre>
+    </article>
+  </slide>
+
+
+
+  <slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+      <h2>Arrays</h2>
+    </hgroup>
+  </slide>
   
   <slide>
     <hgroup>
@@ -595,6 +666,283 @@ int main()
    
     </article>
   </slide>
+
+
+
+
+
+
+  <slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+      <h2>Bitoperationen</h2>
+    </hgroup>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Verkn&uuml;pfen Daten bitweise</li>
+        <li>Erfordern zwei Operanden (Ausnahme: NOT)</li>
+        <li>AND (<code>&amp;</code>), OR (<code>|</code>), XOR (<code>^</code>)</li>
+        <li>Left Shift (<code>&lt;&lt;</code>), Right Shift (<code>&gt;&gt;</code>)</li>
+        <li>NOT (<code>~</code>)</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+    <article>
+      <h3>AND ... &amp;</h3>
+      <table class="middle">
+        <tr><td>&amp;</td><th>1</th><th>0</th></tr>
+        <tr><th>1</th><td>1</td><td>0</td></tr>
+        <tr><th>0</th><td>0</td><td>0</td></tr>
+      </table>
+
+      <h3>OR ... |</h3>
+      <table class="middle">
+        <tr><td>|</td><th>1</th><th>0</th></tr>
+        <tr><th>1</th><td>1</td><td>1</td></tr>
+        <tr><th>0</th><td>1</td><td>0</td></tr>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+    <article>
+      <h3>XOR ... ^</h3>
+      <table class="middle">
+        <tr><td>^</td><th>1</th><th>0</th></tr>
+        <tr><th>1</th><td>0</td><td>1</td></tr>
+        <tr><th>0</th><td>1</td><td>0</td></tr>
+      </table>
+
+      <h3>NOT ... ~</h3>
+      <table class="middle">
+        <tr><td> </td><th>1</th><th>0</th></tr>
+        <tr><th>~</th><td>0</td><td>1</td></tr>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bitoperationen</h2>
+    </hgroup>
+    <article>
+      <h3>Shift Left ... &lt;&lt;</h3>
+      <p>
+        Verschiebt die Bits um <i>n</i> Stellen nach links<br/>
+        Beispiel: 9 ( = 0000 1001<sub>b</sub>) &lt;&lt; 1 = 18 ( = 0001 0010<sub>b</sub>)
+      </p>
+      <p>
+      <h3>Shift Right ... &gt;&gt;</h3>
+      Verschiebt die Bits <i>n</i> Stellen nach rechts<br/>
+      Beispiel: 27 ( = 0001 1011<sub>b</sub>) >> 2 = 6 ( = 0000 0110<sub>b</sub>)
+      </p>
+    </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Bitoperation - Wozu?</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Setzen von einzelnen Bits</li>
+        <li>L&ouml;schen von einzelnen Bits</li>
+        <li>Extrahieren von Bits</li>
+        <li>Potenzen von 2 schnell berechnen</li>
+        <li>Extrahieren von Teilen eines Bytes</li>
+        <li>Tauschen von Bytes</li>
+        <li>Bitfelder</li>
+      </ul>
+
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Bitfeld</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+int main()
+{
+  unsigned char lampen_zustand = 0; // 8 Zust&auml;nde (Lampen)
+  // Lampe 1 einschalten
+  lampen_zustand |= 1;
+  // Lampen 5-8 ausschalten
+  lampen_zustand &amp;= 15;
+  // Lampe 5 umschalten
+  lampen_zustand ^= 16;
+  // Zustand ausgeben
+  int lampe;
+  for(lampe = 0; lampe &lt; 8; lampe++)
+  {
+    printf("Lampe %d: %s\n", lampe + 1,
+      lampen_zustand &amp; (1 &lt;&lt; lampe) ? "ein" : "aus");
+  }
+}
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: RGB</h2>
+    </hgroup>
+    <article>
+      <img src="images/rgb_bsp.png" height="90%" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Byte-Reihenfolge</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+
+unsigned int swapByteOrder(unsigned int value)
+{
+  value = ((value &lt;&lt; 8) &amp; 0xFF00FF00) |
+          ((value >> 8) &amp; 0xFF00FF);
+  return (value &lt;&lt; 16) | (value >> 16);
+}
+
+int main()
+{
+  unsigned int value = 0x12345678;
+
+  printf("value = %x\n", value);
+  printf("swapped value = %x\n", swapByteOrder(value));
+
+  return 0;
+}
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bitmasken-Beispiel: Hexadezimale Ausgabe</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c"  style="font-size: 55%; line-height: 120%;">
+#include &lt;stdio.h>
+
+#define BITS_PER_NIBBLE 4
+#define NIBBLE_MASK 0xF
+
+int main()
+{
+  int a_number = 17036401;
+  int index;
+
+  printf("bin = ");
+  for( index = 32; index > 0; index-- )
+  {
+    printf( "%d", (a_number &amp; (1 &lt;&lt; (index - 1))) ? 1 : 0 );
+    if( (index - 1) % BITS_PER_NIBBLE == 0 )
+      printf(" ");
+  }
+
+  // This should only demonstrate how to use bit operations.
+  // In practice use %x for hexadecimal output
+  printf("\nhex = ");
+  for( index = 32 / BITS_PER_NIBBLE; index > 0; index-- )
+  {
+    int nibble = (a_number >> ((index - 1) * BITS_PER_NIBBLE)) &amp; NIBBLE_MASK;
+    printf( "%4c ", nibble &lt; 10 ? nibble + '0' : nibble + 'A' - 10 );
+  }
+
+  return 0;
+}
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bitmasken</h2>
+    </hgroup>
+    <article>
+      <iframe src="bitmask/bitmask.html" height="100%" style="border: 0px;"></iframe>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+if((value &amp; (value - 1) == 0)
+{
+  printf("Wann werde ich ausgef&uuml;hrt?");
+}
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+a = a^b;
+b = b^a;
+a = a^b;
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bithacking</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+int log = 0;
+while(value > 0)
+{
+  value = value >> 1;
+  log++;
+}
+</pre>
+
+      <a href="http://graphics.stanford.edu/~seander/bithacks.html">http://graphics.stanford.edu/~seander/bithacks.html</a>
+
+    </article>
+  </slide>
+
+
+
+
+
+
+
+  <slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+      <h2>Strings</h2>
+    </hgroup>
+  </slide>
+
     <slide>
     <hgroup>
     <h2>Strings - auch nur Arrays</h2>
@@ -681,269 +1029,15 @@ int main()
     </article>
   </slide>
 
-
-   
-    <slide>
-    <hgroup>
-      <h2>Bitoperationen</h2>
-    </hgroup>
-     <article>
-   <ul>
-       <li>Verkn&uuml;pfen Daten bitweise</li>
-       <li>Erfordern zwei Operanden (Ausnahme: NOT)</li>
-       <li>AND (<code>&amp;</code>), OR (<code>|</code>), XOR (<code>^</code>)</li>
-       <li>Left Shift (<code>&lt;&lt;</code>), Right Shift (<code>&gt;&gt;</code>)</li>
-       <li>NOT (<code>~</code>)</li>
-      </ul>
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bitoperationen</h2>
-    </hgroup>
-     <article>
-<h3>AND ... &amp;</h3>
-     <table class="middle">
-      <tr><td>&amp;</td><th>1</th><th>0</th></tr>
-      <tr><th>1</th><td>1</td><td>0</td></tr>
-      <tr><th>0</th><td>0</td><td>0</td></tr>
-     </table>
-
-     <h3>OR ... |</h3>
-     <table class="middle">
-      <tr><td>|</td><th>1</th><th>0</th></tr>
-      <tr><th>1</th><td>1</td><td>1</td></tr>
-      <tr><th>0</th><td>1</td><td>0</td></tr>
-     </table>
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bitoperationen</h2>
-    </hgroup>
-     <article>
-     <h3>XOR ... ^</h3>
-     <table class="middle">
-      <tr><td>^</td><th>1</th><th>0</th></tr>
-      <tr><th>1</th><td>0</td><td>1</td></tr>
-      <tr><th>0</th><td>1</td><td>0</td></tr>
-     </table>
-
-     <h3>NOT ... ~</h3>
-     <table class="middle">
-      <tr><td> </td><th>1</th><th>0</th></tr>
-      <tr><th>~</th><td>0</td><td>1</td></tr>
-     </table>
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bitoperationen</h2>
-    </hgroup>
-     <article>
-     <h3>Shift Left ... &lt;&lt;</h3>
-     <p>
-     Verschiebt die Bits um <i>n</i> Stellen nach links<br/>
-     Beispiel: 9 ( = 0000 1001<sub>b</sub>) &lt;&lt; 1 = 18 ( = 0001 0010<sub>b</sub>)
-</p>
-<p>
-     <h3>Shift Right ... &gt;&gt;</h3>
-     Verschiebt die Bits <i>n</i> Stellen nach rechts<br/>
-     Beispiel: 27 ( = 0001 1011<sub>b</sub>) >> 2 = 6 ( = 0000 0110<sub>b</sub>)
-     </p>
-     </article>
-  </slide>
-  
-  
-    <slide>
-    <hgroup>
-      <h2>Bitoperation - Wozu?</h2>
-    </hgroup>
-     <article>
-      <ul>
-        <li>Setzen von einzelnen Bits</li>
-        <li>L&ouml;schen von einzelnen Bits</li>
-        <li>Extrahieren von Bits</li>
-        <li>Potenzen von 2 schnell berechnen</li>
-        <li>Extrahieren von Teilen eines Bytes</li>
-        <li>Tauschen von Bytes</li>
-        <li>Bitfelder</li>
-      </ul>
-    
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bitmasken-Beispiel: Bitfeld</h2>
-    </hgroup>
-     <article>
-<pre class="prettyprint" data-lang="c">
-#include &lt;stdio.h>
-int main()
-{
-  unsigned char lampen_zustand = 0; // 8 Zust&auml;nde (Lampen)
-  // Lampe 1 einschalten
-  lampen_zustand |= 1;
-  // Lampen 5-8 ausschalten
-  lampen_zustand &amp;= 15;
-  // Lampe 5 umschalten
-  lampen_zustand ^= 16;
-  // Zustand ausgeben
-  int lampe;
-  for(lampe = 0; lampe &lt; 8; lampe++) 
-  {
-    printf("Lampe %d: %s\n", lampe + 1, 
-      lampen_zustand &amp; (1 &lt;&lt; lampe) ? "ein" : "aus");
-  }
-}
-</pre>
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bitmasken-Beispiel: RGB</h2>
-    </hgroup>
-     <article>
-<img src="images/rgb_bsp.png" height="90%" />
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bitmasken-Beispiel: Byte-Reihenfolge</h2>
-    </hgroup>
-     <article>
-<pre class="prettyprint" data-lang="c">
-#include &lt;stdio.h>
-
-unsigned int swapByteOrder(unsigned int value)
-{
-  value = ((value &lt;&lt; 8) &amp; 0xFF00FF00) |
-          ((value >> 8) &amp; 0xFF00FF); 
-  return (value &lt;&lt; 16) | (value >> 16);
-}
-
-int main()
-{
-  unsigned int value = 0x12345678;
-  
-  printf("value = %x\n", value);
-  printf("swapped value = %x\n", swapByteOrder(value));
-  
-  return 0;
-}
-</pre>
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bitmasken-Beispiel: Hexadezimale Ausgabe</h2>
-    </hgroup>
-     <article>
-<pre class="prettyprint" data-lang="c"  style="font-size: 55%; line-height: 120%;">
-#include &lt;stdio.h>
-
-#define BITS_PER_NIBBLE 4
-#define NIBBLE_MASK 0xF
-
-int main()
-{
-  int a_number = 17036401;
-  int index;
-  
-  printf("bin = ");
-  for( index = 32; index > 0; index-- )
-  {
-    printf( "%d", (a_number &amp; (1 &lt;&lt; (index - 1))) ? 1 : 0 );
-    if( (index - 1) % BITS_PER_NIBBLE == 0 )
-      printf(" ");
-  }
-  
-  // This should only demonstrate how to use bit operations.
-  // In practice use %x for hexadecimal output
-  printf("\nhex = ");
-  for( index = 32 / BITS_PER_NIBBLE; index > 0; index-- )
-  {
-    int nibble = (a_number >> ((index - 1) * BITS_PER_NIBBLE)) &amp; NIBBLE_MASK;
-    printf( "%4c ", nibble &lt; 10 ? nibble + '0' : nibble + 'A' - 10 );
-  }
-  
-  return 0;
-}
-</pre>
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bitmasken</h2>
-    </hgroup>
-     <article>
-<iframe src="bitmask/bitmask.html" height="100%" style="border: 0px;"></iframe> 
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bithacking</h2>
-    </hgroup>
-     <article>
-<pre class="prettyprint" data-lang="c">
-if((value &amp; (value - 1) == 0)
-{
-  printf("Wann werde ich ausgef&uuml;hrt?");
-}
-</pre>
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bithacking</h2>
-    </hgroup>
-     <article>
-<pre class="prettyprint" data-lang="c">
-a = a^b;
-b = b^a;
-a = a^b;
-</pre>
-     </article>
-  </slide>
-  
-  <slide>
-    <hgroup>
-      <h2>Bithacking</h2>
-    </hgroup>
-     <article>
-<pre class="prettyprint" data-lang="c">
-int log = 0;
-while(value > 0)
-{
-  value = value >> 1;
-  log++;
-}
-</pre>
-
-<a href="http://graphics.stanford.edu/~seander/bithacks.html">http://graphics.stanford.edu/~seander/bithacks.html</a>
-    
-     </article>
-  </slide>
-  
-
-  
-    <slide class="thank-you-slide segue nobackground">
+  <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
-      <p style="margin-top: 1em; font-size: 32pt">Viel Erfolg beim <br> ersten Gruppenbeispiel!</p>
-      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss f&uuml;r Ass1:</p>
+      <p style="margin-top: 1em; font-size: 32pt">Strings ausprobieren - wichtig für das nächste Assignment!</p>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Nächsten Termine:</p>
           <ul>
-            <li>3.11.2017 14:00:00 Uhr</li>
+            <li>Gruppenanmeldung: <b>vor</b> 29.11.2018 14:00:00 Uhr</li>
+            <li>Fragestunde: nächste Woche, Termin siehe Newsgroup</li>
+            <li>Deadline Assignment 2: 06.12.2018</li>
           </ul>
     </article>
     </slide>
