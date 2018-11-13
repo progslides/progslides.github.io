@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Fragestunde #2",
+        subtitle: "Einführung in die Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+
+            function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = 1;
+          container.src = container.src.replace(img_id + ".", new_id + ".");
+        }
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+ol li {
+  list-style-type: decimal;
+  display: list-item;
+  }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Ass1 Besprechung - H&auml;ufige Fehler</h2>
+    </hgroup>
+     <article>
+      <ul>
+       <li>Codingstandard (Tabulatoren, Zeile zu lang, Einr&uuml;ckungen, ...)</li>
+       <li>Deutsche Variablennamen und deutsche Kommentare</li>
+       <li>Schlechte Variablennamen (<code>i</code>, <code>tmp</code>, ...)</li>
+      </ul>
+     </article>
+  </slide>
+
+    <slide>
+     <hgroup>
+       <h2>Beispiel 1</h2>
+     </hgroup>
+      <article>
+       <pre class="prettyprint" data-lang="c">
+  int counter;  //counter for for loop
+  while (a&lt;d) {  //outer function
+    for(counter=a;counter&lt;=29;counter++)  //inner function
+      {
+        a=a+2;
+          b=b+1;
+        result=b+c+d;
+        result=result*9;
+        result=result-20;
+        printf("%d %d %d %d\n",a,b,c,d);
+        printf("%d\n",result);
+        printf("--\n");
+      }
+	}
+  result=result*(a%2);
+  printf("%d %d %d %d\n",a,b,c,d);
+  printf("%d\n",result);
+ </pre>
+      </article>
+   </slide>
+   
+     <slide>
+     <hgroup>
+       <h2>Beispiel 1 - Besser so!</h2>
+     </hgroup>
+      <article>
+       <pre class="prettyprint" data-lang="c">
+  int counter;  //counter for for loop
+  while (a &lt; d)  //outer function
+  {
+    for(counter = a; counter &lt;= 29; counter++)  //inner function
+    {
+      a = a + 2;
+      b = b + 1;
+      result = b + c + d;
+      result = result * 9;
+      result = result - 20;
+      printf("%d %d %d %d\n", a, b, c, d);
+      printf("%d\n", result);
+      printf("--\n");
+    }
+  }
+  result = result * (a % 2);
+  printf("%d %d %d %d\n", a, b, c, d);
+  printf("%d\n", result);
+ </pre>
+      </article>
+   </slide>
+   
+<slide>
+     <hgroup>
+       <h2>Beispiel 2</h2>
+     </hgroup>
+      <article>
+       <pre class="prettyprint" data-lang="c">
+  //Bilden der Quersumme
+  int qsum = 1 + 1 + 8 + 4 + 2 + 3 + 5;
+  //Bilden der vorderen Halbsumme
+  int vhsum = 1 + 1 + 8;
+  //Bilden der hinteren Halbsumme
+  int hhsum = 4 + 2 + 3 + 5;
+  
+  for (int i = 1; i <= qsum; i += 2)  //Äußere Struktur; Zählschleife
+  {
+    do  //Innere Struktur; Fußgesteuerte Schleife
+    {
+			a += 2;  //Anweisung aus Angabe
+			b++;  //Anweisung aus Angabe
+			result = ((b + c + d) * vhsum) - hhsum;  //Berechnung result
+			printf("%d %d %d %d\n", a, b, c, d);  //erste Ausgabe der Variablen 
+			printf("%d\n", result);  //erste Ausgabe result
+			printf("--\n");  //Ausgabe Seperatur
+    } while (b < d);
+  }
+ </pre>
+      </article>
+   </slide>
+
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg beim 2. Gruppenbeispiel!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
+          <ul>
+            <li>20.11.2018 14:00:00 Uhr</li>
+          </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
