@@ -369,20 +369,28 @@ int main()
 		<tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
 		<tr><td>hello.c</td><td>Quellcode</td></tr>
 		</table>
-    <p style="margin-top: 1em;">Ausführen (und Testen):</p>
-    <pre class="prettyprint" data-lang="bash">./hello</pre>
-    <pre>Hallo ESP!</pre>
 	</article>
   </slide>
-
 
   <slide>
     <hgroup>
       <h2>Schritt 5</h2>
     </hgroup>
+    <article class="smaller">
+      <p style="margin-top: 1em;">Ausführen (und Testen):</p>
+      <pre class="prettyprint" data-lang="bash">./hello</pre>
+      <pre>Hallo ESP!</pre>
+      <p style="margin-top: 2em;">Testen mit Valgrind:</p>
+      <pre>valgrind --leak-check=full ./hello</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 6</h2>
+    </hgroup>
     <article>
-				<p>Abgabe laut Abgabeliste(siehe Wiki) packen und auf die Palme
-				hochladen.
+      <p>Abgabe laut Abgabeliste (siehe Wiki) packen und auf die Palme hochladen.
         <p><a href="https://palme.iicm.tugraz.at/">
             https://palme.iicm.tugraz.at/</a></p>
 		<p style="text-align: center;"><img src="images/palme.png" alt="PALME" width="60%" /></p>

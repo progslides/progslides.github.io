@@ -78,13 +78,14 @@
       <article>
       	<p>In einem Editor / Entwicklungsumgebung nach Wahl (z.B. CodeBlocks, Sublime,
           Notepad++, Kate, Vim, Emacs, Textmate) eine Datei "hello.cpp" anlegen:</p>
-      	<pre class="prettyprint" data-lang="c">/* Hello World Example */
+        <pre class="prettyprint" data-lang="c">/* Hello World Example */
 
-#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
 
 int main()
 {
-  std::cout &lt;&lt; "Hallo SEP" &lt;&lt; std::endl;
+  printf("Hallo ESP!\n");
+  return 0;
 }</pre>
 			<br>
 			<p>Tutorial: <a href="http://www.student.tugraz.at/manuel.weber/sep/howto_vb.html">Linux als virtuelle Umgebung unter Windows</a></p>
@@ -98,7 +99,7 @@ int main()
     </hgroup>
     <article>
       	<p style="margin-bottom: 1em;">Die Datei auf <u>pluto.tugraz.at</u> kopieren:</p>
-      	<pre class="prettyprint" data-lang="bash">scp hello.cpp user@pluto.tugraz.at:</pre>
+      	<pre class="prettyprint" data-lang="bash">scp hello.c user@pluto.tugraz.at:</pre>
       	<p style="text-align: center;">
 					<img style="width: 70%;" src="images/filezilla.png" alt="FileZilla" />
 				</p>
@@ -125,17 +126,29 @@ int main()
     </hgroup>
     <article class="smaller">
         <p>Das Programm kompilieren:</p>
-        <pre class="prettyprint" data-lang="bash">g++ -Wall -std=c++11 -g -o hello hello.cpp</pre>
-		<table>
-    <tr><th>Eingabe</th><th>Bedeutung</th></tr>
-		<tr><td>g++</td><td>GNU C++ Compiler</td></tr>
-		<tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td><tr>
-    <tr><td>-std=c++11</td><td>den C++11 Standard verwenden</td><tr>
-    <tr><td>-g</td><td>Debug-Informationen anhängen (Zeilennummern, Funktionsnamen)</td><tr>
-		<tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
-		<tr><td>hello.cpp</td><td>Quellcode</td></tr>
-		</table>
+      <pre class="prettyprint" data-lang="bash">gcc -std=c11 -Wall -o hello hello.c</pre>
+      <table>
+        <tr><th>Eingabe</th><th>Bedeutung</th></tr>
+        <tr><td>gcc</td><td>GNU C Compiler</td></tr>
+        <tr><td>-std=c11</td><td>C Language Standard</td></tr>
+        <tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td></tr>
+        <tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
+        <tr><td>hello.c</td><td>Quellcode</td></tr>
+      </table>
 	</article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 5</h2>
+    </hgroup>
+    <article class="smaller">
+      <p style="margin-top: 1em;">Ausführen (und Testen):</p>
+      <pre class="prettyprint" data-lang="bash">./hello</pre>
+      <pre>Hallo ESP!</pre>
+      <p style="margin-top: 2em;">Testen mit Valgrind:</p>
+      <pre>valgrind --leak-check=full ./hello</pre>
+    </article>
   </slide>
 
   <slide>
@@ -157,9 +170,9 @@ int main()
       <h2>Schritt 6</h2>
     </hgroup>
     <article>
-        <p>Bei HW1 den Quellcode und das Binary laut Angabe abgeben.</p>
-        <p><a href="https://palme.iicm.tugraz.at/">
-            https://palme.iicm.tugraz.at/</a></p>
+      <p>Abgabe laut Abgabeliste (siehe Wiki) packen und auf die Palme hochladen.
+      <p><a href="https://palme.iicm.tugraz.at/">
+        https://palme.iicm.tugraz.at/</a></p>
 		<p style="text-align: center;"><img src="images/palme.png" alt="PALME" width="60%" /></p>
       </article>
   </slide>
@@ -169,27 +182,27 @@ int main()
       <h2>Entwicklungsumgebung</h2>
     </hgroup>
     <article>
-        <ul>
-          <li>Editor (oder IDE) nach Wahl</li>
-          <li>Referenzplattform: <code>pluto.tugraz.at</code> (Linux)
-            <ul>
-              <li>Benötigte Tools: <code>g++</code>, <code>make</code>,
-                <code>valgrind</code>, <code>svn</code></li>
-              <li>Datenübertragung mittels SFTP
-                  <pre class="prettyprint" data-lang="bash">scp prog.cpp benutzername@pluto.tugraz.at:~/</pre>
-                  <span class="meta">(alternativ: WinSCP oder FileZilla)</span>
-              </li>
-              <li>Zugang über SSH
-                <pre class="prettyprint" data-lang="bash">ssh benutzername@pluto.tugraz.at</pre>
-                <span class="meta">(alternativ: Putty)</span>
-              </li>
+      <ul>
+        <li>Editor (oder IDE) nach Wahl</li>
+        <li>Referenzplattform: <code>pluto.tugraz.at</code> (Linux)
+          <ul>
+            <li>Benötigte Tools: <code>gcc</code>, <code>make</code>,
+              <code>valgrind</code>, <code><a href="https://git.tugraz.at">git</a></code></li>
+            <li>Datenübertragung mittels SFTP
+              <pre class="prettyprint" data-lang="bash">scp prog.c benutzername@pluto.tugraz.at:~/</pre>
+              <span class="meta">(alternativ: <a href="https://winscp.net">WinSCP</a> oder <a href="https://filezilla-project.org">FileZilla</a>)</span>
+            </li>
+            <li>Zugang über SSH
+              <pre class="prettyprint" data-lang="bash">ssh benutzername@pluto.tugraz.at</pre>
+              <span class="meta">(alternativ: <a href="http://www.putty.org">Putty</a>)</span>
+            </li>
           </ul></li>
-          <li>Kompilieren mit:
-            <pre class="prettyprint" data-lang="bash">g++ -Wall -std=c++11 -g -o hello hello.cpp</pre>
-          </li>
-        </ul>
-      </article>
-    </slide>
+        <li>Kompilieren mit:
+          <pre class="prettyprint" data-lang="bash">gcc -std=c11 -Wall -o prog prog.c</pre>
+        </li>
+      </ul>
+    </article>
+  </slide>
 
 
     <slide>
