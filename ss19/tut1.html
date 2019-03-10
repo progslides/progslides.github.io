@@ -204,8 +204,8 @@
               <li>stdin/stdout</li>              
               <li>Wert vs. Zeiger vs. Referenz</li>
               <li>Namespaces</li>
-              <li>Klassen</li>
               <li>Vectoren und Strings</li>
+              <li>Objekte und Klassen</li>
               <li>GIT</li>
           </ul>
       </article>
@@ -307,7 +307,7 @@
 		<li>fehlenden Abgaben (DEADLINE!)</li>
 		<li>Plagiaten, zusätzlich Meldung an Studiendekan!</li>
 		<li>Weniger als 50% der Punkte auf den Praxis Teil</li>
-		<li>Weniger als 50% der Punkte auf die Klausur</li>
+		<li>Weniger als 50% der Punkte auf die Klausuren</li>
 	</ul></li>
   <br/>
   <li>Mitarbeiten am Übungsbeispiel!<ul>
@@ -354,6 +354,13 @@
 	</article>
   </slide>
 
+  
+ <slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+        <h2>Standardaus- und eingabe</h2>
+    </hgroup>
+</slide> 
+  
   <slide>
 <hgroup>
      <h2>Schreiben auf <span class="src">stdout</span></h2>
@@ -434,6 +441,13 @@ int main()
 
   </article>
 </slide>
+
+<slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+        <h2>Namespaces</h2>
+    </hgroup>
+</slide>
+
 <slide>
   <hgroup>
     <h2>Namespaces</h2>
@@ -460,6 +474,11 @@ int main()
   </article>
 </slide>
 
+<slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+        <h2>Wert, Zeiger und Referenz</h2>
+    </hgroup>
+</slide>
 
   <slide>
     <hgroup>
@@ -481,8 +500,7 @@ int main()
 }</pre>
   </article>
 </slide>
-
-
+ 
   <slide>
     <hgroup>
       <h2>Wert vs. Zeiger vs. Referenz (Beispiel 2)</h2>
@@ -524,7 +542,7 @@ int main()
 }</pre>
 </article>
 </slide>
-
+ 
   <slide>
     <hgroup>
       <h2>Wert vs. Zeiger vs. Referenz</h2>
@@ -539,7 +557,12 @@ int main()
    </article>
   </slide>
 
-
+ <slide class="segue dark nobackground">
+     <hgroup class="auto-fadein">
+         <h2>Vector</h2>
+     </hgroup>
+ </slide>
+ 
   <slide>
   <hgroup>
          <h2>Vector</h2>
@@ -548,7 +571,7 @@ int main()
            <ul>
          <li>inkludieren mit</li>
                  <pre class="compact prettyprint" data-lang="C++">#include &lt;vector></pre>
-         <li>Erstellen eines Vektors
+         <li>Erstellen eines Vectors
                  <pre class="compact prettyprint" data-lang="C++">using std::vector;
 ...
 vector&lt;int&gt; int_vector;</pre>
@@ -557,18 +580,18 @@ vector&lt;int&gt; int_vector;</pre>
 
 
         <img src="images/homer2.gif" width="100px" style="float: left; margin-top: 100px;">
-        <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 610px; background-color: #fcfcfc;">
+        <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 680px; background-color: #fcfcfc;">
         <h3 style="border-bottom: 1px solid gray;">Wichtigste Methoden</h3>
           <div class="left" style="padding-right: 20px;">
                  <dl class="expl">
-                   <dt>Anzahl der Elemente im Vektor</dt><dd><pre class="compact prettyprint">int len = int_vector.size();</dd>
+                   <dt>Anzahl der Elemente im Vector</dt><dd><pre class="compact prettyprint">int len = int_vector.size();</dd>
                    <dt>Wert <em>3</em> an Position <em>0</em> einf&uuml;gen</dt><dd><pre class="compact prettyprint">int_vector.insert(0, 3);</pre></dd>
                  </dl>
          </div>
          <div class="left">
                  <dl class="expl">
                    <dt>Wert <em>3</em> an letzter Stelle einf&uuml;gen</dt><dd><pre class="compact prettyprint">int_vector.push_back(3);</pre></dd>
-                   <dt>Wert an Position <em>0</em></dt><dd><pre class="compact prettyprint">int element = int_vector[0];</pre></dd>
+                   <dt>Wert an Position <em>0</em></dt><dd><pre class="compact prettyprint">int element = int_vector.at(0);</pre></dd>
                  </dl>
          </div>
          </div>
@@ -590,7 +613,7 @@ int_vector.push_back(37);</pre>
 <pre class="compact prettyprint" data-lang="C++" style="font-size: 0.60em;">
 int i;
 for(i = 0; i &lt; int_vector.size(); i++)
-  std::cout &lt;&lt; int_vector[i] &lt;&lt; std::endl;
+  std::cout &lt;&lt; int_vector.at(i) &lt;&lt; std::endl;
 </pre>
 
       <small>...oder durch Iterator</small>
@@ -606,6 +629,12 @@ for(auto &it : int_vector)
      </article>
 </slide>
 
+ <slide class="segue dark nobackground">
+     <hgroup class="auto-fadein">
+         <h2>Strings</h2>
+     </hgroup>
+ </slide>
+ 
   <slide>
     <hgroup>
       <h2>Strings</h2>
@@ -997,6 +1026,184 @@ int main()
   </article>
 </slide>
 
+ <slide class="segue dark nobackground">
+     <hgroup class="auto-fadein">
+         <h2>Object Oriented Programing</h2>
+     </hgroup>
+ </slide>
+
+<slide>
+  <hgroup>
+    <h2>Object Oriented Programing</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Eine <strong>Klasse</strong> vereint Daten (Strukturen) und
+        Funktionalität (Funktionen).
+      </li>
+      <li>Entspricht oft Objekten in der reellen Welt (Spieler, Kamera, etc.)</li>
+      <li>Vereinfachte Schnittstelle (interne Details können verborgen werden)</li>
+    </ul>
+    <pre class="prettyprint" data-lang="C++" style="overflow:scroll; height: 18em;">// Ball.h
+#ifndef BALL_H_INCLUDED
+#define BALL_H_INCLUDED
+class Ball
+{
+  private:
+    std::string color_;
+    double x_, y_;
+
+  public:
+    Ball(std::string color);
+    void move(double dx, double dy);
+
+    std::string getColor() const;
+    void setColor(std::string new_color);
+};
+#endif</pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Ball.cpp</h2>
+        </hgroup>
+        <article>
+          <ul>
+            <li>Trennung Implementierung und Definition.</li>
+          </ul>
+            <pre class="prettyprint" data-lang="C++" style="overflow:scroll; height: 20em;">// Ball.cpp
+#include "Ball.h"
+Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
+{
+}
+void Ball::move(double dx, double dy)
+{
+  x_ += dx;
+  y_ += dy;
+}
+std::string Ball::getColor() const
+{
+  return color_;
+}
+void Ball::setColor(std::string new_color)
+{
+  color_ = new_color;
+}</pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Konstruktor</h2>
+        </hgroup>
+        <article>
+          <ul>
+            <li></li>
+          </ul>
+          <pre class="prettyprint" data-lang="C++">// Ball.h
+...
+public:
+Ball(std::string color);
+Ball();
+...
+          </pre>
+          <pre class="prettyprint" data-lang="C++">// Ball.cpp
+...
+Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
+{
+}
+Ball::Ball() : color_("yellow"), x_(0), y_(0)
+{
+}
+...
+          </pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Konstruktor - Aufruf</h2>
+        </hgroup>
+        <article>
+          <ul>
+            <li></li>
+          </ul>
+          <pre class="prettyprint" data-lang="C++">// Erinnerung: Ball.h
+...
+  public:
+    Ball(std::string color);
+    Ball();
+...
+          </pre>
+          <pre class="prettyprint" data-lang="C++">// main.cpp
+...
+Ball ball();
+Ball redBall("red");
+...
+          </pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Destruktor</h2>
+        </hgroup>
+        <article>
+          <ul>
+            <li>Wird automatisch aufgerufen</li>
+            <li>Sinnvoll, um dynamischen Speicher wieder freizugeben (Pointer!)</li>
+          </ul>
+          <pre class="prettyprint" data-lang="C++">// Ball.h
+...
+  public:
+    virtual ~Ball() noexcept;
+...
+          </pre>
+          <pre class="prettyprint" data-lang="C++">// Ball.cpp
+...
+Ball::~Ball() noexcept
+{
+}
+...
+          </pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Getter / Setter</h2>
+        </hgroup>
+        <article>
+          <p>private Attribute, öffentliche Getter und Setter</p>
+          <ul>
+            <li>neue Werte können validiert werden</li>
+            <li>abhängige Daten können automatisch aktualisiert / angepasst werden</li>
+            <li>Werte können im Getter berechnet werden</li>
+            <li>interne Datenformat kann später geändert werden, die öffentliche
+              API bleibt gleich
+            </li>
+          </ul>
+          <pre class="prettyprint" data-lang="C++">std::string Ball::getColor() const
+{
+  return color_;
+}
+void Ball::setColor(std::string new_color)
+{
+  color_ = new_color;
+}</pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Methoden</h2>
+        </hgroup>
+        <article>
+          <p>Eine Funktion innerhalb einer Klasse heißt <strong>Methode</strong>.
+            Methoden werden üblicherweise mit Verben benannt.
+          </p>
+          <pre class="prettyprint" data-lang="C++">void Ball::move(double dx, double dy)
+{
+  x_ += dx;
+  y_ += dy;
+}</pre>
+        </article>
+      </slide>
 
  <slide class="segue dark nobackground">
      <hgroup class="auto-fadein">
@@ -1010,17 +1217,13 @@ int main()
      </hgroup>
      <article>
          <ul>
-             <li>Das Übungsbeispiel muss mit GIT versioniert werden</li>
+             <li>Die Gruppenbeispiele (D2 &amp; D3) müssen mit GIT versioniert werden</li>
              <li>Repository erstellen auf <a href="https://git.tugraz.at">git.tugraz.at</a></li>
              <ul>
-               <li>Name: SEP18_GroupXXXXX (Bsp Gr24.: SEP18_Group00024)</li>
-               <li>Euren Tutor einladen!</li>
+               <li>Name: SEP19_GroupXXXXX (Bsp Gr24.: SEP19_Group00024)</li>
+               <li>Euren Tutor einladen! Siehe <a href="#2">Folie 2</a></li>
                <li>Repository auf <strong>private</strong> lassen!</li>
-             </ul>
-             <li>Framework Upstream einrichten!</li>
-             <ul>
-               <li>Siehe Anleitung in der Aufgabenstellung ab Donnerstag</li>
-             </ul>
+             </ul>            
          </ul>
      </article>
  </slide>
