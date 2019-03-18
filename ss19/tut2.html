@@ -78,230 +78,58 @@
   </head>
   <body id="tugraz" style="opacity: 0">
     <slides class="layout-widescreen">
-      <slide class="title-slide segue nobackground">
-        <aside class="gdbar"><img src="images/tugraz128.png"></aside>
-        <hgroup class="auto-fadein">
-          <h1 data-config-title>
-            <!-- populated from slide_config.json -->
-          </h1>
-          <h2 data-config-subtitle>
-            <!-- populated from slide_config.json -->
-          </h2>
-          <p data-config-presenter>
-            <!-- populated from slide_config.json -->
-          </p>
-        </hgroup>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Ablauf des Tutoriums</h2>
-        </hgroup>
-        <article>
-          <ul>
-            <li>OOP</li>
-            <li>Makefile</li>
-            <li>Standard Template Library</li>
-            <li>Speichermanagement</li>
-            <li>Smartpointer</li>
-          </ul>
-        </article>
-      </slide>
 
-      <slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-          <h2>Object Oriented Programing</h2>
-        </hgroup>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Object Oriented Programing</h2>
-        </hgroup>
-        <article>
-          <ul>
-            <li>Eine <strong>Klasse</strong> vereint Daten (Strukturen) und
-              Funktionalität (Funktionen).
-            </li>
-            <li>Entspricht oft Objekten in der reellen Welt (Spieler, Kamera, etc.)</li>
-            <li>Vereinfachte Schnittstelle (interne Details können verborgen werden)</li>
-          </ul>
-          <pre class="prettyprint" data-lang="C++" style="overflow:scroll; height: 18em;">// Ball.h
-#ifndef BALL_H_INCLUDED
-#define BALL_H_INCLUDED
-class Ball
-{
-  private:
-    std::string color_;
-    double x_, y_;
+<slide class="title-slide segue nobackground">
+  <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+  <hgroup class="auto-fadein">
+    <h1 data-config-title>
+      <!-- populated from slide_config.json -->
+    </h1>
+    <h2 data-config-subtitle>
+      <!-- populated from slide_config.json -->
+    </h2>
+    <p data-config-presenter>
+      <!-- populated from slide_config.json -->
+    </p>
+  </hgroup>
+</slide>
 
-  public:
-    Ball(std::string color);
-    void move(double dx, double dy);
+<slide>
+  <hgroup>
+    <h2>Ablauf des Tutoriums</h2>
+  </hgroup>
+  <article>
+    <ul>            
+      <li>Makefile</li>
+      <li>Vectoren und Strings</li>
+      <li>Standard Template Library</li>
+      <li>Wert vs. Zeiger vs. Referenz</li>
+      <li>Speichermanagement</li>
+      <li>Smartpointer</li>
+    </ul>
+  </article>
+</slide>
+      
+      
+<slide class="segue dark nobackground">
+  <hgroup class="auto-fadein">
+    <h2>Makefile Demo</h2>
+  </hgroup>
+</slide>
 
-    std::string getColor() const;
-    void setColor(std::string new_color);
-};
-#endif</pre>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Ball.cpp</h2>
-        </hgroup>
-        <article>
-          <ul>
-            <li>Trennung Implementierung und Definition.</li>
-          </ul>
-            <pre class="prettyprint" data-lang="C++" style="overflow:scroll; height: 20em;">// Ball.cpp
-#include "Ball.h"
-Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
-{
-}
-void Ball::move(double dx, double dy)
-{
-  x_ += dx;
-  y_ += dy;
-}
-std::string Ball::getColor() const
-{
-  return color_;
-}
-void Ball::setColor(std::string new_color)
-{
-  color_ = new_color;
-}</pre>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Konstruktor</h2>
-        </hgroup>
-        <article>
-          <ul>
-            <li></li>
-          </ul>
-          <pre class="prettyprint" data-lang="C++">// Ball.h
-...
-public:
-Ball(std::string color);
-Ball();
-...
-          </pre>
-          <pre class="prettyprint" data-lang="C++">// Ball.cpp
-...
-Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
-{
-}
-Ball::Ball() : color_("yellow"), x_(0), y_(0)
-{
-}
-...
-          </pre>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Konstruktor - Aufruf</h2>
-        </hgroup>
-        <article>
-          <ul>
-            <li></li>
-          </ul>
-          <pre class="prettyprint" data-lang="C++">// Erinnerung: Ball.h
-...
-  public:
-    Ball(std::string color);
-    Ball();
-...
-          </pre>
-          <pre class="prettyprint" data-lang="C++">// main.cpp
-...
-Ball ball();
-Ball redBall("red");
-...
-          </pre>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Destruktor</h2>
-        </hgroup>
-        <article>
-          <ul>
-            <li>Wird automatisch aufgerufen</li>
-            <li>Sinnvoll, um dynamischen Speicher wieder freizugeben (Pointer!)</li>
-          </ul>
-          <pre class="prettyprint" data-lang="C++">// Ball.h
-...
-  public:
-    virtual ~Ball() noexcept;
-...
-          </pre>
-          <pre class="prettyprint" data-lang="C++">// Ball.cpp
-...
-Ball::~Ball() noexcept
-{
-}
-...
-          </pre>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Getter / Setter</h2>
-        </hgroup>
-        <article>
-          <p>private Attribute, öffentliche Getter und Setter</p>
-          <ul>
-            <li>neue Werte können validiert werden</li>
-            <li>abhängige Daten können automatisch aktualisiert / angepasst werden</li>
-            <li>Werte können im Getter berechnet werden</li>
-            <li>interne Datenformat kann später geändert werden, die öffentliche
-              API bleibt gleich
-            </li>
-          </ul>
-          <pre class="prettyprint" data-lang="C++">std::string Ball::getColor() const
-{
-  return color_;
-}
-void Ball::setColor(std::string new_color)
-{
-  color_ = new_color;
-}</pre>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Methoden</h2>
-        </hgroup>
-        <article>
-          <p>Eine Funktion innerhalb einer Klasse heißt <strong>Methode</strong>.
-            Methoden werden üblicherweise mit Verben benannt.
-          </p>
-          <pre class="prettyprint" data-lang="C++">void Ball::move(double dx, double dy)
-{
-  x_ += dx;
-  y_ += dy;
-}</pre>
-        </article>
-      </slide>
-      <slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-          <h2>Makefile Demo</h2>
-        </hgroup>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Makefile</h2>
-        </hgroup>
-        <h3>Aufbau:</h3>
-        <p class="pre">
-          <span class="red">Target:</span> <span class="yellow">Dependency1 (Dependency2 ...)</span><br>
-          &nbsp;&nbsp;&lt;tab&gt; <span class="blue">(Command 1)</span><br>
-          &nbsp;&nbsp;&lt;tab&gt; <span class="blue">(Command 2)</span><br>
-        </p>
-        <br>
-        Beispiel:
-        <pre style="font-size: 0.75em; line-height: 1.35em;">EXECUTABLE = assx
+<slide>
+  <hgroup>
+    <h2>Makefile</h2>
+  </hgroup>
+  <h3>Aufbau:</h3>
+  <p class="pre">
+    <span class="red">Target:</span> <span class="yellow">Dependency1 (Dependency2 ...)</span><br>
+    &nbsp;&nbsp;&lt;tab&gt; <span class="blue">(Command 1)</span><br>
+    &nbsp;&nbsp;&lt;tab&gt; <span class="blue">(Command 2)</span><br>
+  </p>
+  <br>
+  Beispiel:
+  <pre style="font-size: 0.75em; line-height: 1.35em;">EXECUTABLE = assx
 CXX = g++
 CC = gcc
 
@@ -314,61 +142,526 @@ clean:
         <br>
         Verwendung:
         <pre class="prettyprint" data-lang="sh" style="font-size: 0.75em; line-height: 1.35em;">$ make</pre>
-      </slide>
+</slide>
 
 
-      <slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-          <h2>STL - Standard Template Library</h2>
-        </hgroup>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>STL - Standard Template Library</h2>
-        </hgroup>
-        <article>
-          <div class="left">
-            <dl class="expl">
-              <dt>std::vector</dt>
-              <dd>Arrays</dd>
-              <dt>std::map</dt>
-              <dd>Assoziatives Array (Key-Value)</dd>
-              <dt>std::list</dt>
-              <dd>Doppelt-verkettete Liste</dd>
-            </dl>
-          </div>
-          <div class="right">
-            <dl class="expl" style="margin-bottom: 0px;">
-              <dt>std::queue</dt>
-              <dd>FIFO</dd>
-              <dt>std::pair</dt>
-              <dd>Vereinigung von 2 Datentypen</dd>
-              <dt>std::array <img src="images/newflag.jpg" style="height: 24px; vertical-align: middle;"/></dt>
-              <dd>Array mit zus&auml;tzlichen Funktionen</dd>
-            </dl>
-            <span>...</span>
-          </div>
-          <ul style="margin-top: 1.5em;">
-            <li>Generische Datentypen für unterschiedliche
-              Einsatzzwecke (z.B. <span class="src" style="font-size: .8em;">std::vector&lt;int&gt;</span> oder
-              <span class="src" style="font-size: .8em;">std::vector&lt;std::string&gt;</span>)
-            <li>Automatisches Speichermanagement</li>
-            <li>Iteratoren zum Durchlaufen der
-              Container, unabhängig von der Datenstruktur
-            </li>
-            <li>Vorgefertigte Algorithmen (copy, sort, transform, etc.)</li>
-          </ul>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Map</h2>
-        </hgroup>
-        <article>
-          <p>Erlaubt Werte unter einem beliebigen Schlüssel zu speichern. Der Schlüssel
-            muss dabei KEINE fortlaufende Ganzzahl wie bei Arrays / Vektoren sein.
-          </p>
-          <pre class="compact prettyprint" data-lang="C++" style="height: 20em; overflow: scroll;">#include &lt;iostream&gt;
+<slide>
+  <hgroup>
+         <h2>Vector</h2>
+  </hgroup>
+     <article class="smaller">
+           <ul>
+         <li>inkludieren mit</li>
+                 <pre class="compact prettyprint" data-lang="C++">#include &lt;vector></pre>
+         <li>Erstellen eines Vektors
+                 <pre class="compact prettyprint" data-lang="C++">using std::vector;
+...
+vector&lt;int&gt; int_vector;</pre>
+              oder
+          <pre class="compact prettyprint" data-lang="C++">std::vector&lt;int> int_vector;</pre><br/></li>
+
+
+        <img src="images/homer2.gif" width="100px" style="float: left; margin-top: 100px;">
+        <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 610px; background-color: #fcfcfc;">
+        <h3 style="border-bottom: 1px solid gray;">Wichtigste Methoden</h3>
+          <div class="left" style="padding-right: 20px;">
+                 <dl class="expl">
+                   <dt>Anzahl der Elemente im Vektor</dt><dd><pre class="compact prettyprint">int len = int_vector.size();</dd>
+                   <dt>Wert <em>3</em> an Position <em>0</em> einf&uuml;gen</dt><dd><pre class="compact prettyprint">int_vector.insert(0, 3);</pre></dd>
+                 </dl>
+         </div>
+         <div class="left">
+                 <dl class="expl">
+                   <dt>Wert <em>3</em> an letzter Stelle einf&uuml;gen</dt><dd><pre class="compact prettyprint">int_vector.push_back(3);</pre></dd>
+                   <dt>Wert an Position <em>0</em></dt><dd><pre class="compact prettyprint">int element = int_vector[0];</pre></dd>
+                 </dl>
+         </div>
+         </div>
+        </ul>
+     </article>
+  </slide>
+
+<slide>
+  <hgroup>
+  <h2>Vector</h2>
+  </hgroup>
+  <article>
+<pre class="compact prettyprint" data-lang="C++" >std::vector&lt;int&gt; int_vector;
+int_vector.push_back(42);
+int_vector.push_back(13);
+int_vector.push_back(37);</pre>
+
+      <small>Zugriff auf alle Elemente durch Index...</small>
+<pre class="compact prettyprint" data-lang="C++" style="font-size: 0.60em;">
+int i;
+for(i = 0; i &lt; int_vector.size(); i++)
+  std::cout &lt;&lt; int_vector[i] &lt;&lt; std::endl;
+</pre>
+
+      <small>...oder durch Iterator</small>
+<pre class="compact prettyprint"  data-lang="C++" style="font-size: 0.55em;">
+for(vector&lt;int&gt;::iterator it = int_vector.begin(); it != int_vector.end(); it++)
+  std::cout &lt;&lt; *it &lt;&lt; std::endl;
+</pre>
+     <small>...oder einfach</small>
+<pre class="compact prettyprint"  data-lang="C++" style="font-size: 0.60em;">
+for(auto &it : int_vector)
+  std::cout &lt;&lt; it &lt;&lt; std::endl;
+</pre>
+     </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Strings</h2>
+  </hgroup>
+    <article>
+      <ul>
+      <li>Repräsentieren Text bzw. Zeichenketten</li>
+      <li>C++ Variante von char*</li>
+      <li>Bietet sehr viele komfortable Funktionen zur Bearbeitung von Text</li>
+    </ul>
+    <pre class="prettyprint" data-lang="C++" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello World!
+</pre>
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Strings: Zugriff auf Zeichen mit "[ ]" oder string::at</h2>
+  </hgroup>
+  <article>
+  <pre class="prettyprint" data-lang="C++" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+
+  std::cout &lt;&lt; "Second character of str: " &lt;&lt; str[1] &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; "Seventh character of str: " &lt;&lt; str.at(6) &lt;&lt; std::endl;
+
+  str[1] = 'Y';
+
+  std::cout &lt;&lt; "Second character of str: " &lt;&lt; str[1] &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Second character of str: e
+Seventh character of str: W
+Second character of str: Y
+</pre>
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Strings: Anhängen von Text mit string::append</h2>
+  </hgroup>
+  <article>
+
+
+
+  <pre class="prettyprint" data-lang="C++" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  strSEP.append(str);
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+SEP&gt;
+SEP&gt; Hello World!
+</pre>
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Strings: Anhängen von Text mit "+="-Operator</h2>
+  </hgroup>
+  <article>
+
+
+
+  <pre class="prettyprint" data-lang="C++" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  strSEP += str;
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+SEP&gt;
+SEP&gt; Hello World!
+</pre>
+
+  </article>
+</slide>
+
+
+
+<slide>
+  <hgroup>
+    <h2>Strings: Kopieren/Zuweisen mit "="-Operator</h2>
+  </hgroup>
+  <article>
+
+
+
+  <pre class="prettyprint" data-lang="C++" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str;
+  str = "Hello";
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+
+  str = "World!";
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello
+World!
+</pre>
+
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Strings: Kopieren/Zuweisen mit "="-Operator</h2>
+  </hgroup>
+  <article>
+
+
+
+  <pre class="prettyprint" data-lang="C++" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  strSEP = str;
+
+  std::cout &lt;&lt; strSEP &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+SEP&gt;
+Hello World!
+</pre>
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Strings: Länge bestimmen mit string::length</h2>
+  </hgroup>
+  <article>
+
+
+
+  <pre class="prettyprint" data-lang="C++" style="line-height: 120%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("SEP> ");
+
+  std::cout &lt;&lt; "length of " &lt;&lt; str &lt;&lt; ": " &lt;&lt; str.length() &lt;&lt; std::endl;
+
+  str += "Hello World!";
+
+  std::cout &lt;&lt; "length of " &lt;&lt; str &lt;&lt; ": " &lt;&lt; str.length() &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+length of SEP&gt; : 5
+length of SEP&gt; Hello World!: 17
+</pre>
+  </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Strings: Vergleichen mit string::compare</h2>
+  </hgroup>
+  <article>
+
+
+
+  <pre class="prettyprint" data-lang="C++" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  if(str.compare(strSEP) == 0)
+  {
+    //strings are equal
+    std::cout &lt;&lt; str &lt;&lt; " == " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+  else
+  {
+    //strings are not equal
+    std::cout &lt;&lt; str &lt;&lt; " != " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello World! != SEP>
+</pre>
+
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Strings: Vergleichen mit "=="-Operator</h2>
+  </hgroup>
+  <article>
+
+
+
+  <pre class="prettyprint" data-lang="C++" style="line-height: 100%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string str("Hello World!");
+  std::string strSEP("SEP> ");
+
+  if(str == strSEP)
+  {
+    //strings are equal
+    std::cout &lt;&lt; str &lt;&lt; " == " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+  else
+  {
+    //strings are not equal
+    std::cout &lt;&lt; str &lt;&lt; " != " &lt;&lt; strSEP &lt;&lt; std::endl;
+  }
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+Hello World! != SEP>
+</pre>
+
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Strings: Umwandlung von Zahlen zu Strings mit std::to_string</h2>
+  </hgroup>
+  <article>
+
+
+
+  <pre class="prettyprint" data-lang="C++" style="line-height: 90%;">
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  std::string pi_str = "pi is ";
+  pi_str += std::to_string(3.1415926);
+
+  std::cout &lt;&lt; pi_str &lt;&lt; std::endl;
+
+  int forty_two = 42;
+
+  std::string str = "answer to life the universe and everything is ";
+
+  str += std::to_string(forty_two);
+
+  std::cout &lt;&lt; str &lt;&lt; std::endl;
+
+  return 0;
+}</pre>
+
+Ausgabe:
+      <pre class="prettyprint" data-lang="BASH" >
+pi is 3.141593
+answer to life the universe and everything is 42
+</pre>
+
+  </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Strings erzeugen</h2>
+  </hgroup>
+  <article>
+<pre class="prettyprint" data-lang="C++">
+#include &lt;string&gt;
+#include &lt;sstream&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+  int groupno = 2;
+
+  std::ostringstream buffer;
+  buffer &lt;&lt; &quot;Hallo Gruppe &quot; &lt;&lt; groupno &lt;&lt; &quot;!&quot;;
+  std::string text(buffer.str());
+  std::cout &lt;&lt; text &lt;&lt; std::endl;
+
+  // oder einfach
+  std::string text2 = &quot;Hallo Gruppe &quot; + std::to_string(groupno) + &quot;!&quot;;
+  std::cout &lt;&lt; text2 &lt;&lt; std::endl;
+}
+</pre>
+  </article>
+</slide>
+      
+
+<slide class="segue dark nobackground">
+  <hgroup class="auto-fadein">
+    <h2>STL - Standard Template Library</h2>
+  </hgroup>
+</slide>
+<slide>
+  <hgroup>
+    <h2>STL - Standard Template Library</h2>
+  </hgroup>
+  <article>
+    <div class="left">
+      <dl class="expl">
+        <dt>std::vector</dt>
+        <dd>Arrays</dd>
+        <dt>std::map</dt>
+        <dd>Assoziatives Array (Key-Value)</dd>
+        <dt>std::list</dt>
+        <dd>Doppelt-verkettete Liste</dd>
+      </dl>
+    </div>
+    <div class="right">
+      <dl class="expl" style="margin-bottom: 0px;">
+        <dt>std::queue</dt>
+        <dd>FIFO</dd>
+        <dt>std::pair</dt>
+        <dd>Vereinigung von 2 Datentypen</dd>
+        <dt>std::array <img src="images/newflag.jpg" style="height: 24px; vertical-align: middle;"/></dt>
+        <dd>Array mit zus&auml;tzlichen Funktionen</dd>
+      </dl>
+      <span>...</span>
+    </div>
+    <ul style="margin-top: 1.5em;">
+      <li>Generische Datentypen für unterschiedliche
+        Einsatzzwecke (z.B. <span class="src" style="font-size: .8em;">std::vector&lt;int&gt;</span> oder
+        <span class="src" style="font-size: .8em;">std::vector&lt;std::string&gt;</span>)
+      <li>Automatisches Speichermanagement</li>
+      <li>Iteratoren zum Durchlaufen der
+        Container, unabhängig von der Datenstruktur
+      </li>
+      <li>Vorgefertigte Algorithmen (copy, sort, transform, etc.)</li>
+    </ul>
+  </article>
+</slide>
+
+<slide>
+    <article>
+        <img src="images/container.png" height="105%"/>
+
+        <div style="position: absolute; right: 24px; top: 24px; font-size: 0.5em;">
+            http://www.liamdevine.co.uk/code/images/container.png
+        </div>
+    </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Map</h2>
+  </hgroup>
+  <article>
+    <p>Erlaubt Werte unter einem beliebigen Schlüssel zu speichern. Der Schlüssel
+      muss dabei KEINE fortlaufende Ganzzahl wie bei Arrays / Vektoren sein.
+    </p>
+    <pre class="compact prettyprint" data-lang="C++" style="height: 20em; overflow: scroll;">#include &lt;iostream&gt;
 #include &lt;map&gt;
 #include &lt;string&gt;
 
@@ -392,23 +685,106 @@ int main()
     std::cout &lt;&lt; it.first &lt;&lt; &quot; = &quot; &lt;&lt; it.second &lt;&lt; std::endl;
   }
 }
-          </pre>
-        </article>
-      </slide>
+    </pre>
+  </article>
+</slide>
 
-      <slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-          <h2>Dynamischer Speicher</h2>
-        </hgroup>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Objekte anlegen</h2>
-        </hgroup>
-        <article>
-          <div style="width: 48%; float: left;">
-            <strong>Automatic Storage</strong>
-            <pre class="compact prettyprint" data-lang="C++">int main()
+      
+<slide>
+    <hgroup>
+      <h2>Wert vs. Zeiger vs. Referenz (Beispiel 1)</h2>
+    </hgroup>
+    <article>
+      <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+void funcValue(int x, int val)
+{
+  x += val;
+}
+
+int main()
+{
+  int v = 3;
+  funcValue(v, 4);
+  std::cout << v << std::endl;
+}</pre>
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Wert vs. Zeiger vs. Referenz (Beispiel 2)</h2>
+  </hgroup>
+  <article>
+    <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+void funcPointer(int* x, int val)
+{
+  *x += val;
+}
+
+int main()
+{
+  int v = 3;
+  funcPointer(&amp;v, 4);
+  std::cout &lt;&lt; v &lt;&lt; std::endl;
+}</pre>
+  </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Wert vs. Zeiger vs. Referenz</h2>
+  </hgroup>
+  <article>
+    <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+void funcReference(int&amp; x, int val)
+{
+  x += val;
+}
+
+int main()
+{
+  int v = 3;
+  funcReference(v, 4);
+  std::cout &lt;&lt; v &lt;&lt; std::endl;
+}</pre>
+</article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Wert vs. Zeiger vs. Referenz</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Referenzen können <em>nicht</em> <span class="src">NULL</span> sein, Pointer schon</li>
+      <li>Referenzen können wie normale Variablen verwendet werden</li>
+      <li>Bei Referenzen und Pointern wird nur die Adresse übergeben, bei Werten
+        wird kopiert</li>
+    </ul>
+  </article>
+</slide>   
+      
+      
+      
+<slide class="segue dark nobackground">
+  <hgroup class="auto-fadein">
+    <h2>Dynamischer Speicher</h2>
+  </hgroup>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Objekte anlegen</h2>
+  </hgroup>
+  <article>
+    <div style="width: 48%; float: left;">
+      <strong>Automatic Storage</strong>
+      <pre class="compact prettyprint" data-lang="C++">int main()
 {
   int num(3);
   // alternativ: int num = 3;
@@ -419,10 +795,10 @@ int main()
     arr[i] = i + 1;
   }
 }</pre>
-          </div>
-          <div style="margin-left: 52%; width: 48%;">
-            <strong>Dynamic Storage</strong>
-            <pre class="compact prettyprint" data-lang="C++">int main()
+</div>
+<div style="margin-left: 52%; width: 48%;">
+  <strong>Dynamic Storage</strong>
+  <pre class="compact prettyprint" data-lang="C++">int main()
 {
   int *num = new int(3);
 
@@ -435,19 +811,20 @@ int main()
   delete[] arr;
   delete num;
 }</pre>
-          </div>
-          <p style="clear:left; margin-top: 2em;"><strong>Anmerkung:</strong> Statt <code>int</code> kann
-            auch jeder beliebige andere Datentyp (auch eigene Klassen!) verwendet
-            werden.
-          </p>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Neu zu beachten: Out of Memory!</h2>
-        </hgroup>
-        <article>
-          <pre class="prettyprint" data-lang="C++">
+    </div>
+    <p style="clear:left; margin-top: 2em;"><strong>Anmerkung:</strong> Statt <code>int</code> kann
+      auch jeder beliebige andere Datentyp (auch eigene Klassen!) verwendet
+      werden.
+    </p>
+  </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Neu zu beachten: Out of Memory!</h2>
+  </hgroup>
+  <article>
+    <pre class="prettyprint" data-lang="C++">
 int main ()
 {
   try
@@ -461,15 +838,17 @@ int main ()
   return 0;
 }
 </pre>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Neu zu beachten: Out of Memory!</h2>
-        </hgroup>
-        <article>
-          <p style="font-size:20px;"><strong>In jedem Fall muss aller Speicher wieder freigegeben werden!</strong></p>
-          <pre class="prettyprint" data-lang="C++" style="font-size: 17px; line-height: 1.2em;">
+  </article>
+</slide>
+
+      
+<slide>
+  <hgroup>
+    <h2>Neu zu beachten: Out of Memory!</h2>
+  </hgroup>
+  <article>
+    <p style="font-size:20px;"><strong>In jedem Fall muss aller Speicher wieder freigegeben werden!</strong></p>
+    <pre class="prettyprint" data-lang="C++" style="font-size: 17px; line-height: 1.2em;">
 ...
 try
 {
@@ -492,35 +871,37 @@ catch (std::bad_alloc& ba)
 }
 ...
 </pre>
-          <p style="font-size:22px;" align="center"><strong>Aber geht das nicht besser???</strong></p>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Besser:</h2>
-        </hgroup>
-        <article>
-          <ul>
-            <li>Smart Pointer verwenden!</li>
-            <li>Variablen sofort nach dem "new" Aufruf in eine Klassen-Member-Variable Speichern, die vom Destruktor
-              wieder freigegeben wird.
-            </li>
-          </ul>
-          <p>-> Es reicht bad alloc in der Main zu fangen.</p>
-          <p><strong>Außer: Exceptions im Konstruktor!</strong></p>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2><strong>Achtung</strong>: Exception im Konstruktor</h2>
-        </hgroup>
-        <article>
-          <ul>
-            <li>Wird im Konstruktor eine Exception geworfen, ist das Objekt nicht erstellt, und auch der Destruktor
-              wird nicht aufgerufen.
-            </li>
-          </ul>
-          <pre class="prettyprint" data-lang="C++" style="font-size: 0.55em; line-height: 1.22em; margin: 1em auto;">
+    <p style="font-size:22px;" align="center"><strong>Aber geht das nicht besser???</strong></p>
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Besser:</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Smart Pointer verwenden!</li>
+      <li>Variablen sofort nach dem "new" Aufruf in eine Klassen-Member-Variable Speichern, die vom Destruktor
+        wieder freigegeben wird.
+      </li>
+    </ul>
+    <p>-> Es reicht bad alloc in der Main zu fangen.</p>
+    <p><strong>Außer: Exceptions im Konstruktor!</strong></p>
+  </article>
+</slide>
+<slide>
+  <hgroup>
+    <h2><strong>Achtung</strong>: Exception im Konstruktor</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Wird im Konstruktor eine Exception geworfen, ist das Objekt nicht erstellt, und auch der Destruktor
+        wird nicht aufgerufen.
+      </li>
+    </ul>
+    <pre class="prettyprint" data-lang="C++" style="font-size: 0.55em; line-height: 1.22em; margin: 1em auto;">
 #include &lt;memory>
 #include &lt;iostream>
 #include &lt;vector>
@@ -547,38 +928,40 @@ int main()
   Foo f;
   return 0;
 }</pre>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Smart Pointer <img src="images/newflag.jpg" style="vertical-align: middle;"/></h2>
-        </hgroup>
-        <article>
-          <ul>
-            <li>Helfen beim Verwalten von <u>dynamischem</u> Speicher</li>
-            <li>Zugriff wie &uuml;ber einen normalen Pointer</li>
-            <li>Im Header <span class="src">&lt;memory></span> zu finden (<a
-              href="http://en.cppreference.com/w/cpp/memory">C++ Referenz</a>)
-            </li>
-            <li>
-              Syntax:
-              <pre class="compact">std::unique_ptr&lt;typ> pointer(speicher);</pre>
-            </li>
-          </ul>
-          <br/><br/>
-          <img src="images/homer2.gif" width="100px" style="float: left;"/>
-          <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
-            "Stirbt" der Smart-Pointer, wird der reservierte Speicher (durch <span class="src">delete</span>)
-            freigegeben.
-          </div>
-        </article>
-      </slide>
-      <slide>
-        <hgroup>
-          <h2>Smart Pointer - Beispiel <img src="images/newflag.jpg" style="vertical-align: middle;"/></h2>
-        </hgroup>
-        <article>
-          <pre class="prettyprint" data-lang="C++" style="font-size: 0.6em; line-height: 1.15em; margin: 1em auto;">
+  </article>
+</slide>
+      
+      
+<slide>
+  <hgroup>
+    <h2>Smart Pointer <img src="images/newflag.jpg" style="vertical-align: middle;"/></h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Helfen beim Verwalten von <u>dynamischem</u> Speicher</li>
+      <li>Zugriff wie &uuml;ber einen normalen Pointer</li>
+      <li>Im Header <span class="src">&lt;memory></span> zu finden (<a
+        href="http://en.cppreference.com/w/cpp/memory">C++ Referenz</a>)
+      </li>
+      <li>
+        Syntax:
+        <pre class="compact">std::unique_ptr&lt;typ> pointer(speicher);</pre>
+      </li>
+    </ul>
+    <br/><br/>
+    <img src="images/homer2.gif" width="100px" style="float: left;"/>
+    <div style="border: 1px solid #ccc; border-radius: 16px; padding: 8px; float: left; margin-left: 20px; width: 600px; background-color: #fcfcfc;">
+      "Stirbt" der Smart-Pointer, wird der reservierte Speicher (durch <span class="src">delete</span>)
+      freigegeben.
+    </div>
+  </article>
+</slide>
+<slide>
+  <hgroup>
+    <h2>Smart Pointer - Beispiel <img src="images/newflag.jpg" style="vertical-align: middle;"/></h2>
+  </hgroup>
+  <article>
+    <pre class="prettyprint" data-lang="C++" style="font-size: 0.6em; line-height: 1.15em; margin: 1em auto;">
 #include &lt;iostream>
 #include &lt;memory>
 #include &lt;vector>
@@ -610,24 +993,24 @@ int main()
 
   ptr->bar();
 }</pre>
-        </article>
-      </slide>
-      <slide class="thank-you-slide segue nobackground">
-        <hgroup class="auto-fadein">
-          <h2>Fragen zu Deliverable 1?</h2>
-          </br>
-          <h2>GIT!!!</h2>
-        </hgroup>
-      </slide>
-      <slide class="thank-you-slide segue nobackground">
-        <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
-        <article class="flexbox vleft auto-fadein">
-          <h2>Bis zum n&auml;chsten Tutorium!</h2>
-        </article>
-      </slide>
-      </slide>
-      <slide class="backdrop"></slide>
-    </slides>
+  </article>
+</slide>
+
+<slide class="thank-you-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h2>Fragen zu Deliverable 1?</h2>
+  </hgroup>
+</slide>
+      
+<slide class="thank-you-slide segue nobackground">
+  <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+  <article class="flexbox vleft auto-fadein">
+    <h2>Bis zum n&auml;chsten Tutorium!</h2>
+  </article>
+</slide>
+<slide class="backdrop"></slide>
+
+</slides>
     <!--[if IE]>
     <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
     <script>CFInstall.check({mode: 'overlay'});</script>
