@@ -115,6 +115,8 @@
          <li>Operator Overloading</li>
          <li>C++ casts</li>
          <li>C++11</li>
+         <li>Templates</li>
+         <li>Profiling</li>
         </ul>
      </article></slide>
 
@@ -531,6 +533,8 @@ MusicCD *charts = dynamic_cast&lt;MusicCD *&gt;(cd1);</pre></dd>
      </div>
      </article></slide>
 
+
+
      <slide class="segue dark nobackground">
         <hgroup class="auto-fadein">
             <h2>C++ 11</h2>
@@ -769,7 +773,6 @@ int main() {
     }
 }
 </pre>
-            </pre>
         </article>
     </slide>
 
@@ -906,42 +909,36 @@ int main() {
         </article>
     </slide>
 
-  </slide>
-  <slide class="thank-you-slide segue nobackground">
+
+  <slide class="segue dark nobackground">
     <hgroup class="auto-fadein">
-      <h2>Fragen zu Deliverable 2?</h2>
-      </br>
+      <h2>Templates</h2>
     </hgroup>
   </slide>
 
-     </article></slide>
-
-
-
-<slide class="thank-you-slide segue nobackground">
-    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
-    <article class="flexbox vleft auto-fadein">
-      <h2>Bis zum nächsten Tutorium!</h2>
-    </article></slide>
-    </slide>
-  <slide class="backdrop"></slide>
-</slides>
-<!--
-     <slide><hgroup>
-      <h2>Templates</h2></hgroup><article>
+  <slide>
+    <hgroup><h2>Templates</h2></hgroup>
+    <article>
       <ul>
-       <li>Erlauben es, generische Funktionen zu schreiben</li>
-       <li>Werden in der STL ausgiebig verwendet</li>
-       <li>Es gibt Funktions- und Klassentemplates</li>
-       <li>Deklarations-Syntax: <pre class="compact">template &lt;typename identifier> function_declaration;</pre></li>
-       <li>Aufrufs-Syntax: <pre class="compact">function&lt;argument_type>(arguments);</pre> bzw. <pre class="compact">classname&lt;class_type>(constructor_values);</pre></li>
+        <li>Erlauben es, generische Funktionen zu schreiben</li>
+        <li>Werden in der STL ausgiebig verwendet</li>
+        <li>Es gibt Funktions- und Klassentemplates</li>
+        <li>Deklarations-Syntax:
+          <pre class="prettyprint">template &lt;typename identifier> function_declaration;</pre>
+        </li>
+        <li>Aufrufs-Syntax:
+          <pre class="prettyprint">function&lt;argument_type>(arguments);</pre>
+          bzw.
+          <pre class="prettyprint">classname&lt;class_type>(constructor_values);</pre>
+        </li>
       </ul>
-     </article></slide>
+    </article>
+  </slide>
 
-     <slide><hgroup>
-      <h2>Templates - Beispiel (Funktionstemplate)</h2></hgroup><article>
-      <br />
-<pre class="compact">
+  <slide>
+    <hgroup><h2>Templates - Beispiel (Funktionstemplate)</h2></hgroup>
+    <article>
+<pre class="prettyprint" data-lang="C++">
 template &lt;typename Type>
 Type max(Type a, Type b)
 {
@@ -949,7 +946,7 @@ Type max(Type a, Type b)
     else return b;
 }
 </pre>
-<pre class="compact">
+      <pre class="prettyprint" data-lang="C++">
 int main()
 {
   // ruft max&lt;int> auf (wird an Argumenten erkannt)
@@ -961,11 +958,13 @@ int main()
   return 0;
 }
 </pre>
-     </article></slide>
+    </article>
+  </slide>
 
-     <slide><hgroup>
-      <h2>Templates - Beispiel (Klassentemplate)</h2></hgroup><article>
-<pre class="compact">
+  <slide>
+    <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
+    <article>
+<pre class="prettyprint" data-lang="C++">
 template &lt;typename T>
 class Math {
 public:
@@ -980,7 +979,7 @@ public:
   }
 };
 </pre>
-<pre class="compact" style="font-size: .62em; line-height: 1.3em;">
+      <pre class="prettyprint" data-lang="C++" style="font-size: .62em; line-height: 1.3em;">
 int main() {
   Math&lt;int> int_math;
   Math&lt;std::string> str_math;
@@ -990,8 +989,151 @@ int main() {
     &lt;&lt; str_math.getMin("abc", "bcd") &lt;&lt; std::endl;
 }
 </pre>
-     </article></slide>
--->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
+    <article>
+<pre class="prettyprint" data-lang="C++">
+template &lt;typename T&gt;
+struct LinkedList {
+  LinkedListElement&lt;T>* elements_;
+
+  LinkedList();
+  void insert(int index, T object);
+};
+
+template &lt;typename T&gt;
+struct LinkedListElement {
+  T object_;
+  LinkedListElement&lt;T>* next_;
+
+  LinkedListElement(T object);
+}
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup><h2>Templates - Beispiel (Klassentemplate)</h2></hgroup>
+    <article>
+<pre class="prettyprint" data-lang="C++">
+void LinkedList::insert(int index, T object)
+{
+  if(elements_ == null)
+  {
+    elements_ = new LinkedListElement(object);
+    return;
+  }
+  LinkedListElement* previous = elements_;
+  for(int i = 0; i &lt; index &amp;&amp; previous != null; i++)
+  {
+    previous = previous->next_;
+  }
+
+  LinkedListElement* next = previous->next_;
+  previous->next_ = new LinkedListElement(object);
+
+  previous->next_->next_ = next;
+}
+</pre>
+    </article>
+  </slide>
+
+
+  <slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+      <h2>Profiling</h2>
+
+      <h3>// Premature optimization is the root of all evil <span style="font-size: 60%;">(Donald Knuth)</span>
+      </h3>
+    </hgroup>
+  </slide>
+
+
+  <slide>
+    <hgroup><h2>Optimieren</h2></hgroup>
+    <article>
+      <ul class="small-stretched">
+        <li>Optimierungen k&ouml;nnen enorm viel Geschwindigkeit herausholen</li>
+        <li>Wichtig ist es, die richtigen Dinge zu optimieren</li>
+        <li>Durch Profiling findet man heraus, was sich auszahlt zu optimieren</li>
+        <li>F&uuml;r Profiling ben&ouml;tigt man einen CPU Profiler:
+          <ul>
+            <li>Googles <span class='code'>gperf</span> (<a
+              href="https://github.com/gperftools/gperftools">https://github.com/gperftools/gperftools</a>)
+            </li>
+            <li>oder Valgrinds <span class='code'>callgrind</span> zusammen mit KCachegrind (<a
+              href="https://kcachegrind.github.io/">https://kcachegrind.github.io/</a>)
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup><h2><span class="code">gperf</span></h2></hgroup>
+    <article>
+      <ul>
+        <li>Unter Ubuntu im Paketmanager als <span class='code'>google-perftools</span></li>
+        <li>C++ Code mit Compiler Flag <span class='src'>-pg</span> kompilieren und starten</li>
+        <li>Mit <span class='src'>gprof [binary] gmon.out</span> analysieren</li>
+      </ul>
+      <pre style="font-size: 60%; line-height: 120%;">
+ time   seconds   seconds    calls   name
+26.96      0.28     0.28 10252798   void std::__adjust_heap
+23.53      0.52     0.24 61948292   std::remove_reference
+11.77      0.64     0.12 10252798   void std::__push_heap
+ 6.86      0.71     0.07 31071480   DijkstraSolverExtended::InfoComp::operator()
+ 5.88      0.77     0.06 20338780   bool __gnu_cxx::__ops::_Iter_comp_iter&lt;DijkstraSolverExtended::InfoComp>::operator()
+ 4.90 0.82 0.05 10591122 bool __gnu_cxx::__ops::_Iter_comp_val&lt;DijkstraSolverExtended::InfoComp>::operator()
+ 4.90 0.87 0.05 12792 void std::__make_heap
+ 3.43 0.90 0.04 10265590 __gnu_cxx::__ops::_Iter_comp_val&lt;DijkstraSolverExtended::InfoComp>
+ 2.45 0.93 0.03 25600 __gnu_cxx::__normal_iterator
+ 1.96 0.95 0.02 12796 void __gnu_cxx::new_allocator&lt;DijkstraSolverExtended::Info*>::destroy
+ 1.96 0.97 0.02 108 void std::vector::_M_emplace_back_aux
+ 1.47 0.98 0.02 25588 __gnu_cxx::__ops::_Iter_comp_iter
+ 0.98 0.99 0.01 10278386 __gnu_cxx::__ops::_Iter_comp_val
+ 0.98 1.00 0.01 12796 std::enable_if
+ 0.98 1.01 0.01 1 MazeGame::solve(std::vector&lt;std::string, std::allocator&lt;std::string> >)
+ 0.98 1.02 0.01 MazeGame::checkWinning()            </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup><h2><span class="code">Valgrind</span></h2></hgroup>
+    <article>
+      <ul>
+        <li>Programm mit <br/><span class='src'>valgrind --tool=callgrind --dump-instr=yes [binary]</span>
+          starten
+        </li>
+        <li>Mit <span class='src'>kcachegrind callgrind.out.*</span> analysieren</li>
+      </ul>
+      <center>
+        <img src="images/kcachegrind.png" width="650px">
+      </center>
+    </article>
+  </slide>
+
+  <slide class="thank-you-slide segue nobackground">
+    <hgroup class="auto-fadein">
+      <h2>Fragen zu Deliverable 1?</h2>
+      </br>
+    </hgroup>
+  </slide>
+
+
+<slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Bis zum Abgabegespräch!</h2>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+</slides>
+
 <!--[if IE]>
   <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
   <script>CFInstall.check({mode: 'overlay'});</script>
