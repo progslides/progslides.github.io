@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #1",
+        subtitle: "Einführung in die (strukturierte) Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+    .stretched li {
+        margin-bottom: 1.5em;
+    }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+      <hgroup>
+      <h2>Tutoriumsinhalt</h2>
+      </hgroup>
+      <article>
+        <ul>
+          <li>Fragen zur Vorlesung</li>
+          <li>Hilfestellungen zu den Beispielen</li>
+          <li>Betreutes Arbeiten</li>
+          <li>Besprechung häufiger Fehler</li>
+          <li>Erarbeiten &auml;hnlicher Beispiele</li>
+          <li>Eure Vorschl&auml;ge?</li>
+        </ul>
+      </article>
+    </slide>
+  <slide>
+      <hgroup>
+        <h2>Die VM</h2>
+      </hgroup>
+      <article>
+        <ul>
+          <li>
+            In der Virtuellen Maschine sollten alle erforderlichen Programme und Abhängigkeiten vorinstalliert sein.
+          </li>
+          <li>
+            Als Referenzplatform wird Ubuntu 18:04 verwendet
+          </li>
+          <li>
+            Die Abhängigkeiten für das Testscipt können im Readme.md file nachgelesen werden. Falls man die virtuelle Maschine nicht verwenden will.
+          </li>
+        </ul>
+      </article>
+    </slide>
+  
+
+  <slide>
+    <hgroup>
+      <h2>Installation der VM</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          <p>Virtualbox herunterladen und installieren</p>
+          <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>
+        </li>
+        <li>
+          Die virtuelle Maschine von <a href="progpipe.tugraz.at">progpipe.tugraz.at</a> herunterladen.
+        </li>
+        <li>
+          Unter tools die VM hinzufügen
+          <img src="images/vbox.png">
+        </li>
+      </ul>
+
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Abhängigkeiten des Testscripts</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          clang
+        </li>
+        <li>
+          ctags
+        </li>
+        <li>
+          python 3
+        </li>
+        <li>
+          pip3 install pexepect
+        </li>
+        <li>
+          pip3 install pyaml
+        </li>
+        <li>
+          pip3 install diff-match-patch
+        </li>
+
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Erstellen des Repositorys</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          Einloggen auf <a href="gitlab.tugraz.at">gitlab.tugraz.at</a>
+          <p>Dabei wird die Git ID generiert</p>
+        </li>
+        <li>
+          Einloggen auf <a href="progpipe.tugraz.at">progpipe.tugraz.at</a>
+        </li>
+        <li>
+          Das aktuelle Assignment wird bei der Ausgabe angezeigt.
+        </li>
+        <li>
+          Mit dem Create Button ein neues Git Repository für das anstehende Assignment erstellen.
+        </li>
+        <li>
+          Der Link zum Repository wird angezeigt(wenn alles geklappt hat)
+        </li>
+      </ul>
+
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>SSH-Key erstellen und hochladen</h2>
+  </hgroup>
+      
+  </slide>
+
+  <slide>
+    <h1>SSH-Key erstellen</h1>
+    <img src="images/sshkey.png">
+  </slide>
+
+  <slide>
+    <h1>SSH-Key hochladen</h1>
+    <img src="images/gitlab1.png">
+  </slide>
+
+  <slide>
+      <h1>Gitlab ID</h1>
+      <p>Wichtig! Die git ID sollte zwischen 16 und 32 Zeichen haben!</p>
+      <p>Ist dies nicht der Fall:</p>
+      <p>prog-tutor-tbrunner@iicm.edu</p>
+      <img src="images/gitlab.png" width=50%>
+  </slide>
+
+<slide>
+    <img src="images/progpipe.jpeg" width="98%">
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Das Repository clonen</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>
+        <b>cd</b> Ordner wechseln 
+      </li>
+      <li>
+        <b>mkdir</b> Ordner erstellen
+      </li>
+      <li>
+        <b>git clone</b> Git repository auf den Rechner clonen
+      </li>
+      <li>
+          <b>git pull</b> Holt die aktuelle Version von gitlab
+      </li>
+    </ul>
+    <img src="images/clone_se_repo.png">
+  </article>
+</slide>
+
+  <slide>
+    <hgroup>
+      <h2>Das erste C Programm</h2>
+    </hgroup>
+    <article>
+      <img src="images/vim.png">
+    </article>
+  </slide>
+
+  <slide>
+      <article>
+        <img src="images/clang.png">
+      </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Die Änderungen commiten</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          <b>git add</b> Files zum aktuellen Commit hinzufügen
+        </li>
+        <li>
+          <b>git commit</b> "Das Paket zuschnüren"
+        </li>
+        <li>
+          <b>git push</b> Den commit auf den gitlabserver schieben
+        </li>
+        <li>
+          <b>git tag</b> Den commit taggen (Für die Abgabe)
+        </li>
+        <li>
+          <b>git push --tags</b> Den tag auch pushen!!!
+        </li>
+        <li>
+          <b>git init</b> Lokales Repo erstellen
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <img src="images/git push_tags.png">
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Ausführen der Testscripts</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          <b>python tc_runner</b> Ausführen der Tests
+        </li>
+        <li>
+          <b>python tc_report</b> Erstellen eines "schönen" HTML report (unter results)(WIP ^^)
+        </li>
+      </ul>
+      <img src="images/tc_runner.png" width="70%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Testcase report</h2>
+    </hgroup>
+    <img src="images/tc_reporter.png" width="50%">
+  </slide>
+
+  <slide>
+    <article class="smaller">
+      <h3>EP Tutoren</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>LV</th>
+            <th>Termin</th>
+            <th>Tutor</th>
+            <th>Kontakt</th>
+          </tr>
+        </thead>
+        <tbody>
+					<tr>
+          <td>Gruppe A </td>
+          <td>Mi, 8:00 - 10:00</td>
+          <td>Paul Nagele</td>
+          <td><a href="mailto:prog-tutor-paul@iicm.tugraz.at">prog-tutor-paul@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe B </td>
+          <td>Mi, 18:00 - 20:00</td>
+          <td>Paul Nagele</td>
+          <td><a href="mailto:prog-tutor-paul@iicm.tugraz.at">prog-tutor-paul@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe C </td>
+          <td>Mi, 12:00 - 14:00</td>
+          <td>Thomas Schwar</td>
+          <td><a href="mailto:prog-tutor-schwar@iicm.tugraz.at">prog-tutor-schwar@iicm.tugraz.at</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <article class="smaller">
+      <h3>ESP Tutoren</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>LV</th>
+            <th>Termin</th>
+            <th>Tutor</th>
+            <th>Kontakt</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Gruppe 1 </td>
+          <td>Mo, 08:00 - 10:00</td>
+          <td>Fabian Rauscher</td>
+          <td><a href="mailto:prog-tutor-rauscher@iicm.tugraz.at">prog-tutor-rauscher@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 2 </td>
+          <td>Mo, 10:00 - 12:00</td>
+          <td>Martin Haubenwallner</td>
+          <td><a href="mailto:prog-tutor-haubenwallner@iicm.tugraz.at">prog-tutor-haubenwallner@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 3 </td>
+          <td>Mo, 12:00 - 14:00</td>
+          <td>Florian Hager</td>
+          <td><a href="mailto:prog-tutor-fhager@iicm.tugraz.at">prog-tutor-fhager@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 4 </td>
+          <td>Mo, 14:00 - 16:00</td>
+          <td>Mathias Kahr</td>
+          <td><a href="mailto:prog-tutor-kahr@iicm.tugraz.at">prog-tutor-kahr@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 5 </td>
+          <td>Mo, 16:00 - 18:00</td>
+          <td>Michael Hancianu</td>
+          <td><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 6 </td>
+          <td>Mo, 18:00 - 20:00</td>
+          <td>Michael Hancianu</td>
+          <td><a href="mailto:prog-tutor-michael@iicm.tugraz.at">prog-tutor-michael@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 7 </td>
+          <td>Di, 8:00 - 10:00</td>
+          <td>Marcel Nageler</td>
+          <td><a href="mailto:prog-tutor-marcel@iicm.tugraz.at">prog-tutor-marcel@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 8 </td>
+          <td>Di, 10:00 - 12:00</td>
+          <td>Thomas Brunner</td>
+          <td><a href="mailto:prog-tutor-tbrunner@iicm.tugraz.at">prog-tutor-tbrunner@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 9 </td>
+          <td>Di, 12:00 - 14:00</td>
+          <td>Roman Walch</td>
+          <td><a href="mailto:prog-tutor-roman@iicm.tugraz.at">prog-tutor-roman@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 10 </td>
+          <td>Di, 14:00 - 16:00</td>
+          <td>Philip Loibl</td>
+          <td><a href="mailto:prog-tutor-ploibl@iicm.tugraz.at">prog-tutor-ploibl@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 11 </td>
+          <td>Di, 16:00 - 18:00</td>
+          <td>Florian Bernhardt</td>
+          <td><a href="mailto:prog-tutor-fbernhardt@iicm.tugraz.at">prog-tutor-fbernhardt@iicm.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe 12 </td>
+          <td>Di, 18:00 - 20:00</td>
+          <td>Florian Hirner</td>
+          <td><a href="mailto:prog-tutor-fhirner@iicm.tugraz.at">prog-tutor-fhirner@iicm.tugraz.at</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Resourcen</h2>
+    </hgroup>
+    <article>
+      <dl>
+        <dt>Wiki:</dt>
+				<dd><a href="https://palme.iicm.tugraz.at/wiki/EP">https://palme.iicm.tugraz.at/wiki/EP</a><br>
+						<a href="https://palme.iicm.tugraz.at/wiki/ESP">https://palme.iicm.tugraz.at/wiki/ESP</a></dd>
+        <dt>Abgabesystem:</dt>
+				<dd><a href="https://palme.iicm.tugraz.at">https://palme.iicm.tugraz.at</a></dd>
+        <dt>Tutorium:</dt>
+				<dd><a href="http://progslides.github.io/ws18">http://progslides.github.io/ws18</a></dt>
+        <dt>Newsgroup:</dt>
+				<dd><a href="https://news.tugraz.at/#faq900">https://news.tugraz.at/</a></dd>
+				<dd>
+        <ul>
+          <li>tu-graz.lv.e(s)p</li>
+          <li>tu-graz.lv.e(s)p.organisatorisches</li>
+          <li>tu-graz.lv.e(s)p.uebungsgruppen</li>
+        <ul>
+        </dd>
+      </dl>
+      <p>Alle nicht persönlichen Fragen <strong>ausschließlich</strong>
+      in der Newsgroup stellen!</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bewertung</h2>
+    </hgroup>
+    <article>
+      <ul class="stretched">
+        <li><b>1 Verpflichtende Haus&uuml;bung</b> (unbewertet, muss abgegeben werden)</li>
+        <li>Drei bewertete <b>Gruppenbeispiele</b> (jeweils 10 Punkte)</li>
+        <ul>
+            <li>zweifache Wertung für Ass3</li>
+        </ul>
+        <li>Eine <b>Klausur</b> (10 Punkte, zweifache Wertung)</li>
+        <li>Klausur <strong>und</strong> Übung müssen positiv sein</li>
+        <li>Alle Beispiele müssen rechtzeitig (siehe Abgabenliste im wiki) abgegeben werden!<br>
+        <li>Alle Beispiele werden auf <strong>Plagiate</strong> geprüft!</li>
+      </ul>
+    </article>
+  </slide>
+
+   <slide>
+    <hgroup>
+      <h2>Bewertung</h2>
+    </hgroup>
+    <article>
+      <ul class="stretched">
+        <li>Bei allen Beispielen muss ein ernsthafter Versuch erkennbar sein.</li>
+        <li>Bewertet wird Programmierstil, Struktur, Korrektheit und Funktionalität.</li>
+        <li>Mitarbeit wird durch die <b>Abgabegespräche</b> überprüft.</li>
+        <li>Benotet wird ab der Anmeldung zum Gruppenbeispiel.</li>
+        <li>Gewichtete Bewertung: Punkte werden anhand der Vollständigkeit eurer Lösung gewichtet.</li>
+        <li>Bonuspunkte zählen nur wenn das restliche Programm bereits positiv ist</li>
+        <li><strong>Plagiate</strong></li>
+      </ul>
+    </article>
+  </slide>
+
+
+
+  <slide>
+    <hgroup>
+      <h2>Abgabegespr&auml;ch</h2>
+    </hgroup>
+    <article>
+      <ul class="stretched">
+        <li>Jedes Gruppenmitglied muss den kompletten Code erkl&auml;ren k&ouml;nnen</li>
+        <li>Programm nicht erkl&auml;ren &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Nicht vorprogrammieren &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Keine &Auml;nderungen am Programm durchf&uuml;hren &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Unentschuldigt nicht erscheinen &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Mitschwimmer &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li><strong>Wenn der Code selbst geschrieben und verstanden wurde - kein Problem!</strong></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+          <hgroup class="auto-fadein">
+              <h2>Kompilieren am Pluto</h2>
+          </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 1</h2>
+    </hgroup>
+      <article>
+      	<p>In einem Editor nach Wahl (z.B. UltraEdit,  Notepad++, Kate, Vim,
+      		Emacs, Textmate) eine Datei "hello.c" anlegen:</p>
+      	<pre class="prettyprint" data-lang="c">/* Hello World Example */
+
+#include &lt;stdio.h&gt;
+
+int main()
+{
+  printf("Hallo ESP!\n");
+  return 0;
+}</pre>
+			<br>
+			<p>Tutorial: <a href="http://www.student.tugraz.at/manuel.weber/sep/howto_vb.html">Linux als virtuelle Umgebung unter Windows</a></p>
+			</article>
+    </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 2</h2>
+    </hgroup>
+    <article>
+      	<p style="margin-bottom: 1em;">Die Datei auf <u>pluto.tugraz.at</u> kopieren:</p>
+      	<pre class="prettyprint" data-lang="bash">scp hello.c user@pluto.tugraz.at:</pre>
+      	<p style="text-align: center;">
+					<img style="width: 70%;" src="images/filezilla.png" alt="FileZilla" />
+				</p>
+			</article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 3</h2>
+    </hgroup>
+    <article>
+        <p>Zum Pluto verbinden:</p>
+        <pre class="prettyprint" data-lang="bash">ssh user@pluto.tugraz.at</pre>
+       	<p style="text-align: center;">
+        	<img style="width: 70%;" src="images/putty.png" alt="Putty">
+      	</p>
+      </article>
+    </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 4</h2>
+    </hgroup>
+    <article class="smaller">
+        <p>Das Programm kompilieren:</p>
+        <pre class="prettyprint" data-lang="bash">gcc -std=c11 -Wall -o hello hello.c</pre>
+		<table>
+    <tr><th>Eingabe</th><th>Bedeutung</th></tr>
+		<tr><td>gcc</td><td>GNU C Compiler</td></tr>
+		<tr><td>-std=c11</td><td>C Language Standard</td></tr>
+		<tr><td>-Wall</td><td>Ausgabe von zusätzlichen hilfreichen Warnungen</td></tr>
+		<tr><td>-o hello</td><td>Name der zu erstellenden ausführbaren Datei</td></tr>
+		<tr><td>hello.c</td><td>Quellcode</td></tr>
+		</table>
+    <p style="margin-top: 1em;">Ausführen (und Testen):</p>
+    <pre class="prettyprint" data-lang="bash">./hello</pre>
+    <pre>Hallo ESP!</pre>
+	</article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Schritt 5</h2>
+    </hgroup>
+    <article>
+				<p>Abgabe laut Abgabeliste(siehe Wiki) packen und auf die Palme
+				hochladen.
+        <p><a href="https://palme.iicm.tugraz.at/">
+            https://palme.iicm.tugraz.at/</a></p>
+		<p style="text-align: center;"><img src="images/palme.png" alt="PALME" width="60%" /></p>
+      </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Entwicklungsumgebung</h2>
+    </hgroup>
+    <article>
+        <ul>
+          <li>Editor (oder IDE) nach Wahl</li>
+          <li>Referenzplattform: <code>pluto.tugraz.at</code> (Linux)
+            <ul>
+              <li>Benötigte Tools: <code>gcc</code>, <code>make</code>,
+                <code>valgrind</code>, <code><a href="https://git.tugraz.at">git</a></code></li>
+              <li>Datenübertragung mittels SFTP
+                  <pre class="prettyprint" data-lang="bash">scp prog.c benutzername@pluto.tugraz.at:~/</pre>
+                  <span class="meta">(alternativ: <a href="https://winscp.net">WinSCP</a> oder <a href="https://filezilla-project.org">FileZilla</a>)</span>
+              </li>
+              <li>Zugang über SSH
+                <pre class="prettyprint" data-lang="bash">ssh benutzername@pluto.tugraz.at</pre>
+                <span class="meta">(alternativ: <a href="http://www.putty.org">Putty</a>)</span>
+              </li>
+          </ul></li>
+          <li>Kompilieren mit:
+            <pre class="prettyprint" data-lang="bash">clang -std=c11 -Wall -o prog prog.c</pre>
+          </li>
+        </ul>
+      </article>
+    </slide>
+
+
+    <slide>
+    <hgroup>
+      <h2>Linux Befehlsübersicht</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tr>
+        <th>Befehl</th>
+        <th>Beschreibung</th>
+        </tr>
+        <tr>
+          <td>pwd</td>
+          <td>Aktuelles Verzeichnis ausgeben (print working directory)</td>
+        </tr>
+        <tr>
+          <td>ls</td>
+          <td>Dateien im aktuellen Verzeichnis auflisten (list)</td>
+        </tr>
+	<tr>
+          <td>mkdir &lt;name_des_ordners&gt;</td>
+          <td>Ordner erstellen</td>
+        </tr>
+        <tr>
+          <td>cd &lt;pfad&gt;</td>
+          <td>Verzeichnis wechseln (change diretory)</td>
+        </tr>
+        <tr>
+          <td>cd ..</td>
+          <td>in das das übergeordnete Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>cd</td>
+          <td>in das $HOME-Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>rm &lt;pfad&gt;</td>
+          <td>Datei löschen (remove)</td>
+        </tr>
+        <tr>
+          <td>nano &lt;pfad&gt;</td>
+          <td>Datei bearbeiten (sehr einfacher Texteditor)</td>
+        </tr>
+         <tr>
+          <td>zip &lt;name_des_archivs&gt; &lt;file_1&gt; &lt;file_2&gt; ...</td>
+          <td>Zip-Archiv erstellen</td>
+        </tr>
+      </table>
+    </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Windows Subsystem for Linux</h2>
+      </hgroup>
+      <article>
+        <ul>
+          <li><b>Voraussetzung</b>: nur für Windows 10 <b>64-bit</b></li>
+          <ul>
+            <li>Windows 10 für Studenten: <a href="http://www.tugraz.at/software/microsoft">Dreamspark</a></li>
+          </ul>
+          <li><b>Installationsanleitung</b>: <a href="https://msdn.microsoft.com/en-us/commandline/wsl/install_guide">Windows Subsystem for Linux</a></li>
+          <li>
+            <b>Compiler installieren</b>:
+            <pre class="prettyprint" data-lang="bash">sudo apt update && sudo apt dist-upgrade
+sudo apt install build-essential</pre>
+          </li>
+          <li>
+            <b>Kontextmenüeintrag</b> (optional): Download <a href="dl/bash.reg">Registry Eintrag</a> und Ausführen.
+          </li>
+        </ul>
+          <center><img src="images/bash_for_windows.png"/></center>
+      </article>
+    </slide>
+
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg bei HW1!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
+        <ul>
+          <li>(EP) Di, 9.10.2018 14:00</li>
+          <li>(ESP) Do, 15.11.2018 14:00</li>
+        </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
