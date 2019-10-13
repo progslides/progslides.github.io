@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "QR-Codes (Ass3)",
+        subtitle: "Einführung in die Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+
+            function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = 1;
+          container.src = container.src.replace(img_id + ".", new_id + ".");
+        }
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+ol li {
+  list-style-type: decimal;
+  display: list-item;
+  }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Aufgabenstellung</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Daten einlesen</li>
+        <li>Daten codieren</li>
+        <li>QR-Code erstellen</li>
+        <li>QR-Code ausgeben</li>
+        <li>Bonus: QR-Code als SVG speichern</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/final.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+                <li>Modul</li>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/modul_white.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+                <li>Modul</li>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/modul_black.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+                <li>Modul</li>
+                <li>Positionsmuster</li>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/matrix_with_finter_pattern.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+                <li>Modul</li>
+                <li>Positionsmuster</li>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/matrix_with_separators.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+                <li>Modul</li>
+                <li>Positionsmuster</li>
+                <li>Ausrichtungsmuster</li>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/matrix_alignment_pattern.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+                <li>Modul</li>
+                <li>Positionsmuster</li>
+                <li>Ausrichtungsmuster</li>
+                <li>Synchronisationsmuster</li>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/matrix_timing_pattern.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+                <li>Modul</li>
+                <li>Positionsmuster</li>
+                <li>Ausrichtungsmuster</li>
+                <li>Synchronisationsmuster</li>
+                <li>Schwarzes Modul</li>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/matrix_dark_module.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+                <li>Modul</li>
+                <li>Positionsmuster</li>
+                <li>Ausrichtungsmuster</li>
+                <li>Synchronisationsmuster</li>
+                <li>Schwarzes Modul</li>
+                <li>Informations Module</li>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/matrix_reserve_version_information.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Teile eines QR-Codes</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tbody>
+          <tr>
+            <td width="30%">
+              <ul>
+                <li>Modul</li>
+                <li>Positionsmuster</li>
+                <li>Ausrichtungsmuster</li>
+                <li>Synchronisationsmuster</li>
+                <li>Schwarzes Modul</li>
+                <li>Informations Module</li>
+                <li>Daten</li>
+              </ul>
+            </td>
+            <td width="70%" text-align="center">
+              <div>
+                <img src="images/matrix_data.png" width="70%"/>
+              </div>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!"
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen
+    </article>
+
+    <img src="images/qrtable.png" />
+  </slide>
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen
+    </article>
+
+    <img src="images/qrtable2.png" />
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen
+    </article>
+
+    <img src="images/qrtable3.png" />
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+    </article>
+
+    <img src="images/qrtable3.png" />
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,
+      </br>
+      0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,
+      </br>
+      0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21
+      <h3>Nachrichtendaten:</h3>
+    </article>
+    <img src="images/qrdata.png" />
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,
+      </br>
+      0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21
+      <h3>Nachrichtendaten:</h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,
+      </br>
+      0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21
+      <h3>Nachrichtendaten:</h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>0x<p style="color:red;display:inline;">4</p>0</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> <p style="color:red;display:inline;">18 Zeichen</p> --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,
+      </br>
+      0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21
+      <h3>Nachrichtendaten:</h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>0x4<p style="color:red;display:inline;">1</p></td>
+            <td>0x<p style="color:red;display:inline;">2</p>0</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      <p style="color:red;display:inline;">0x48</p>, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,
+      </br>
+      0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21
+      <h3>Nachrichtendaten:</h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>0x41</td>
+            <td>0x2<p style="color:red;display:inline;">4</p></td>
+            <td>0x<p style="color:red;display:inline;">8</p>0</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      0x48, <p style="color:red;display:inline;">0x65</p>, 0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,
+      </br>
+      0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21
+      <h3>Nachrichtendaten:</h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>0x41</td>
+            <td>0x24</td>
+            <td>0x8<p style="color:red;display:inline;">6</p></td>
+            <td>0x<p style="color:red;display:inline;">5</p>0</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td>0x00</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      0x48, 0x65, <p style="color:red;display:inline;">0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,</p>
+      </br>
+      <p style="color:red;display:inline;">0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21</p>
+      <h3>Nachrichtendaten:</h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>0x41</td>
+            <td>0x24</td>
+            <td>0x86</td>
+            <td>0x5<p style="color:red;display:inline;">6</p></td>
+          </tr>
+          <tr>
+            <td><p style="color:red;display:inline;">0xC6</p></td>
+            <td><p style="color:red;display:inline;">0xC6</p></td>
+            <td><p style="color:red;display:inline;">0xF2</p></td>
+            <td><p style="color:red;display:inline;">0x04</p></td>
+          </tr>
+          <tr>
+            <td><p style="color:red;display:inline;">0x55</p></td>
+            <td><p style="color:red;display:inline;">0x02</p></td>
+            <td><p style="color:red;display:inline;">0x07</p></td>
+            <td><p style="color:red;display:inline;">0x37</p></td>
+          </tr>
+          <tr>
+            <td><p style="color:red;display:inline;">0x47</p></td>
+            <td><p style="color:red;display:inline;">0x56</p></td>
+            <td><p style="color:red;display:inline;">0x46</p></td>
+            <td><p style="color:red;display:inline;">0x56</p></td>
+          </tr>
+          <tr>
+            <td><p style="color:red;display:inline;">0xE7</p></td>
+            <td><p style="color:red;display:inline;">0x47</p></td>
+            <td><p style="color:red;display:inline;">0x32</p></td>
+            <td><p style="color:red;display:inline;">0x1</p>0</td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,
+      </br>
+      0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21
+      <h3>Nachrichtendaten:</h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>0x41</td>
+            <td>0x24</td>
+            <td>0x86</td>
+            <td>0x56</td>
+          </tr>
+          <tr>
+            <td>0xC6</td>
+            <td>0xC6</td>
+            <td>0xF2</td>
+            <td>0x04</td>
+          </tr>
+          <tr>
+            <td>0x55</td>
+            <td>0x02</td>
+            <td>0x07</td>
+            <td>0x37</td>
+          </tr>
+          <tr>
+            <td>0x47</td>
+            <td>0x56</td>
+            <td>0x46</td>
+            <td>0x56</td>
+          </tr>
+          <tr>
+            <td>0xE7</td>
+            <td>0x47</td>
+            <td>0x32</td>
+            <td>0x1<p style="color:red;display:inline;">0</p></td>
+          </tr>
+          <tr>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten Codierung</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      <h3>Hex darstellung (ASCII):</h3>
+      0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x45, 0x50, 0x20,
+      </br>
+      0x73, 0x74, 0x75, 0x64, 0x65, 0x6E, 0x74, 0x73, 0x21
+      <h3>Nachrichtendaten:</h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>0x41</td>
+            <td>0x24</td>
+            <td>0x86</td>
+            <td>0x56</td>
+          </tr>
+          <tr>
+            <td>0xC6</td>
+            <td>0xC6</td>
+            <td>0xF2</td>
+            <td>0x04</td>
+          </tr>
+          <tr>
+            <td>0x55</td>
+            <td>0x02</td>
+            <td>0x07</td>
+            <td>0x37</td>
+          </tr>
+          <tr>
+            <td>0x47</td>
+            <td>0x56</td>
+            <td>0x46</td>
+            <td>0x56</td>
+          </tr>
+          <tr>
+            <td>0xE7</td>
+            <td>0x47</td>
+            <td>0x32</td>
+            <td>0x10</td>
+          </tr>
+          <tr>
+            <td><p style="color:red;display:inline;">0xEC</p></td>
+            <td><p style="color:red;display:inline;">0x11</p></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Fehlerkorrekturdaten</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      </br>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Fehlerkorrekturdaten</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+    </article>
+
+    <img src="images/qrtable.png" />
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Fehlerkorrekturdaten</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      </br></br>
+      <h1>==> Fehlerkorrekturbibliothek</h1>
+
+       <pre class="prettyprint" data-lang="c">
+int generateErrorCorrectionCodewords(
+     uint8_t *error_correction_code_words,
+     const size_t number_of_error_correction_code_words,
+     const uint8_t *message, const size_t message_length)
+       </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Fehlerkorrekturdaten</h2>
+    </hgroup>
+    <article>
+      Input: "Hello EP students!" --> 18 Zeichen --> QR-Code: 2-Q
+      </br></br>
+      <h1>==> Fehlerkorrekturbibliothek</h1>
+
+       <pre class="prettyprint" data-lang="c">
+int generateErrorCorrectionCodewords(
+     uint8_t *error_correction_code_words,
+     const size_t number_of_error_correction_code_words,
+     const uint8_t *message, const size_t message_length)
+      </pre>
+      </br>
+      Fehlerkorrekturdaten:</br>
+      0x7B, 0x49, 0x72, 0xE5, 0x08, 0xCA, 0x44, 0x67, 0x8A, 0x24, 0xB3,</br>
+      0x55, 0x0A, 0xDA, 0xA7, 0x6A, 0xC7, 0x45, 0xB2, 0x44, 0x4B, 0x74
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten zusammmenfügen</h2>
+    </hgroup>
+    <article>
+      <p style="color:blue;display:inline;">Nachrichtendaten:</br>
+      0x41, 0x24, 0x86, 0x56, 0xC6, 0xC6, 0xF2, 0x04, 0x55, 0x02, 0x07,</br>
+      0x37, 0x47, 0x56, 0x46, 0x56, 0xE7, 0x47, 0x32, 0x10, 0xEC, 0x11</br></p>
+      </br>
+      <p style="color:green;display:inline;">Fehlerkorrekturdaten:</br>
+      0x7B, 0x49, 0x72, 0xE5, 0x08, 0xCA, 0x44, 0x67, 0x8A, 0x24, 0xB3,</br>
+      0x55, 0x0A, 0xDA, 0xA7, 0x6A, 0xC7, 0x45, 0xB2, 0x44, 0x4B, 0x74</br></p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten zusammmenfügen</h2>
+    </hgroup>
+    <article>
+      <p style="color:blue;display:inline;">Nachrichtendaten:</br>
+      0x41, 0x24, 0x86, 0x56, 0xC6, 0xC6, 0xF2, 0x04, 0x55, 0x02, 0x07,</br>
+      0x37, 0x47, 0x56, 0x46, 0x56, 0xE7, 0x47, 0x32, 0x10, 0xEC, 0x11</br></p>
+      </br>
+      <p style="color:green;display:inline;">Fehlerkorrekturdaten:</br>
+      0x7B, 0x49, 0x72, 0xE5, 0x08, 0xCA, 0x44, 0x67, 0x8A, 0x24, 0xB3,</br>
+      0x55, 0x0A, 0xDA, 0xA7, 0x6A, 0xC7, 0x45, 0xB2, 0x44, 0x4B, 0x74</br></p>
+      </br>
+      Daten:</br>
+      <p style="color:blue;display:inline;">
+      0x41, 0x24, 0x86, 0x56, 0xC6, 0xC6, 0xF2, 0x04, 0x55, 0x02, 0x07,</br>
+      0x37, 0x47, 0x56, 0x46, 0x56, 0xE7, 0x47, 0x32, 0x10, 0xEC, 0x11,</br>
+      </p>
+      <p style="color:green;display:inline;">
+      0x7B, 0x49, 0x72, 0xE5, 0x08, 0xCA, 0x44, 0x67, 0x8A, 0x24, 0xB3,</br>
+      0x55, 0x0A, 0xDA, 0xA7, 0x6A, 0xC7, 0x45, 0xB2, 0x44, 0x4B, 0x74</br>
+      </p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten in den QR-Code einfügen</h2>
+    </hgroup>
+    <article>
+      <img src="images/matrix_reserve_version_information.png" width="50%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten in den QR-Code einfügen</h2>
+    </hgroup>
+    <article>
+      <img src="images/matrix_data_placement_0.png" width="50%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten in den QR-Code einfügen</h2>
+    </hgroup>
+    <article>
+      <img src="images/matrix_data_placement_1.png" width="50%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten in den QR-Code einfügen</h2>
+    </hgroup>
+    <article>
+      <img src="images/matrix_data_placement_2.png" width="50%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten in den QR-Code einfügen</h2>
+    </hgroup>
+    <article>
+      <img src="images/matrix_data_placement_3.png" width="50%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten in den QR-Code einfügen</h2>
+    </hgroup>
+    <article>
+      <img src="images/matrix_data_placement_4.png" width="50%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten in den QR-Code einfügen</h2>
+    </hgroup>
+    <article>
+      <img src="images/matrix_data_placement_5.png" width="50%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten in den QR-Code einfügen</h2>
+    </hgroup>
+    <article>
+      <img src="images/matrix_data_placement_6.png" width="50%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Daten in den QR-Code einfügen</h2>
+    </hgroup>
+    <article>
+      <img src="images/matrix_data_placement_7.png" width="50%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Maskierung</h2>
+    </hgroup>
+    <article>
+      <pre>Maskierungsmuster = Gruppennummber mod 8</pre>
+      <img src="images/masking.png" width="70%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Maskierung</h2>
+    </hgroup>
+    <article>
+      <img src="images/800px-QR-Code_Maskieren.png" width="100%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Informations Module</h2>
+    </hgroup>
+    <article>
+    <h1>==> Fehlerkorrekturbibliothek</h1>
+
+     <pre class="prettyprint" data-lang="c">
+  int generateFormatString(uint32_t *format_string, const int version,
+                         int error_correction_level,
+                         const int mask_pattern_id)
+     </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Informations Module</h2>
+    </hgroup>
+    <article>
+    <img src="images/matrix_formatstring.png" width="50%">
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+        <h2>Livedemo</h2>
+    </hgroup>
+</slide>
+
+  <slide>
+    <hgroup>
+      <h2>P.S.</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Die Aufgabenstellung besteht goßteils aus Bildern!</li>
+        <li>Lest auch die letzten Teile der Angabe (Spezifikation, ...)!</li>
+        <li>Verwendet ein struct zum Speichern des QR-Codes!</li>
+        <li>News Group lesen.</li>
+        <li>Gut und viel testen!</li>
+      </ul>
+    </article>
+  </slide>
+
+  </slide>
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg bei Ass3!</h2>
+      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
+        <ul>
+          <li>23.12.2018 23:59:59 Uhr</li>
+        </ul>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

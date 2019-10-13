@@ -115,9 +115,8 @@ ol li {
        <li>Strukturen</li>
        <li>File-IO</li>
        <li>Command-line Arguments</li>
+       <li>Dynamischer Speicher</li>
        <li>Übungsbeispiel</li>
-       <li>Livedemo</li>
-       <li>Gruppensuche</li>
        </ul>
     </article>
   </slide>
@@ -402,34 +401,6 @@ fclose(file);
 
  <slide>
  <hgroup>
- <h2>Beispiel zur Umrechnung</h2>
- </hgroup>
- <article>
-<ul>
-   <li>Inhalt der Datei als <code>char</code> Array eingelesen: <code>02 01 00 00</code></li>
-   <li>Umrechnung ins Dezimalsystem:
-   <table>
-    <tr><th><sub>256</sub><sup>0</sup></th><th><sub>256</sub><sup>1</sup></th><th><sub>256</sub><sup>2</sup></th><th><sub>256</sub><sup>3</sup></th></tr>
-    <tr><td>02</td><td>01</td><td>00</td><td>00</td></tr>
-   </table></li>
-   <li>= <u>0x02</u> * 256<sup>0</sup> + <u>0x01</u> * 256<sup>1</sup> + <u>0x00</u> * 256<sup>2</sup> + <u>0x00</u> * 256<sup>3</sup></li>
-   <li>= 258</li>
-  </ul>
- </article>
-</slide>
-
- <slide>
- <hgroup>
- <h2>Beispieldatei - Hex-Editor</h2>
- </hgroup>
- <article>
-<br />
-  <center><img src="images/hexedit.png" width="50%" /></center>
- </article>
-</slide>
-
- <slide>
- <hgroup>
  <h2>Geht das auch einfacher?</h2>
  </hgroup>
  <article>
@@ -501,43 +472,255 @@ int main (int argc, char *argv[])
 </article>
 </slide>
 
+
 <slide>
-<hgroup>
-<h2>Übungsbeispiel</h2>
-</hgroup>
-<article>
-<br />
-<ul>
-<li>Ausgabe in der Klausur-Woche!</li>
-<li>Keine Gruppenübergreifenden Lösungen (Plagiate!)</li>
-<li>Fragen / Unklarheiten -> Newsgroup</li>
-</ul>
-</article>
+  <hgroup>
+    <h2>Verwendung von Pointern: Dynamischer Speicher</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Wird zur Laufzeit angefordert</li>
+      <li>Hat keinen &raquo;Namen&laquo;, nur eine Adresse &#8594; Zugriff &uuml;ber Pointer</li>
+      <li>Angeforderter Speicher muss auch wieder freigegeben werden</li>
+      <li><span class="src">void* malloc(size_t size)</span> fordert Speicher der Gr&ouml;&szlig;e <code>size</code> an (in Bytes angegeben)</li>
+      <li><span class="src">void free(void* ptr)</span> gibt angeforderten Speicher wieder frei</li>
+      <li><span class="src">void* realloc(void* ptr, size_t new_size)</span> vergr&ouml;&szlig;ert einen angeforderten Speicherbereich</li>
+    </ul>
+  </article>
+</slide>
+
+
+
+<slide>
+  <hgroup>
+  <h2>Beispiel</h2>
+  </hgroup>
+  <article>
+    <div class="codeAnimator">
+    <table class="ptr_table_format"><tr><td>
+<div class="code">
+1int main()
+{
+2  int* mem = (int*)malloc(sizeof(int) * 2);
+3  if(mem == NULL) return 0;
+4  *mem = 1;
+5  *(mem + 1) = 2;
+6  mem[0] = 3;
+7  mem[1] = 4;
+8  free(mem);
+ return 0;
+}
+</div>
+    </td><td>
+
+    <div class="code_1">
+    Heap:
+    <table class="ptr_table">
+    <tr><th>0xA000</th><td></td></tr>
+    <tr><th>0xA004</th><td></td></tr>
+    <tr><th>0xA008</th><td></td></tr>
+    </table>
+    Stack:
+    <table class="ptr_table">
+    <tr><th>0xF000</th><td></td></tr>
+    <tr><th>0xF004</th><td></td></tr>
+    <tr><th>0xF008</th><td></td></tr>
+    </table>
+    </div>
+
+    <div class="code_2">
+    Heap:
+    <table class="ptr_table">
+    <tr><th>0xA000</th><td class="ptr_resv"></td></tr>
+    <tr><th>0xA004</th><td class="ptr_resv"></td></tr>
+    <tr><th>0xA008</th><td></td></tr>
+    </table>
+    Stack:
+    <table class="ptr_table">
+    <tr><th>0xF000</th><td></td></tr>
+    <tr><th>0xF004</th><td></td></tr>
+    <tr><th><strong>mem</strong> &nbsp; 0xF008</th><td>0xA000</td></tr>
+    </table>
+    </div>
+
+    <div class="code_3">
+    Heap:
+    <table class="ptr_table">
+    <tr><th>0xA000</th><td class="ptr_resv"></td></tr>
+    <tr><th>0xA004</th><td class="ptr_resv"></td></tr>
+    <tr><th>0xA008</th><td></td></tr>
+    </table>
+    Stack:
+    <table class="ptr_table">
+    <tr><th>0xF000</th><td></td></tr>
+    <tr><th>0xF004</th><td></td></tr>
+    <tr><th><strong>mem</strong> &nbsp; 0xF008</th><td>0xA000</td></tr>
+    </table>
+    </div>
+
+    <div class="code_4">
+    Heap:
+    <table class="ptr_table">
+    <tr><th>0xA000</th><td class="ptr_resv">1</td></tr>
+    <tr><th>0xA004</th><td class="ptr_resv"></td></tr>
+    <tr><th>0xA008</th><td></td></tr>
+    </table>
+    Stack:
+    <table class="ptr_table">
+    <tr><th>0xF000</th><td></td></tr>
+    <tr><th>0xF004</th><td></td></tr>
+    <tr><th><strong>mem</strong> &nbsp; 0xF008</th><td>0xA000</td></tr>
+    </table>
+    </div>
+
+
+    <div class="code_5">
+    Heap:
+    <table class="ptr_table">
+    <tr><th>0xA000</th><td class="ptr_resv">1</td></tr>
+    <tr><th>0xA004</th><td class="ptr_resv">2</td></tr>
+    <tr><th>0xA008</th><td></td></tr>
+    </table>
+    Stack:
+    <table class="ptr_table">
+    <tr><th>0xF000</th><td></td></tr>
+    <tr><th>0xF004</th><td></td></tr>
+    <tr><th><strong>mem</strong> &nbsp; 0xF008</th><td>0xA000</td></tr>
+    </table>
+    </div>
+
+    <div class="code_6">
+    Heap:
+    <table class="ptr_table">
+    <tr><th>0xA000</th><td class="ptr_resv">3</td></tr>
+    <tr><th>0xA004</th><td class="ptr_resv">2</td></tr>
+    <tr><th>0xA008</th><td></td></tr>
+    </table>
+    Stack:
+    <table class="ptr_table">
+    <tr><th>0xF000</th><td></td></tr>
+    <tr><th>0xF004</th><td></td></tr>
+    <tr><th><strong>mem</strong> &nbsp; 0xF008</th><td>0xA000</td></tr>
+    </table>
+    </div>
+
+    <div class="code_7">
+    Heap:
+    <table class="ptr_table">
+    <tr><th>0xA000</th><td class="ptr_resv">3</td></tr>
+    <tr><th>0xA004</th><td class="ptr_resv">4</td></tr>
+    <tr><th>0xA008</th><td></td></tr>
+    </table>
+    Stack:
+    <table class="ptr_table">
+    <tr><th>0xF000</th><td></td></tr>
+    <tr><th>0xF004</th><td></td></tr>
+    <tr><th><strong>mem</strong> &nbsp; 0xF008</th><td>0xA000</td></tr>
+    </table>
+    </div>
+
+    <div class="code_8">
+    Heap:
+    <table class="ptr_table">
+    <tr><th>0xA000</th><td>3</td></tr>
+    <tr><th>0xA004</th><td>4</td></tr>
+    <tr><th>0xA008</th><td></td></tr>
+    </table>
+    Stack:
+    <table class="ptr_table">
+    <tr><th>0xF000</th><td></td></tr>
+    <tr><th>0xF004</th><td></td></tr>
+    <tr><th><strong>mem</strong> &nbsp; 0xF008</th><td>0xA000</td></tr>
+    </table>
+    </div>
+
+    </td></tr></table>
+    </div>
+
+  </article>
+</slide>
+
+
+<slide>
+  <hgroup>
+  <h2>Häufige Fehler / Best Practice</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Pointer auf <code>NULL</code> initialisieren</li>
+      <li>Pointer nach <code>free</code> auf <code>NULL</code> setzen</li>
+      <li><strong><code><strong>malloc</strong></code>/<code><strong>realloc</strong></code> auf <code><strong>NULL</strong></code> &uuml;berpr&uuml;fen</strong></li>
+      <li><strong>Bei <code><strong>realloc</strong></code> Hilfspointer verwenden:</strong>
+<pre class="prettyprint" data-lang="c">
+char* text = (char*)malloc(8 * sizeof(char));
+char* new_text = (char*)realloc(text, 16 * sizeof(char));
+if(new_text != NULL)
+{
+  text = new_text;
+}
+else
+{
+  free(text);
+  printf("Out of memory!\n");
+}
+</pre>
+</li>
+   </ul>
+  </article>
+</slide>
+
+<slide>
+  <hgroup>
+  <h2>Valgrind</h2>
+  </hgroup>
+  <article>
+    <ul>
+    <li>Tool zum Finden von
+     <ul>
+      <li>Memory Leaks</li>
+      <li>unitialiserten Variablen</li>
+      <li>Off-by-one Fehlern</li>
+      <li>Segmentation Faults</li>
+     </ul>
+    </li>
+    <li>Testsystem verwendet Valgrind &#8594; Valgrind Fehler geben Punkteabzug!</li>
+    <li>Nur f&uuml;r Linux, aber auf Pluto schon installiert</li>
+   </ul>
+  </article>
 </slide>
 
 
 <slide class="segue dark nobackground">
-        <hgroup class="auto-fadein">
-            <h2>Livedemo</h2>
-        </hgroup>
+  <hgroup class="auto-fadein">
+    <h2>Ass3</h2>
+  </hgroup>
 </slide>
+
 <slide>
-      <hgroup>
-      <h2>Gruppensuche</h2>
-      </hgroup>
-      <article>
-     <br /><br /><br />
-        <center><img src="images/gruppe.jpg"></center>
-      </article>
-  </slide>
+  <hgroup>
+    <h2>Tipps</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Gut und viel testen!</li>
+      <li>Codingstandard beachten!</li>
+      <li>Bei malloc und realloc auf NULL prüfen!</li>
+      <li>Valgrind verwenden!</li>
+      <li>Programm sinnvoll in ("kurze") Funktionen einteilen!</li>
+      <li>Komplizierte Stellen kommentieren!</li>
+      <li>Aussagekräftige Variablennamen verwenden!</li>
+      <li>Variablen initialisieren!</li>
+    </ul>
+  </article>
+</slide>
 
     <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
-      <h2>Viel Erfolg bei den Haus&uuml;bungen!</h2>
+      <h2>Viel spaß mit QR-Codes!</h2>
       <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
           <ul>
-            <li>Fr, 02.12.2016 14:00</li>
+            <li>SO, 23.12.2018 23:59:59</li>
           </ul>
     </article>
     </slide>

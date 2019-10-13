@@ -39,7 +39,7 @@
           var img_id = parseInt(match[match.length - 1]);
           var new_id = img_id + 1;
           if(new_id > max_img) new_id = 1;
-          container.src = container.src.replace(img_id + ".", new_id + "."); 
+          container.src = container.src.replace(img_id + ".", new_id + ".");
         }
   </script>
   <style type="text/css">
@@ -102,7 +102,7 @@ ol li {
     </hgroup>
   </slide>
 
-  
+
       <slide>
     <hgroup>
     <h2>Tutoriumsinhalt</h2>
@@ -120,7 +120,7 @@ ol li {
     </article>
   </slide>
 
- 
+
    <slide>
     <hgroup>
     <h2>Pointer</h2>
@@ -249,7 +249,7 @@ ol li {
     </article>
   </slide>
 
-  
+
 
     <slide>
     <hgroup>
@@ -266,7 +266,7 @@ ol li {
       </ul>
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Beispiel</h2>
@@ -278,7 +278,7 @@ ol li {
 1int main()
  {
 2  int* mem = (int*)malloc(sizeof(int) * 2);
-3  if(mem == NULL) return 0; 
+3  if(mem == NULL) return 0;
 4  *mem = 1;
 5  *(mem + 1) = 2;
 6  mem[0] = 3;
@@ -361,8 +361,8 @@ ol li {
 
 <div class="code_8">
  <table class="ptr_table">
-  <tr><th>0x1000</th><td></td></tr>
-  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1000</th><td>3</td></tr>
+  <tr><th>0x1004</th><td>4</td></tr>
   <tr><th>0x1008</th><td></td></tr>
   <tr><th>0x100C</th><td></td></tr>
   <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
@@ -374,7 +374,7 @@ ol li {
 
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Call-by-Reference</h2>
@@ -388,7 +388,7 @@ ol li {
      </ul>
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Beispiel</h2>
@@ -402,7 +402,7 @@ ol li {
 5  *h = minutes / 60;
 6  *m = minutes % 60;
  }
-  
+
 1int main()
  {
 2  int hour = 0, minutes = 0;
@@ -516,7 +516,7 @@ ol li {
 </div>
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Valgrind</h2>
@@ -536,7 +536,7 @@ ol li {
      </ul>
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Beispiel</h2>
@@ -567,7 +567,7 @@ valgrind --leak-check=full ./valgrind_test
 </pre>
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Weitere Valgrind-Beispiele</h2>
@@ -583,14 +583,14 @@ valgrind --leak-check=full ./valgrind_test
       </ul>
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Häufige Fehler / Best Practice</h2>
     </hgroup>
     <article>
 <ul>
-      <li>Pointer auf <code>NULL</code> initialisieren</li> 
+      <li>Pointer auf <code>NULL</code> initialisieren</li>
       <li>Pointer nach <code>free</code> auf <code>NULL</code> setzen</li>
       <li><strong><code><strong>malloc</strong></code>/<code><strong>realloc</strong></code> auf <code><strong>NULL</strong></code> &uuml;berpr&uuml;fen</strong></li>
       <li><strong>Bei <code><strong>realloc</strong></code> Hilfspointer verwenden:</strong>
@@ -611,7 +611,7 @@ else
      </ul>
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Warum nicht einfach?</h2>
@@ -620,7 +620,7 @@ else
 <div class="codeAnimator">
 <table class="ptr_table_format"><tr><td>
 <div class="code">
-1int* x = (int*)malloc(3);
+1int* x = (int*)malloc(3 * sizeof(int));
 2x = (int*)realloc(x, 16);
 3if(x == NULL)
  {
@@ -686,7 +686,7 @@ else
 
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Deshalb mit Hilfspointer</h2>
@@ -696,7 +696,7 @@ else
 <div class="codeAnimator">
 <table class="ptr_table_format"><tr><td>
 <div class="code">
-1int* x = (int*)malloc(3);
+1int* x = (int*)malloc(3 * sizeof(int));
 2int* new_x = (int*)realloc(x, 16);
 3if(new_x != NULL)
  {
@@ -778,7 +778,7 @@ else
   </slide>
 
 
-  
+
     <slide>
     <hgroup>
     <h2>Der sizeof Operator</h2>
@@ -796,12 +796,12 @@ else
         <li>
 <pre class="prettyprint" data-lang="c">
 int x[20];
-int len = 
+int len =
   sizeof(x) / sizeof(x[0]);
 </pre>
        </ul>
        </div>
-       
+
        <div style="float: left; width: 45%; padding-left: 7%;">
        <h4>Funktioniert nicht</h4>
        <ul>
@@ -812,7 +812,7 @@ int len = sizeof(x);</pre></li>
 <pre class="prettyprint" data-lang="c">
 int x[20];
 int* y = x;
-int len = 
+int len =
   sizeof(y) / sizeof(y[0]);
 </pre></li>
         <li>
@@ -825,7 +825,7 @@ int size = sizeof(hallo);
        </div>
     </article>
   </slide>
-  
+
     <slide>
     <hgroup>
     <h2>Verwendung von sizeof</h2>
@@ -845,7 +845,7 @@ int* x = (int*)malloc(10 * sizeof(int));
       </ul>
     </article>
   </slide>
-  
+
     <slide>
     <hgroup>
     <h2>Strukturen</h2>
@@ -857,23 +857,24 @@ int* x = (int*)malloc(10 * sizeof(int));
         <li>
 <pre class="prettyprint" data-lang="c">
 #include &lt;stdio.h>
-struct _Person_ {
-  char* name;
-  int age;
+struct _Person_
+{
+  char* name_;
+  int age_;
 };
 
 int main()
 {
   struct _Person_ petra;
-  petra.name = "Petra";
-  petra.age = 17;
+  petra.name_ = "Petra";
+  petra.age_ = 17;
   return 0;
 }
 </pre></li>
       </ul>
     </article>
   </slide>
-  
+
     <slide>
     <hgroup>
     <h2>Strukturen</h2>
@@ -884,24 +885,25 @@ int main()
 <pre class="prettyprint" data-lang="c">
 [...]
 
-struct _Person_ {
-  char* name;
-  int age;
+struct _Person_
+{
+  char* name_;
+  int age_;
 };
 typedef struct _Person_ Person;
 
 [...]
 
 Person petra;
-petra.name = "Petra";
-petra.age = 17;
+petra.name_ = "Petra";
+petra.age_ = 17;
 
 [...]
 </pre>
       </ul>
     </article>
   </slide>
-  
+
     <slide>
     <hgroup>
     <h2>Strukturen dynamisch anlegen</h2>
@@ -912,16 +914,17 @@ petra.age = 17;
         <li>
 <pre class="prettyprint" data-lang="c">
 [...]
-struct _Person_ {
-  char* name;
-  int age;
+struct _Person_
+{
+  char* name_;
+  int age_;
 };
 typedef struct _Person_ Person;
 
 [...]
 Person* petra = (Person*)malloc(sizeof(Person));
-petra->name = "Petra";
-petra->age = 17;
+petra->name_ = "Petra";
+petra->age_ = 17;
 
 [...]
 free(petra);
@@ -930,7 +933,7 @@ free(petra);
       </ul>
     </article>
   </slide>
-  
+
     <slide>
     <hgroup>
     <h2>Selbstreferenzierende Strukturen</h2>
@@ -940,11 +943,12 @@ free(petra);
         <li>Struktur kann Pointer auf Objekte vom eigenem Typ enthalten</li>
         <li>
 <pre class="prettyprint" data-lang="c">
-struct _Person_ {
-  char* name;
-  int age;
-  struct _Person_* father;
-  struct _Person_* mother;
+struct _Person_
+{
+  char* name_;
+  int age_;
+  struct _Person_* father_;
+  struct _Person_* mother_;
 };
 </pre></li>
       <li>Funktioniert, da Pointer immer gleich gro&szlig; sind (4 bzw. 8 Byte)</li>
@@ -952,8 +956,8 @@ struct _Person_ {
       </ul>
     </article>
   </slide>
-  
-  
+
+
     <slide>
     <hgroup>
     <h2>File I/O</h2>
@@ -990,7 +994,7 @@ struct _Person_ {
            <li>
              <pre class="prettyprint" data-lang="c">
 fopen(const char * filename, const char * mode);</pre></li>
-          
+
           <li>
            <b>r</b>ead
           </li>
@@ -1001,7 +1005,7 @@ fopen(const char * filename, const char * mode);</pre></li>
            <b>a</b>ppend
           </li>
         </ul>
-        
+
         </li>
         <li>Daten lesen
           <ul>
@@ -1010,7 +1014,7 @@ fopen(const char * filename, const char * mode);</pre></li>
 fread(void * dst, size_t size, size_t items, FILE * file); </pre></li>
           </ul>
         </li>
-        <li>Daten schreiben 
+        <li>Daten schreiben
           <ul>
            <li>
              <pre class="prettyprint" data-lang="c">
@@ -1022,7 +1026,7 @@ fread(void * dst, size_t size, size_t items, FILE * file); </pre></li>
   </slide>
 
 
-  
+
     <slide>
     <hgroup>
     <h2><code>struct</code> in Datei speichern</h2>
@@ -1033,15 +1037,16 @@ fread(void * dst, size_t size, size_t items, FILE * file); </pre></li>
       <li>
 <pre class="prettyprint" data-lang="c">
 [...]
-struct _Phone_ {
-  int country_code;
-  int number;
+struct _Phone_
+{
+  int country_code_;
+  int number_;
 }__attribute__((packed));
 
 [...]
 struct _Phone_ number;
-number.number = 1234567;
-number.country_code = 43;
+number.number_ = 1234567;
+number.country_code_ = 43;
 
 FILE* file = fopen("phone_numbers", "wb"); // w<strong>b</strong> = write binary
 fwrite(&amp;number, sizeof(struct _Phone_), 1, file);
@@ -1051,8 +1056,8 @@ fclose(file);
      </ul>
     </article>
   </slide>
-  
-  
+
+
     <slide>
     <hgroup>
     <h2><code>struct</code> aus Datei lesen</h2>
@@ -1063,9 +1068,10 @@ fclose(file);
       <li>
 <pre class="prettyprint" data-lang="c">
 [...]
-struct _Phone_ {
-  int country_code;
-  int number;
+struct _Phone_
+{
+  int country_code_;
+  int number_;
 }__attribute__((packed));
 
 [...]
@@ -1079,7 +1085,7 @@ fclose(file);
      </ul>
     </article>
   </slide>
-  
+
     <slide>
     <hgroup>
     <h2>Wie schaut ein <code>int</code> in einer Datei aus?</h2>
@@ -1095,7 +1101,7 @@ fclose(file);
      </ul>
     </article>
   </slide>
-  
+
     <slide>
     <hgroup>
     <h2>Beispiel zur Umrechnung</h2>
@@ -1113,7 +1119,7 @@ fclose(file);
      </ul>
     </article>
   </slide>
-  
+
     <slide>
     <hgroup>
     <h2>Geht das auch einfacher?</h2>
@@ -1134,7 +1140,7 @@ memcpy(&amp;length, buffer, sizeof(int));</pre>
      </ul>
     </article>
   </slide>
-  
+
     <slide>
     <hgroup>
     <h2>Dateigr&ouml;&szlig;e ermitteln</h2>
@@ -1147,7 +1153,7 @@ memcpy(&amp;length, buffer, sizeof(int));</pre>
    <li>Dateizeiger an das Ende der Datei setzen</li>
    <li>Abfragen, wo der Dateizeiger steht</li>
    <li>Dateizeiger wieder auf den Anfang der Datei setzen</li>
-  </ol></li> 
+  </ol></li>
  <li>Der Code dazu:
  <pre class="prettyprint" data-lang="c">
 long size;
@@ -1158,8 +1164,8 @@ fseek(file, 0, SEEK_SET);
 </ul>
     </article>
   </slide>
-  
-   
+
+
     <slide>
       <hgroup>
       <h2>Pipes</h2>
@@ -1207,8 +1213,8 @@ fseek(file, 0, SEEK_SET);
       </article>
     </slide>
 
-  
-  
+
+
     <slide>
     <hgroup>
     <h2>Gruppenbeispiel - Tipps</h2>
@@ -1218,13 +1224,13 @@ fseek(file, 0, SEEK_SET);
       <li>Gut und viel testen!</li>
       <li>R&uuml;ckgabewerte der File I/O Funktionen pr&uuml;fen!</li>
       <li>Nie vergessen, bei <span class="src">malloc</span> und <span class="src">realloc</span> auf NULL zu pr&uuml;fen!</li>
-      <li>String-Bibliothek Funktionen anschauen (<span class="src">strtok</span>), es gibt jedoch nicht alle Funktionen die man braucht!</li>
+      <li>String-Bibliothek Funktionen anschauen  es gibt jedoch nicht alle Funktionen die man braucht!</li>
       <li>Codingstandard beachten!</li>
       <li>Valgrind verwenden!</li>
      </ul>
     </article>
   </slide>
-  
+
   <slide>
     <hgroup>
     <h2>Best Practice</h2>
@@ -1241,16 +1247,10 @@ fseek(file, 0, SEEK_SET);
     </article>
   </slide>
 
-  
-  
     <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
     <article class="flexbox vleft auto-fadein">
-      <h2>Viel Erfolg beim Ass2!</h2>
-      <p style="margin-top: 5em; margin-bottom: 1em;">Abgabeschluss:</p>
-        <ul>
-          <li>7.12.2017 14:00:00 Uhr</li>
-        </ul>
+      <h2>Viel Erfolg beim Ass3!</h2>
     </article>
     </slide>
   <slide class="backdrop"></slide>
