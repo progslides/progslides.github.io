@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #1",
+        subtitle: "Einführung in die Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+    .stretched li {
+        margin-bottom: 1.5em;
+    }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <article class="smaller">
+      <h3>EP Tutoren</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>LV</th>
+            <th>Termin</th>
+            <th>Tutor</th>
+            <th>Kontakt</th>
+          </tr>
+        </thead>
+        <tbody>
+					<tr>
+          <td>Gruppe A </td>
+          <td>Mi, 8:00 - 10:00</td>
+          <td>Kilian Payer</td>
+          <td><a href="mailto:kilian.payer@student.tugraz.at">kilian.payer@student.tugraz.at</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe B </td>
+          <td>Mi, 18:00 - 20:00</td>
+          <td>Peter Radmüller</td>
+          <td><a href="mailto:prog-tutor-peter@iicm.edu">prog-tutor-peter@iicm.edu</a></td>
+        </tr>        
+        <tr>
+          <td>Gruppe C </td>
+          <td>Mi, 12:00 - 14:00</td>
+          <td>Johannes Niederwieser</td>
+          <td><a href="mailto:prog-tutor-johnie@iicm">prog-tutor-johnie@iicm</a></td>
+        </tr>
+        <tr>
+          <td>Gruppe D </td>
+          <td>Mi, 14:00 - 16:00</td>
+          <td>Thomas Schwar</td>
+          <td><a href="mailto:prog-tutor-schwar@iicm.tugraz.at">prog-tutor-schwar@iicm.tugraz.at</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+      <hgroup>
+      <h2>Tutoriumsinhalt</h2>
+      </hgroup>
+      <article>
+        <ul>
+          <li>Fragen zur Vorlesung</li>
+          <li>Hilfestellungen zu den Beispielen</li>
+          <li>Betreutes Arbeiten</li>
+          <li>Besprechung häufiger Fehler</li>
+          <li>Erarbeiten &auml;hnlicher Beispiele</li>
+          <li>Eure Vorschl&auml;ge?</li>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+    <hgroup>
+      <h2>Bewertung</h2>
+    </hgroup>
+    <article>
+      <ul class="stretched">
+        <li><b>1 Verpflichtende Haus&uuml;bung</b> (unbewertet, muss abgegeben werden)</li>
+        <li>Drei bewertete <b>Assignments</b> (jeweils 15 Punkte)</li>
+        <ul>
+            <li><b>Einzelarbeiten!</b></li>
+        </ul>
+        <li>Eine <b>Klausur</b> (30 Punkte)</li>
+        <li>Klausur <strong>und</strong> Übung müssen positiv sein</li>
+        <li>Alle Beispiele müssen rechtzeitig abgegeben werden!<br>
+        <li>Alle Beispiele werden auf <strong>Plagiate</strong> geprüft!</li>
+      </ul>
+    </article>
+  </slide>
+
+   <slide>
+    <hgroup>
+      <h2>Bewertung</h2>
+    </hgroup>
+    <article>
+      <ul class="stretched">
+        <li>Bei allen Beispielen muss ein ernsthafter Versuch erkennbar sein.</li>
+        <li>Bewertet wird Programmierstil, Struktur, Korrektheit und Funktionalität.</li>
+        <li><b>2 Abgabegespräche</b> zur Überprüfung</li>
+        <li>Benotet wird ab Abgabe von Assignment 1</li>
+        <li>Gewichtete Bewertung: Punkte werden anhand der Vollständigkeit eurer Lösung gewichtet.</li>
+        <li>Bonuspunkte zählen nur wenn das restliche Programm bereits positiv ist</li>
+        <li>Details: siehe <a href="https://tc.tugraz.at">TeachCenter</a></li>
+      </ul>
+    </article>
+  </slide>
+
+
+
+  <slide>
+    <hgroup>
+      <h2>Abgabegespr&auml;ch</h2>
+    </hgroup>
+    <article>
+      <ul class="stretched">
+        <li>Programm nicht erkl&auml;ren &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Nicht vorprogrammieren &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Keine &Auml;nderungen am Programm durchf&uuml;hren &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li>Unentschuldigt nicht erscheinen &rarr; bis zu <strong>0 Punkte</strong></li>
+        <li><strong>Wenn der Code selbst geschrieben und verstanden wurde - kein Problem!</strong></li>
+      </ul>
+    </article>
+  </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Resourcen</h2>
+      </hgroup>
+      <article>
+        <dl>
+          <dt>Abgabesystem:</dt>
+          <dd><a href="https://progpipe.tugraz.at">https://progpipe.tugraz.at</a></dd>
+          <dd><a href="https://gitlab.tugraz.at">https://gitlab.tugraz.at</a></dd>
+          <dt>Tutorium:</dt>
+          <dd><a href="http://progslides.github.io/ws19">http://progslides.github.io/ws19</a></dt>
+          <dt>Newsgroup:</dt>
+          <dd><a href="https://news.tugraz.at/#faq900">https://news.tugraz.at/</a></dd>
+          <dd>
+          <ul>
+            <li>tu-graz.lv.ep</li>
+            <li>tu-graz.lv.ep.organisatorisches</li>
+          <ul>
+          </dd>
+        </dl>
+        <p>Alle nicht persönlichen Fragen <strong>ausschließlich</strong>
+        in der Newsgroup stellen!</p>
+      </article>
+    </slide>
+  
+  <slide class="segue dark nobackground">
+          <hgroup class="auto-fadein">
+              <h2>Abgabesystem</h2>
+          </hgroup>
+  </slide>
+
+  <slide>
+      <hgroup>
+        <h2>Die Virtuellen Maschine (VM)</h2>
+      </hgroup>
+      <article>
+        <ul>
+          <li>
+            In der Virtuellen Maschine sind alle erforderlichen Programme und Abhängigkeiten vorinstalliert.
+          </li>
+          <li>
+            Als Referenzplatform wird <b>Ubuntu 18.04</b> verwendet.
+          </li>
+          <li>
+            Die Abhängigkeiten für das Testscipt können im Readme.md file nachgelesen werden. Falls man die virtuelle Maschine nicht verwenden will.
+          </li>
+        </ul>
+      </article>
+    </slide>
+  
+
+  <slide>
+    <hgroup>
+      <h2>Installation der VM</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          <p>Virtualbox herunterladen und installieren</p>
+          <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>
+        </li>
+        <li>
+          Die virtuelle Maschine von <a href="progpipe.tugraz.at">progpipe.tugraz.at</a> herunterladen.
+        </li>
+        <li>
+          Unter tools die VM hinzufügen
+          <img src="images/vbox.png">
+        </li>
+      </ul>
+
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Abhängigkeiten des Testscripts</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          clang
+        </li>
+        <li>
+          make 
+        </li>
+        <li>
+          xclip
+        </li>
+        <li>
+          git
+        <li>
+          ctags
+        </li>
+        <li>
+          python 3
+        </li>
+        <li>
+          pip3 install pexepect
+        </li>
+        <li>
+          pip3 install pyaml
+        </li>
+        <li>
+          pip3 install diff-match-patch
+        </li>
+
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Erstellen des Repositorys</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          Einloggen auf <a href="gitlab.tugraz.at">gitlab.tugraz.at</a>
+          <p>Dabei wird die Git ID generiert</p>
+        </li>
+        <li>
+          Einloggen auf <a href="progpipe.tugraz.at">progpipe.tugraz.at</a>
+        </li>
+        <li>
+          Das aktuelle Assignment wird bei der Ausgabe angezeigt.
+        </li>
+        <li>
+          Mit dem <b>Create</b> Button ein neues Git Repository für das anstehende Assignment erstellen.
+        </li>
+        <li>
+          Der Link zum Repository wird angezeigt (wenn alles geklappt hat)
+        </li>
+      </ul>
+
+    </article>
+  </slide>
+
+  <slide>
+    <h1>SSH-Key erstellen</h1>
+    <img src="images/sshkey.png">
+  </slide>
+
+  <slide>
+    <h1>SSH-Key hochladen</h1>
+    <img src="images/gitlab1.png">
+  </slide>
+
+<slide>
+    <img src="images/progpipe.jpeg" width="98%">
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Das Repository clonen</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>
+        <b>cd</b> Ordner wechseln 
+      </li>
+      <li>
+        <b>mkdir</b> Ordner erstellen
+      </li>
+      <li>
+        <b>git clone</b> Git repository auf den Rechner clonen
+      </li>
+      <li>
+          <b>git pull</b> Holt die aktuelle Version von gitlab
+      </li>
+    </ul>
+    <img src="images/clone_se_repo.png">
+  </article>
+</slide>
+
+  <slide>
+    <hgroup>
+      <h2>Das erste C Programm</h2>
+    </hgroup>
+    <article>
+      <img src="images/vim.png">
+    </article>
+  </slide>
+
+  <slide>
+      <article>
+        <img src="images/clang.png">
+      </article>
+      <pre class="prettyprint" data-lang="bash">clang -g -std=c11 -Wall</pre>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Die Änderungen commiten</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          <b>git add</b> Files zum aktuellen Commit hinzufügen
+        </li>
+        <li>
+          <b>git commit</b> "Das Paket zuschnüren"
+        </li>
+        <li>
+          <b>git push</b> Den commit auf den gitlabserver schieben
+        </li>
+        <li>
+          <b>git tag EPAssX</b> Den commit taggen (Für die Abgabe)
+        </li>
+        <li>
+          <b>git push --tags</b> Den Tag auch pushen!!!
+        </li>
+        <li>
+          <b>git tag -d &lt;Tagname &gt;</b> Tag löschen
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <img src="images/git push_tags.png">
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Ausführen der Testscripts</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          <b>python3 tc_runner</b> Ausführen der Tests
+        </li>
+        <li>
+          <b>python3 tc_report</b> Erstellen eines "schönen" HTML report (unter results)(WIP ^^)
+        </li>
+      </ul>
+      <img src="images/tc_runner.png" width="60%">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Testcase report</h2>
+    </hgroup>
+    <img src="images/tc_reporter.png" width="50%">
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Linux Befehlsübersicht</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tr>
+        <th>Befehl</th>
+        <th>Beschreibung</th>
+        </tr>
+        <tr>
+          <td>pwd</td>
+          <td>Aktuelles Verzeichnis ausgeben (print working directory)</td>
+        </tr>
+        <tr>
+          <td>ls</td>
+          <td>Dateien im aktuellen Verzeichnis auflisten (list)</td>
+        </tr>
+	<tr>
+          <td>mkdir &lt;name_des_ordners&gt;</td>
+          <td>Ordner erstellen</td>
+        </tr>
+        <tr>
+          <td>cd &lt;pfad&gt;</td>
+          <td>Verzeichnis wechseln (change diretory)</td>
+        </tr>
+        <tr>
+          <td>cd ..</td>
+          <td>in das das übergeordnete Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>cd</td>
+          <td>in das $HOME-Verzeichnis wechseln</td>
+        </tr>
+        <tr>
+          <td>rm &lt;pfad&gt;</td>
+          <td>Datei löschen (remove)</td>
+        </tr>
+        <tr>
+          <td>nano &lt;pfad&gt;</td>
+          <td>Datei bearbeiten (sehr einfacher Texteditor)</td>
+        </tr>
+      </table>
+    </article>
+    </slide>
+
+   <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Viel Erfolg!</h2>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+    <slide class="backdrop"></slide>
+</slides>
+
+
+
+
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
