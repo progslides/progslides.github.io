@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
+typedef struct 
+{
   char a;
   int x, y;
 } dummy;
 
-typedef struct {
+typedef struct 
+{
   int** array;
   int x, y;
 } MyArray;

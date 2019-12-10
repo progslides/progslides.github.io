@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <link rel="stylesheet" href="css/prettify.css">
+  <link rel="stylesheet" href="css/code_animator.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/code_animator.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #4",
+        subtitle: "Einführung in die Programmierung",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+  function(someModule) {}
+    );
+        function nextImage(container, max_img) {
+          var cur = container.src;
+          var match = cur.match(/(\d+)\./g);
+          var img_id = parseInt(match[match.length - 1]);
+          var new_id = img_id + 1;
+          if(new_id > max_img) new_id = 1;
+          container.src = container.src.replace(img_id + ".", new_id + ".");
+        }
+  </script>
+  <style type="text/css">
+
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 95%;
+      padding: .4em .5em;
+    }
+    sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+sup {
+top: -0.5em;
+}
+sub {
+bottom: -0.25em;
+}
+ol li {
+  list-style-type: decimal;
+  display: list-item;
+  }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0" onload="animateCode();">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+
+      <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+     <ul>
+    <li>Bits & Bytes</li>
+    <li>Command-line Arguments</li>
+    <li>Dynamischer Speicher</li>
+    <li>sizeof</li>
+    <li>Strukturen</li>
+    <li>File I/O</li>
+    <li>Pipes</li>
+    <li>Ausbesserungsbeispiel</li>
+    </ul>
+    </article>
+  </slide>
+
+<slide>
+    <hgroup>
+    <h2>Bits & Bytes</h2>
+    </hgroup>
+    <article>
+    <ul>
+        <li>AND (auf uint8_t)
+          <ul>
+           <li>
+             <pre class="prettyprint" data-lang="c">
+output = output & 0x80;</pre></li>
+
+          <li>
+<li>
+             <pre class="prettyprint" data-lang="c">
+output &= (1 << 7);</pre></li>
+        </ul>
+
+        </li>
+<li>OR (auf uint8_t)
+          <ul>
+           <li>
+             <pre class="prettyprint" data-lang="c">
+output = output | 0x10;</pre></li>
+
+          <li>
+<li>
+             <pre class="prettyprint" data-lang="c">
+output |= (1 << 4);</pre></li>
+        </ul>
+
+        </li>
+<li>XOR (auf uint8_t)
+          <ul>
+           <li>
+             <pre class="prettyprint" data-lang="c">
+output = output ^ 0x01;</pre></li>
+
+          <li>
+<li>
+             <pre class="prettyprint" data-lang="c">
+output ^= (1 << 0);</pre></li>
+        </ul>
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+<slide>
+<hgroup>
+<h2>Command-line Arguments</h2>
+</hgroup>
+<article>
+  <pre class="prettyprint" data-lang="c">
+int main (int argc, char *argv[])
+{
+  int count;
+  printf ("This program was called with \"%s\".\n",argv[0]);
+
+  if (argc &gt; 1)
+  {
+    for (count = 1; count &lt; argc; count++)
+    {
+      printf("argv[%d] = %s\n", count, argv[count]);
+    }
+  }
+  else
+  {
+    printf("The command had no other arguments.\n");
+  }
+  return 0;
+}
+  </pre>
+</article>
+</slide>
+
+
+    <slide>
+    <hgroup>
+    <h2>Dynamischer Speicher</h2>
+    </hgroup>
+    <article>
+<ul>
+        <li>Wird zur Laufzeit angefordert</li>
+        <li>Hat keinen &raquo;Namen&laquo;, nur eine Adresse &#8594; Zugriff &uuml;ber Pointer</li>
+        <li>Angeforderter Speicher muss auch wieder freigegeben werden</li>
+        <li><span class="src">void* malloc(size_t size)</span> fordert Speicher der Gr&ouml;&szlig;e <code>size</code> an (in Bytes angegeben)</li>
+        <li><span class="src">void free(void* ptr)</span> gibt angeforderten Speicher wieder frei</li>
+        <li><span class="src">void* realloc(void* ptr, size_t new_size)</span> vergr&ouml;&szlig;ert einen angeforderten Speicherbereich</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Beispiel</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int main()
+ {
+2  int* mem = (int*)malloc(sizeof(int) * 2);
+3  if(mem == NULL) return 0;
+4  *mem = 1;
+5  *(mem + 1) = 2;
+6  mem[0] = 3;
+7  mem[1] = 4;
+8  free(mem);
+   return 0;
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td><em>0x1000</em></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"><em>1</em></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv">1</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"><em>2</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv"><em>3</em></td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv">2</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_7">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td class="ptr_resv">3</td></tr>
+  <tr><th>0x1004</th><td class="ptr_resv"><em>4</em></td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+<div class="code_8">
+ <table class="ptr_table">
+  <tr><th>0x1000</th><td>3</td></tr>
+  <tr><th>0x1004</th><td>4</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th><strong>mem</strong> &nbsp; 0x1010</th><td>0x1000</td></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+    <h2>Häufige Fehler / Best Practice</h2>
+    </hgroup>
+    <article>
+<ul>
+      <li>Pointer auf <code>NULL</code> initialisieren</li>
+      <li>Pointer nach <code>free</code> auf <code>NULL</code> setzen</li>
+      <li><strong><code><strong>malloc</strong></code>/<code><strong>realloc</strong></code> auf <code><strong>NULL</strong></code> &uuml;berpr&uuml;fen</strong></li>
+      <li><strong>Bei <code><strong>realloc</strong></code> Hilfspointer verwenden:</strong>
+<pre class="prettyprint" data-lang="c">
+char* text = (char*)malloc(8 * sizeof(char));
+char* new_text = (char*)realloc(text, 16 * sizeof(char));
+if(new_text != NULL)
+{
+  text = new_text;
+}
+else
+{
+  free(text);
+  printf("Out of memory!\n");
+}
+</pre>
+</li>
+     </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Warum nicht einfach?</h2>
+    </hgroup>
+    <article>
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int* x = (int*)malloc(3 * sizeof(int));
+2x = (int*)realloc(x, 16);
+3if(x == NULL)
+ {
+4  free(x);
+5  printf("Out of memory!");
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td><em>0x1008</em></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td><em>NULL</em></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>NULL</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>NULL</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>NULL</td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+  <tr><th><strong>stdout</strong><th style="border: 1px solid black;">Out of memory!</th></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Deshalb mit Hilfspointer</h2>
+    </hgroup>
+    <article>
+
+<div class="codeAnimator">
+<table class="ptr_table_format"><tr><td>
+<div class="code">
+1int* x = (int*)malloc(3 * sizeof(int));
+2int* new_x = (int*)realloc(x, 16);
+3if(new_x != NULL)
+ {
+   x = new_x;
+ }
+4else
+ {
+5  free(x);
+6  printf("Out of memory!\n");
+ }
+</div>
+</td><td>
+
+<div class="code_1">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td><em>0x1008</em></td></tr>
+  <tr><th>0x1004</th><td></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_2">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td><em>NULL</em></td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_3">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_4">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x100C</th><td class="ptr_resv"></td></tr>
+  <tr><th>0x1010</th><td class="ptr_resv"></td></tr>
+ </table>
+</div>
+
+<div class="code_5">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+ </table>
+</div>
+
+<div class="code_6">
+ <table class="ptr_table">
+  <tr><th><strong>x</strong> &nbsp; 0x1000</th><td>0x1008</td></tr>
+  <tr><th><strong>new_x</strong> &nbsp; 0x1004</th><td>NULL</td></tr>
+  <tr><th>0x1008</th><td></td></tr>
+  <tr><th>0x100C</th><td></td></tr>
+  <tr><th>0x1010</th><td></td></tr>
+  <tr><th><strong>stdout</strong></th><th style="border: 1px solid black;">Out of memory!</th></tr>
+ </table>
+</div>
+
+</td></tr></table>
+</div>
+
+    </article>
+  </slide>
+
+
+
+    <slide>
+    <hgroup>
+    <h2>Der sizeof Operator</h2>
+    </hgroup>
+    <article>
+  <ul>
+         <li>Operator (keine Funktion), nur f&uuml;r Gr&ouml;&szlig;en, die zur Kompilierzeit bekannt sind</li>
+       </ul>
+       <div style="float: left; width: 45%">
+       <h4>Funktioniert</h4>
+       <ul>
+        <li><pre class="prettyprint" data-lang="c">int charsize = sizeof(char);</pre></li>
+        <li><pre class="prettyprint" data-lang="c">int ptrsize = sizeof(int*);</pre></li>
+        <li><pre class="prettyprint" data-lang="c">int size = sizeof("Hallo");</pre></li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+int x[20];
+int len =
+  sizeof(x) / sizeof(x[0]);
+</pre>
+       </ul>
+       </div>
+
+       <div style="float: left; width: 45%; padding-left: 7%;">
+       <h4>Funktioniert nicht</h4>
+       <ul>
+        <li><pre class="prettyprint" data-lang="c">
+int* x = (int*)malloc(100);
+int len = sizeof(x);</pre></li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+int x[20];
+int* y = x;
+int len =
+  sizeof(y) / sizeof(y[0]);
+</pre></li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+char* hallo = "Hallo";
+int size = sizeof(hallo);
+</pre>
+        </li>
+        </ul>
+       </div>
+    </article>
+  </slide>
+
+    <slide>
+    <hgroup>
+    <h2>Verwendung von sizeof</h2>
+    </hgroup>
+    <article>
+ <ul>
+       <li>Soll bei <span class="src">malloc</span>/<span class="src">realloc</span> verwendet werden, da diese die Gr&ouml;&szlig;e in Byte verlangen</li>
+       <li><em>Beispiel</em>: Integer Array mit 10 Elementen</li>
+       <li><strong>Falsch</strong>
+<pre class="prettyprint" data-lang="c">
+int* x = (int*)malloc(10);
+</pre></li>
+       <li><strong>Richtig</strong>
+<pre class="prettyprint" data-lang="c">
+int* x = (int*)malloc(10 * sizeof(int));
+</pre>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Valgrind</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li>Tool zum Finden von
+       <ul>
+        <li>Memory Leaks</li>
+        <li>unitialiserten Variablen</li>
+        <li>Off-by-one Fehlern</li>
+        <li>Segmentation Faults</li>
+       </ul>
+      </li>
+      <li>Testsystem verwendet Valgrind &#8594; Valgrind Fehler geben Punkteabzug!</li>
+      <li>Nur f&uuml;r Linux</li>
+     </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Beispiel</h2>
+    </hgroup>
+    <article>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+#include &lt;stdlib.h>
+#include &lt;string.h>
+
+int main()
+{
+  char* text = (char*)malloc(6 * sizeof(char));
+  strcpy(text, "Hallo!");
+  printf("%s\n", text);
+  return 0;
+}
+</pre>
+
+Kompilieren:
+<pre class="prettyprint" data-lang="bash">
+clang -Wall -g -o valgrind_test valgrind_test.c
+</pre>
+
+Valgrind:
+<pre class="prettyprint" data-lang="bash">
+valgrind --leak-check=full ./valgrind_test
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Weitere Valgrind-Beispiele</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind1.c">Beispiel 1</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind2.c">Beispiel 2</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind3.c">Beispiel 3</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind_4.c">Beispiel 4</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind_5.c">Beispiel 5</a></li>
+        <li><a href="../ws13/Valgrind-Beispiele/valgrind_6.c">Beispiel 6</a></li>
+      </ul>
+    </article>
+  </slide>
+
+    <slide>
+    <hgroup>
+    <h2>Strukturen</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Zusammenfassung mehrer Variablen zu neuem Datentyp</li>
+        <li>Zugriff mit &raquo;.&laquo; bzw. &raquo;->&laquo; bei Pointern</li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+struct _Person_
+{
+  char* name_;
+  int age_;
+};
+
+int main()
+{
+  struct _Person_ petra;
+  petra.name_ = "Petra";
+  petra.age_ = 17;
+  return 0;
+}
+</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+    <slide>
+    <hgroup>
+    <h2>Strukturen</h2>
+    </hgroup>
+    <article>
+    <ul>
+       <li>K&uuml;rzere Schreibweise mit <code>typedef</code>:
+<pre class="prettyprint" data-lang="c">
+[...]
+
+typedef struct _Person_
+{
+  char* name_;
+  int age_;
+} Person;
+
+[...]
+
+Person petra;
+petra.name_ = "Petra";
+petra.age_ = 17;
+
+[...]
+</pre>
+      </ul>
+    </article>
+  </slide>
+
+    <slide>
+    <hgroup>
+    <h2>Strukturen dynamisch anlegen</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Strukturen k&ouml;nnen ebenso wie andere Daten dynamisch angelegt werden</li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+[...]
+typedef struct _Person_
+{
+  char* name_;
+  int age_;
+} Person;
+
+[...]
+Person* petra = (Person*)malloc(sizeof(Person));
+petra->name_ = "Petra";
+petra->age_ = 17;
+
+[...]
+free(petra);
+</pre>
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+    <slide>
+    <hgroup>
+    <h2>Selbstreferenzierende Strukturen</h2>
+    </hgroup>
+    <article>
+   <ul>
+        <li>Struktur kann Pointer auf Objekte vom eigenem Typ enthalten</li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+struct _Person_
+{
+  char* name_;
+  int age_;
+  struct _Person_* father_;
+  struct _Person_* mother_;
+};
+</pre></li>
+      <li>Funktioniert, da Pointer immer gleich gro&szlig; sind (4 bzw. 8 Byte)</li>
+      <li>F&uuml;r viele Datenstrukturen ben&ouml;tigt (z.B. Baum, Linked List)</li>
+      </ul>
+    </article>
+  </slide>
+
+<slide>
+    <hgroup>
+    <h2>Strukturen - Bitfelder</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>Zusammenfassung von Bits</li>
+        <li>Sinnvoll, wenn Funktion mehr als einen "Zustand" zurückgeben muss</li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+typedef struct _FileParserReturn_
+{
+  char file_present_ : 1;
+  char file_open_failed_ : 1;
+  char ignored_ : 6;
+} FileParserReturn;
+
+FileParserReturn parseConfigFile( ... )
+{
+  FileParserReturn return_value;
+  
+  ...
+  return_value.file_present_ = 1;
+
+  return return_value;
+}
+</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+<slide>
+    <hgroup>
+    <h2>Enums</h2>
+    </hgroup>
+    <article>
+ <ul>
+        <li>"Zusammenfassung von <code>#define</code>s"</li>
+        <li>Sinnvoll, wenn Funktion mehrere verschiedene Werte zurückgibt</li>
+        <li>
+<pre class="prettyprint" data-lang="c">
+#include &lt;stdio.h>
+typedef enum _FileParserReturn_
+{
+  FILE_PRESENT,
+  FILE_OPEN_FAILED
+} FileParserReturn;
+
+FileParserReturn parseConfigFile( ... )
+{
+  ...
+
+  return FILE_PRESENT;
+}
+</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+ <slide>
+    <hgroup>
+    <h2>File I/O</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Textdateien und Bin&auml;rdateien</li>
+        <li>Textdateien
+          <ul>
+            <li>enthalten nur Text</li>
+            <li>k&ouml;nnen mit dem normalen Editor gelesen werden</li>
+            <li>z.B. .txt Dateien</li>
+          </ul>
+          </li>
+        <li>Bin&auml;rdateien
+          <ul>
+           <li>enthalten beliebige bin&auml;re Daten</li>
+           <li>sind <strong>nicht</strong> mit dem normalen Editor lesbar</li>
+           <li>z.B. Bilder, Musik</li>
+          </ul>
+          </li>
+      </ul>
+    </article>
+  </slide>
+
+    <slide>
+    <hgroup>
+    <h2>File I/O</h2>
+    </hgroup>
+    <article>
+    <ul>
+        <li>Datei öffnen
+          <ul>
+           <li>
+             <pre class="prettyprint" data-lang="c">
+fopen(const char * filename, const char * mode);</pre></li>
+
+          <li>
+           <b>r</b>ead
+          </li>
+          <li>
+           <b>w</b>rite
+          </li>
+          <li>
+           <b>a</b>ppend
+          </li>
+        </ul>
+
+        </li>
+        <li>Daten lesen
+          <ul>
+           <li>
+             <pre class="prettyprint" data-lang="c">
+fread(void * dst, size_t size, size_t items, FILE * file); </pre></li>
+          </ul>
+        </li>
+        <li>Daten schreiben
+          <ul>
+           <li>
+             <pre class="prettyprint" data-lang="c">
+ fwrite(const void * data, size_t size, size_t items, FILE * file); </pre></li>
+          </ul>
+        </li>
+<li>bzw. alle Funktionen, die mit "<b>f</b>" beginnen (z.B. fprintf, fscanf, fgets)</li>
+      </ul>
+    </article>
+  </slide>
+
+
+
+    <slide>
+    <hgroup>
+    <h2><code>struct</code> in Datei speichern</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li><code>struct</code>s k&ouml;nnen in Bin&auml;rdateien gespeichert werden</li>
+      <li>
+<pre class="prettyprint" data-lang="c">
+[...]
+struct _Phone_
+{
+  int country_code_;
+  int number_;
+}__attribute__((packed));
+
+[...]
+struct _Phone_ number;
+number.number_ = 1234567;
+number.country_code_ = 43;
+
+FILE* file = fopen("phone_numbers", "wb"); // w<strong>b</strong> = write binary
+fwrite(&amp;number, sizeof(struct _Phone_), 1, file);
+fclose(file);
+</pre>
+      </li>
+     </ul>
+    </article>
+  </slide>
+
+
+    <slide>
+    <hgroup>
+    <h2><code>struct</code> aus Datei lesen</h2>
+    </hgroup>
+    <article>
+ <ul>
+      <li><code>struct</code>s k&ouml;nnen aus Bin&auml;rdateien geladen werden</li>
+      <li>
+<pre class="prettyprint" data-lang="c">
+[...]
+struct _Phone_
+{
+  int country_code_;
+  int number_;
+}__attribute__((packed));
+
+[...]
+struct _Phone_ number;
+
+FILE* file = fopen("phone_numbers", "rb"); // r<strong>b</strong> = read binary
+fread(&amp;number, sizeof(struct _Phone_), 1, file);
+fclose(file);
+</pre>
+      </li>
+     </ul>
+    </article>
+  </slide>
+
+<slide>
+ <hgroup>
+ <h2>__attribute__((packed)) ?</h2>
+ </hgroup>
+ <article>
+<ul>
+   <li>wichtig wenn <code>struct</code> in Datei gespeichert werden soll</li>
+   <li>entfernt unn&ouml;tige Padding-Bytes</li>
+  </ul>
+
+  <table class="little_bit_bigger">
+  <tr>
+  <td>
+   <table>
+    <tr><th colspan="2" style="text-align: left;">struct _Code_ {</th></tr>
+    <tr><td>0:</td><td><code>char</code> symbol;</td></tr>
+    <tr><td>1:</td><td><code>uint8_t</code> bits;</td></tr>
+    <tr><td>2:</td><td>0 (Padding)</td></tr>
+    <tr><td>3:</td><td>0 (Padding)</td></tr>
+    <tr><td>4:</td><td><code>char*</code> code;</td></tr>
+    <tr><th colspan="2" style="text-align: left;">}</th></tr>
+   </table>
+  </td><td>
+   <table>
+    <tr><th colspan="2" style="text-align: left;">struct _Code_ {</th></tr>
+    <tr><td>0:</td><td><code>char</code> symbol;</td></tr>
+    <tr><td>1:</td><td><code>uint8_t</code> bits;</td></tr>
+    <tr><td>2:</td><td><code>char*</code> code;</td></tr>
+    <tr><th colspan="2" style="text-align: left;">}__attribute__((packed))</th></tr>
+   </table>
+  </td>
+  </tr></table>
+ </article>
+</slide>
+
+    <slide>
+    <hgroup>
+    <h2>Dateigr&ouml;&szlig;e ermitteln</h2>
+    </hgroup>
+    <article>
+ <ul>
+ <li>Keine C Funktion um die Dateigr&ouml;&szlig;e zu ermitteln</li>
+ <li>Folgende Vorgehensweise:
+  <ol>
+   <li>Dateizeiger an das Ende der Datei setzen</li>
+   <li>Abfragen, wo der Dateizeiger steht</li>
+   <li>Dateizeiger wieder auf den Anfang der Datei setzen</li>
+  </ol></li>
+ <li>Der Code dazu:
+ <pre class="prettyprint" data-lang="c">
+long size;
+fseek(file, 0, SEEK_END);
+size = ftell(file);
+fseek(file, 0, SEEK_SET);
+</pre></li>
+</ul>
+    </article>
+  </slide>
+
+
+    <slide>
+      <hgroup>
+      <h2>Pipes</h2>
+      </hgroup>
+      <article>
+      <p>Möglichkeit, die Ausgabe der einzelnen Befehle umzuleiten bzw. an andere Befehle weiterzuleiten.</p>
+           <ul>
+            <li>Umleiten der Ausgabe in Datei</li>
+            <li>Standardeingabe von Datei lesen</li>
+            <li>Ausgabe als Eingabe f&uuml;r anderes Programm</li>
+          </ul>
+      </article>
+    </slide>
+
+      <slide>
+      <hgroup>
+      <h2>Pipes</h2>
+      </hgroup>
+      <article>
+       <h4>Ausgabe umleiten</h4>
+         <pre class="prettyprint" data-lang="bash">./programm > ausgabe.txt</pre>
+
+         <h4>Eingabe umleiten</h4>
+         <pre class="prettyprint" data-lang="bash">./programm &lt; eingabe.txt</pre>
+
+         <h4>stderr umleiten</h4>
+         <pre class="prettyprint" data-lang="bash">./programm 2> error.txt</pre>
+      </article>
+    </slide>
+
+
+      <slide>
+      <hgroup>
+      <h2>Pipes</h2>
+      </hgroup>
+      <article>
+    <h4>Beliebig kombinierbar</h4>
+         <pre class="prettyprint" data-lang="bash">./programm &lt; input.txt 1> output.txt 2> error.txt</pre>
+
+         <h4>Stdout als stdin eines anderen programms</h4>
+         <pre class="prettyprint" data-lang="bash">./programm | tail</pre>
+
+         <h4>Returncode des letzten Programms</h4>
+         <pre class="prettyprint" data-lang="bash">echo $?</pre>
+      </article>
+    </slide>
+
+
+
+    <slide>
+    <hgroup>
+    <h2>Ausbesserungsbeispiel</h2>
+    </hgroup>
+    <article>
+  <ul>
+      <li>Gute Übung!</li>
+      <li><strong>Nur abgeben, wenn es benotet werden soll! (+ E-Mail an Tutor)</strong></li>
+      <li>Beispiel mit wenigsten Punkten wird ersetzt</li>
+      <li><strong>Aber: Punkteverlust möglich!</strong></li>
+     </ul>
+    </article>
+  </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Schöne Feiertage!</h2>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
