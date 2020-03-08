@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="../slides/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="../slides/theme/css/phone.css">
+  <base target="_blank">
+  <script src="../slides/js/require-1.0.8.min.js"></script>
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      settings: {
+        title: "Tutorium #1",
+        subtitle: "Objektorientierte Programmierung 1",
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ]
+      }
+    };
+    require([
+         '../slides/js/order!../slides/js/modernizr.custom.45394',
+         '../slides/js/order!../slides/js/prettify/prettify',
+         '../slides/js/order!../slides/js/hammer',
+         '../slides/js/order!../slides/js/slide-controller',
+         '../slides/js/order!../slides/js/slide-deck'],
+         function(someModule) {}
+    );
+  </script>
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      background: none;
+      display: none;
+    }
+    slides > slide {
+      color: #222;
+    }
+    h2 {
+      color: #ee1952;
+    }
+    strong {
+      color: #ee1952;
+      font-weight: bold;
+    }
+    dt {
+      margin: .4em 0 .2em 0;
+    }
+    dd {
+      margin: .2em 0 .2em 1.5em;
+    }
+    pre {
+      margin: .4em 0 .4em 0;
+      left: 0;
+      width: 100%;
+      padding: .4em .5em;
+    }
+    div.left {
+      float: left;
+      width: 48%;
+    }
+    div.right {
+      margin-left: 52%;
+      width: 48%;
+    }
+    span.src {
+      font-family: monospace;
+      background: #eee;
+      border: 1px solid #ccc;
+      padding: 1px 2px;
+    }
+  </style>
+</head>
+<body id="tugraz" style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/tugraz128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+  
+  <slide>
+    <h2>Tutoren</h2>
+    <article class="smaller">
+      <table>
+        <thead>
+          <tr>
+            <th>Termin</th>
+            <th>Tutor</th>
+            <th>Kontakt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mo, 12:00 - 14:00</td>
+            <td>Florian Hager</td>
+            <td><a href="mailto:prog-tutor-fhager@iicm.edu">prog-tutor-fhager@iicm.edu</a></td>
+          </tr>
+          <tr>
+            <td>Mo, 14:00 - 16:00</td>
+            <td>Kevin Innerebner</td>
+            <td> <a href="mailto:prog-tutor-innerebner@iicm.edu">prog-tutor-innerebner@iicm.edu</a></td>
+          </tr>
+          <tr>
+            <td>Mo, 16:00 - 18:00</td>
+            <td>Mathias Kahr</td>
+            <td><a href="mailto:prog-tutor-kahr@iicm.edu">prog-tutor-kahr@iicm.edu</a></td>
+          </tr>
+          <tr>
+            <td>Mo, 18:00 - 20:00</td>
+            <td>David Andrawes</td>
+            <td><a href="mailto:prog-tutor-dandrawes@iicm.edu">prog-tutor-dandrawes@iicm.edu</a></td>
+          </tr>
+          <tr>
+            <td>Di, 11:00 - 13:00</td>
+            <td>Katrin Schupfer</td>
+            <td> <a href="mailto:prog-tutor-katrin@iicm.edu">prog-tutor-katrin@iicm.edu</a></td>
+          </tr>
+          <tr>
+            <td>Di, 13:00 - 15:00</td>
+            <td>Thomas Brunner</td>
+            <td><a href="mailto:prog-tutor-tbrunner@iicm.edu">prog-tutor-tbrunner@iicm.edu</a></td>
+          </tr>
+          <tr>
+            <td>Di, 15:00 - 17:00</td>
+            <td>Florian Hirner</td>
+            <td><a href="mailto:prog-tutor-fhirner@iicm.edu">prog-tutor-fhirner@iicm.edu</a></td>
+          </tr>
+          <tr>
+            <td>Di, 17:00 - 19:00</td>
+            <td>Mathias Oberhuber</td>
+            <td> <a href="mailto:prog-tutor-oberhuber@iicm.edu">prog-tutor-oberhuber@iicm.edu</a></td>
+          </tr>
+          <tr>
+            <td>Mi, 08:00 - 10:00</td>
+            <td>Simone Franza</td>
+            <td><a href="mailto:prog-tutor-franza@iicm.edu">prog-tutor-franza@iicm.edu</a></td>
+          </tr>
+          <tr>
+            <td>Mi, 13:00 - 15:00</td>
+            <td>Clemens Oberhauser</td>
+            <td><a href="mailto:prog-tutor-clemens@iicm.edu">prog-tutor-clemens@iicm.edu</a></td>
+          </tr>
+        <tr>
+          <td>Mi, 15:00 - 17:00</td>
+          <td>Michael Hancianu</td>
+          <td><a href="mailto:prog-tutor-michael@iicm.edu">prog-tutor-michael@iicm.edu</a></td>
+        </tr>
+        <tr>
+          <td>Mi, 17:00 - 19:00</td>
+          <td>David Kerschbaumer</td>
+          <td> <a href="mailto:prog-tutor-kerschbaumer@iicm.edu">prog-tutor-kerschbaumer@iicm.edu</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>Tutoriumsinhalt</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Fragen zur Vorlesung</li>
+        <li>Hilfestellungen zu den Beispielen</li>
+        <li>Erarbeiten ähnlicher Beispiele</li>
+        <li>Eure Vorschläge?</li>
+      </ul>
+      <dl>
+        <dt>Achtung: Tutorien nicht jede Woche!</dt>
+        <dd> siehe <a href="https://palme.iicm.tugraz.at/wiki/SEP/time">Zeiteinteilung</a></dd>
+      </dl>
+    </article>
+  </slide>
+
+  <slide>
+      <hgroup>
+          <h2>Ablauf des heutigen Tutoriums</h2>
+      </hgroup>
+      <article>
+          <ul>
+              <li>Ablauf Übung</li>
+              <li>stdin/stdout</li>
+              <li>Namespaces</li>
+              <li>Objekte und Klassen</li>
+              <li>GIT</li>
+          </ul>
+      </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Resourcen</h2>
+    </hgroup>
+    <article>
+      <dl>
+        <dt>Abgabesystem:</dt>
+        <dd><a href="https://progpipe.tugraz.at">https://progpipe.tugraz.at</a></dd>
+        <dd><a href="https://gitlab.tugraz.at">https://gitlab.tugraz.at</a></dd>
+        <dt>Tutorium:</dt>
+        <dd><a href="http://progslides.github.io/ws19">http://progslides.github.io/ws19</a></dt>
+        <dt>Newsgroup:</dt>
+        <dd><a href="https://news.tugraz.at/#faq900">https://news.tugraz.at/</a></dd>
+        <dd>
+        <ul>
+          <li>tu-graz.lv.oop1</li>
+          <li>tu-graz.lv.oop1.organisatorisches</li>
+          <li>tu-graz.lv.oop1.uebungsgruppen</li>
+        <ul>
+        </dd>
+      </dl>
+      <p>Alle nicht persönlichen Fragen <strong>ausschließlich</strong>
+      in der Newsgroup stellen!</p>
+    </article>
+    </slide>
+    <slide>
+      <hgroup>
+        <h2>ACHTUNG</h2>
+      </hgroup>
+      <article>
+        <ul>
+          <li>
+            Aktuallisierte und detailierte Schritt für Schritt Anleitung verfügbar
+          </li>
+	  <li>
+             mit vielen Bildern ;)
+          </li>
+          <li>
+             im Teachcenter -> KU -> "Programmieren, Testen & Abgeben in der KU"
+          </li>
+	  <li>
+             (die nachfolgenden Folien dienen daher nur mehr grober Übersicht / Kurzvorstellung)
+          </li>
+        </ul>
+      </article>
+    </slide>
+	
+	
+  <slide>
+      <hgroup>
+        <h2>Die VM</h2>
+      </hgroup>
+      <article>
+        <ul>
+          <li>
+            In der Virtuellen Maschine sind alle erforderlichen Programme und Abhängigkeiten vorinstalliert sein.
+          </li>
+          <li>
+            Als Referenzplatform wird Ubuntu 18.04 verwendet
+          </li>
+          <li>
+            Die Abhängigkeiten für das Testscipt können im Readme.md file nachgelesen werden. Falls man die virtuelle Maschine nicht verwenden will.
+          </li>
+        </ul>
+      </article>
+    </slide>
+  
+
+  <slide>
+    <hgroup>
+      <h2>Installation der VM</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          <p>Virtualbox herunterladen und installieren</p>
+          <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>
+        </li>
+        <li>
+          Die virtuelle Maschine von <a href="progpipe.tugraz.at">progpipe.tugraz.at</a> herunterladen.
+        </li>
+        <li>
+          Unter tools die VM importieren
+          <img src="images/vbox.png">
+        </li>
+      </ul>
+
+    </article>
+  </slide>
+
+
+  <slide>
+    <hgroup>
+      <h2>Erstellen des Repositorys</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          Einloggen auf <a href="gitlab.tugraz.at">gitlab.tugraz.at</a>
+          <p>Dabei wird die Git ID generiert</p>
+        </li>
+        <li>
+          Einloggen auf <a href="progpipe.tugraz.at">progpipe.tugraz.at</a>
+        </li>
+        <li>
+          Das aktuelle Assignment wird bei der Ausgabe angezeigt.
+        </li>
+        <li>
+          Mit dem Create Button ein neues Git Repository für das anstehende Assignment erstellen.
+        </li>
+        <li>
+          Der Link zum Repository wird angezeigt(wenn alles geklappt hat)
+        </li>
+      </ul>
+
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+    <h2>SSH-Key erstellen und hochladen</h2>
+  </hgroup>
+	 <article>
+      <ul>
+        <li>
+          Im Ordner home/student .ssh Ordner erstellen und darin Key erzeugen
+        </li>
+        <img src="images/ssh_ordner.png">
+      </ul>
+
+    </article>
+      
+  </slide>
+
+  <slide>
+    <h1>SSH-Key erstellen</h1>
+    <img src="images/sshkey.png">
+  </slide>
+
+  <slide>
+    <h1>SSH-Key hochladen</h1>
+    <img src="images/gitlab1.png">
+  </slide>
+
+<slide>
+    <img src="images/progpipe.jpeg" width="98%">
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Das Repository clonen</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>
+        <b>cd</b> Ordner wechseln 
+      </li>
+      <li>
+        <b>mkdir</b> Ordner erstellen
+      </li>
+      <li>
+        <b>git clone</b> Git repository auf den Rechner clonen
+      </li>
+      <li>
+          <b>git pull</b> Holt die aktuelle Version von gitlab
+      </li>
+    </ul>
+    <img src="images/clone_se_repo.png">
+  </article>
+</slide>
+
+ <slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+        <h2>Standardaus- und eingabe</h2>
+    </hgroup>
+</slide>
+
+  <slide>
+<hgroup>
+     <h2>Schreiben auf <span class="src">stdout</span></h2>
+     </hgroup>
+       <article>
+
+<pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+int main()
+{
+  std::cout &lt;&lt; "Hallo Welt!" &lt;&lt; std::endl;
+  return 0;
+}
+</pre>
+<br />
+Verketten von Strings und anderen Datentypen m&ouml;glich
+<pre class="compact prettyprint">
+std::cout &lt;&lt; &quot;The answer to life, the universe &quot;
+        &lt;&lt; &quot;and everything is &quot; &lt;&lt; 42 &lt;&lt; std::endl;
+</pre>
+<pre class="compact prettyprint">
+std::cout &lt;&lt; &quot; string1 is &quot;  &lt;&lt; string1
+        &lt;&lt; &quot; , it's length is &quot;  &lt;&lt; string1.length() &lt;&lt; std::endl;
+</pre>
+<pre class="compact prettyprint">
+std::cout &lt;&lt; 3.14 &lt;&lt; &quot; * &quot; &lt;&lt; 5 &lt;&lt; std::endl;
+</pre>
+</article>
+</slide>
+
+<slide>
+<hgroup>
+<h2>Formatieren der Ausgabe</h2>
+</hgroup>
+<article>
+
+<ul>
+<li>Ändern der Basis
+<pre class="compact prettyprint">
+int value = 32;
+std::cout &lt;&lt; value &lt;&lt; " = 0x" &lt;&lt; std::hex
+        &lt;&lt; value &lt;&lt; std::endl;
+std::cout &lt;&lt; value &lt;&lt; " = 0" &lt;&lt; std::oct
+        &lt;&lt; value &lt;&lt; std::endl;
+</pre>
+</li>
+<li>Ausrichtung
+<pre class="compact prettyprint">#include &lt;iomanip&gt;
+int value = 32;
+std::cout &lt;&lt; std::setw(8) &lt;&lt; value &lt;&lt; std::endl;
+std::cout &lt;&lt; std::setfill('0') &lt;&lt; std::setw(8)
+        &lt;&lt; value &lt;&lt; std::endl;</pre>
+</li>
+<li>Kommastellen
+<pre class="compact prettyprint">#include &lt;iomanip&gt;
+double value = 3.14159265;
+std::cout &lt;&lt; std::setprecision(3) &lt;&lt; value &lt;&lt; std::endl;
+</li></ul>
+   </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Lesen von <span class="src">stdin</span></h2>
+  </hgroup>
+  <article>
+  <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+
+int main()
+{
+  int age, number;
+  std::cout << "Type in age and matrikelnumber" << std::endl;
+  std::cin >> age >> number;
+  std::cout << "Age:" << age << " Number:" << number << std::endl;
+
+  return 0;
+}</pre>
+
+  </article>
+</slide>
+
+<slide class="segue dark nobackground">
+    <hgroup class="auto-fadein">
+        <h2>Namespaces</h2>
+    </hgroup>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Namespaces</h2>
+  </hgroup>
+  <article>
+  <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+using std::endl;
+
+int main()
+{
+  int age, number;
+  std::cout << "Hello World!" << endl;
+}</pre>
+<br>
+  <pre class="compact prettyprint" data-lang="C++">#include &lt;iostream&gt;
+using namespace std; // possible but bad!
+
+int main()
+{
+  int age, number;
+  cout << "Hello World!" << endl;
+}</pre>
+
+  </article>
+
+</slide>
+ <slide class="segue dark nobackground">
+     <hgroup class="auto-fadein">
+         <h2>Object Oriented Programing</h2>
+     </hgroup>
+ </slide>
+ 
+<slide>
+  <hgroup>
+    <h2>Object Oriented Programing</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Eine <strong>Klasse</strong> vereint Daten (Strukturen) und
+        Funktionalität (Funktionen).
+      </li>
+      <li>Entspricht oft Objekten in der reellen Welt (Spieler, Kamera, etc.)</li>
+      <li>Vereinfachte Schnittstelle (interne Details können verborgen werden)</li>
+    </ul>
+    <pre class="prettyprint" data-lang="C++" style="overflow:scroll; height: 18em;">// Ball.h
+#ifndef BALL_H_INCLUDED
+#define BALL_H_INCLUDED
+class Ball
+{
+  private:
+    std::string color_;
+    double x_, y_;
+
+  public:
+    Ball(std::string color);
+    void move(double dx, double dy);
+
+    std::string getColor() const;
+    void setColor(std::string new_color);
+};
+#endif</pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Ball.cpp</h2>
+        </hgroup>
+        <article>
+          <ul>
+            <li>Trennung Implementierung und Definition.</li>
+          </ul>
+            <pre class="prettyprint" data-lang="C++" style="overflow:scroll; height: 20em;">// Ball.cpp
+#include "Ball.h"
+Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
+{
+}
+void Ball::move(double dx, double dy)
+{
+  x_ += dx;
+  y_ += dy;
+}
+std::string Ball::getColor() const
+{
+  return color_;
+}
+void Ball::setColor(std::string new_color)
+{
+  color_ = new_color;
+}</pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Konstruktor</h2>
+        </hgroup>
+        <article>
+          <ul>
+            <li></li>
+          </ul>
+          <pre class="prettyprint" data-lang="C++">// Ball.h
+...
+public:
+Ball(std::string color);
+Ball();
+...
+          </pre>
+          <pre class="prettyprint" data-lang="C++">// Ball.cpp
+...
+Ball::Ball(std::string color) : color_(color), x_(0), y_(0)
+{
+}
+Ball::Ball() : color_("yellow"), x_(0), y_(0)
+{
+}
+...
+          </pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Konstruktor - Aufruf</h2>
+        </hgroup>
+        <article>
+          <ul>
+            <li></li>
+          </ul>
+          <pre class="prettyprint" data-lang="C++">// Erinnerung: Ball.h
+...
+  public:
+    Ball(std::string color);
+    Ball();
+...
+          </pre>
+          <pre class="prettyprint" data-lang="C++">// main.cpp
+...
+Ball ball();
+Ball redBall("red");
+...
+          </pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Destruktor</h2>
+        </hgroup>
+        <article>
+          <ul>
+            <li>Wird automatisch aufgerufen</li>
+            <li>Sinnvoll, um dynamischen Speicher wieder freizugeben (Pointer!)</li>
+          </ul>
+          <pre class="prettyprint" data-lang="C++">// Ball.h
+...
+  public:
+    virtual ~Ball() noexcept;
+...
+          </pre>
+          <pre class="prettyprint" data-lang="C++">// Ball.cpp
+...
+Ball::~Ball() noexcept
+{
+}
+...
+          </pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Getter / Setter</h2>
+        </hgroup>
+        <article>
+          <p>private Attribute, öffentliche Getter und Setter</p>
+          <ul>
+            <li>neue Werte können validiert werden</li>
+            <li>abhängige Daten können automatisch aktualisiert / angepasst werden</li>
+            <li>Werte können im Getter berechnet werden</li>
+            <li>interne Datenformat kann später geändert werden, die öffentliche
+              API bleibt gleich
+            </li>
+          </ul>
+          <pre class="prettyprint" data-lang="C++">std::string Ball::getColor() const
+{
+  return color_;
+}
+void Ball::setColor(std::string new_color)
+{
+  color_ = new_color;
+}</pre>
+        </article>
+      </slide>
+      <slide>
+        <hgroup>
+          <h2>Methoden</h2>
+        </hgroup>
+        <article>
+          <p>Eine Funktion innerhalb einer Klasse heißt <strong>Methode</strong>.
+            Methoden werden üblicherweise mit Verben benannt.
+          </p>
+          <pre class="prettyprint" data-lang="C++">void Ball::move(double dx, double dy)
+{
+  x_ += dx;
+  y_ += dy;
+}</pre>
+        </article>
+      </slide>
+
+ <slide class="segue dark nobackground">
+     <hgroup class="auto-fadein">
+         <h2>GIT</h2>
+     </hgroup>
+ </slide>
+
+ <slide>
+     <hgroup>
+         <h2>GIT</h2>
+     </hgroup>
+     <article>
+         <ul>
+             <li>D2 &amp; D3 müssen mit GIT versioniert werden</li>
+             <li>Repository erstellen auf <a href="https://git.tugraz.at">git.tugraz.at</a></li>
+             <ul>
+               <li>Name: SEP19_GroupXXXXX (Bsp Gr24.: SEP19_Group00024)</li>
+               <li>Euren Tutor einladen! Siehe <a href="#2">Folie 2</a></li>
+               <li>Repository auf <strong>private</strong> lassen!</li>
+             </ul>
+         </ul>
+     </article>
+ </slide>
+
+ <slide>
+     <hgroup>
+         <h2>GIT - commands</h2>
+     </hgroup>
+     <article>
+         <ul>
+             <li>clone</li>
+             <ul><li>git clone &lt;repository-url&gt;</li></ul>
+             <li>add</li>
+             <ul><li>git add &lt;filename(s)&gt;</li></ul>
+             <li>commit</li>
+             <ul><li>git commit -m "&lt;message&gt;"</li></ul>
+             <li>push</li>
+             <ul><li>git push origin &lt;branchname&gt;</li></ul>
+             <li>pull</li>
+             <ul><li>git pull origin &lt;branchname&gt;</li></ul>
+         </ul>
+     </article>
+ </slide>
+
+ <slide>
+     <hgroup>
+         <h2>GIT - sonstiges</h2>
+     </hgroup>
+     <article>
+         <ul>
+           <li>gitk</li>
+           <li>branching / merging</li>
+           <li>ssh Key support</li>
+           <li>tagging</li>
+           <li>For more information: <a href="git_tutorial.pdf">Git Tutorial</a></li>
+         </ul>
+     </article>
+ </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/tugraz128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Bis zum nächsten Tutorium!</h2>
+    </article>
+    </slide>
+  <slide class="backdrop"></slide>
+
+</slides>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
